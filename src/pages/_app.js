@@ -9,12 +9,17 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 const theme = {
   colors: {
     primary: "#000000",
     secondary: "#E2FF5D",
+    white: "#ffffff",
   },
   background: {
     primary: "#ffffff",
