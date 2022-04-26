@@ -7,7 +7,7 @@ class UiStore {
     this.isOpen = false;
     this.allStores = [this.filterStore];
     this.numberSavedItems = 0;
-    this.menuItems = ["orte", "zeiten", "alles"];
+    this.menuItems = ["orte", "zeiten", "katalog", "advice"];
     this.selected = null;
     this.previous = null;
     this.direction = "left";

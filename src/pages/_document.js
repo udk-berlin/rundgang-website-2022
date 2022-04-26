@@ -27,7 +27,7 @@ export default class MyDocument extends Document {
     }
   }
 
-  /*   render() {
+  render() {
     return (
       <Html lang="en">
         <Head>
@@ -45,5 +45,5 @@ export default class MyDocument extends Document {
         </body>
       </Html>
     );
-  } */
+  }
 }

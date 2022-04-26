@@ -4,155 +4,116 @@ import SearchBar from "@/components/SearchBar";
 import { useStores } from "@/stores/index";
 import MenuBar from "@/components/MenuBar";
 import LocalizedText from "modules/i18n/components/LocalizedText";
-import TestComponent from "@/components/TestComponent";
+import StretchSqueeze from "@/components/StretchSqueezeUhh";
 
 const HomeWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
   overflow-x: hidden;
   overflow-y: hidden;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
 `;
 
-const ScaleHome = styled.div`
-  transition: transform 1s, width 1s, height 2s;
-  transform: ${({ visible }) =>
-    visible ? "scaleX(1) scaleY(1)" : "scaleX(0) scaleY(0)"};
-  width: ${({ visible }) => (visible ? "100%" : "0")};
-  height: ${({ visible }) => (visible ? "100%" : "0")};
-  justify-content: ${({ direction }) =>
-    direction == "left" ? "flex-end" : "flex-start"};
-  transform-origin: ${({ direction }) =>
-    direction == "left" ? "top right" : "top left"};
-`;
-
-const ScalePage = styled.div`
-  transition: transform 1s, height 1s;
-  transform: ${({ visible }) => (visible ? "scaleX(1)" : "scaleX(0)")};
-  height: ${({ visible }) => (visible ? "100%" : "0")};
-  justify-content: ${({ direction }) =>
-    direction == "right" ? "flex-end" : "flex-start"};
-  transform-origin: ${({ direction }) =>
-    direction == "right" ? "top right" : "top left"};
-`;
-
-const TitleWrapper = styled.div`
-  display: flex;
-  justify-content: flex-start;
+const SearchBarWrapper = styled.div`
+  transform: ${({ visible }) => (visible ? "scaleY(1)" : "scaleY(0)")};
+  height: ${({ visible }) => (visible ? "fit-content" : "0px")};
 `;
 
 const DefaultLink = styled.div`
-  width: fit-content;
-  height: fit-content;
-  transform-origin: top left;
-  line-height: 1;
   cursor: pointer;
-`;
-
-const OrteLink = styled(DefaultLink)`
-  font-size: 10vw;
-  transform: scaleX(2.95);
-`;
-const ZeitenLink = styled(DefaultLink)`
-  font-size: 9vw;
-  transform: scaleX(2.62);
-`;
-const KatalogLink = styled(DefaultLink)`
-  font-size: 8vw;
-  transform: scaleX(2.3);
-`;
-const MehrLink = styled(DefaultLink)`
-  font-size: 3vw;
-  transform: scaleX(1.62);
 `;
 
 const Footer = styled.footer`
   display: flex;
   justify-content: space-between;
-  padding: 16px;
 `;
 
 const Home = () => {
   const { uiStore } = useStores();
-
-  const handleClickLink = (name, direction) => {
-    uiStore.setSelectedFromLink(name);
-    uiStore.setDirection(direction);
+  const handleClickLink = (name, dir) => {
+    if (name in uiStore.menuItems) {
+      uiStore.setDirection(dir);
+      uiStore.setSelectedFromLink(name);
+    } else {
+      uiStore.setMenuItems([name]);
+      uiStore.setDirection(dir);
+      uiStore.setSelectedFromLink(name);
+    }
   };
   return (
     <HomeWrapper>
-      <ScalePage
-        visible={uiStore.selected !== null}
-        direction={uiStore.direction}
-      >
+      <SearchBarWrapper visible={uiStore.selected !== null}>
         <MenuBar />
-        <TestComponent />
-      </ScalePage>
-      <ScaleHome
+      </SearchBarWrapper>
+      <StretchSqueeze
         visible={uiStore.selected == null}
-        direction={uiStore.direction}
+        position="left"
+        fontSize={3}
       >
-        <TitleWrapper>
-          <DefaultLink
-            style={{
-              fontSize: "3vw",
-              height: "6vw",
-              transform: "scaleX(0.7)",
-              padding: "6px",
-            }}
-          >
-            20.-22.JULI
-          </DefaultLink>
-          <DefaultLink
-            style={{
-              fontSize: "6vw",
-              transform: "scaleX(2.6)",
-              transformOrigin: "top right",
-              position: "fixed",
-              right: 0,
-            }}
-          >
-            RUNDGANG
-          </DefaultLink>
-          <DefaultLink
-            style={{
-              fontSize: "2vw",
-              height: "6vw",
-              transform: "scaleX(3)",
-              paddingTop: "3.1vw",
-              position: "fixed",
-              left: 0,
-            }}
-          >
-            UdK
-          </DefaultLink>
-        </TitleWrapper>
-        <SearchBar />
-        <KatalogLink onClick={() => handleClickLink("katalog", "right")}>
+        20.-22.JULI UdK RUNDGANG
+      </StretchSqueeze>
+      <SearchBar />
+      <StretchSqueeze
+        position="top"
+        fontSize={7}
+        visible={uiStore.selected == null}
+      >
+        <DefaultLink onClick={() => handleClickLink("katalog", "top")}>
           <LocalizedText id="katalog" /> &#8593;
-        </KatalogLink>
-        <OrteLink onClick={() => handleClickLink("orte", "left")}>
+        </DefaultLink>
+      </StretchSqueeze>
+      <StretchSqueeze
+        position="left"
+        fontSize={9}
+        visible={uiStore.selected == null}
+      >
+        <DefaultLink onClick={() => handleClickLink("orte", "left")}>
           {"<-"}
           <LocalizedText id="orte" />
-        </OrteLink>
-        <ZeitenLink onClick={() => handleClickLink("zeiten", "right")}>
+        </DefaultLink>
+      </StretchSqueeze>
+      <StretchSqueeze
+        position="right"
+        fontSize={8}
+        visible={uiStore.selected == null}
+      >
+        <DefaultLink onClick={() => handleClickLink("zeiten", "right")}>
           <LocalizedText id="zeiten" />
           {"->"}
-        </ZeitenLink>
-        <MehrLink onClick={() => handleClickLink("mehr", "down")}>
+        </DefaultLink>
+      </StretchSqueeze>
+      <StretchSqueeze
+        position="bottom"
+        fontSize={3}
+        visible={uiStore.selected == null}
+      >
+        <DefaultLink onClick={() => handleClickLink("advice", "bottom")}>
           &#8595; <LocalizedText id="advice" />
-        </MehrLink>
+        </DefaultLink>
+      </StretchSqueeze>
+      <StretchSqueeze
+        position="left"
+        fontSize={2}
+        visible={uiStore.selected == null}
+      >
         <Footer>
-          <div>
+          <DefaultLink onClick={() => handleClickLink("imprint", "left")}>
+            &#12308;
             <LocalizedText id="imprint" />
-          </div>
-          <div>
+            &#12309;
+          </DefaultLink>
+          <DefaultLink onClick={() => handleClickLink("privacy", "left")}>
+            &#12308;
             <LocalizedText id="privacy" />
-          </div>
-          <div>
+            &#12309;
+          </DefaultLink>
+          <DefaultLink onClick={() => handleClickLink("contact", "left")}>
+            &#12308;
             <LocalizedText id="contact" />
-          </div>
+            &#12309;
+          </DefaultLink>
         </Footer>
-      </ScaleHome>
+      </StretchSqueeze>
     </HomeWrapper>
   );
 };

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import StretchSqueeze from "./StretchSqueezeUuh";
+import StretchSqueeze from "./StretchSqueezeUhh";
 
 const TestComponent = () => {
   const [value, setValue] = useState("UdK RUNDGANG");
-  const [fontSize, setFontsize] = useState(5);
+  const [fontSize, setFontsize] = useState(7);
   const [width, setWidth] = useState(400);
   const [height, setHeight] = useState(200);
   const [position, setPosition] = useState("left");
@@ -83,21 +83,23 @@ const TestComponent = () => {
         }}
       >
         <StretchSqueeze
-          text={value}
           position={position}
           fontSize={fontSize}
           visible={visible}
           width={width}
           height={height}
-        ></StretchSqueeze>
+        >
+          {value}
+        </StretchSqueeze>
         <StretchSqueeze
-          text={value}
           position={position == "top" ? "bottom" : "right"}
           fontSize={fontSize}
           visible={!visible}
           width={width}
           height={height}
-        ></StretchSqueeze>
+        >
+          {"blubl"}
+        </StretchSqueeze>
       </div>
     </div>
   );
