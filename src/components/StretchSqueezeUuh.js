@@ -4,7 +4,6 @@ import styled from "styled-components";
 export const Scaler = styled.div`
   width: fit-content;
   height: fit-content;
-  border: ${({ position }) => `1px solid ${STRETCH_ANIMATIONS[position][3]}`};
   line-height: 1;
   font-family: "Diatype";
   position: relative;
@@ -25,6 +24,7 @@ export const Scaler = styled.div`
     position == "right" ? `${scaling[2]}px` : 0};
   margin-top: ${({ position, scaling }) =>
     position == "bottom" ? `${scaling[2]}px` : 0};
+  white-space: nowrap;
 
   @keyframes stretchInW {
     0% {
@@ -64,27 +64,25 @@ export const Scaler = styled.div`
 
   @keyframes stretchInH {
     0% {
-      transform: ${({ scaling }) => `scaleX(${scaling[0]}) scaleY(0)`};
       height: 0px;
+      transform: ${({ scaling }) => `scaleX(${scaling[0]}) scaleY(0)`};
     }
     30% {
+      transform: ${({ scaling }) => `scaleX(${scaling[0]}) scaleY(0.5)`};
       height: ${({ originialSize }) => `${0.5 * originialSize[1]}px`};
-      transform:  ${({ scaling }) => `scaleX(${scaling[0]}) scaleY(0.5)`};
     }
     60% {
+      transform: ${({ scaling }) => `scaleX(${scaling[0]}) scaleY(1)`};
       height: ${({ originialSize }) => `${originialSize[1]}px`};
-      transform:  ${({ scaling }) => `scaleX(${scaling[0]}) scaleY(1)`};
     }
     100% {
       transform: ${({ scaling }) =>
         `scaleX(${scaling[0]}) scaleY(${scaling[1]})`};
-      height: ${({ height }) => `${height}px`};
     }
   }
 
   @keyframes stretchOutH {
     0% {
-      height: ${({ height }) => `${height}px`};
       transform: ${({ scaling }) =>
         `scaleX(${scaling[0]}) scaleY(${scaling[1]})`};
     }
@@ -113,19 +111,20 @@ const STRETCH_ANIMATIONS = {
 const StretchSqueeze = ({
   position = "left",
   fontSize = 3,
-  text,
   visible = true,
   width,
   height,
+  text,
 }) => {
   const scaledRef = useRef();
   const [scaling, setScaling] = useState(0);
   const [originialSize, setOriginalSize] = useState([0, 0]);
   useEffect(() => {
     const textWidth = scaledRef.current.offsetWidth;
-    const textHeight = scaledRef.current.offsetHeight;
+    const textHeight = (fontSize * window.innerWidth) / 100;
+    console.log(textWidth, textHeight);
     setOriginalSize([textWidth, textHeight]);
-  }, [position, text]);
+  }, [position, text, width, height]);
 
   useEffect(() => {
     if (position == "left" || position == "right") {
@@ -154,7 +153,7 @@ const StretchSqueeze = ({
       position={position}
       fontSize={fontSize}
     >
-      {text.toUpperCase()}
+      {text}
     </Scaler>
   );
 };

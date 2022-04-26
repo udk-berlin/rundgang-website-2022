@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import StretchSqueeze from "./StretchSqueezeUuh";
 
 const TestComponent = () => {
-  const [value, setValue] = useState("HALLO");
+  const [value, setValue] = useState("UdK RUNDGANG");
   const [fontSize, setFontsize] = useState(5);
   const [width, setWidth] = useState(400);
   const [height, setHeight] = useState(200);
@@ -70,22 +70,21 @@ const TestComponent = () => {
           }}
         >
           <option value="left">left</option>
-          <option value="right">right</option>
           <option value="top">top</option>
-          <option value="bottom">bottom</option>
         </select>
       </div>
       <div
         style={{
           margin: "16px",
-          border: "1px solid black",
           width: `${width}px`,
           height: `${height}px`,
+          display: position == "left" ? "flex" : "block",
+          overflow: "hidden",
         }}
       >
         <StretchSqueeze
           text={value}
-          position={"top"}
+          position={position}
           fontSize={fontSize}
           visible={visible}
           width={width}
@@ -93,7 +92,7 @@ const TestComponent = () => {
         ></StretchSqueeze>
         <StretchSqueeze
           text={value}
-          position={"bottom"}
+          position={position == "top" ? "bottom" : "right"}
           fontSize={fontSize}
           visible={!visible}
           width={width}
