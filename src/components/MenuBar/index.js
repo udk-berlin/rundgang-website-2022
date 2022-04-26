@@ -8,6 +8,7 @@ const MenuBarWrapper = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
+  font-family: "Diatype";
 `;
 
 const BackArrow = styled.div`
@@ -26,7 +27,6 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.background.primary};
   color: ${({ theme }) => theme.colors.primary};
   overflow-x: hidden;
-  font-family: "Helvetica";
   overflow: hidden;
 `;
 
@@ -89,13 +89,13 @@ const MenuBar = () => {
   };
 
   return (
-    <MenuBarWrapper
-      onClick={() => {
-        uiStore.setDirection("right");
-        uiStore.setSelected(null);
-      }}
-    >
-      <BackArrow>
+    <MenuBarWrapper>
+      <BackArrow
+        onClick={() => {
+          uiStore.setDirection("right");
+          uiStore.setSelected(null);
+        }}
+      >
         <Arrow direction="top" size="40px" />
       </BackArrow>
       <Container>

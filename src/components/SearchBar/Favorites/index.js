@@ -7,7 +7,7 @@ import FavouriteStarSvg from "./FavouriteStar";
 const FavouritesWrapper = styled.div`
   width: 5vw;
   min-width: 40px;
-  height: 36px;
+  height: 2vw;
   background: ${({ theme }) => theme.background.secondary};
   display: flex;
   justify-content: space-between;
@@ -18,7 +18,6 @@ const FavouritesWrapper = styled.div`
 `;
 const FavouritesSavedItems = styled.div`
   color: ${({ theme }) => theme.colors.primary};
-  font-family: "Helvetica";
   font-weight: bold;
   font-size: 24px;
   transform: scaleY(2);

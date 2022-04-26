@@ -20,6 +20,19 @@ const nextConfig = {
     };
     return cfg;
   },
-}
+  swcMinify: false, // it should be false by default
 
-module.exports = nextConfig
+  i18n: {
+    /**
+     * Provide the locales you want to support in your application
+     */
+    locales: ["de", "en"],
+    /**
+     * This is the default locale you want to be used when visiting
+     * a non-locale prefixed path.
+     */
+    defaultLocale: "de",
+  },
+};
+
+module.exports = nextConfig;

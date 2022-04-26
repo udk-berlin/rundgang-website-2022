@@ -1,36 +1,107 @@
-import React, { useCallback, useState, useEffect } from "react";
-import { useStores } from "../stores/index";
-import useDebounce from "hooks/useDebounce";
-import { observer } from "mobx-react";
+import React, { useState } from "react";
+import StretchSqueeze from "./StretchSqueezeUuh";
 
 const TestComponent = () => {
-  const { uiStore } = useStores();
-  const [value, setValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [results, setResults] = useState(null);
-  const debouncedSearchTerm = useDebounce(value, 600);
+  const [value, setValue] = useState("HALLO");
+  const [fontSize, setFontsize] = useState(5);
+  const [width, setWidth] = useState(400);
+  const [height, setHeight] = useState(200);
+  const [position, setPosition] = useState("left");
+  const [visible, setVisible] = useState(true);
 
   const handleChangeValue = e => {
     let text = e.target.value;
-    console.log(uiStore.filterStore);
-    uiStore.filterStore.parseText(text);
-    setIsLoading(true);
     setValue(text);
   };
 
-  useEffect(() => {
-    setIsLoading(false);
-    setResults(uiStore.filterStore.result);
-  }, [debouncedSearchTerm]);
-
   return (
     <div>
-      TEST
-      <input value={value} onChange={handleChangeValue} />
-      {isLoading ? "is loading" : "loaded"}
-      {results}
+      <div style={{ padding: "16px" }}>
+        <label htmlFor="text">TEXT</label>
+        <input
+          id="text"
+          value={value}
+          onChange={handleChangeValue}
+          autoComplete="off"
+          autoCapitalize="on"
+        />
+        <label htmlFor="text">fontsize</label>
+        <input
+          id="fontsize"
+          value={fontSize}
+          type="number"
+          onChange={e => {
+            setFontsize(e.target.value);
+          }}
+        />
+        <label htmlFor="divWidth">divWidth</label>
+        <input
+          id="divWidth"
+          value={width}
+          type="number"
+          onChange={e => {
+            setWidth(e.target.value);
+          }}
+        />
+        <label htmlFor="divHeight">divHeight</label>
+        <input
+          id="divHeight"
+          value={height}
+          type="number"
+          onChange={e => {
+            setHeight(e.target.value);
+          }}
+        />
+        <label htmlFor="isvisible">isvisible</label>
+        <input
+          id="isvisible"
+          type="checkbox"
+          checked={visible}
+          onChange={e => {
+            setVisible(Boolean(e.target.checked));
+          }}
+        />
+        <label htmlFor="position">position</label>
+        <select
+          name="position"
+          id="position-select"
+          onChange={e => {
+            setPosition(e.target.value);
+          }}
+        >
+          <option value="left">left</option>
+          <option value="right">right</option>
+          <option value="top">top</option>
+          <option value="bottom">bottom</option>
+        </select>
+      </div>
+      <div
+        style={{
+          margin: "16px",
+          border: "1px solid black",
+          width: `${width}px`,
+          height: `${height}px`,
+        }}
+      >
+        <StretchSqueeze
+          text={value}
+          position={"top"}
+          fontSize={fontSize}
+          visible={visible}
+          width={width}
+          height={height}
+        ></StretchSqueeze>
+        <StretchSqueeze
+          text={value}
+          position={"bottom"}
+          fontSize={fontSize}
+          visible={!visible}
+          width={width}
+          height={height}
+        ></StretchSqueeze>
+      </div>
     </div>
   );
 };
 
-export default observer(TestComponent);
+export default TestComponent;

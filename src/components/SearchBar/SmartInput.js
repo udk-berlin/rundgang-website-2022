@@ -4,18 +4,20 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import { createEditor, Node, Range, Transforms } from "slate";
 import { withHistory } from "slate-history";
 import { Editable, ReactEditor, Slate, withReact } from "slate-react";
+import { observer } from "mobx-react";
+import { useStores } from "@/stores/index";
 import ClickAwayListener from "./ClickAwayListener";
 
 const InputField = styled(Editable)`
-  background-color: ${({ theme }) => theme.background.secondary};
+  background-color: ${({ theme }) => theme.background.primary};
   color: ${({ theme }) => theme.colors.primary};
-  font-family: "Helvetica";
   border: 3px solid #333;
   min-width: 12rem;
   padding: 0.25em 0.4em;
-  height: 36px;
+  height: 2vw;
   flex-grow: 1;
   align-items: center;
+  font-size: 1.5vw;
 `;
 
 const SmartInputWrapper = styled.div`
@@ -23,6 +25,16 @@ const SmartInputWrapper = styled.div`
   position: relative;
   width: 100%;
   padding: 16px;
+`;
+
+const CloseButton = styled.div`
+  font-family: "Diatype";
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  flex-grow: 0;
+  font-size: 1.5vw;
 `;
 
 const PluginList = React.memo(({ plugins }) =>
@@ -40,6 +52,7 @@ PluginList.defaultProps = {
 };
 
 const SmartInput = ({ plugins, onSubmit, onChange, text, onFocus, onBlur }) => {
+  const { uiStore } = useStores();
   const hasContent = useMemo(() => text.length > 0, [text]);
 
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
@@ -195,6 +208,20 @@ const SmartInput = ({ plugins, onSubmit, onChange, text, onFocus, onBlur }) => {
     [plugins, hasContent],
   );
 
+  const renderPlaceholder = props => {
+    console.log(text !== "" || uiStore.isOpen);
+    if (text !== "" || uiStore.isOpen) return false;
+
+    return (
+      <span
+        contentEditable={false}
+        styles={{ pointerEvents: "none", userSelect: "none" }}
+      >
+        {props.children}
+      </span>
+    );
+  };
+
   // TODO: Necessary until https://github.com/ianstormtaylor/slate/issues/3321 is fixed
   const keyToTriggerRerender = useMemo(() => `SLATE-FAKE-KEY`);
 
@@ -214,10 +241,15 @@ const SmartInput = ({ plugins, onSubmit, onChange, text, onFocus, onBlur }) => {
             decorate={decorate}
             onKeyDown={onKeyDown}
             renderLeaf={renderLeaf}
-            placeholder={"TYPE STH..."}
+            renderPlaceholder={props => (
+              <span style={{ opacity: "1 !important" }}>{props.children}</span>
+            )}
+            placeholder="SUCHE..."
           />
+          {hasContent && (
+            <CloseButton onClick={handleReset}>&#57344;</CloseButton>
+          )}
         </Slate>
-        {hasContent && <div onClick={handleReset}>X</div>}
         <PluginList plugins={plugins} />
       </SmartInputWrapper>
     </ClickAwayListener>
@@ -254,4 +286,4 @@ SmartInput.propTypes = {
   plugins: PropTypes.array,
 };
 
-export default SmartInput;
+export default observer(SmartInput);

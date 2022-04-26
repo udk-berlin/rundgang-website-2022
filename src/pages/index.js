@@ -3,18 +3,20 @@ import { observer } from "mobx-react";
 import SearchBar from "@/components/SearchBar";
 import { useStores } from "@/stores/index";
 import MenuBar from "@/components/MenuBar";
-import ArrowSvg from "@/components/Arrow";
+import LocalizedText from "modules/i18n/components/LocalizedText";
+import TestComponent from "@/components/TestComponent";
 
 const HomeWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  font-family: "Helvetica";
+  width: 100vw;
+  height: 100vh;
   overflow-x: hidden;
+  overflow-y: hidden;
 `;
 
 const ScaleHome = styled.div`
   transition: transform 1s, width 1s, height 2s;
-  transform: ${({ visible }) => (visible ? "scaleX(1) scaleY(1)" : "scaleX(0) scaleY(0)")};
+  transform: ${({ visible }) =>
+    visible ? "scaleX(1) scaleY(1)" : "scaleX(0) scaleY(0)"};
   width: ${({ visible }) => (visible ? "100%" : "0")};
   height: ${({ visible }) => (visible ? "100%" : "0")};
   justify-content: ${({ direction }) =>
@@ -33,24 +35,40 @@ const ScalePage = styled.div`
     direction == "right" ? "top right" : "top left"};
 `;
 
+const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
+
 const DefaultLink = styled.div`
-  width: 100%;
-  height: 100%;
+  width: fit-content;
+  height: fit-content;
   transform-origin: top left;
+  line-height: 1;
   cursor: pointer;
 `;
 
 const OrteLink = styled(DefaultLink)`
   font-size: 10vw;
-  transform: scaleX(2.6);
+  transform: scaleX(2.95);
 `;
 const ZeitenLink = styled(DefaultLink)`
   font-size: 9vw;
-  transform: scaleX(2.5);
+  transform: scaleX(2.62);
 `;
-const AllesLink = styled(DefaultLink)`
+const KatalogLink = styled(DefaultLink)`
   font-size: 8vw;
-  transform: scaleX(3.2);
+  transform: scaleX(2.3);
+`;
+const MehrLink = styled(DefaultLink)`
+  font-size: 3vw;
+  transform: scaleX(1.62);
+`;
+
+const Footer = styled.footer`
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
 `;
 
 const Home = () => {
@@ -67,25 +85,74 @@ const Home = () => {
         direction={uiStore.direction}
       >
         <MenuBar />
+        <TestComponent />
       </ScalePage>
-      <SearchBar />
       <ScaleHome
         visible={uiStore.selected == null}
         direction={uiStore.direction}
       >
-        <OrteLink onClick={() => handleClickLink("orte", "right")}>
-          ORTE <ArrowSvg size="9vw" direction="right" />
+        <TitleWrapper>
+          <DefaultLink
+            style={{
+              fontSize: "3vw",
+              height: "6vw",
+              transform: "scaleX(0.7)",
+              padding: "6px",
+            }}
+          >
+            20.-22.JULI
+          </DefaultLink>
+          <DefaultLink
+            style={{
+              fontSize: "6vw",
+              transform: "scaleX(2.6)",
+              transformOrigin: "top right",
+              position: "fixed",
+              right: 0,
+            }}
+          >
+            RUNDGANG
+          </DefaultLink>
+          <DefaultLink
+            style={{
+              fontSize: "2vw",
+              height: "6vw",
+              transform: "scaleX(3)",
+              paddingTop: "3.1vw",
+              position: "fixed",
+              left: 0,
+            }}
+          >
+            UdK
+          </DefaultLink>
+        </TitleWrapper>
+        <SearchBar />
+        <KatalogLink onClick={() => handleClickLink("katalog", "right")}>
+          <LocalizedText id="katalog" /> &#8593;
+        </KatalogLink>
+        <OrteLink onClick={() => handleClickLink("orte", "left")}>
+          {"<-"}
+          <LocalizedText id="orte" />
         </OrteLink>
-        <ZeitenLink onClick={() => handleClickLink("zeiten", "left")}>
-          <ArrowSvg size="8vw" direction="left" />
-          ZEITEN
+        <ZeitenLink onClick={() => handleClickLink("zeiten", "right")}>
+          <LocalizedText id="zeiten" />
+          {"->"}
         </ZeitenLink>
-        <AllesLink onClick={() => handleClickLink("alles", "right")}>
-          ALLES
-          <ArrowSvg size="7vw" direction="right" />
-        </AllesLink>
+        <MehrLink onClick={() => handleClickLink("mehr", "down")}>
+          &#8595; <LocalizedText id="advice" />
+        </MehrLink>
+        <Footer>
+          <div>
+            <LocalizedText id="imprint" />
+          </div>
+          <div>
+            <LocalizedText id="privacy" />
+          </div>
+          <div>
+            <LocalizedText id="contact" />
+          </div>
+        </Footer>
       </ScaleHome>
-      {uiStore.selected !== null ? "GUTEN TAG" : null}
     </HomeWrapper>
   );
 };
