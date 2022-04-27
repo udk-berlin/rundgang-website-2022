@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
@@ -17,6 +17,7 @@ const Arrow = styled.span`
   &:hover {
     opacity: 0.8;
   }
+  width: fit-content;
 `;
 
 const BackArrow = styled.div`
@@ -25,7 +26,7 @@ const BackArrow = styled.div`
   top: 0;
   left: 0;
   z-index: 10;
-  font-size: 5vw;
+  font-size: 4vw;
 `;
 
 const Container = styled.div`
@@ -55,20 +56,27 @@ const MenuBar = () => {
   const { uiStore } = useStores();
   const size = useWindowSize();
 
-  const computeDirection = index => {
-    if (uiStore.direction == "left" && index == uiStore.previous) {
-      return "right";
-    }
-    if (uiStore.direction == "right" && index == uiStore.previous) {
-      return "left";
-    }
-    if (uiStore.direction == "left" && index == uiStore.selected) {
-      return "left";
-    }
-    if (uiStore.direction == "right" && index == uiStore.selected) {
-      return "right";
-    }
-  };
+  const computeDirection = useCallback(
+    index => {
+      if (uiStore.direction == "left" && index == uiStore.previous) {
+        console.log("prev left", index);
+        return "right";
+      }
+      if (uiStore.direction == "right" && index == uiStore.previous) {
+        console.log("prev right", index);
+        return "left";
+      }
+      if (uiStore.direction == "left" && index == uiStore.selected) {
+        console.log("selected left", index);
+        return "left";
+      }
+      if (uiStore.direction == "right" && index == uiStore.selected) {
+        console.log("selected right", index);
+        return "right";
+      }
+    },
+    [uiStore.direction, uiStore.selected, uiStore.previous],
+  );
 
   const handleSwipeLeft = () => {
     uiStore.setMenuState("left");
@@ -80,44 +88,48 @@ const MenuBar = () => {
 
   return (
     <MenuBarWrapper>
-      <Container>
-        {uiStore.menuItems.length == 1 && uiStore.selected !== null ? (
-          <Header width={size.width}>
-            <StretchSqueeze position="left" fontSize={10}>
-              <Title>
-                <Arrow onClick={() => uiStore.setSelected(null)}>{"<-"}</Arrow>
-                <LocalizedText id={uiStore.selectedItem} />
-              </Title>
-            </StretchSqueeze>
-          </Header>
-        ) : (
-          <Header width={size.width}>
-            <BackArrow
-              onClick={() => {
-                uiStore.setDirection("right");
-                uiStore.setSelected(null);
-              }}
-            >
-              &#8598;
-            </BackArrow>
-            {uiStore.menuItems.map((item, index) => (
-              <StretchSqueeze
-                position={computeDirection(index)}
-                fontSize={10}
-                visible={index == uiStore.selected}
-                key={`${index}-menuitem`}
-                id={`${index}-tab`}
-              >
+      {uiStore.selected !== null && (
+        <Container>
+          {uiStore.menuItems.length == 1 ? (
+            <Header width={size.width}>
+              <StretchSqueeze position="left" fontSize={10}>
                 <Title>
-                  <Arrow onClick={() => handleSwipeLeft()}>{"<-"}</Arrow>
-                  <LocalizedText id={item} />
-                  <Arrow onClick={() => handleSwipeRight()}>{"->"}</Arrow>
+                  <Arrow onClick={() => uiStore.setSelected(null)}>
+                    {"<-"}
+                  </Arrow>
+                  <LocalizedText id={uiStore.selectedItem} />
                 </Title>
               </StretchSqueeze>
-            ))}
-          </Header>
-        )}
-      </Container>
+            </Header>
+          ) : (
+            <Header width={size.width}>
+              <BackArrow
+                onClick={() => {
+                  uiStore.setDirection("right");
+                  uiStore.setSelected(null);
+                }}
+              >
+                &#8598;
+              </BackArrow>
+              {uiStore.menuItems.map((item, index) => (
+                <StretchSqueeze
+                  position={computeDirection(index)}
+                  fontSize={10}
+                  width={size.width}
+                  visible={index == uiStore.selected}
+                  key={`${index}-menuitem`}
+                >
+                  <Title>
+                    <Arrow onClick={() => handleSwipeLeft()}>{"<-"}</Arrow>
+                    <LocalizedText id={item} />
+                    <Arrow onClick={() => handleSwipeRight()}>{"->"}</Arrow>
+                  </Title>
+                </StretchSqueeze>
+              ))}
+            </Header>
+          )}
+        </Container>
+      )}
     </MenuBarWrapper>
   );
 };

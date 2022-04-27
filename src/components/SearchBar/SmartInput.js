@@ -7,6 +7,7 @@ import { Editable, ReactEditor, Slate, withReact } from "slate-react";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import ClickAwayListener from "./ClickAwayListener";
+import { useIntl } from "react-intl";
 
 const InputField = styled(Editable)`
   background-color: ${({ theme }) => theme.background.primary};
@@ -53,6 +54,7 @@ PluginList.defaultProps = {
 
 const SmartInput = ({ plugins, onSubmit, onChange, text, onFocus, onBlur }) => {
   const { uiStore } = useStores();
+  const { messages } = useIntl();
   const hasContent = useMemo(() => text.length > 0, [text]);
 
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
@@ -208,19 +210,6 @@ const SmartInput = ({ plugins, onSubmit, onChange, text, onFocus, onBlur }) => {
     [plugins, hasContent],
   );
 
-  const renderPlaceholder = props => {
-    console.log(text !== "" || uiStore.isOpen);
-    if (text !== "" || uiStore.isOpen) return false;
-
-    return (
-      <span
-        contentEditable={false}
-        styles={{ pointerEvents: "none", userSelect: "none" }}
-      >
-        {props.children}
-      </span>
-    );
-  };
 
   // TODO: Necessary until https://github.com/ianstormtaylor/slate/issues/3321 is fixed
   const keyToTriggerRerender = useMemo(() => `SLATE-FAKE-KEY`);
@@ -241,10 +230,7 @@ const SmartInput = ({ plugins, onSubmit, onChange, text, onFocus, onBlur }) => {
             decorate={decorate}
             onKeyDown={onKeyDown}
             renderLeaf={renderLeaf}
-            renderPlaceholder={props => (
-              <span style={{ opacity: "1 !important" }}>{props.children}</span>
-            )}
-            placeholder="SUCHE..."
+            placeholder={messages.search}
           />
           {hasContent && (
             <CloseButton onClick={handleReset}>&#57344;</CloseButton>

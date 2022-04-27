@@ -31,7 +31,7 @@ const Footer = styled.footer`
 const Home = () => {
   const { uiStore } = useStores();
   const handleClickLink = (name, dir) => {
-    if (name in uiStore.menuItems) {
+    if (uiStore.menuItems.includes(name)) {
       uiStore.setDirection(dir);
       uiStore.setSelectedFromLink(name);
     } else {
@@ -84,7 +84,7 @@ const Home = () => {
       </StretchSqueeze>
       <StretchSqueeze
         position="bottom"
-        fontSize={3}
+        fontSize={2}
         visible={uiStore.selected == null}
       >
         <DefaultLink onClick={() => handleClickLink("advice", "bottom")}>
