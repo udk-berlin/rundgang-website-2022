@@ -1,45 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { IntlProvider } from "react-intl";
-import { LOCALES } from "../../../utils/multilanguage";
+import { useRouter } from "next/router";
 import deFile from "../localizations/de.json";
 import enFile from "../localizations/en.json";
 
-export const LocalizedRouter = ({
-  children,
-  defaultLanguage = LOCALES.de,
-  language,
-}) => {
-  const [messages, setMessages] = useState({});
-  const [lang, setLang] = useState(defaultLanguage);
+const LocalizedRouter = ({ Component, pageProps }) => {
+  const { locale } = useRouter();
 
-  useEffect(() => {
-    let isMounted = true; // note mutable flag
-
-    const fetchData = async () => {
-      if (isMounted) {
-        setMessages({
-          de: deFile,
-          en: enFile,
-        });
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (language) {
-      setLang(language);
+  const messages = useMemo(() => {
+    switch (locale) {
+      case "de":
+        return deFile;
+      case "en":
+        return enFile;
+      default:
+        return deFile;
     }
-  }, [language]);
+  }, [locale]);
 
   return (
-    <IntlProvider locale={lang} messages={messages[lang]}>
-      {messages[lang] ? children : null}
+    <IntlProvider locale={locale} messages={messages} onError={() => null}>
+      <Component {...pageProps} />
     </IntlProvider>
   );
 };
+export default LocalizedRouter;

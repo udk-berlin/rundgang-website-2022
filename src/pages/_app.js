@@ -3,7 +3,7 @@ import { Provider } from "mobx-react";
 import { ThemeProvider } from "styled-components";
 import { useStoreInstances } from "../stores/index";
 import GlobalStyle from "./globalStyle";
-import { LocalizedRouter } from "modules/i18n/components/LocalizedRouter";
+import LocalizedRouter from "modules/i18n/components/LocalizedRouter";
 
 const theme = {
   colors: {
@@ -32,9 +32,11 @@ export default function App({ Component, pageProps }) {
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Provider dataStore={dataStore} uiStore={uiStore}>
-          <LocalizedRouter defaultLanguage="de">
-            <Component {...pageProps} />
-          </LocalizedRouter>
+          <LocalizedRouter
+            defaultLanguage="de"
+            Component={Component}
+            {...pageProps}
+          />
         </Provider>
       </ThemeProvider>
     </>
