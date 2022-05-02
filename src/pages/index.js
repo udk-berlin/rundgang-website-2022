@@ -1,120 +1,40 @@
+import React from "react";
 import styled from "styled-components";
-import { observer } from "mobx-react";
-import SearchBar from "@/components/SearchBar";
 import { useStores } from "@/stores/index";
-import MenuBar from "@/components/MenuBar";
 import LocalizedText from "modules/i18n/components/LocalizedText";
-import StretchSqueeze from "@/components/StretchSqueezeUhh";
+import LocalizedLink from "modules/i18n/components/LocalizedLink";
+import { Container } from "@/theme/reusedStyles";
 
-const HomeWrapper = styled.div`
-  overflow-x: hidden;
-  overflow-y: hidden;
-  width: 100vw;
-  height: 100vh;
-  position: relative;
+const IndexContainer = styled(Container)``;
+
+const LinkWrapper = styled.div`
+  width: 100%;
+  font-size: ${({ theme }) => theme.fontSizes.xxl};
 `;
 
-const SearchBarWrapper = styled.div`
-  transform: ${({ visible }) => (visible ? "scaleY(1)" : "scaleY(0)")};
-  height: ${({ visible }) => (visible ? "fit-content" : "0px")};
-`;
-
-const DefaultLink = styled.div`
-  cursor: pointer;
-`;
-
-const Footer = styled.footer`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Home = () => {
+const IndexPage = () => {
   const { uiStore } = useStores();
-  const handleClickLink = (name, dir) => {
-    if (uiStore.menuItems.includes(name)) {
-      uiStore.setDirection(dir);
-      uiStore.setSelectedFromLink(name);
-    } else {
-      uiStore.setMenuItems([name]);
-      uiStore.setDirection(dir);
-      uiStore.setSelectedFromLink(name);
-    }
-  };
   return (
-    <HomeWrapper>
-      <SearchBarWrapper visible={uiStore.selected !== null}>
-        <MenuBar />
-      </SearchBarWrapper>
-      <StretchSqueeze
-        visible={uiStore.selected == null}
-        position="left"
-        fontSize={3}
-      >
-        20.-22.JULI UdK RUNDGANG
-      </StretchSqueeze>
-      <SearchBar />
-      <StretchSqueeze
-        position="top"
-        fontSize={7}
-        visible={uiStore.selected == null}
-      >
-        <DefaultLink onClick={() => handleClickLink("katalog", "top")}>
+    <IndexContainer>
+      <LinkWrapper>
+        <LocalizedLink to="/katalog">
           <LocalizedText id="katalog" /> &#8593;
-        </DefaultLink>
-      </StretchSqueeze>
-      <StretchSqueeze
-        position="left"
-        fontSize={9}
-        visible={uiStore.selected == null}
-      >
-        <DefaultLink onClick={() => handleClickLink("orte", "left")}>
+        </LocalizedLink>
+      </LinkWrapper>
+      <LinkWrapper>
+        <LocalizedLink to="/orte">
           {"<-"}
           <LocalizedText id="orte" />
-        </DefaultLink>
-      </StretchSqueeze>
-      <StretchSqueeze
-        position="right"
-        fontSize={8}
-        visible={uiStore.selected == null}
-      >
-        <DefaultLink onClick={() => handleClickLink("zeiten", "right")}>
+        </LocalizedLink>
+      </LinkWrapper>
+      <LinkWrapper>
+        <LocalizedLink to="/zeiten">
           <LocalizedText id="zeiten" />
           {"->"}
-        </DefaultLink>
-      </StretchSqueeze>
-      <StretchSqueeze
-        position="bottom"
-        fontSize={2}
-        visible={uiStore.selected == null}
-      >
-        <DefaultLink onClick={() => handleClickLink("advice", "bottom")}>
-          &#8595; <LocalizedText id="advice" />
-        </DefaultLink>
-      </StretchSqueeze>
-      <StretchSqueeze
-        position="left"
-        fontSize={2}
-        visible={uiStore.selected == null}
-      >
-        <Footer>
-          <DefaultLink onClick={() => handleClickLink("imprint", "left")}>
-            &#12308;
-            <LocalizedText id="imprint" />
-            &#12309;
-          </DefaultLink>
-          <DefaultLink onClick={() => handleClickLink("privacy", "left")}>
-            &#12308;
-            <LocalizedText id="privacy" />
-            &#12309;
-          </DefaultLink>
-          <DefaultLink onClick={() => handleClickLink("contact", "left")}>
-            &#12308;
-            <LocalizedText id="contact" />
-            &#12309;
-          </DefaultLink>
-        </Footer>
-      </StretchSqueeze>
-    </HomeWrapper>
+        </LocalizedLink>
+      </LinkWrapper>
+    </IndexContainer>
   );
 };
-export default observer(Home);
+
+export default IndexPage;

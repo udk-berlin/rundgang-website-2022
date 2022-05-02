@@ -1,18 +1,16 @@
 import { observer } from "mobx-react";
 import React from "react";
 import { useIntl } from "react-intl";
-import { Link } from "react-router-dom";
+import { DefaultLink } from "@/theme/reusedStyles";
 
-const LocalizedLink = observer(
-  ({ children, to, style = {}, ...props }) => {
-    const { locale } = useIntl();
+const LocalizedLink = ({ children, to, style = {}, ...props }) => {
+  const { locale } = useIntl();
 
-    return (
-      <Link to={`/${locale}${to}`} style={style} {...props}>
-        {children}
-      </Link>
-    );
-  },
-);
+  return (
+    <DefaultLink href={`/${locale}${to}`} {...props}>
+      {children}
+    </DefaultLink>
+  );
+};
 
-export default LocalizedLink;
+export default observer(LocalizedLink);

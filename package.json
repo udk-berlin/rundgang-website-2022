@@ -31,6 +31,7 @@
     "d3-dsv": "^3.0.1",
     "d3-scale": "3.3.0",
     "express": "^4.17.1",
+    "framer-motion": "^6.3.3",
     "lodash": "^4.17.21",
     "mobx": "^6.3.12",
     "mobx-react": "^7.2.1",
