@@ -33,6 +33,7 @@
     "express": "^4.17.1",
     "framer-motion": "^6.3.3",
     "lodash": "^4.17.21",
+    "maplibre-gl": "^2.1.9",
     "mobx": "^6.3.12",
     "mobx-react": "^7.2.1",
     "next": "latest",

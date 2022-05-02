@@ -12,20 +12,17 @@ import { useIntl } from "react-intl";
 const InputField = styled(Editable)`
   background-color: ${({ theme }) => theme.background.primary};
   color: ${({ theme }) => theme.colors.primary};
-  border: 3px solid #333;
   min-width: 12rem;
-  padding: 0.25em 0.4em;
-  height: 2vw;
+  height: ${({ theme }) => theme.spacing.lg};
   flex-grow: 1;
   align-items: center;
-  font-size: 1.5vw;
+  font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 
 const SmartInputWrapper = styled.div`
   display: flex;
   position: relative;
   width: 100%;
-  padding: 16px;
 `;
 
 const CloseButton = styled.div`
@@ -35,7 +32,7 @@ const CloseButton = styled.div`
   align-items: center;
   padding: 8px;
   flex-grow: 0;
-  font-size: 1.5vw;
+  font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 
 const PluginList = React.memo(({ plugins }) =>

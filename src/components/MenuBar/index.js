@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
@@ -54,24 +55,21 @@ const Title = styled.div`
 
 const MenuBar = () => {
   const { uiStore } = useStores();
+  const { pathname } = useRouter();
   const size = useWindowSize();
 
   const computeDirection = useCallback(
     index => {
       if (uiStore.direction == "left" && index == uiStore.previous) {
-        console.log("prev left", index);
         return "right";
       }
       if (uiStore.direction == "right" && index == uiStore.previous) {
-        console.log("prev right", index);
         return "left";
       }
       if (uiStore.direction == "left" && index == uiStore.selected) {
-        console.log("selected left", index);
         return "left";
       }
       if (uiStore.direction == "right" && index == uiStore.selected) {
-        console.log("selected right", index);
         return "right";
       }
     },
@@ -86,52 +84,48 @@ const MenuBar = () => {
     uiStore.setMenuState("right");
   };
 
-  return (
+  return uiStore.selected !== null ? (
     <MenuBarWrapper>
-      {uiStore.selected !== null && (
-        <Container>
-          {uiStore.menuItems.length == 1 ? (
-            <Header width={size.width}>
-              <StretchSqueeze position="left" fontSize={10}>
+      <Container>
+        {uiStore.menuItems.length == 1 ? (
+          <Header width={size.width}>
+            <StretchSqueeze position="left" fontSize={10}>
+              <Title>
+                <Arrow onClick={() => uiStore.setSelected(null)}>{"<-"}</Arrow>
+                <LocalizedText id={uiStore.selectedItem} />
+              </Title>
+            </StretchSqueeze>
+          </Header>
+        ) : (
+          <Header width={size.width}>
+            <BackArrow
+              onClick={() => {
+                uiStore.setDirection("right");
+                uiStore.setSelected(null);
+              }}
+            >
+              &#8598;
+            </BackArrow>
+            {uiStore.menuItems.map((item, index) => (
+              <StretchSqueeze
+                position={computeDirection(index)}
+                fontSize={10}
+                width={size.width}
+                visible={index == uiStore.selected}
+                key={`${index}-menuitem`}
+              >
                 <Title>
-                  <Arrow onClick={() => uiStore.setSelected(null)}>
-                    {"<-"}
-                  </Arrow>
-                  <LocalizedText id={uiStore.selectedItem} />
+                  <Arrow onClick={() => handleSwipeLeft()}>{"<-"}</Arrow>
+                  <LocalizedText id={item} />
+                  <Arrow onClick={() => handleSwipeRight()}>{"->"}</Arrow>
                 </Title>
               </StretchSqueeze>
-            </Header>
-          ) : (
-            <Header width={size.width}>
-              <BackArrow
-                onClick={() => {
-                  uiStore.setDirection("right");
-                  uiStore.setSelected(null);
-                }}
-              >
-                &#8598;
-              </BackArrow>
-              {uiStore.menuItems.map((item, index) => (
-                <StretchSqueeze
-                  position={computeDirection(index)}
-                  fontSize={10}
-                  width={size.width}
-                  visible={index == uiStore.selected}
-                  key={`${index}-menuitem`}
-                >
-                  <Title>
-                    <Arrow onClick={() => handleSwipeLeft()}>{"<-"}</Arrow>
-                    <LocalizedText id={item} />
-                    <Arrow onClick={() => handleSwipeRight()}>{"->"}</Arrow>
-                  </Title>
-                </StretchSqueeze>
-              ))}
-            </Header>
-          )}
-        </Container>
-      )}
+            ))}
+          </Header>
+        )}
+      </Container>
     </MenuBarWrapper>
-  );
+  ) : null;
 };
 
 export default observer(MenuBar);

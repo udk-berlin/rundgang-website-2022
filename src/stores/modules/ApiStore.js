@@ -30,12 +30,23 @@ class ApiStore {
     try {
       if (currentRoot.context?.length) {
         const data = await this.api.getTreeFromId(currentRoot.id);
+        let locationIds = _.keys(
+          _.values(data.children).find(c => c.name == "Locations").children,
+        );
+        let hierarchyIds = _.keys(
+          _.values(data.children).find(c => c.name == "UDK").children,
+        );
+        const locations = await Promise.all(
+          locationIds.map(id => this.api.getId(id)),
+        );
+        const hierarchy = await Promise.all(
+          hierarchyIds.map(id => this.api.getId(id)),
+        );
+        
         runInAction(() => {
-          this.locations = _.values(data.children).find(
-            c => c.name == "Locations",
-          );
-          this.hierarchy = _.values(data.children).find(c => c.name == "UDK");
-          if (this.locations?.length && this.hierarchy?.length) {
+          if (locations?.length && hierarchy?.length) {
+            this.locations = locations;
+            this.hierarchy = hierarchy
             this.status = "success";
           } else {
             this.status = "error";

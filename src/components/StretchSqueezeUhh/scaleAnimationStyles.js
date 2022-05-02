@@ -14,7 +14,7 @@ export const TestScaler = styled.div`
   z-index: 0;
   opacity: 0;
   position: absolute;
-  white-space: nowrap;
+  white-space: ${({ wrappingText }) => (wrappingText ? "pre" : "nowrap")};
   line-height: 1;
   font-family: "Diatype";
   font-size: ${({ fontSize }) => `${fontSize}vw`};
@@ -31,7 +31,7 @@ const Scaler = styled.div`
   width: fit-content;
   height: fit-content;
   position: relative;
-  white-space: nowrap;
+  white-space: ${({ wrappingText }) => (wrappingText ? "pre" : "nowrap")};
   line-height: 1;
   font-family: "Diatype";
   font-size: ${({ fontSize }) => `${fontSize}vw`};

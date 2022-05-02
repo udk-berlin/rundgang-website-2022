@@ -18,7 +18,7 @@ export default function App({ Component, pageProps, router }) {
   const { data } = pageProps;
   const snapshot = data?.dataStore;
   const { dataStore, uiStore } = useStoreInstances(snapshot);
-  const { locale } = useRouter();
+  const { locale, pathname } = useRouter();
 
   const messages = useMemo(() => {
     switch (locale) {
@@ -49,13 +49,13 @@ export default function App({ Component, pageProps, router }) {
             onError={() => null}
           >
             <MenuBar />
+            <SearchBar key="searchbar" />
             <AnimatePresence
               exitBeforeEnter
-              initial={false}
+              initial={true}
               onExitComplete={() => window.scrollTo(0, 0)}
             >
-              <SearchBar key="searchbar" />
-              <Component key="component" {...pageProps} />
+              <Component  key={pathname} {...pageProps} />
             </AnimatePresence>
             <Footer />
           </IntlProvider>

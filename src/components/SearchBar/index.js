@@ -14,6 +14,13 @@ const SearchBarWrapper = styled.div`
   align-items: center;
 `;
 
+const SearchWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  border: ${({ theme }) => `4px solid ${theme.colors.secondary}`};
+  margin: ${({ theme }) => `${theme.spacing.md}px`};
+`;
+
 const SearchBar = () => {
   const { uiStore } = useStores();
   const [value, setValue] = useState("");
@@ -22,7 +29,6 @@ const SearchBar = () => {
   const debouncedSearchTerm = useDebounce(value, 600);
 
   const handleChangeValue = ({ text }) => {
-    uiStore.filterStore.parseText(text);
     setIsLoading(true);
     setValue(text);
   };
@@ -37,18 +43,20 @@ const SearchBar = () => {
 
   useEffect(() => {
     setIsLoading(false);
-    setResults(uiStore.filterStore.result);
+    setResults(debouncedSearchTerm);
   }, [debouncedSearchTerm]);
 
   return (
     <SearchBarWrapper>
-      <SmartInput
-        text={value}
-        plugins={[]}
-        onChange={handleChangeValue}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-      />
+      <SearchWrapper>
+        <SmartInput
+          text={value}
+          plugins={[]}
+          onChange={handleChangeValue}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      </SearchWrapper>
       <Favorites />
     </SearchBarWrapper>
   );

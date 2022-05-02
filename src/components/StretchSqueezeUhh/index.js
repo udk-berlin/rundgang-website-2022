@@ -1,6 +1,7 @@
-import react, { useEffect, useRef, useState } from "react";
+import react, { useCallback, useEffect, useRef, useState } from "react";
 import Scaler, { TestScaler, STRETCH_ANIMATIONS } from "./scaleAnimationStyles";
 import useWindowSize from "@/hooks/useWindowSize";
+import useInitialSize from "@/hooks/useInitialSize";
 import { useDebounce } from "@/hooks/useDebounce";
 
 const StretchSqueeze = ({
@@ -10,28 +11,24 @@ const StretchSqueeze = ({
   width = null,
   height = null,
   stretchOut = true,
+  wrappingText = false,
   children,
 }) => {
-  const scaledRef = useRef();
+  const [originalSize, setRef] = useInitialSize();
   const [scaling, setScaling] = useState();
-  const [originalSize, setOriginalSize] = useState();
   const [scaledSize, setScaledSize] = useState();
   const size = useWindowSize();
   const debouncedSize = useDebounce(size, 800);
 
   useEffect(() => {
     if (debouncedSize.width && scaledRef?.current && stretchOut) {
-      let textWidth = scaledRef.current.clientWidth;
-      let textHeight = scaledRef.current.clientHeight;
       let scaledWidth = width ?? debouncedSize.width;
       let scaledHeight = height ?? (fontSize * debouncedSize.width) / 100;
       setScaledSize([scaledWidth, scaledHeight]);
-      setOriginalSize([textWidth, textHeight]);
     } else if (!stretchOut) {
       let scaledWidth = width ?? debouncedSize.width;
       let scaledHeight = height ?? (fontSize * debouncedSize.width) / 100;
       setScaledSize([scaledWidth, scaledHeight]);
-      setOriginalSize([scaledWidth, scaledHeight]);
     }
   }, [debouncedSize]);
 
@@ -39,15 +36,15 @@ const StretchSqueeze = ({
     if (scaledSize && originalSize && stretchOut) {
       if (position == "left" || position == "right") {
         setScaling([
-          scaledSize[0] / originalSize[0],
-          scaledSize[1] / originalSize[1],
-          scaledSize[0] - originalSize[0],
+          scaledSize[0] / originalSize.width,
+          scaledSize[1] / originalSize.height,
+          scaledSize[0] - originalSize.width,
         ]);
       } else {
         setScaling([
-          scaledSize[0] / originalSize[0],
-          scaledSize[1] / originalSize[1],
-          scaledSize[1] - originalSize[1],
+          scaledSize[0] / originalSize.width,
+          scaledSize[1] / originalSize.height,
+          scaledSize[1] - originalSize.height,
         ]);
       }
     } else if (scaledSize && originalSize && !stretchOut) {
@@ -63,7 +60,8 @@ const StretchSqueeze = ({
         stretchOut={stretchOut}
         width={width}
         height={height}
-        ref={scaledRef}
+        wrappingText={wrappingText}
+        ref={setRef}
       >
         {children}
       </TestScaler>
@@ -75,6 +73,7 @@ const StretchSqueeze = ({
           position={position}
           fontSize={fontSize}
           stretchOut={stretchOut}
+          wrappingText={wrappingText}
         >
           {children}
         </Scaler>

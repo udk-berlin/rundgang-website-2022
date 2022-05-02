@@ -38,6 +38,7 @@ export default class MyDocument extends Document {
             type="font/woff2"
             crossOrigin=""
           />
+          <link href="/assets/css/maplibre-gl.css" rel="stylesheet" />
         </Head>
         <body>
           <Main />
