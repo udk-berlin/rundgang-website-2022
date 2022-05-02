@@ -1,11 +1,9 @@
 import { makeAutoObservable } from "mobx";
-import FilterStore from "./modules/FilterStore";
 
 class UiStore {
   constructor() {
-    this.filterStore = new FilterStore();
     this.isOpen = false;
-    this.allStores = [this.filterStore];
+    this.allStores = [];
     this.numberSavedItems = 0;
     this.menuItems = ["orte", "zeiten", "katalog"];
     this.selected = null;
@@ -13,7 +11,6 @@ class UiStore {
     this.direction = "left";
 
     makeAutoObservable(this, {
-      filterStore: false,
       isOpen: false,
     });
   }
