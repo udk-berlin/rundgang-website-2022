@@ -1,4 +1,3 @@
-import React from "react";
 import _ from "lodash";
 import {
   makeAutoObservable,
@@ -6,7 +5,7 @@ import {
   runInAction,
   observable,
   action,
-  computed,
+  toJS,
 } from "mobx";
 import Api from "./Api";
 
@@ -26,7 +25,7 @@ class ApiStore {
     });
   }
 
-  getIds = async currentRoot => {
+  getMainTree = async currentRoot => {
     try {
       if (currentRoot.context?.length) {
         const data = await this.api.getTreeFromId(currentRoot.id);
@@ -42,17 +41,32 @@ class ApiStore {
         const hierarchy = await Promise.all(
           hierarchyIds.map(id => this.api.getId(id)),
         );
-        
+
         runInAction(() => {
           if (locations?.length && hierarchy?.length) {
             this.locations = locations;
-            this.hierarchy = hierarchy
+            this.hierarchy = hierarchy;
             this.status = "success";
           } else {
             this.status = "error";
           }
         });
       }
+    } catch (error) {
+      runInAction(() => {
+        this.status = "error";
+      });
+    }
+  };
+
+  getIdFromLink = async linkName => {
+    let searchId = `!${linkName}:dev.medienhaus.udk-berlin.de`;
+    try {
+      const data = await this.api.getId(searchId);
+      runInAction(() => {
+        this.currentRoot = data;
+        this.status = "success";
+      });
     } catch (error) {
       runInAction(() => {
         this.status = "error";
@@ -77,7 +91,7 @@ class ApiStore {
   initialize = () => {
     this.initializeRoot().then(() => {
       this.isInitialized = true;
-      this.getIds(this.root);
+      this.getMainTree(this.root);
     });
   };
 

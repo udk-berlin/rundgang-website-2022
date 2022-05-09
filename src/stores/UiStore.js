@@ -5,10 +5,7 @@ class UiStore {
     this.isOpen = false;
     this.allStores = [];
     this.numberSavedItems = 0;
-    this.menuItems = ["orte", "zeiten", "katalog"];
-    this.selected = null;
-    this.previous = null;
-    this.direction = "left";
+    this.title = null;
 
     makeAutoObservable(this, {
       isOpen: false,
@@ -21,7 +18,6 @@ class UiStore {
   };
 
   initialize = () => {
-    console.log("initialize");
     this.allStores.forEach(store => store?.initialize?.(this));
   };
 
@@ -46,43 +42,12 @@ class UiStore {
   setIsOpen(open) {
     this.isOpen = open;
   }
-
-  setSelected(sel) {
-    this.previous = this.selected;
-    this.selected = sel;
-  }
-
   setNumberSavedItems(num) {
     this.numberSavedItems = num;
   }
-
-  setMenuItems(items) {
-    this.menuItems = items;
+  setTitle(title) {
+    this.title = title;
   }
-
-  setMenuState(direction) {
-    let prev = this.selected;
-    if (direction == "right") {
-      this.selected =
-        this.selected >= this.menuItems.length - 1 ? 0 : this.selected + 1;
-      this.previous = prev;
-      this.direction = "right";
-    } else {
-      this.selected =
-        this.selected == 0 ? this.menuItems.length - 1 : this.selected - 1;
-      this.previous = prev;
-      this.direction = "left";
-    }
-  }
-
-  setDirection = dir => {
-    this.direction = dir;
-  };
-
-  setSelectedFromLink = item => {
-    let sel = this.menuItems.indexOf(item);
-    this.selected = sel;
-  };
 }
 
 export default UiStore;

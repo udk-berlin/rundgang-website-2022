@@ -1,21 +1,21 @@
 import { toJS, makeAutoObservable, reaction } from "mobx";
-import ApiStore from "./modules/ApiStore";
+import ApiStore from "./ApiStore";
 
 class DataStore {
   constructor() {
-    this.apiStore = new ApiStore();
+    this.api = new ApiStore();
 
-    this.allStores = [this.apiStore];
+    this.allStores = [this.api];
 
     reaction(
-      () => this.apiStore.isLoaded,
+      () => this.api.isLoaded,
       () => {
         this.initialize();
       },
     );
 
     makeAutoObservable(this, {
-      apiStore: false,
+      api: false,
     });
   }
 
@@ -49,7 +49,7 @@ class DataStore {
   };
 
   hydrate = snapshot => {
-    this.apiStore.hydrate(snapshot.apiStore);
+    this.api.hydrate(snapshot.api);
   };
 }
 
