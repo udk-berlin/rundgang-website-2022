@@ -3,61 +3,42 @@ import styled from "styled-components";
 import { useStores } from "@/stores/index";
 import { useDebounce } from "@/hooks/useDebounce";
 import { observer } from "mobx-react";
-import SmartInput from "./SmartInput";
+import Filter from "./Filter";
 import Favorites from "./Favorites";
 
 const SearchBarWrapper = styled.div`
   width: 100%;
+  position: sticky;
+  top: 0px;
+  background: white;
+  z-index: 10;
+  padding: 8px 0px 16px 0px;
+`;
+
+const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
   text-align: justify;
-  align-items: center;
-`;
-
-const SearchWrapper = styled.div`
   width: 100%;
   height: 100%;
-  border: ${({ theme }) => `4px solid ${theme.colors.secondary}`};
-  margin: ${({ theme }) => `${theme.spacing.md}px`};
 `;
 
 const SearchBar = () => {
-  const { uiStore } = useStores();
-  const [value, setValue] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [results, setResults] = useState(null);
-  const debouncedSearchTerm = useDebounce(value, 600);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleChangeValue = ({ text }) => {
-    setIsLoading(true);
-    setValue(text);
+  const handleOnFocus = () => {
+    setIsOpen(true);
   };
-
-  const handleFocus = () => {
-    uiStore.setIsOpen(true);
+  const handleOnClose = () => {
+    setIsOpen(false);
   };
-
-  const handleBlur = () => {
-    uiStore.setIsOpen(false);
-  };
-
-  useEffect(() => {
-    setIsLoading(false);
-    setResults(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
 
   return (
     <SearchBarWrapper>
-      <SearchWrapper>
-        <SmartInput
-          text={value}
-          plugins={[]}
-          onChange={handleChangeValue}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-        />
-      </SearchWrapper>
-      <Favorites />
+      <FlexContainer>
+        <Filter isOpen={isOpen} onFocus={handleOnFocus} onClose={handleOnClose} />
+        {isOpen ? null : <Favorites />}
+      </FlexContainer>
     </SearchBarWrapper>
   );
 };
