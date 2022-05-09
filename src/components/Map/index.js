@@ -3,11 +3,21 @@ import styled from "styled-components";
 import { observer } from "mobx-react";
 import maplibregl from "maplibre-gl";
 import { useStores } from "@/stores/index";
+import useWindowSize from "@/hooks/useWindowSize";
 
 const MapWrapper = styled.div`
-  width: 700px;
-  background: #888;
-  height: 400px;
+  padding: ${({ theme }) => theme.spacing.md};
+  width: ${({ width }) => `${width * 0.6}px`};
+  height: ${({ height }) => `${height * 0.7}px`};
+  @media ${({ theme }) => theme.breakpoints.md} {
+    width: ${({ width }) => `${width}px`};
+    height: ${({ height }) => `${height * 0.7}px`};
+  }
+`;
+
+const MapContainerDiv = styled.div`
+  width: 100%;
+  height: 100%;
 `;
 
 const ZOOM = 11.5;
@@ -20,6 +30,7 @@ const Map = () => {
   const [addresses, setAddresses] = useState([]);
   const mapContainer = useRef(null);
   const map = useRef(null);
+  const size = useWindowSize();
 
   useEffect(() => {
     map.current = new maplibregl.Map({
@@ -30,15 +41,14 @@ const Map = () => {
       maxZoom: 20,
       minZoom: 10,
     });
-  }, []);
+  }, [size]);
 
   useEffect(() => {
-    if (dataStore.apiStore.locations && map) {
-      const adrr = Object.values(dataStore.apiStore.locations);
+    if (dataStore.api.locations && map) {
+      const adrr = Object.values(dataStore.api.locations);
       setAddresses(adrr);
-      adrr.forEach((el, index) => {
+      adrr.forEach(el => {
         const { lat, lng } = el.allocation.physical[0];
-        console.log(el.name);
         // create a DOM element for the marker
         const markerElement = document.createElement("div");
         markerElement.style.backgroundImage = 'url("/assets/img/haus1.svg")';
@@ -63,8 +73,12 @@ const Map = () => {
         markers.push(marker);
       });
     }
-  }, [dataStore.apiStore.locations]);
+  }, [dataStore.api.locations]);
 
-  return <MapWrapper ref={mapContainer} />;
+  return (
+    <MapWrapper width={size.width} height={size.height}>
+      <MapContainerDiv ref={mapContainer} />
+    </MapWrapper>
+  );
 };
 export default observer(Map);

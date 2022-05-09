@@ -7,5 +7,8 @@
   "imprint": "IMPRINT",
   "contact": "CONTACT",
   "privacy": "PRIVACY",
-  "search": "SEARCH..."
+  "search": "SEARCH...",
+  "filter": "FILTER",
+  "saturday": "SATURDAY",
+  "sunday": "SUNDAY"
 }
