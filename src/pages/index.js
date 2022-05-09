@@ -3,19 +3,18 @@ import styled from "styled-components";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import Layout from "@/components/Layout";
-import { Container } from "@/theme/reusedStyles";
-
-const IndexContainer = styled(Container)``;
 
 const LinkWrapper = styled.div`
   width: 100%;
-  font-size: ${({ theme }) => theme.fontSizes.xxl};
+  font-size: ${({ theme }) => theme.fontSizes.xxxl};
+  @media ${({ theme }) => theme.breakpoints.md} {
+    font-size: ${({ theme }) => theme.fontSizes.xxl};
+  }
 `;
 
 const IndexPage = () => {
   return (
-    <Layout>
-      <IndexContainer>
+    <Layout fillwidth={false}>
         <LinkWrapper>
           <LocalizedLink to="/katalog">
             <LocalizedText id="katalog" /> &#8593;
@@ -33,7 +32,6 @@ const IndexPage = () => {
             {"->"}
           </LocalizedLink>
         </LinkWrapper>
-      </IndexContainer>
     </Layout>
   );
 };

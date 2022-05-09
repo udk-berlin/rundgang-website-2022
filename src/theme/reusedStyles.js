@@ -2,12 +2,12 @@ import styled from "styled-components";
 import Link from "next/link";
 
 export const Container = styled.div`
-  overflow-x: hidden;
-  overflow-y: hidden;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: relative;
-    box-sizing: border-box;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: scroll;
 `;
 
 const StyledLink = ({ as, children, className, href }) => (
