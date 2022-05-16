@@ -3,21 +3,21 @@ import styled from "styled-components";
 import React, { useState } from "react";
 import { observer } from "mobx-react";
 import { motion, AnimatePresence } from "framer-motion";
-import ClickAwayListener from "../ClickAwayListener";
+import ClickAwayListener from "./ClickAwayListener";
 import InputField from "./InputField";
 import TagMenu from "./TagMenu";
 
 const variants = {
   open: { height: "fit-content", width: "100%" },
-  closed: { height: "48px", width: "100%" },
+  closed: { height: "5vh", width: "100%" },
 };
 
 const FilterWrapper = styled(motion.div)`
   margin: ${({ theme }) => `0 ${theme.spacing.md}`};
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   border: ${({ theme }) => `4px solid ${theme.colors.highlight}`};
+  @media ${({ theme }) => theme.breakpoints.md} {
+    margin: ${({ theme }) => `0 ${theme.spacing.xs}`};
+  }
 `;
 
 const CloseButton = styled.div`

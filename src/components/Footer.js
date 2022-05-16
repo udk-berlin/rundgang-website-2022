@@ -16,7 +16,6 @@ const FooterContainer = styled.div`
 
   @media ${({ theme }) => theme.breakpoints.md} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
-    height: ${({ theme }) => theme.spacing.xl};
   }
 `;
 

@@ -8,12 +8,14 @@ import { useIntl } from "react-intl";
 const Field = styled.input`
   color: ${({ theme }) => theme.colors.primary};
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   border: ${({ theme, isOpen }) =>
     isOpen ? `4px solid ${theme.colors.highlight}` : "none"};
-  height: 40px;
+  height: 5vh;
   width: 100%;
   align-items: center;
-  font-size: ${({ theme }) => theme.fontSizes.md};
+  font-size: ${({ isOpen }) => (isOpen ? "3vh" : "5vh")};
   margin: ${({ theme, isOpen }) => (isOpen ? `${theme.spacing.xs}` : "0px")};
   :focus {
     outline: none;

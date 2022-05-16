@@ -59,7 +59,7 @@ const TimeTable = () => {
     .range([TIME_PADDING, TIME_WIDTH]);
 
   const scaleY = scaleLinear()
-    .domain([0, 11])
+    .domain([0, 20])
     .range([LOCATION_PADDING, LOCATION_HEIGHT]);
   return (
     <TimeTableWrapper>
