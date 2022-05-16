@@ -30,7 +30,8 @@ export const theme = {
     secondary: COLORS.highlight,
   },
   fontSizes: {
-    xs: "0.8em",
+    xxs: "0.6em",
+    xs: "0.7em",
     sm: "1em",
     md: "2em",
     lg: "3em",

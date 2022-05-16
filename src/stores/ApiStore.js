@@ -35,6 +35,7 @@ class ApiStore {
         let hierarchyIds = _.keys(
           _.values(data.children).find(c => c.name == "UDK").children,
         );
+        console.log(toJS(data));
         const locations = await Promise.all(
           locationIds.map(id => this.api.getId(id)),
         );

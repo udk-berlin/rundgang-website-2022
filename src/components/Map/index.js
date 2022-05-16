@@ -1,9 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
+import ReactDOM from "react-dom";
 import maplibregl from "maplibre-gl";
 import { useStores } from "@/stores/index";
 import useWindowSize from "@/hooks/useWindowSize";
+import testAddresses from "./locationData.json";
+import GrundrissMarker from "./GrundrissMarker";
 
 const MapWrapper = styled.div`
   padding: ${({ theme }) => theme.spacing.md};
@@ -20,14 +23,12 @@ const MapContainerDiv = styled.div`
   height: 100%;
 `;
 
-const ZOOM = 11.5;
+const ZOOM = 11.3;
 const FIRSTLAT = 52.513661;
 const FIRSTLNG = 13.3286892;
-const markers = [];
 
 const Map = () => {
   const { dataStore } = useStores();
-  const [addresses, setAddresses] = useState([]);
   const mapContainer = useRef(null);
   const map = useRef(null);
   const size = useWindowSize();
@@ -35,45 +36,74 @@ const Map = () => {
   useEffect(() => {
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: "https://osm.udk-berlin.de/styles/toner/style.json", // stylesheet location
-      center: [FIRSTLNG, FIRSTLAT], // starting position [lng, lat]
+      style: "https://osm.udk-berlin.de/styles/toner/style.json",
+      center: [FIRSTLNG, FIRSTLAT],
       zoom: ZOOM,
-      maxZoom: 20,
-      minZoom: 10,
+      maxZoom: 18,
+      minZoom: 11,
     });
-  }, [size]);
+    map.current.on("load", function () {
+      map.current.resize();
+      const adrr = testAddresses.reduce(
+        (obj, a, i) => ({
+          ...obj,
+          [a.image]: {
+            ...a,
+            id: `grundriss-${i}`,
+            lat: a.coordinates.split(",")[0].trim(),
+            lng: a.coordinates.split(",")[1].trim(),
+          },
+        }),
+        {},
+      );
+      let addresses = Object.values(adrr);
+      const markers = [];
 
-  useEffect(() => {
-    if (dataStore.api.locations && map) {
-      const adrr = Object.values(dataStore.api.locations);
-      setAddresses(adrr);
-      adrr.forEach(el => {
-        const { lat, lng } = el.allocation.physical[0];
+      addresses.forEach((el, i) => {
         // create a DOM element for the marker
         const markerElement = document.createElement("div");
-        markerElement.style.backgroundImage = 'url("/assets/img/haus1.svg")';
-        markerElement.style.backgroundRepeat = "no-repeat";
-        markerElement.style.backgroundSize = "cover";
-        markerElement.style.width = "86px";
-        markerElement.style.height = "35px";
-        markerElement.id = el.id;
+        markerElement.pitchAlignment = "map";
+        markerElement.rotationAlignment = "map";
+        ReactDOM.render(<GrundrissMarker el={el} size={60} />, markerElement);
 
         const popup = new maplibregl.Popup({
           maxWidth: "200px",
           height: "20px",
-          zIndex: 100,
+          zIndex: 200,
         }).setHTML(`<h3>${el.name}</h3>`);
 
         // add marker to map
         const marker = new maplibregl.Marker(markerElement)
-          .setLngLat([lng, lat])
+          .setLngLat([el.lng, el.lat])
           .setPopup(popup)
           .addTo(map.current);
 
-        markers.push(marker);
+        markers[el.id] = { marker, markerElement };
       });
-    }
-  }, [dataStore.api.locations]);
+
+      map.current.on("zoomend", e => {
+        let bounds = map.current.getBounds();
+        let filteredLocations = addresses.filter(el =>
+          bounds.contains([el.lng, el.lat]),
+        );
+        filteredLocations.map(el => {
+          const scale = map.current.getZoom() - el.maxZoom;
+          if (scale > 0) {
+            console.log(scale, 60 * 2 ** scale);
+            ReactDOM.render(
+              <GrundrissMarker el={el} size={60 * 2 ** scale} />,
+              markers[el.id].markerElement,
+            );
+          } else {
+            ReactDOM.render(
+              <GrundrissMarker el={el} size={60} />,
+              markers[el.id].markerElement,
+            );
+          }
+        });
+      });
+    });
+  }, [size]);
 
   return (
     <MapWrapper width={size.width} height={size.height}>

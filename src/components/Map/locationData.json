@@ -1,0 +1,104 @@
+[
+  {
+    "name": "Hardenbergstr. 33, 10623 Berlin",
+    "coordinates": "52.50967152502669, 13.327300406397331",
+    "maxZoom": 13.7,
+    "image": "haus2"
+  },
+  {
+    "name": "Universitätsbibliothek im Volkswagen-Haus, Fasanenstr. 88, 10624 Berlin",
+    "coordinates": "52.510479987948806, 13.330647430909163",
+    "maxZoom": 14.5,
+    "image": "haus11"
+  },
+  {
+    "name": "Str. des 17. Juni 118, 10623 Berlin",
+    "coordinates": "52.513815995810795, 13.329011660461106",
+    "maxZoom": 15.45,
+    "image": "haus6"
+  },
+  {
+    "name": "Medienhaus, Grunewaldstr. 2-5, 10823 Berlin",
+    "coordinates": "52.4908045, 13.3588243",
+    "maxZoom": 14.66,
+    "image": "haus4"
+  },
+  {
+    "name": "Lietzenburger Str. 45, 10789 Berlin",
+    "coordinates": "52.49982823444154, 13.332849698118526",
+    "maxZoom": 15.6,
+    "image": "haus0"
+  },
+  {
+    "name": "Mierendorffstr. 30, 10589 Berlin",
+    "coordinates": "52.524466466706826, 13.303906395449998",
+    "maxZoom": 15.9,
+    "image": "haus14"
+  },
+  {
+    "name": "Konzertsaal der UdK Berlin, Hardenbergstr./Ecke Fasanenstr., 10623 Berlin",
+    "coordinates": "52.508933594080126, 13.328170836476492",
+    "maxZoom": 15.3,
+    "image": "haus3"
+  },
+  {
+    "name": "Karlsruher Str. 7a, 10711 Berlin",
+    "coordinates": "52.49965735008827, 13.294753564537846",
+    "maxZoom": 16.15,
+    "image": "haus12"
+  },
+  {
+    "name": "Hardenbergstr. 41, 10623 Berlin",
+    "coordinates": "52.511295526569526, 13.323453006016974",
+    "maxZoom": 16.8,
+    "image": "haus13"
+  },
+  {
+    "name": "Bundesallee 1-12, 10719 Berlin",
+    "coordinates": "52.4986354,13.3299593",
+    "maxZoom": 14,
+    "image": "haus5"
+  },
+  {
+    "name": "Fasanenstr. 1b, 10623 Berlin",
+    "coordinates": "52.509389769740785, 13.32858657568885",
+    "maxZoom": 15.2,
+    "image": "haus8"
+  },
+  {
+    "name": "Jazz-Institut Berlin, Einsteinufer 43-53, 10587 Berlin",
+    "coordinates": "52.51702833511489, 13.322340551980432",
+    "maxZoom": 14.2,
+    "image": "haus9"
+  },
+  {
+    "name": "designtransfer, Einsteinufer 43-53, 10587 Berlin",
+    "coordinates": "52.51702833511489, 13.322340551980432",
+    "maxZoom": 14.2,
+    "image": "haus9"
+  },
+  {
+    "name": "Einsteinufer 43-53, 10587 Berlin",
+    "coordinates": "52.51702833511489, 13.322340551980432",
+    "maxZoom": 14.2,
+    "image": "haus9"
+  },
+  {
+    "name": "UNI.T, Fasanenstr. 1b, 10623 Berlin",
+    "coordinates": "52.5098352,13.328858",
+    "maxZoom": 15.3,
+    "image": "haus10"
+  },
+  {
+    "name": "HZT Berlin, Uferstr. 23, 13357 Berlin",
+    "coordinates": "52.55171736557215, 13.374830208006573",
+    "maxZoom": 16.1,
+    "image": "haus7"
+  },
+  {
+    "name": "Grainauer Str. 12, 10777 Berlin",
+    "coordinates": "52.49659896091511, 13.334342932383702",
+    "maxZoom": 17.2,
+    "image": "haus1"
+  }
+]
