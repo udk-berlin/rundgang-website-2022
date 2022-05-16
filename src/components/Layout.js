@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const MainLayout = styled(motion.main)`
   transform-origin: "100% 0%";
-  flex-grow: ${({ fillwidth }) => (fillwidth ? 1 : 0)};
+  flex-grow: ${({ growing }) => growing};
 `;
 const variants = {
   hidden: { scaleX: 0, originX: 0, x: "100%", y: 0 },
@@ -12,13 +12,13 @@ const variants = {
   exit: { scaleX: 0, originX: 0, x: "0%", y: 0 },
 };
 
-const Layout = ({ children, fillwidth }) => (
+const Layout = ({ children, growing }) => (
   <MainLayout
     initial="hidden"
     animate="enter"
     exit="exit"
     variants={variants}
-    fillwidth={fillwidth}
+    growing={growing}
     transition={{ type: "linear", duration: 0.8 }}
   >
     {children}

@@ -4,7 +4,7 @@ import Map from "@/components/Map";
 
 const OrtePage = () => {
   return (
-    <Layout fillwidth={true}>
+    <Layout growing={1}>
       <>
         ORTE
         <Map />

@@ -11,7 +11,7 @@ const TextWrapper = styled.div`
 
 const KatalogPage = () => {
   return (
-    <Layout fillwidth={true}>
+    <Layout growing={1}>
       <TextWrapper>
         KATALOG Contrary to popular belief, Lorem Ipsum is not simply random
         text. It has roots in a piece of classical Latin literature from 45 BC,

@@ -8,11 +8,7 @@ import Favorites from "./Favorites";
 
 const SearchBarWrapper = styled.div`
   width: 100%;
-  position: sticky;
-  top: 0px;
   background: white;
-  z-index: 10;
-  padding: 8px 0px 16px 0px;
 `;
 
 const FlexContainer = styled.div`
@@ -20,7 +16,6 @@ const FlexContainer = styled.div`
   justify-content: space-between;
   text-align: justify;
   width: 100%;
-  height: 100%;
 `;
 
 const SearchBar = () => {

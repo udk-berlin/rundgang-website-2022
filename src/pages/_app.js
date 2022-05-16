@@ -5,14 +5,13 @@ import deFile from "modules/i18n/localizations/de.json";
 import enFile from "modules/i18n/localizations/en.json";
 import { Provider } from "mobx-react";
 import styled, { ThemeProvider } from "styled-components";
-import { AnimatePresence } from "framer-motion";
+import { MotionConfig, AnimatePresence } from "framer-motion";
 import { theme } from "theme/index";
 import GlobalStyle from "theme/globalStyle";
 import GlobalFonts from "public/fonts/globalFonts";
-import SearchBar from "@/components/SearchBar";
 import { useStoreInstances } from "../stores/index";
-import MenuBar from "@/components/MenuBar";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 const Container = styled.div`
   width: 100%;
@@ -54,6 +53,7 @@ export default function App({ Component, pageProps, router }) {
     if (title.length) {
       uiStore.setTitle(title);
     } else {
+      //let x = "KET Symposium 2021 - Exploring Multimodal Design Videokonferenz";
       uiStore.setTitle(null);
     }
   }, [pathname]);
@@ -69,18 +69,19 @@ export default function App({ Component, pageProps, router }) {
             messages={messages}
             onError={() => null}
           >
-            <Container>
-              <MenuBar key={pathname} />
-              <SearchBar key="searchbar" />
-              <AnimatePresence
-                exitBeforeEnter
-                initial={true}
-                onExitComplete={() => window.scrollTo(0, 0)}
-              >
-                <Component key={pathname} {...pageProps} />
-              </AnimatePresence>
-            <Footer />
-            </Container>
+            <MotionConfig reducedMotion="user">
+              <Container>
+                <Header key={pathname} />
+                <AnimatePresence
+                  exitBeforeEnter
+                  initial={true}
+                  onExitComplete={() => window.scrollTo(0, 0)}
+                >
+                  <Component key={pathname} {...pageProps} />
+                </AnimatePresence>
+                <Footer />
+              </Container>
+            </MotionConfig>
           </IntlProvider>
         </Provider>
       </ThemeProvider>

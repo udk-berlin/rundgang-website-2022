@@ -4,7 +4,7 @@ import TimeTable from "@/components/TimeTable";
 
 const ZeitenPage = () => {
   return (
-    <Layout fillwidth={false}>
+    <Layout growing={0}>
       <TimeTable />
     </Layout>
   );
