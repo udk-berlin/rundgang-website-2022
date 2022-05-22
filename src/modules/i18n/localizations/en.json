@@ -9,6 +9,10 @@
   "privacy": "PRIVACY",
   "search": "SEARCH...",
   "filter": "FILTER",
-  "saturday": "SATURDAY",
-  "sunday": "SUNDAY"
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "reset": "reset selection",
+  "download": "download",
+  "projects": "projects",
+  "events": "events"
 }

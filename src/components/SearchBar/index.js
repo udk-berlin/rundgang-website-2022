@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
-import { useStores } from "@/stores/index";
-import { useDebounce } from "@/hooks/useDebounce";
 import { observer } from "mobx-react";
 import Filter from "./Filter";
 import Favorites from "./Favorites";
+import ClickAwayListener from "../simple/ClickAwayListener";
 
 const SearchBarWrapper = styled.div`
   width: 100%;
@@ -19,21 +18,39 @@ const FlexContainer = styled.div`
 `;
 
 const SearchBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openField, setOpenField] = useState(null);
 
-  const handleOnFocus = () => {
-    setIsOpen(true);
-  };
-  const handleOnClose = () => {
-    setIsOpen(false);
-  };
+  const handleOpen = useCallback(
+    item => {
+      setOpenField(item);
+    },
+    [openField],
+  );
+  const handleClose = useCallback(
+    item => {
+      if (item === openField) {
+        setOpenField(null);
+      }
+    },
+    [openField],
+  );
 
   return (
     <SearchBarWrapper>
-      <FlexContainer>
-        <Filter isOpen={isOpen} onFocus={handleOnFocus} onClose={handleOnClose} />
-        {isOpen ? null : <Favorites />}
-      </FlexContainer>
+      <ClickAwayListener onClickAway={() => setOpenField(null)}>
+        <FlexContainer>
+          <Filter
+            openField={openField}
+            onFocus={() => handleOpen("filter")}
+            onClose={() => handleClose("filter")}
+          />
+          <Favorites
+            openField={openField}
+            onClick={() => handleOpen("favourites")}
+            onClose={() => handleClose("favourites")}
+          />
+        </FlexContainer>
+      </ClickAwayListener>
     </SearchBarWrapper>
   );
 };

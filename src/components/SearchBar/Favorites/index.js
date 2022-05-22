@@ -1,36 +1,79 @@
 import React from "react";
 import styled from "styled-components";
-import { useStores } from "@/stores/index";
 import { observer } from "mobx-react";
-import FavouriteStarSvg from "./FavouriteStar";
+import { motion, AnimatePresence } from "framer-motion";
+import { useStores } from "@/stores/index";
+import FavouriteStarSvg from "@/components/simple/FavouriteStar";
+import FavouritesList from "./FavouritesList";
+import ClickAwayListener from "@/components/simple/ClickAwayListener";
 
-const FavouritesWrapper = styled.div`
-  width: 5vw;
-  min-width: 40px;
+const variants = {
+  favourites: { height: "fit-content", width: "99vw", overflowY: "auto" },
+  filter: { height: "5vh", width: "0px" },
+  closed: { height: "5vh", width: "70px" },
+};
+
+const FavouritesWrapper = styled(motion.div)`
+  position: relative;
+  width: 70px;
   height: 5vh;
+  max-height: 60vh;
   border: ${({ theme }) => `4px solid ${theme.colors.primary}`};
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-  align-items: center;
   margin: ${({ theme }) => `0 ${theme.spacing.md}`};
-  @media ${({ theme }) => theme.breakpoints.md} {
+  @media ${({ theme }) => theme.breakpoints.tablet} {
     margin: ${({ theme }) => `0 ${theme.spacing.xs}`};
   }
 `;
+
+const FavouritesHeader = styled.div`
+  display: flex;
+  width: 70px;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+`;
 const FavouritesSavedItems = styled.div`
   color: ${({ theme }) => theme.colors.primary};
+  margin: ${({ theme }) => `0 ${theme.spacing.xs}`};
   font-weight: bold;
   font-size: 30px;
 `;
 
-const Favourites = () => {
-  const { uiStore } = useStores();
+const CloseButton = styled.div`
+  position: sticky;
+  bottom: 0;
+  right: 0;
+  font-family: "Diatype";
+  border: none;
+  background: transparent;
+  padding: ${({ theme }) => `${theme.spacing.sm}`};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  cursor: pointer;
+  text-align: right;
+  margin: 0;
+`;
 
+const Favourites = ({ openField, onClick, onClose }) => {
+  const { uiStore } = useStores();
   return (
-    <FavouritesWrapper>
-      <FavouritesSavedItems>{uiStore.numberSavedItems}</FavouritesSavedItems>
-      <FavouriteStarSvg />
+    <FavouritesWrapper
+      animate={openField ?? "closed"}
+      variants={variants}
+      transition={{ type: "linear", duration: 0.5 }}
+    >
+      <FavouritesHeader onClick={onClick}>
+        <FavouritesSavedItems>{uiStore.numberSavedItems}</FavouritesSavedItems>
+        <FavouriteStarSvg saved={true} size={30} />
+      </FavouritesHeader>
+      <AnimatePresence>
+        {openField == "favourites" && (
+          <>
+            <FavouritesList />
+            <CloseButton onClick={onClose}>&#57344;</CloseButton>
+          </>
+        )}
+      </AnimatePresence>
     </FavouritesWrapper>
   );
 };
