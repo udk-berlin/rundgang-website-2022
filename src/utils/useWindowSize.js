@@ -26,4 +26,20 @@ const useWindowSize = () => {
   }, []); // Empty array ensures that effect is only run on mount
   return windowSize;
 };
+
+export const useIsMobile = () => {
+  const windowSize = useWindowSize();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (windowSize?.width < 768) {
+      console.log(windowSize);
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [windowSize]);
+  return isMobile;
+};
+
 export default useWindowSize;

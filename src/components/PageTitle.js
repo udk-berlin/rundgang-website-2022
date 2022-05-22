@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
-import Stretch from "./Stretch";
+import Stretch from "./simple/Stretch";
 
 const PageTitleWrapper = styled.div`
   width: 100%;

@@ -51,11 +51,6 @@ const Stretch = ({ children, title, preferredSize, direction }) => {
       let factor = window.innerWidth / stretchRef?.current?.clientWidth;
       let scaledVar = getVariants(factor);
       setVariants(scaledVar);
-      console.log(
-        window.innerWidth / stretchRef?.current?.clientWidth,
-        fontSize,
-        title.length,
-      );
     }
   }, [fontSize, title]);
 
@@ -63,7 +58,7 @@ const Stretch = ({ children, title, preferredSize, direction }) => {
     // TODO: multiple conditions to perfect sizing
     if (preferredSize) {
       setFontSize(preferredSize);
-    }else if (title.length > 15) {
+    } else if (title.length > 15) {
       setFontSize(6);
     } else {
       setFontSize(11);

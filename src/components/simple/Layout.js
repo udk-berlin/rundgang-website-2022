@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 const MainLayout = styled(motion.main)`
   transform-origin: "100% 0%";
   flex-grow: ${({ growing }) => growing};
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 const variants = {
   hidden: { scaleX: 0, originX: 0, x: "100%", y: 0 },
