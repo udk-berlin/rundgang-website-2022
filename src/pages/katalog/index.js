@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Layout from "@/components/simple/Layout";
-import { Container } from "@/theme/reusedStyles";
-import LocalizedLink from "modules/i18n/components/LocalizedLink";
 
 const TextWrapper = styled.div`
   width: 100%;

@@ -27,10 +27,6 @@ class UiStore {
     );
   }
 
-  get scaleFactor() {
-    return this.menuItems && this.menuItems.length < 3 ? 6 : 4.8;
-  }
-
   get selectedItem() {
     return this.menuItems[this.selected];
   }
@@ -46,6 +42,7 @@ class UiStore {
     this.numberSavedItems = num;
   }
   setTitle(title) {
+    console.log(title);
     this.title = title;
   }
 }

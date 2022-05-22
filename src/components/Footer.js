@@ -6,21 +6,24 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 
 const FooterContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  height: ${({ theme }) => theme.spacing.lg};
+  height: ${({ theme }) => theme.fontSizes.md};
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-size: ${({ theme }) => theme.fontSizes.md};
 
-  @media ${({ theme }) => theme.breakpoints.md} {
+  @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
   }
 `;
 
 const LinkWrapper = styled.div`
-  padding: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => ` 0 ${theme.spacing.sm}`};
   flex-grow: ${({ grow }) => grow};
 `;
 
@@ -32,45 +35,104 @@ const LanguageItem = styled.div`
   color: ${({ selected }) => (selected ? "#000000" : "#888888")};
 `;
 
+const FooterBelow = styled.div`
+  position: sticky;
+  top: 100vh;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: ${({ theme }) => theme.fontSizes.xl};
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  font-size: ${({ theme }) => theme.fontSizes.md};
+
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+  }
+`;
+
 const Footer = () => {
   const router = useRouter();
   return (
-    <FooterContainer>
-      <LinkWrapper grow={1}>
-        <LocalizedLink to="/">
-          <LocalizedText id="maintitle" />
-        </LocalizedLink>
-      </LinkWrapper>
-      <LanguageSwitch grow={0}>
-        <LanguageItem
-          onClick={() => {
-            router.push(router.pathname, router.pathname, { locale: "en" });
-          }}
-          selected={router.locale == "en"}
-        >
-          EN
-        </LanguageItem>
-        |
-        <LanguageItem
-          onClick={() => {
-            router.push(router.pathname, router.pathname, { locale: "de" });
-          }}
-          selected={router.locale == "de"}
-        >
-          DE
-        </LanguageItem>
-      </LanguageSwitch>
-      <LinkWrapper grow={0}>
-        <LocalizedLink to="/imprint">
-          <LocalizedText id="imprint" />
-        </LocalizedLink>
-      </LinkWrapper>
-      <LinkWrapper grow={0}>
-        <LocalizedLink to="/privacy">
-          <LocalizedText id="privacy" />
-        </LocalizedLink>
-      </LinkWrapper>
-    </FooterContainer>
+    <>
+      <FooterContainer>
+        <LinkWrapper grow={0}>
+          <LocalizedLink to="/">
+            <LocalizedText id="maintitle" />
+          </LocalizedLink>
+        </LinkWrapper>
+        <LinkWrapper grow={0}>23.-24.07.2022</LinkWrapper>
+        {router.pathname == "/" ? (
+          <LanguageSwitch grow={0}>
+            <LanguageItem
+              onClick={() => {
+                router.push(router.pathname, router.pathname, { locale: "en" });
+              }}
+              selected={router.locale == "en"}
+            >
+              EN
+            </LanguageItem>
+            |
+            <LanguageItem
+              onClick={() => {
+                router.push(router.pathname, router.pathname, { locale: "de" });
+              }}
+              selected={router.locale == "de"}
+            >
+              DE
+            </LanguageItem>
+          </LanguageSwitch>
+        ) : null}
+
+        {router.pathname == "/" ? (
+          <LinkWrapper grow={0}>
+            <LocalizedLink to="/imprint">
+              <LocalizedText id="imprint" />
+            </LocalizedLink>
+          </LinkWrapper>
+        ) : null}
+      </FooterContainer>
+      {router.pathname !== "/" ? (
+        <FooterBelow>
+          <LinkWrapper grow={1}>
+            <LocalizedLink to="/">
+              <LocalizedText id="maintitle" />
+            </LocalizedLink>
+          </LinkWrapper>
+          <LinkWrapper grow={1}>23.-24.07.2022</LinkWrapper>
+          <LanguageSwitch grow={1}>
+            <LanguageItem
+              onClick={() => {
+                router.push(router.pathname, router.pathname, {
+                  locale: "en",
+                });
+              }}
+              selected={router.locale == "en"}
+            >
+              EN
+            </LanguageItem>
+            |
+            <LanguageItem
+              onClick={() => {
+                router.push(router.pathname, router.pathname, {
+                  locale: "de",
+                });
+              }}
+              selected={router.locale == "de"}
+            >
+              DE
+            </LanguageItem>
+          </LanguageSwitch>
+
+          <LinkWrapper grow={0}>
+            <LocalizedLink to="/imprint">
+              <LocalizedText id="imprint" />
+            </LocalizedLink>
+          </LinkWrapper>
+        </FooterBelow>
+      ) : null}
+    </>
   );
 };
 

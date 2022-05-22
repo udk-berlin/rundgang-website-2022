@@ -4,15 +4,13 @@ import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
-import Stretch from "./simple/Stretch";
+import Stretch from "@/components/simple/Stretch";
 
 const PageTitleWrapper = styled.div`
   width: 100%;
   font-family: "Diatype";
   background: white;
   height: fit-content;
-  position: sticky;
-  top: 0px;
 `;
 
 const Title = styled.div`
@@ -32,7 +30,7 @@ const PageTitle = () => {
           </Title>
         </Stretch>
       ) : (
-        <Stretch title="RUNDGANG"  preferredSize={13.5}>
+        <Stretch title="RUNDGANG"  preferredSize={17}>
           <Title>
             RUNDGANG
             <span style={{ fontSize: "4vh", whiteSpace: "nowrap" }}>

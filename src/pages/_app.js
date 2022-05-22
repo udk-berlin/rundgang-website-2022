@@ -18,16 +18,17 @@ import { useIsMobile } from "@/utils/useWindowSize";
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   position: relative;
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
+  scroll-behavior: smooth;
 `;
 
-export default function App({ Component, pageProps, router }) {
+export default function App({ Component, pageProps }) {
   const { data } = pageProps;
   const snapshot = data?.dataStore;
   const { dataStore, uiStore } = useStoreInstances(snapshot);
@@ -58,12 +59,16 @@ export default function App({ Component, pageProps, router }) {
     if (pid) {
       let id = makeIdFromUrl(pid);
       dataStore.api.getIdFromLink(id, true);
+    } else if (pathname !== "/") {
+      let id = pathname.replaceAll("/", "");
+      uiStore.setTitle(id);
     } else {
       if (pathname == "/" && !isMobile) {
         setShowLine(true);
+        uiStore.setTitle(null);
       }
     }
-  }, [query]);
+  }, [query, pathname]);
 
   useEffect(() => {
     if (pathname == "/" && !isMobile) {
@@ -83,7 +88,7 @@ export default function App({ Component, pageProps, router }) {
             onError={() => null}
           >
             <MotionConfig reducedMotion="user">
-              <Container>
+              <Container scrollable={Boolean(pathname !== "/")}>
                 <Header key={pathname} />
                 <AnimatePresence
                   exitBeforeEnter

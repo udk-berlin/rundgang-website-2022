@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import PageTitle from "../PageTitle";
+import PageTitle from "./PageTitle";
 import SearchBar from "../SearchBar";
 
 const HeaderWrapper = styled.div`
-  z-index: 10;
+  width: 100%;
+  height: 100%;
   position: relative;
-  top: 0;
-  left: 0;
 `;
 
 const Header = () => {

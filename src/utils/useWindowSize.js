@@ -33,7 +33,6 @@ export const useIsMobile = () => {
 
   useEffect(() => {
     if (windowSize?.width < 768) {
-      console.log(windowSize);
       setIsMobile(true);
     } else {
       setIsMobile(false);

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
+import { makeUrlFromId } from "@/utils/idUtils";
 
 const ProjectListContainer = styled.div`
   display: flex;
@@ -16,17 +17,11 @@ const LinkWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.sm};
 `;
 
-const makeLinkId = node => {
-  if (!node) return "";
-  let [id] = node.id.split(":");
-  return encodeURI(id.replace("!", ""));
-};
-
 const ProjectList = () => {
   const { dataStore, uiStore } = useStores();
   return (
     <ProjectListContainer>
-      <LocalizedLink to={`/katalog/${makeLinkId(dataStore.api.root)}`}>
+      <LocalizedLink to={`/katalog/${makeUrlFromId(dataStore.api.root)}`}>
         PROJEKT LINK
       </LocalizedLink>
     </ProjectListContainer>

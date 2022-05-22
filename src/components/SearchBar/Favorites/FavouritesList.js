@@ -12,6 +12,7 @@ const DownloadButton = styled.button`
   position: absolute;
   top: 0;
   right: 0;
+  overflow: auto;
   border: ${({ theme }) => `3px solid ${theme.colors.highlight}`};
   background: ${({ theme }) => theme.colors.highlight};
   font-size: ${({ theme }) => theme.fontSizes.sm};

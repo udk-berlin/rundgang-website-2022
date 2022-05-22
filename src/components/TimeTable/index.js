@@ -6,7 +6,6 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 import {
   TIME_PADDING,
   LOCATION_PADDING,
-  LOCATION_HEIGHT,
   TIME_PADDING_MOBILE,
   TIME_WIDTH,
 } from "./testdata";
@@ -32,7 +31,7 @@ const TimeTableContainer = styled.div`
 const Day = styled.div`
   flex-grow: 1;
   width: 90vw;
-  height: fit-content;
+  height: 100%;
   overflow-x: auto;
 `;
 
@@ -57,8 +56,9 @@ const DayName = styled.div`
 const TimeWrapper = styled.div`
   position: relative;
   width: ${TIME_WIDTH}px;
-  height: 73vh;
+  height: ${({ height }) => `${height}px`};
   display: flex;
+
 `;
 /* 
 into timewrapper and Day
@@ -79,9 +79,9 @@ const TimeTable = () => {
   const scaleX = scaleLinear().domain([9, 24]).range([padding, TIME_WIDTH]);
 
   const scaleY = scaleLinear()
-    .domain([0, dataStore.eventRooms?.length])
-    .range([LOCATION_PADDING, 50 * dataStore.eventRooms?.length]);
-
+    .domain([0, dataStore.eventRooms?.length + 1])
+    .range([LOCATION_PADDING, 50 * dataStore.eventRooms?.length + 1]);
+  console.log(scaleY(dataStore.eventRooms?.length));
   return (
     <TimeTableWrapper>
       <DayMenu>
@@ -96,7 +96,7 @@ const TimeTable = () => {
       </DayMenu>
       <TimeTableContainer>
         <Day>
-          <TimeWrapper>
+          <TimeWrapper height={scaleY(dataStore.eventRooms?.length + 2)}>
             <LocationList scaleY={index => scaleY(index)} />
             <EventList selected={selectedDay} scaleX={scaleX} scaleY={scaleY} />
             <TimeScale

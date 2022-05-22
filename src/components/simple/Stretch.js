@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import useWindowSize from "@/utils/useWindowSize";
 
 const StretchLayout = styled(motion.div)`
   transform-origin: "100% 0%";
@@ -43,16 +44,17 @@ const getVariants = scalingX => ({
 
 const Stretch = ({ children, title, preferredSize, direction }) => {
   const stretchRef = useRef();
+  const size = useWindowSize();
   const [variants, setVariants] = useState(INITIAL);
   const [fontSize, setFontSize] = useState(null);
 
   useEffect(() => {
     if (fontSize && stretchRef?.current?.clientWidth) {
-      let factor = window.innerWidth / stretchRef?.current?.clientWidth;
+      let factor = (size.width - 10) / stretchRef?.current?.clientWidth;
       let scaledVar = getVariants(factor);
       setVariants(scaledVar);
     }
-  }, [fontSize, title]);
+  }, [fontSize, title, size]);
 
   useEffect(() => {
     // TODO: multiple conditions to perfect sizing

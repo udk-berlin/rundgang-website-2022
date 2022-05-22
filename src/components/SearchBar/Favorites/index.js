@@ -17,7 +17,8 @@ const FavouritesWrapper = styled(motion.div)`
   position: relative;
   width: 70px;
   height: 5vh;
-  max-height: 60vh;
+  max-height: 50vh;
+  overflow: hidden;
   border: ${({ theme }) => `4px solid ${theme.colors.primary}`};
   margin: ${({ theme }) => `0 ${theme.spacing.md}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {

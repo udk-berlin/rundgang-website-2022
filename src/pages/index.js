@@ -11,41 +11,47 @@ const LinkWrapper = styled.div`
   white-space: nowrap;
 `;
 
+const IndexWrapper = styled.div`
+  overflow: hidden;
+`;
+
 const IndexPage = () => {
   return (
-    <Layout growing={1}>
-      <Stretch title="katalog" preferredSize={25}>
-        <LinkWrapper>
-          <LocalizedLink to="/katalog">
-            <LocalizedText id="katalog" />
-            &#8593;
-          </LocalizedLink>
-        </LinkWrapper>
-      </Stretch>
-      <Stretch title="orte" preferredSize={25}>
-        <LinkWrapper>
-          <LocalizedLink to="/orte">
-            &#8592;
-            <LocalizedText id="orte" />
-          </LocalizedLink>
-        </LinkWrapper>
-      </Stretch>
-      <Stretch title="zeiten" preferredSize={25}>
-        <LinkWrapper>
-          <LocalizedLink to="/zeiten">
-            <LocalizedText id="zeiten" />
-            &#8594;
-          </LocalizedLink>
-        </LinkWrapper>
-      </Stretch>
-      <Stretch title="beratungsangebote" preferredSize={11}>
-        <LinkWrapper>
-          <LocalizedLink to="/beratungsangebote">
-            <LocalizedText id="beratungsangebote" />
-            &#8595;
-          </LocalizedLink>
-        </LinkWrapper>
-      </Stretch>
+    <Layout growing={0}>
+      <IndexWrapper>
+        <Stretch title="katalog" preferredSize={26}>
+          <LinkWrapper>
+            <LocalizedLink to="/katalog">
+              &#8593;
+              <LocalizedText id="katalog" />
+            </LocalizedLink>
+          </LinkWrapper>
+        </Stretch>
+        <Stretch title="orte" preferredSize={25}>
+          <LinkWrapper>
+            <LocalizedLink to="/orte">
+              <LocalizedText id="orte" />
+              &#8594;
+            </LocalizedLink>
+          </LinkWrapper>
+        </Stretch>
+        <Stretch title="zeiten" preferredSize={26}>
+          <LinkWrapper>
+            <LocalizedLink to="/zeiten">
+              &#8592;
+              <LocalizedText id="zeiten" />
+            </LocalizedLink>
+          </LinkWrapper>
+        </Stretch>
+        <Stretch title="beratungsangebote" preferredSize={12}>
+          <LinkWrapper>
+            <LocalizedLink to="/beratungsangebote">
+              <LocalizedText id="beratungsangebote" />
+              &#8595;
+            </LocalizedLink>
+          </LinkWrapper>
+        </Stretch>
+      </IndexWrapper>
     </Layout>
   );
 };

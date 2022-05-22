@@ -1,13 +1,18 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import Filter from "./Filter";
 import Favorites from "./Favorites";
 import ClickAwayListener from "../simple/ClickAwayListener";
+import useIsSticky from "@/utils/useIsSticky";
 
 const SearchBarWrapper = styled.div`
+  position: ${({ position }) => position};
+  top: 0;
+  left: 0;
   width: 100%;
   background: white;
+  z-index: 4000;
 `;
 
 const FlexContainer = styled.div`
@@ -18,6 +23,7 @@ const FlexContainer = styled.div`
 `;
 
 const SearchBar = () => {
+  const isSticky = useIsSticky(100);
   const [openField, setOpenField] = useState(null);
 
   const handleOpen = useCallback(
@@ -36,7 +42,7 @@ const SearchBar = () => {
   );
 
   return (
-    <SearchBarWrapper>
+    <SearchBarWrapper position={isSticky}>
       <ClickAwayListener onClickAway={() => setOpenField(null)}>
         <FlexContainer>
           <Filter

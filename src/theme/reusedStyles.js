@@ -1,14 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-export const Container = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: relative;
-  box-sizing: border-box;
-  overflow-x: hidden;
-  overflow-y: scroll;
-`;
 
 const StyledLink = ({ as, children, className, href }) => (
   <Link href={href} as={as} passHref scroll={false}>
