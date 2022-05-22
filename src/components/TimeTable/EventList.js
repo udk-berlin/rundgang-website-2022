@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import styled from "styled-components";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
@@ -14,6 +14,7 @@ const AbsoluteDiv = styled.div`
   display: flex;
   top: 0px;
   left: 0px;
+  z-index: 500;
 `;
 const EventBar = styled.div`
   position: absolute;
@@ -21,24 +22,24 @@ const EventBar = styled.div`
   left: ${({ start }) => `${start + 1}px`};
   width: ${({ start, end }) => `${end - start - 2}px`};
   height: ${({ y0, y1 }) => `${y1 - y0 - 16}px`};
-  font-size: ${({ theme }) => theme.fontSizes.xs};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   background: ${({ theme }) => theme.background.secondary};
   box-sizing: border-box;
-  padding: 8px;
+  padding: 6px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  z-index: 5;
 `;
 const EventList = ({ scaleX, scaleY }) => {
   return (
     <AbsoluteDiv>
       {test_events.map(ev => (
         <EventBar
+          title={ev.name}
           start={scaleX(toNumber(ev.start))}
           end={scaleX(toNumber(ev.end))}
-          y0={scaleY(ev.location_id)}
-          y1={scaleY(ev.location_id + 1)}
+          y0={scaleY(ev.location_index)}
+          y1={scaleY(ev.location_index + 1)}
         >
           {ev.name}
         </EventBar>

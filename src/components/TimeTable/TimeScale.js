@@ -6,14 +6,19 @@ const TimeLegend = styled.div`
   position: absolute;
   top: 0;
   left: ${({ x }) => `${x}px`};
-  height: ${LOCATION_HEIGHT}px;
   box-sizing: border-box;
+
+`;
+
+const TimeLine = styled.div`
+  height: ${({ height }) => `${height}px`};
   border-left: 1px solid black;
 `;
 
 const TimeHour = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => theme.spacing.xs};
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  padding: ${({ theme }) => `${theme.spacing.xs} 0`};
+  margin-left: -7px;
   z-index: 11;
   height: fit-content;
   width: fit-content;
@@ -28,12 +33,13 @@ const TimeScaleWrapper = styled.div`
   top: 0px;
   left: 0px;
 `;
-const TimeScale = ({ scaleX }) => {
+const TimeScale = ({ scaleX, maxY }) => {
   return (
     <TimeScaleWrapper>
       {times.map(t => (
         <TimeLegend key={`timeline-${t}`} x={scaleX(t)}>
           <TimeHour>{t}</TimeHour>
+          <TimeLine height={maxY} />
         </TimeLegend>
       ))}
     </TimeScaleWrapper>
