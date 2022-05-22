@@ -3,7 +3,6 @@ import _ from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import TagGroup from "./TagGroup";
-import { groupss } from "./testData";
 import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 

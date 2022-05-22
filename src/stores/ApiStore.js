@@ -13,59 +13,42 @@ class ApiStore {
   constructor() {
     this.api = new Api();
     this.root = null;
-    this.locations = [];
-    this.hierarchy = [];
+    this.locations = null;
+    this.structure = null;
+    this.cachedIds = {};
     this.currentRoot = null;
-    this.isInitialized = false;
+    this.currentPath = null;
+    this.isLoaded = false;
     this.status = "initial";
     makeAutoObservable(this, {
       api: false,
+      isLoaded: false,
       root: observable,
       currentRoot: observable,
+      setCachedId: action,
     });
   }
 
-  getMainTree = async currentRoot => {
-    try {
-      if (currentRoot.context?.length) {
-        const data = await this.api.getTreeFromId(currentRoot.id);
-        let locationIds = _.keys(
-          _.values(data.children).find(c => c.name == "Locations").children,
-        );
-        let hierarchyIds = _.keys(
-          _.values(data.children).find(c => c.name == "UDK").children,
-        );
-        console.log(toJS(data));
-        const locations = await Promise.all(
-          locationIds.map(id => this.api.getId(id)),
-        );
-        const hierarchy = await Promise.all(
-          hierarchyIds.map(id => this.api.getId(id)),
-        );
-
-        runInAction(() => {
-          if (locations?.length && hierarchy?.length) {
-            this.locations = locations;
-            this.hierarchy = hierarchy;
-            this.status = "success";
-          } else {
-            this.status = "error";
-          }
-        });
-      }
-    } catch (error) {
-      runInAction(() => {
-        this.status = "error";
-      });
+  setCachedId = data => {
+    if (data.id && !data.id in this.cachedIds) {
+      this.cachedIds[data.id] = data;
     }
   };
 
-  getIdFromLink = async linkName => {
-    let searchId = `!${linkName}:dev.medienhaus.udk-berlin.de`;
+  getIdFromLink = async (searchId, asroot = false) => {
     try {
-      const data = await this.api.getId(searchId);
+      let data = this.cachedIds[searchId];
+      let path = ""
+      if (!data) {
+        data = await this.api.getId(searchId);
+        path = await this.api.getPathToId(searchId)
+        this.setCachedId(data);
+      }
       runInAction(() => {
-        this.currentRoot = data;
+        if (asroot) {
+          this.currentRoot = data;
+          this.currentPath = path
+        }
         this.status = "success";
       });
     } catch (error) {
@@ -78,8 +61,12 @@ class ApiStore {
   initializeRoot = async () => {
     try {
       const data = await this.api.getRoot();
+      const structure = await this.api.getStructure();
+      const locations = await this.api.getLocations();
       runInAction(() => {
         this.root = data;
+        this.locations = locations;
+        this.structure = structure;
         this.status = "success";
       });
     } catch (error) {
@@ -90,10 +77,12 @@ class ApiStore {
   };
 
   initialize = () => {
-    this.initializeRoot().then(() => {
-      this.isInitialized = true;
-      this.getMainTree(this.root);
-    });
+    this.initializeRoot()
+      .then(() => {
+        this.isLoaded = true;
+        console.log("is loaded");
+      })
+      .then(() => {});
   };
 
   connect(parentStore) {

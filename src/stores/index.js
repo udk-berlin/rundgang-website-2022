@@ -14,8 +14,11 @@ export const getStoreInstances = snapshot => {
 
   // Connect stores to each other
   _uiStore.connect({ dataStore: _dataStore });
+  _dataStore.connect({ uiStore: _uiStore });
 
-  if (snapshot) _dataStore.hydrate(snapshot);
+  if (snapshot) {
+    _dataStore.hydrate(snapshot);
+  }
 
   // For SSG and SSR always create a new store
   if (typeof window === "undefined")

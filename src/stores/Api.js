@@ -5,6 +5,9 @@ const PATH_URL = "/path";
 const TREE_URL = "/tree";
 const LIST_URL = "/list";
 const FILTER_URL = "/filter";
+const ROOT = "!yGwpTLQiIMoyuhGggS:dev.medienhaus.udk-berlin.de";
+const STRUCTURE_ROOT = "!YPRUkokMRFexJfMRtB:dev.medienhaus.udk-berlin.de";
+const LOCATIONS_ROOT = "!ZfLuOQsYLtkuIvswLv:dev.medienhaus.udk-berlin.de";
 
 const GET_OPTIONS = {
   method: "GET",
@@ -18,9 +21,19 @@ class API {
   };
 
   getRoot = async () => {
-    return this.get()
-      .then(res => this.get(res.rootId))
-      .catch(() => console.log("no root id"));
+    return this.get(ROOT).catch(() => console.log("no root id"));
+  };
+
+  getLocations = async () => {
+    return this.getTreeFromId(LOCATIONS_ROOT).catch(() =>
+      console.log("no LOCATIONS_ROOT id"),
+    );
+  };
+
+  getStructure = async () => {
+    return this.getTreeFromId(STRUCTURE_ROOT).catch(() =>
+      console.log("no STRUCTURE_ROOT id"),
+    );
   };
 
   getId = async id => {

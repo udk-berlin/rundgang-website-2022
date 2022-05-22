@@ -1,5 +1,6 @@
 import { toJS, makeAutoObservable, reaction } from "mobx";
 import ApiStore from "./ApiStore";
+import { eventlocations } from "./test_data";
 
 class DataStore {
   constructor() {
@@ -19,17 +20,17 @@ class DataStore {
     });
   }
 
-  connect = () => {
-    this.allStores.forEach(store => store?.connect?.(this));
-  };
+  get eventHouses() {
+    return eventlocations;
+  }
 
-  load = () => {
-    console.log("load children stores");
-  };
-
-  initialize = () => {
-    this.allStores.forEach(store => store?.initialize?.(this));
-  };
+  get eventRooms() {
+    let res = eventlocations
+      .map((house, i) => [house, ...house.children])
+      .flat()
+      .map((place, i) => ({ ...place, index: i }));
+    return res;
+  }
 
   get isLoaded() {
     return (
@@ -40,6 +41,29 @@ class DataStore {
   setIsLoaded(loaded) {
     this.isLoaded = loaded;
   }
+
+  connect = stores => {
+    this.allStores.forEach(store => store?.connect?.(this));
+    this.uiStore = stores.uiStore;
+    this.sideEffects = [
+      reaction(
+        () => this.api.currentRoot,
+        root => {
+          if (root) {
+            this.uiStore.setTitle(root.name);
+          }
+        },
+      ),
+    ];
+  };
+
+  load = () => {
+    console.log("load children stores");
+  };
+
+  initialize = () => {
+    this.allStores.forEach(store => store?.initialize?.(this));
+  };
 
   // funciton that creates the snapshot of thr store
   // you should extract connected stores via destructuring
