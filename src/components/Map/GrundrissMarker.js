@@ -7,8 +7,8 @@ const Grundriss = styled.img`
   zindex: 40;
   cursor: pointer;
 
-  -webkit-filter: drop-shadow(0px 0px 4px rgb(226, 255, 93));
-  filter: drop-shadow(0px 0px 4px rgb(226, 255, 93));
+  -webkit-filter: drop-shadow(0px 0px 8px rgb(226, 255, 93));
+  filter: drop-shadow(0px 0px 8px rgb(226, 255, 93));
 `;
 const GrundrissMarker = ({ el, size }) => {
   return (
