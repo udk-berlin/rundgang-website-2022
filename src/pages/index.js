@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
-import Layout from "@/components/Layout";
-import Stretch from "@/components/Stretch";
+import Layout from "@/components/simple/Layout";
+import Stretch from "@/components/simple/Stretch";
 
 const LinkWrapper = styled.div`
   width: fit-content;
@@ -38,7 +38,7 @@ const IndexPage = () => {
           </LocalizedLink>
         </LinkWrapper>
       </Stretch>
-      <Stretch title="beratungsangebote"  preferredSize={11}>
+      <Stretch title="beratungsangebote" preferredSize={11}>
         <LinkWrapper>
           <LocalizedLink to="/beratungsangebote">
             <LocalizedText id="beratungsangebote" />

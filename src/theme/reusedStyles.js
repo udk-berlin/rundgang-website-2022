@@ -21,7 +21,7 @@ export const DefaultLink = styled(StyledLink)`
   text-decoration: none;
 
   &:hover {
-    color: #888888;
+    color: #222222;
   }
 
   &:focus {

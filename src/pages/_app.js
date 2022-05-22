@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { IntlProvider } from "react-intl";
 import { useRouter } from "next/router";
 import deFile from "modules/i18n/localizations/de.json";
@@ -12,6 +12,9 @@ import GlobalFonts from "public/fonts/globalFonts";
 import { useStoreInstances } from "../stores/index";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import CursorLine from "@/components/CursorLine";
+import { makeIdFromUrl } from "@/utils/idUtils";
+import { useIsMobile } from "@/utils/useWindowSize";
 
 const Container = styled.div`
   width: 100%;
@@ -19,7 +22,7 @@ const Container = styled.div`
   position: relative;
   box-sizing: border-box;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
 `;
@@ -28,7 +31,9 @@ export default function App({ Component, pageProps, router }) {
   const { data } = pageProps;
   const snapshot = data?.dataStore;
   const { dataStore, uiStore } = useStoreInstances(snapshot);
-  const { locale, pathname } = useRouter();
+  const { locale, pathname, query } = useRouter();
+  const isMobile = useIsMobile();
+  const [showLine, setShowLine] = useState(false);
 
   const messages = useMemo(() => {
     switch (locale) {
@@ -42,21 +47,29 @@ export default function App({ Component, pageProps, router }) {
   }, [locale]);
 
   useEffect(() => {
-    dataStore.connect();
     dataStore.initialize();
     dataStore.load();
     uiStore.initialize();
   }, []);
 
   useEffect(() => {
-    let title = pathname.replace("/", "");
-    if (title.length) {
-      uiStore.setTitle(title);
+    let pid = query.pid;
+    setShowLine(false);
+    if (pid) {
+      let id = makeIdFromUrl(pid);
+      dataStore.api.getIdFromLink(id, true);
     } else {
-      //let x = "KET Symposium 2021 - Exploring Multimodal Design Videokonferenz";
-      uiStore.setTitle(null);
+      if (pathname == "/" && !isMobile) {
+        setShowLine(true);
+      }
     }
-  }, [pathname]);
+  }, [query]);
+
+  useEffect(() => {
+    if (pathname == "/" && !isMobile) {
+      setShowLine(true);
+    }
+  }, []);
 
   return (
     <>
@@ -80,6 +93,7 @@ export default function App({ Component, pageProps, router }) {
                   <Component key={pathname} {...pageProps} />
                 </AnimatePresence>
                 <Footer />
+                {showLine ? <CursorLine /> : null}
               </Container>
             </MotionConfig>
           </IntlProvider>
