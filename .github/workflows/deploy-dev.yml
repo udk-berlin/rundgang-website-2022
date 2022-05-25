@@ -16,7 +16,7 @@ jobs:
         env:
           HOST: dev.medienhaus.udk-berlin.de
           KEY: ${{secrets.SSH_DEV_MEDIENHAUS_UDK_BERLIN_DE}}
-          TARGET: /opt/medienhaus-api/
+          TARGET: /opt/rundgang-frontend-22/
           VERBOSE: true
           USER: root
           PORT: 22
