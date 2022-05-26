@@ -38,10 +38,6 @@ class DataStore {
     );
   }
 
-  setIsLoaded(loaded) {
-    this.isLoaded = loaded;
-  }
-
   connect = stores => {
     this.allStores.forEach(store => store?.connect?.(this));
     this.uiStore = stores.uiStore;
@@ -55,10 +51,6 @@ class DataStore {
         },
       ),
     ];
-  };
-
-  load = () => {
-    console.log("load children stores");
   };
 
   initialize = () => {
