@@ -15,5 +15,8 @@
   "reset": "Auswahl löschen",
   "download": "Download",
   "projects": "Projekte",
-  "events": "Veranstaltungen"
+  "events": "Veranstaltungen",
+  "level0": "Fakultäten, Zentren und Beratungsangebote",
+  "level1": "Studiengänge, Fachbereiche und Initiativen",
+  "level2": "Kurse und Klassen"
 }

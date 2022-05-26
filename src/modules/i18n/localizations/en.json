@@ -3,7 +3,7 @@
   "orte": "PLACES",
   "zeiten": "TIMES",
   "katalog": "CATALOGUE",
-  "beratungsangebote": "BERATUNGSANGEBOTE",
+  "beratungsangebote": "CONSULTATION OFFERS",
   "imprint": "IMPRINT",
   "contact": "CONTACT",
   "privacy": "PRIVACY",
@@ -14,5 +14,8 @@
   "reset": "reset selection",
   "download": "download",
   "projects": "projects",
-  "events": "events"
+  "events": "events",
+  "level0": "Faculties, Centers and Consultation Offers",
+  "level1": "Intitutes and Initiatives",
+  "level2": "Courses and Classes"
 }

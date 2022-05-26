@@ -6,12 +6,13 @@ import { useStores } from "@/stores/index";
 import Layout from "@/components/simple/Layout";
 import { makeUrlFromId } from "@/utils/idUtils";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
+import ListView from "@/components/ListView";
 
 const ProjectWrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: ${({ theme }) => theme.spacing.sm};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   flex-grow: 1;
 `;
 
@@ -24,8 +25,10 @@ const Project = () => {
   const { dataStore, uiStore } = useStores();
   const { pid } = router.query;
 
+  console.log(uiStore.items);
+
   return dataStore.api.currentRoot ? (
-    <Layout growing={1}>
+    <Layout growing={1} direction="right">
       <ProjectWrapper>
         <div>ID: {pid}</div>
         <div>Name: {dataStore.api.currentRoot.name}</div>
@@ -39,6 +42,8 @@ const Project = () => {
             </ChildName>
           ))}
         </div>
+        <div>description: {dataStore.api.currentRoot.description?.default}</div>
+        <ListView />
       </ProjectWrapper>
     </Layout>
   ) : null;

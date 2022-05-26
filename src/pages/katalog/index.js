@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Layout from "@/components/simple/Layout";
+import LocalizedLink from "modules/i18n/components/LocalizedLink";
 
 const TextWrapper = styled.div`
   width: 100%;
@@ -9,8 +10,9 @@ const TextWrapper = styled.div`
 
 const KatalogPage = () => {
   return (
-    <Layout growing={1}>
+    <Layout growing={1} direction="left">
       <TextWrapper>
+        <LocalizedLink to="/katalog/gestaltung">GESTALTUNG</LocalizedLink>
         KATALOG Contrary to popular belief, Lorem Ipsum is not simply random
         text. It has roots in a piece of classical Latin literature from 45 BC,
         making it over 2000 years old. Richard McClintock, a Latin professor at
