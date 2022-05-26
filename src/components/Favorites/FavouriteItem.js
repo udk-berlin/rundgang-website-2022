@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { FormattedTime } from "react-intl";
+import { useStores } from "@/stores/index";
 import FavouriteStarSvg from "@/components/simple/FavouriteStar";
 import Tag from "@/components/simple/Tag";
 
@@ -49,24 +51,39 @@ const Time = styled.div`
 `;
 
 const FavouriteItem = ({ element }) => {
+  const { dataStore } = useStores();
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    dataStore.api
+      .getPathToId(element.id)
+      .then(res => setTags(res.slice(-3, -1)));
+  }, []);
+
   return (
     <FavouriteItemWrapper>
       <FavouriteStarSvg saved={true} size={30} />
       {element.template == "studentproject" ? (
-        <Image src={element.image} />
+        <Image src={element.thumbnail} />
       ) : (
-        <Time>{element.time}</Time>
+        <Time>
+          {element.allocation.temporal.map(t => (
+            <span>
+              <FormattedTime value={t.start} weekday="long" />-
+              <FormattedTime value={t.end} />
+            </span>
+          ))}
+        </Time>
       )}
       <Info>
-        <Title>{element.title}</Title>
-        <Authors>{element.authors}</Authors>
+        <Title>{element.name}</Title>
+        <Authors>{element.origin.authors.map(a => a.name).join(",")}</Authors>
         <Tags>
-          {element.tags.map(t => (
+          {tags.map(t => (
             <Tag
               selected={false}
               key={t.id}
               levelSelected={false}
-              tagtitle={t.title}
+              tagtitle={t.name}
             />
           ))}
         </Tags>

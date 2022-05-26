@@ -3,7 +3,8 @@ import styled, { css } from "styled-components";
 import { observer } from "mobx-react";
 import { motion } from "framer-motion";
 import { useStores } from "@/stores/index";
-import Tag from "../../../simple/Tag";
+import Tag from "../../simple/Tag";
+import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const variants = {
   open: { scaleY: 1, height: "100%", width: "100%" },
@@ -11,7 +12,6 @@ const variants = {
 };
 
 const TagGroupWrapper = styled.div`
-  width: fit-content;
   padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.sm}`};
 `;
 const NumberItems = styled.span`
@@ -49,24 +49,21 @@ const TagSubGroupTitle = styled.div`
   }
 `;
 const Tags = styled.div`
-  margin: ${({ theme }) => theme.spacing.xs};
+  width: 99%;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
-const TagGroup = ({
-  handleToggleOpen,
-  group,
-  isOpen,
-  selected,
-  handleClickTag,
-}) => {
+const TagGroup = ({ group }) => {
   const { uiStore } = useStores();
+  const isOpen = uiStore.openTagGroup == group.level;
   return (
-    <TagGroupWrapper key={`${group.id}-taggroup`}>
+    <TagGroupWrapper key={`${group.level}-taggroup`}>
       <TagGroupTitle
-        key={`${group.id}-title`}
-        onClick={() => handleToggleOpen(group.id)}
+        key={`${group.level}-title`}
+        onClick={() => uiStore.handleToggleOpen(group.level)}
       >
-        {group.name}
+        <LocalizedText id={group.name} />
         <NumberItems>{group.numberItems}</NumberItems>
         {isOpen ? (
           <ToggleIcon>&#8595;</ToggleIcon>
@@ -78,7 +75,7 @@ const TagGroup = ({
         animate={isOpen ? "open" : "closed"}
         variants={variants}
         initial={false}
-        key={`${group.id}-stretch`}
+        key={`${group.level}-stretch`}
         transition={{ type: "linear", duration: 0.5 }}
       >
         {Object.entries(group.children).map(([subgroup, children]) => (
@@ -88,15 +85,15 @@ const TagGroup = ({
               {children.map(child => (
                 <Tag
                   onClick={() =>
-                    handleClickTag(
-                      group.id,
+                    uiStore.setSelected(
+                      group.level,
                       child.id,
                       child.parent,
                       child.grandparent,
                     )
                   }
-                  selected={selected[group.id] == child.id}
-                  levelSelected={selected[group.id] !== null}
+                  selected={uiStore.selected[group.level] == child.id}
+                  levelSelected={uiStore.selected[group.level] !== null}
                   key={child.id}
                   tagtitle={child.name}
                 />
