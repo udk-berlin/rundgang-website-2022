@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useIntl } from "react-intl";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import Layout from "@/components/simple/Layout";
@@ -16,10 +17,15 @@ const IndexWrapper = styled.div`
 `;
 
 const IndexPage = () => {
+  const intl = useIntl();
   return (
-    <Layout growing={0}>
+    <Layout growing={0} direction="right">
       <IndexWrapper>
-        <Stretch title="katalog" preferredSize={26}>
+        <Stretch
+          title={intl.formatMessage({ id: "katalog" })}
+          preferredSize={26}
+          direction="right"
+        >
           <LinkWrapper>
             <LocalizedLink to="/katalog">
               &#8593;
@@ -27,7 +33,11 @@ const IndexPage = () => {
             </LocalizedLink>
           </LinkWrapper>
         </Stretch>
-        <Stretch title="orte" preferredSize={25}>
+        <Stretch
+          title={intl.formatMessage({ id: "orte" })}
+          preferredSize={25}
+          direction="right"
+        >
           <LinkWrapper>
             <LocalizedLink to="/orte">
               <LocalizedText id="orte" />
@@ -35,7 +45,11 @@ const IndexPage = () => {
             </LocalizedLink>
           </LinkWrapper>
         </Stretch>
-        <Stretch title="zeiten" preferredSize={26}>
+        <Stretch
+          title={intl.formatMessage({ id: "zeiten" })}
+          preferredSize={26}
+          direction="right"
+        >
           <LinkWrapper>
             <LocalizedLink to="/zeiten">
               &#8592;
@@ -43,7 +57,11 @@ const IndexPage = () => {
             </LocalizedLink>
           </LinkWrapper>
         </Stretch>
-        <Stretch title="beratungsangebote" preferredSize={12}>
+        <Stretch
+          title={intl.formatMessage({ id: "beratungsangebote" })}
+          preferredSize={12}
+          direction="right"
+        >
           <LinkWrapper>
             <LocalizedLink to="/beratungsangebote">
               <LocalizedText id="beratungsangebote" />

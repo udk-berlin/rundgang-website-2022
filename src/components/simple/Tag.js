@@ -10,6 +10,7 @@ const TagWrapper = styled.span`
   border: 1px solid black;
   white-space: nowrap;
   cursor: pointer;
+  line-height: 1;
   ${({ theme, selected, levelSelected }) => {
     let color = theme.colors.black;
     let background = theme.colors.white;
@@ -20,7 +21,7 @@ const TagWrapper = styled.span`
       color = theme.colors.lightgray;
     }
     return {
-      fontSize: theme.fontSizes.xs,
+      fontSize: theme.fontSizes.sm,
       borderRadius: theme.spacing.md,
       padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
       margin: theme.spacing.xs,

@@ -15,34 +15,44 @@ const StretchLayout = styled(motion.div)`
   }
 `;
 const INITIAL = {
-  hidden: { scaleX: 0, originX: 0, x: "100%", y: 0 },
-  enter: {
-    scaleX: [null, 1],
-    scaleY: [1, 1],
-    originX: 0,
-    x: "0%",
-    y: 0,
-  },
-  exit: { scaleX: 0, scaleY: 0, originX: 0, x: "0%", y: 0 },
-};
-
-const getVariants = scalingX => ({
   hidden: {
     scaleX: 0,
-    originX: 0,
+    originX: "0%",
     x: "0%",
     y: "0%",
   },
-  enter: {
-    scaleX: [null, scalingX],
-    originX: 0,
+  visible: {
+    scaleX: 1,
+    originX: "0%",
     x: "0%",
     y: "0%",
   },
-  exit: { scaleX: [scalingX, 0], originX: 0, x: "0%", y: "0%" },
+};
+
+const getVariants = (scalingX, direction) => ({
+  hidden: {
+    scaleX: 0,
+    originX: "0%",
+    x: "0%",
+    y: "0%",
+    width: 0,
+  },
+  visible: {
+    scaleX: scalingX,
+    originX: "0%",
+    x: `${direction == "left" ? 100 : 0}%`,
+    y: "0%",
+    width: "100%",
+  },
 });
 
-const Stretch = ({ children, title, preferredSize, direction }) => {
+const Stretch = ({
+  children,
+  title,
+  preferredSize,
+  direction = "left",
+  duration = 0.1,
+}) => {
   const stretchRef = useRef();
   const size = useWindowSize();
   const [variants, setVariants] = useState(INITIAL);
@@ -50,11 +60,17 @@ const Stretch = ({ children, title, preferredSize, direction }) => {
 
   useEffect(() => {
     if (fontSize && stretchRef?.current?.clientWidth) {
-      let factor = (size.width - 10) / stretchRef?.current?.clientWidth;
+      let factor = size.width / stretchRef?.current?.clientWidth;
+      if (factor > 1) {
+        factor = variants.visible.scaleX * factor;
+      } else if (factor < 1) {
+        factor = variants.visible.scaleX / factor;
+      }
+      factor -= 0.02;
       let scaledVar = getVariants(factor);
-      setVariants(scaledVar);
+      setVariants(scaledVar, direction);
     }
-  }, [fontSize, title, size]);
+  }, [title, size]);
 
   useEffect(() => {
     // TODO: multiple conditions to perfect sizing
@@ -69,11 +85,11 @@ const Stretch = ({ children, title, preferredSize, direction }) => {
   return (
     <StretchLayout
       initial="hidden"
-      animate="enter"
-      exit="exit"
+      animate="visible"
+      exit="hidden"
       variants={variants}
       fontSize={fontSize}
-      transition={{ type: "linear", duration: 0.9, times: [0, 0.4] }}
+      transition={{ type: "linear", duration: duration }}
       ref={stretchRef}
     >
       {children}

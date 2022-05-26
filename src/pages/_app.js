@@ -49,7 +49,6 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     dataStore.initialize();
-    dataStore.load();
     uiStore.initialize();
   }, []);
 
@@ -59,6 +58,7 @@ export default function App({ Component, pageProps }) {
     if (pid) {
       let id = makeIdFromUrl(pid);
       dataStore.api.getIdFromLink(id, true);
+      uiStore.setTitle(pid);
     } else if (pathname !== "/") {
       let id = pathname.replaceAll("/", "");
       uiStore.setTitle(id);
@@ -90,15 +90,11 @@ export default function App({ Component, pageProps }) {
             <MotionConfig reducedMotion="user">
               <Container scrollable={Boolean(pathname !== "/")}>
                 <Header key={pathname} />
-                <AnimatePresence
-                  exitBeforeEnter
-                  initial={true}
-                  onExitComplete={() => window.scrollTo(0, 0)}
-                >
+                <AnimatePresence exitBeforeEnter initial={true}>
                   <Component key={pathname} {...pageProps} />
                 </AnimatePresence>
                 <Footer />
-                {showLine ? <CursorLine /> : null}
+                {/* {showLine ? <CursorLine /> : null} */}
               </Container>
             </MotionConfig>
           </IntlProvider>
