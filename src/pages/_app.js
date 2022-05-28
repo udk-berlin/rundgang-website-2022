@@ -13,8 +13,8 @@ import { useStoreInstances } from "../stores/index";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import CursorLine from "@/components/CursorLine";
-import { makeIdFromUrl } from "@/utils/idUtils";
 import { useIsMobile } from "@/utils/useWindowSize";
+import { makeUrlFromId } from "@/utils/idUtils";
 
 const Container = styled.div`
   width: 100%;
@@ -32,12 +32,12 @@ export default function App({ Component, pageProps }) {
   const { data } = pageProps;
   const snapshot = data?.dataStore;
   const { dataStore, uiStore } = useStoreInstances(snapshot);
-  const { locale, pathname, query } = useRouter();
+  const router = useRouter();
   const isMobile = useIsMobile();
   const [showLine, setShowLine] = useState(false);
 
   const messages = useMemo(() => {
-    switch (locale) {
+    switch (router.locale) {
       case "de":
         return deFile;
       case "en":
@@ -45,7 +45,7 @@ export default function App({ Component, pageProps }) {
       default:
         return deFile;
     }
-  }, [locale]);
+  }, [router.locale]);
 
   useEffect(() => {
     dataStore.initialize();
@@ -53,28 +53,23 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
-    let pid = query.pid;
+    let pid = router.query.pid;
     setShowLine(false);
     if (pid) {
-      let id = makeIdFromUrl(pid);
+      dataStore.api.getIdFromLink(pid, true);
+    } else if (router.pathname !== "/") {
+      let id = router.pathname.replaceAll("/", "").replaceAll("[pid]", "");
       dataStore.api.getIdFromLink(id, true);
-      uiStore.setTitle(pid);
-    } else if (pathname !== "/") {
-      let id = pathname.replaceAll("/", "");
-      uiStore.setTitle(id);
-    } else {
-      if (pathname == "/" && !isMobile) {
-        setShowLine(true);
-        uiStore.setTitle(null);
-      }
+    } else if (dataStore.api.root) {
+      dataStore.api.getIdFromLink(dataStore.api.root.id, true);
     }
-  }, [query, pathname]);
+  }, [router.query, router.pathname]);
 
   useEffect(() => {
-    if (pathname == "/" && !isMobile) {
+    if (router.pathname == "/" && !isMobile) {
       setShowLine(true);
     }
-  }, []);
+  }, [router.pathname]);
 
   return (
     <>
@@ -83,15 +78,15 @@ export default function App({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         <Provider dataStore={dataStore} uiStore={uiStore}>
           <IntlProvider
-            locale={locale}
+            locale={router.locale}
             messages={messages}
             onError={() => null}
           >
             <MotionConfig reducedMotion="user">
-              <Container scrollable={Boolean(pathname !== "/")}>
-                <Header key={pathname} />
+              <Container scrollable={Boolean(router.pathname !== "/")}>
+                <Header key={router.pathname} />
                 <AnimatePresence exitBeforeEnter initial={true}>
-                  <Component key={pathname} {...pageProps} />
+                  <Component key={router.pathname} {...pageProps} />
                 </AnimatePresence>
                 <Footer />
                 {/* {showLine ? <CursorLine /> : null} */}

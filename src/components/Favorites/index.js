@@ -55,11 +55,11 @@ const CloseButton = styled.div`
   margin: 0;
 `;
 
-const Favourites = ({ openField, onClick, onClose }) => {
+const Favourites = ({ onClick, onClose }) => {
   const { uiStore } = useStores();
   return (
     <FavouritesWrapper
-      animate={openField ?? "closed"}
+      animate={uiStore.isOpen ?? "closed"}
       variants={variants}
       transition={{ type: "linear", duration: 0.5 }}
     >
@@ -68,7 +68,7 @@ const Favourites = ({ openField, onClick, onClose }) => {
         <FavouriteStarSvg saved={true} size={30} />
       </FavouritesHeader>
       <AnimatePresence>
-        {openField == "favourites" && (
+        {uiStore.isOpen == "favourites" && (
           <>
             <FavouritesList />
             <CloseButton onClick={onClose}>&#57344;</CloseButton>

@@ -29,34 +29,40 @@ const FavouritesTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.mm};
 `;
 
-
 const FavouritesList = () => {
   const { uiStore } = useStores();
+  console.log(uiStore.savedItems);
   return (
     <FavouritesListWrapper>
-      <DownloadButton>
-        <LocalizedText id="download" />
-      </DownloadButton>
-      <Favourites>
-        <FavouritesTitle>
-          <LocalizedText id="projects" />
-        </FavouritesTitle>
-        {favData
-          .filter(item => item.template == "studentproject")
-          .map(item => (
-            <FavouriteItem key={item.id} element={item} />
-          ))}
-      </Favourites>
-      <Favourites>
-        <FavouritesTitle>
-          <LocalizedText id="events" />
-        </FavouritesTitle>
-        {favData
-          .filter(item => item.template == "event")
-          .map(item => (
-            <FavouriteItem key={item.id} element={item} />
-          ))}
-      </Favourites>
+      {uiStore.savedItems.length > 0 ? (
+        <>
+          <DownloadButton>
+            <LocalizedText id="download" />
+          </DownloadButton>
+          <Favourites>
+            <FavouritesTitle>
+              <LocalizedText id="projects" />
+            </FavouritesTitle>
+            {uiStore.savedItems
+              .filter(item => item.template == "studentproject")
+              .map(item => (
+                <FavouriteItem key={item.id} element={item} />
+              ))}
+          </Favourites>
+          <Favourites>
+            <FavouritesTitle>
+              <LocalizedText id="events" />
+            </FavouritesTitle>
+            {uiStore.savedItems
+              .filter(item => item.template == "event")
+              .map(item => (
+                <FavouriteItem key={item.id} element={item} />
+              ))}
+          </Favourites>
+        </>
+      ) : (
+        "no events or projects saved yet"
+      )}
     </FavouritesListWrapper>
   );
 };

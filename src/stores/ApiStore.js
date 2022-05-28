@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { makeIdFromUrl, ALIAS_IDS } from "@/utils/idUtils";
 
 const BASE_URL = "https://api.dev.medienhaus.udk-berlin.de/api/v2/";
 const PATH_URL = "/pathlist";
@@ -7,6 +8,7 @@ const LIST_URL = "/list";
 const FILTER_URL = "/list/filter";
 const TYPE_ITEM = "/type/item";
 const TYPE_CONTEXT = "/type/context";
+const RENDER_JSON = "/render/json";
 const ROOT = "!yGwpTLQiIMoyuhGggS:dev.medienhaus.udk-berlin.de";
 const STRUCTURE_ROOT = "!YPRUkokMRFexJfMRtB:dev.medienhaus.udk-berlin.de";
 const LOCATIONS_ROOT = "!ZfLuOQsYLtkuIvswLv:dev.medienhaus.udk-berlin.de";
@@ -76,6 +78,10 @@ class ApiStore {
     return this.get(`${id}${TREE_URL}`);
   };
 
+  getRenderedItem = async id => {
+    return this.get(`${id}${RENDER_JSON}`);
+  };
+
   getListFromId = async id => {
     return this.get(`${id}${LIST_URL}`);
   };
@@ -98,13 +104,17 @@ class ApiStore {
   };
 
   setCachedId = data => {
-    if (data.id && !data.id in this.cachedIds) {
+    if (data.id && !(data.id in this.cachedIds)) {
       this.cachedIds[data.id] = data;
     }
   };
 
   getIdFromLink = async (searchId, asroot = false) => {
     try {
+      let title = searchId;
+      if (!searchId.includes(":dev.medienhaus.udk-berlin.de")) {
+        searchId = makeIdFromUrl(searchId);
+      }
       let data = searchId in this.cachedIds ? this.cachedIds[searchId] : null;
       let path = "";
       if (!data) {
@@ -115,7 +125,7 @@ class ApiStore {
       let currentItems = data?.allItemsBelow?.length
         ? data.allItemsBelow.map(item => this.cachedIds[item.id])
         : null;
-      if (data && asroot && !currentItems) {
+      if (data?.type == "context" && asroot && !currentItems) {
         let items = await this.getFilteredListFromId(searchId, TYPE_ITEM);
         data = { ...data, allItemsBelow: items.map(i => i.id) };
         currentItems = await Promise.all(
@@ -123,11 +133,17 @@ class ApiStore {
             if (item.id in this.cachedIds) {
               return this.cachedIds[item.id];
             } else {
-              return await this.getId(item.id);
+              let res = await this.getId(item.id);
+              this.setCachedId(res);
+              return res;
             }
           }),
         );
+      } else if (data?.type == "item" && asroot) {
+        let renderedItem = await this.getRenderedItem(searchId);
+        data = { ...data, rendered: renderedItem };
       }
+      data.name = title in ALIAS_IDS ? title : data.name;
       runInAction(() => {
         if (asroot) {
           this.currentRoot = data;

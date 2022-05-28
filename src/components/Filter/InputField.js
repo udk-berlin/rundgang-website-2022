@@ -52,7 +52,7 @@ const CloseButton = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 
-const InputField = ({ isOpen, onFocus }) => {
+const InputField = ({ onFocus }) => {
   const { uiStore } = useStores();
   const { messages } = useIntl();
   const [value, setValue] = useState("");
@@ -77,8 +77,8 @@ const InputField = ({ isOpen, onFocus }) => {
         value={value}
         onChange={handleChange}
         onFocus={onFocus}
-        isOpen={isOpen}
-        placeholder={isOpen ? messages.search : messages.filter}
+        isOpen={uiStore.isOpen == "filter"}
+        placeholder={uiStore.isOpen == "filter" ? messages.search : messages.filter}
       />
       {hasContent && <CloseButton onClick={handleReset}>&#57344;</CloseButton>}
     </InputFieldWrapper>

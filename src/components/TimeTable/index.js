@@ -58,7 +58,6 @@ const TimeWrapper = styled.div`
   width: ${TIME_WIDTH}px;
   height: ${({ height }) => `${height}px`};
   display: flex;
-
 `;
 /* 
 into timewrapper and Day
@@ -81,7 +80,7 @@ const TimeTable = () => {
   const scaleY = scaleLinear()
     .domain([0, dataStore.eventRooms?.length + 1])
     .range([LOCATION_PADDING, 50 * dataStore.eventRooms?.length + 1]);
-  console.log(scaleY(dataStore.eventRooms?.length));
+
   return (
     <TimeTableWrapper>
       <DayMenu>

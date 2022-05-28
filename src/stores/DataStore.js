@@ -46,7 +46,7 @@ class DataStore {
         () => this.api.currentRoot,
         root => {
           if (root) {
-            this.uiStore.setTitle(root.name);
+            this.uiStore.setTitle(root.name, root.id);
           }
         },
       ),

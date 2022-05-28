@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { FormattedDateTimeRange } from "react-intl";
+import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
 import FavouriteStar from "@/components/simple/FavouriteStar";
+import LocalizedLink from "modules/i18n/components/LocalizedLink";
+import { makeUrlFromId } from "@/utils/idUtils";
 
 const ListItemWrapper = styled.div`
   cursor: pointer;
@@ -28,7 +31,7 @@ const SaveIcon = styled.div`
   position: absolute;
   top: 5%;
   right: 5%;
-  z-index: 10;
+  z-index: 100;
 `;
 const Title = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.md};
@@ -53,37 +56,51 @@ const Time = styled.div`
 `;
 
 const ListItem = ({ element }) => {
-  const { uiStore } = useStores();
+  const { uiStore, dataStore } = useStores();
+  const router = useRouter();
+  const linklocation = router.pathname.includes("[pid]")
+    ? router.pathname.replace("[pid]", makeUrlFromId(element.id))
+    : `${router.pathname}/${makeUrlFromId(element.id)}`;
 
-  const handleSaved = id => {
+  const handleAddSaved = (e, id) => {
+    e.preventDefault();
     uiStore.addToSaved(id);
   };
 
   return (
     <ListItemWrapper>
-      <Image src={element.thumbnail} />
-      <SaveIcon>
-        <FavouriteStar
-          saved={uiStore.savedItems.includes(element.id)}
-          size={25}
-          onClick={() => handleSaved(element.id)}
+      <LocalizedLink to={linklocation}>
+        <Image
+          src={
+            element.thumbnail.length > 0
+              ? element.thumbnail
+              : "/assets/img/missing.svg"
+          }
         />
-      </SaveIcon>
-      <Title>{element.name}</Title>
-      <Authors>{element.origin.authors.map(a => a.name).join(",")}</Authors>
-      {element.template == "event" ? (
-        <Time>
-          {element.allocation.temporal.map(t => (
-            <FormattedDateTimeRange
-              from={t.start}
-              weekday="long"
-              hour="numeric"
-              minute="numeric"
-              to={t.end}
-            />
-          ))}
-        </Time>
-      ) : null}
+        <SaveIcon>
+          <FavouriteStar
+            saved={uiStore.savedItemIds.includes(element.id)}
+            size={25}
+            onClick={e => handleAddSaved(e, element.id)}
+          />
+        </SaveIcon>
+        <Title>{element.name}</Title>
+        <Authors>{element.origin.authors.map(a => a.name).join(",")}</Authors>
+        {element.template == "event" ? (
+          <Time>
+            {element.allocation?.temporal?.map((t, i) => (
+              <FormattedDateTimeRange
+                key={`time-range-${i}-${element.id}`}
+                from={t.start}
+                weekday="long"
+                hour="numeric"
+                minute="numeric"
+                to={t.end}
+              />
+            ))}
+          </Time>
+        ) : null}
+      </LocalizedLink>
     </ListItemWrapper>
   );
 };

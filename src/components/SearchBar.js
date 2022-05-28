@@ -5,6 +5,7 @@ import Filter from "@/components/Filter";
 import Favorites from "@/components/Favorites";
 import ClickAwayListener from "@/components/simple/ClickAwayListener";
 import useIsSticky from "@/utils/useIsSticky";
+import { useStores } from "@/stores/index";
 
 const SearchBarWrapper = styled.div`
   position: ${({ position }) => position};
@@ -23,35 +24,33 @@ const FlexContainer = styled.div`
 `;
 
 const SearchBar = () => {
+  const { uiStore } = useStores();
   const isSticky = useIsSticky(100);
-  const [openField, setOpenField] = useState(null);
 
   const handleOpen = useCallback(
     item => {
-      setOpenField(item);
+      uiStore.setIsOpen(item);
     },
-    [openField],
+    [uiStore.isOpen],
   );
   const handleClose = useCallback(
     item => {
-      if (item === openField) {
-        setOpenField(null);
+      if (item === uiStore.isOpen) {
+        uiStore.setIsOpen(null);
       }
     },
-    [openField],
+    [uiStore.isOpen],
   );
 
   return (
-    <SearchBarWrapper position={openField ? "relative" : isSticky}>
-      <ClickAwayListener onClickAway={() => setOpenField(null)}>
+    <SearchBarWrapper position={uiStore.isOpen ? "relative" : isSticky}>
+      <ClickAwayListener onClickAway={() => uiStore.setIsOpen(null)}>
         <FlexContainer>
           <Filter
-            openField={openField}
             onFocus={() => handleOpen("filter")}
             onClose={() => handleClose("filter")}
           />
           <Favorites
-            openField={openField}
             onClick={() => handleOpen("favourites")}
             onClose={() => handleClose("favourites")}
           />

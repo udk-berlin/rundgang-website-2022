@@ -63,10 +63,16 @@ const FavouriteItem = ({ element }) => {
     <FavouriteItemWrapper>
       <FavouriteStarSvg saved={true} size={30} />
       {element.template == "studentproject" ? (
-        <Image src={element.thumbnail} />
+        <Image
+          src={
+            element.thumbnail.length > 0
+              ? element.thumbnail
+              : "/assets/img/missing.svg"
+          }
+        />
       ) : (
         <Time>
-          {element.allocation.temporal.map(t => (
+          {element?.allocation?.temporal?.map(t => (
             <span>
               <FormattedTime value={t.start} weekday="long" />-
               <FormattedTime value={t.end} />

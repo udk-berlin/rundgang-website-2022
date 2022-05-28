@@ -4,14 +4,12 @@ class UiStore {
   constructor() {
     this.isOpen = false;
     this.allStores = [];
-    this.savedItems = [];
+    this.savedItemIds = [];
     this.title = null;
     this.selected = INITIAL_SELECTION;
     this.openTagGroup = 0;
 
-    makeAutoObservable(this, {
-      isOpen: false,
-    });
+    makeAutoObservable(this, {});
   }
 
   connect = ({ dataStore }) => {
@@ -42,20 +40,35 @@ class UiStore {
   }
 
   get numberSavedItems() {
-    return this.savedItems.length;
+    return this.savedItemIds.length;
+  }
+
+  get savedItems() {
+    console.log(this.dataStore.api.cachedIds);
+    return this.savedItemIds.map(id => this.dataStore.api.cachedIds[id]);
   }
 
   addToSaved(id) {
-    if (this.savedItems.includes(id)) {
-      this.savedItems = this.savedItems.filter(i => i !== id);
+    if (this.savedItemIds.includes(id)) {
+      this.savedItemIds = this.savedItemIds.filter(i => i !== id);
     } else {
-      this.savedItems.push(id);
+      this.savedItemIds.push(id);
     }
   }
 
-  setTitle(title) {
-    console.log(title);
-    this.title = title;
+  setTitle(title, id) {
+    if (
+      id == "!yGwpTLQiIMoyuhGggS:dev.medienhaus.udk-berlin.de" ||
+      title == "rundgang22-struct-root"
+    ) {
+      this.title = null;
+    } else if (title == "locations") {
+      this.title = "orte";
+    } else if (title == "Universität der Künste Berlin") {
+      this.title = "katalog";
+    } else {
+      this.title = title;
+    }
   }
   setOpenTagGroup(openTagGroup) {
     this.openTagGroup = openTagGroup;
@@ -137,6 +150,30 @@ class UiStore {
       children: _.groupBy(children2, "template"),
     };
     return [level0, level1, level2];
+  }
+
+  get isTagSelected() {
+    if (
+      this.selected[0] !== null ||
+      this.selected[1] !== null ||
+      this.selected[2] !== null
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  get selectedId() {
+    if (this.selected[2] !== null) {
+      return this.selected[2];
+    }
+    if (this.selected[1] !== null) {
+      return this.selected[1];
+    }
+    if (this.selected[0] !== null) {
+      return this.selected[0];
+    }
+    return null;
   }
 
   get items() {

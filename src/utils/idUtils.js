@@ -2,28 +2,14 @@ export const ALIASES = {
   yGwpTLQiIMoyuhGggS: "index",
   ZfLuOQsYLtkuIvswLv: "orte",
   YPRUkokMRFexJfMRtB: "katalog",
-  SZwEjEwLFovosWWjej: "international_office",
-  jDHRkvPatViKcWNwdk: "musik",
-  MglQlvTygSLmYgqVeJ: "darstellende_kunst",
-  UdoXQmRoLCCyOMMyhF: "gestaltung",
-  rbrGPHkGJBPWnmGsND: "studium_generale",
-  oQivYTxOEkUebwuDcf: "universitaets_bibliothek",
-  nyPvOepSumUDhRYtTV: "frauenbeauftragte",
-  pQxEhcuBOqWwNlpAbg: "jazz_institut_berlin",
+  YPRUkokMRFexJfMRtB: "zeiten",
 };
 
 export const ALIAS_IDS = {
   index: "yGwpTLQiIMoyuhGggS",
   orte: "ZfLuOQsYLtkuIvswLv",
   katalog: "YPRUkokMRFexJfMRtB",
-  international_office: "SZwEjEwLFovosWWjej",
-  musik: "jDHRkvPatViKcWNwdk",
-  darstellende_kunst: "MglQlvTygSLmYgqVeJ",
-  gestaltung: "UdoXQmRoLCCyOMMyhF",
-  studium_generale: "rbrGPHkGJBPWnmGsND",
-  universitaets_bibliothek: "oQivYTxOEkUebwuDcf",
-  frauenbeauftragte: "nyPvOepSumUDhRYtTV",
-  jazz_institut_berlin: "pQxEhcuBOqWwNlpAbg",
+  zeiten: "YPRUkokMRFexJfMRtB",
 };
 
 export const makeUrlFromId = idString => {
