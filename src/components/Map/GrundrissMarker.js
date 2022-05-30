@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Grundriss = styled.img`
   width: ${({ size }) => `${size}px`};
   height: ${({ size }) => `${size}px`};
-  zindex: 40;
+  z-index: 40;
   cursor: pointer;
 
   -webkit-filter: drop-shadow(0px 0px 8px rgb(226, 255, 93));

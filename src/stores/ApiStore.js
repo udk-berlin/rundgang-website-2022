@@ -55,7 +55,7 @@ class ApiStore {
   };
 
   getLocations = async () => {
-    return this.getTreeFromId(LOCATIONS_ROOT).catch(() =>
+    return this.get(`${LOCATIONS_ROOT}/tree/filter${TYPE_CONTEXT}`).catch(() =>
       console.log("no LOCATIONS_ROOT id"),
     );
   };

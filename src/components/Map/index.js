@@ -2,22 +2,24 @@ import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import ReactDOM from "react-dom";
+import { useRouter } from "next/router";
 import maplibregl from "maplibre-gl";
 import { useStores } from "@/stores/index";
 import useWindowSize from "@/utils/useWindowSize";
-import testAddresses from "./locationData.json";
+import exactLocations from "./locationData.json";
 import GrundrissMarker from "./GrundrissMarker";
+import GrundrissPopup from "./GrundrissPopup";
 
 const MapWrapper = styled.div`
   position: relative;
   top: 0vh;
   left: 1vw;
-  width: ${({ size }) => `${size?.width * 0.66}px`};
-  height: ${({ size }) => `${size?.height * 0.8}px`};
-  padding-bottom: 100px;
+  width: 70vw;
+  height: 60vh;
+  padding: ${({ theme }) => theme.spacing.lg};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    width: 90vh;
-    height: 65vh;
+    width: 90vw;
+    height: 70vh;
   }
 `;
 
@@ -32,28 +34,23 @@ const FIRSTLNG = 13.3286892;
 
 const Map = () => {
   const { dataStore } = useStores();
+  const { locale } = useRouter();
   const mapContainer = useRef(null);
   const map = useRef(null);
   const size = useWindowSize();
   const [addresses, setAddresses] = useState([]);
 
   useEffect(() => {
-    if (testAddresses) {
-      const adrr = testAddresses.reduce(
-        (obj, a, i) => ({
-          ...obj,
-          [a.image]: {
-            ...a,
-            id: `grundriss-${i}`,
-            lat: a.coordinates.split(",")[0].trim(),
-            lng: a.coordinates.split(",")[1].trim(),
-          },
-        }),
-        {},
-      );
-      setAddresses(Object.values(adrr));
+    if (exactLocations && dataStore.api.locations) {
+      const adrr = exactLocations.map(a => ({
+        ...a,
+        ...(a.id in dataStore.api.locations.children
+          ? dataStore.api.locations.children[a.id]
+          : {}),
+      }));
+      setAddresses(adrr);
     }
-  }, [testAddresses]);
+  }, [exactLocations, dataStore.api.locations]);
 
   useEffect(() => {
     map.current = new maplibregl.Map({
@@ -64,7 +61,7 @@ const Map = () => {
       maxZoom: 18,
       minZoom: 11,
     });
-    map.current.on("load", function () {
+    map.current.on("load", () => {
       map.current.resize();
       const markers = [];
 
@@ -75,9 +72,20 @@ const Map = () => {
         markerElement.rotationAlignment = "map";
         ReactDOM.render(<GrundrissMarker el={el} size={60} />, markerElement);
 
+        const popupElement = document.createElement("div");
+        ReactDOM.render(
+          <GrundrissPopup el={el} locale={locale} />,
+          popupElement,
+        );
+
+        const popup = new maplibregl.Popup()
+          .setLngLat([el.lng, el.lat])
+          .setDOMContent(popupElement);
+
         // add marker to map
         const marker = new maplibregl.Marker(markerElement)
           .setLngLat([el.lng, el.lat])
+          .setPopup(popup)
           .addTo(map.current);
 
         markers[el.id] = { marker, markerElement };
@@ -107,11 +115,11 @@ const Map = () => {
         });
       });
     });
-  }, [size, addresses]);
+  }, [size, dataStore.api.locations]);
 
   return (
-    <MapWrapper size={size} >
-      <MapContainerDiv ref={mapContainer}/>
+    <MapWrapper size={size}>
+      <MapContainerDiv ref={mapContainer} />
     </MapWrapper>
   );
 };

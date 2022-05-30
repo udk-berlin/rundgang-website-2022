@@ -29,7 +29,7 @@ const ListView = ({ numCol }) => {
   const { uiStore } = useStores();
   return (
     <ListViewWrapper numCol={numCol}>
-      {uiStore.items && uiStore.items.length
+      {uiStore.items && uiStore.items.length > 1
         ? uiStore.items.map(item => <ListItem key={item.id} element={item} />)
         : testListData.map(item => <ListItem key={item.id} element={item} />)}
     </ListViewWrapper>
