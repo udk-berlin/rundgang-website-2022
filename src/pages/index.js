@@ -8,8 +8,6 @@ import Stretch from "@/components/simple/Stretch";
 
 const LinkWrapper = styled.div`
   width: fit-content;
-  display: flex;
-  white-space: nowrap;
 `;
 
 const IndexWrapper = styled.div`
@@ -23,36 +21,36 @@ const IndexPage = () => {
       <IndexWrapper>
         <Stretch
           title={intl.formatMessage({ id: "katalog" })}
-          preferredSize={26}
+          preferredSize={27.5}
           direction="right"
         >
           <LinkWrapper>
             <LocalizedLink to="/katalog">
-              &#8593;
+              <span style={{ fontFamily: "Inter" }}>&#8593;</span>
               <LocalizedText id="katalog" />
             </LocalizedLink>
           </LinkWrapper>
         </Stretch>
         <Stretch
           title={intl.formatMessage({ id: "orte" })}
-          preferredSize={25}
+          preferredSize={27.5}
           direction="right"
         >
           <LinkWrapper>
             <LocalizedLink to="/orte">
               <LocalizedText id="orte" />
-              &#8594;
+              <span style={{ fontFamily: "Inter" }}>&#8594;</span>
             </LocalizedLink>
           </LinkWrapper>
         </Stretch>
         <Stretch
           title={intl.formatMessage({ id: "zeiten" })}
-          preferredSize={26}
+          preferredSize={27.5}
           direction="right"
         >
           <LinkWrapper>
             <LocalizedLink to="/zeiten">
-              &#8592;
+              <span style={{ fontFamily: "Inter" }}>&#8592;</span>
               <LocalizedText id="zeiten" />
             </LocalizedLink>
           </LinkWrapper>
@@ -65,7 +63,7 @@ const IndexPage = () => {
           <LinkWrapper>
             <LocalizedLink to="/beratungsangebote">
               <LocalizedText id="beratungsangebote" />
-              &#8595;
+              <span style={{ fontFamily: "Inter" }}>&#8595;</span>
             </LocalizedLink>
           </LinkWrapper>
         </Stretch>

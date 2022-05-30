@@ -20,6 +20,8 @@ const PageTitleWrapper = styled.div`
 
 const Title = styled.div`
   display: flex;
+  white-space: nowrap;
+  width: max-content;
 `;
 
 const PageTitle = () => {
@@ -54,37 +56,42 @@ const PageTitle = () => {
   return (
     <PageTitleWrapper>
       <AnimatePresence initial={true}>
-        {uiStore.title !== null ? (
-          <Stretch
-            title={intl.formatMessage({ id: uiStore.title })}
-            direction="left"
-            key={`${uiStore.title}_title`}
-            duration={0.7}
-          >
-            <Title>
-              <LocalizedLink to={backRoute}>&#8592;</LocalizedLink>
-              <LocalizedText id={uiStore.title} />
-            </Title>
-          </Stretch>
-        ) : (
-          <Stretch
-            title="RUNDGANG"
-            preferredSize={17}
-            direction="right"
-            key="rundgang_title"
-            duration={0.7}
-          >
-            <Title>
-              RUNDGANG
-              <span style={{ fontSize: "4vh", whiteSpace: "nowrap" }}>
-                23.07-24.07
-              </span>
-            </Title>
-          </Stretch>
-        )}
+        <Stretch
+          title={intl.formatMessage({ id: uiStore.title })}
+          key={`${uiStore.title}_title`}
+          lineh={1}
+          preferredSize={13}
+        >
+          <Title>
+            {uiStore.title !== "rundgang" && (
+              <LocalizedLink to={backRoute}>
+                <span style={{ fontFamily: "Inter" }}>&#8592;</span>
+              </LocalizedLink>
+            )}
+            <LocalizedText id={uiStore.title} />
+          </Title>
+        </Stretch>
       </AnimatePresence>
     </PageTitleWrapper>
   );
 };
 
 export default observer(PageTitle);
+{
+  /* (
+          <Stretch
+            title="RUNDGANG"
+            preferredSize={10}
+            direction="right"
+            key="rundgang_title"
+            duration={0.7}
+          >
+            <Title>
+              RUNDGANG{" "}
+              <span style={{ fontSize: "4vh", whiteSpace: "nowrap" }}>
+                23.07-24.07
+              </span>
+            </Title>
+          </Stretch>
+        ) */
+}

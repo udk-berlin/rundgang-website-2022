@@ -5,7 +5,7 @@ class UiStore {
     this.isOpen = false;
     this.allStores = [];
     this.savedItemIds = [];
-    this.title = null;
+    this.title = "rundgang";
     this.selected = INITIAL_SELECTION;
     this.openTagGroup = 0;
 
@@ -61,7 +61,7 @@ class UiStore {
       id == "!yGwpTLQiIMoyuhGggS:dev.medienhaus.udk-berlin.de" ||
       title == "rundgang22-struct-root"
     ) {
-      this.title = null;
+      this.title = "rundgang";
     } else if (title == "locations") {
       this.title = "orte";
     } else if (title == "Universität der Künste Berlin") {

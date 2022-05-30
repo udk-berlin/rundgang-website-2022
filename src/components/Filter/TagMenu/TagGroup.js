@@ -20,6 +20,7 @@ const NumberItems = styled.span`
   margin: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.sm}`};
 `;
 const ToggleIcon = styled.span`
+  font-family: "Inter";
   font-size: ${({ theme }) => theme.fontSizes.xs};
   margin: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.xs}`};
 `;

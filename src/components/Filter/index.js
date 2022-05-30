@@ -28,7 +28,7 @@ const GoButton = styled.div`
   position: absolute;
   bottom: 0px;
   right: 0px;
-  font-family: "Diatype";
+  font-family: "Inter";
   cursor: pointer;
   flex-grow: 0;
   padding: ${({ theme }) => `${theme.spacing.sm}`};

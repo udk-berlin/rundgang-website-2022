@@ -43,7 +43,7 @@ const InputFieldWrapper = styled.div`
 `;
 
 const CloseButton = styled.div`
-  font-family: "Diatype";
+  font-family: "Inter";
   cursor: pointer;
   display: flex;
   align-items: center;
