@@ -28,7 +28,7 @@ const TagGroupTitle = styled.div`
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
+    font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
 
@@ -41,31 +41,21 @@ const TagGroupStretch = styled(motion.div)`
 const TagSubGroup = styled.div`
   width: 100%;
 `;
-const TagSubGroupTitle = styled.div`
-  width: 100%;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  margin: ${({ theme }) => theme.spacing.sm};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
-  }
-`;
+
 const Tags = styled.div`
   width: 99%;
   display: flex;
   flex-wrap: wrap;
 `;
 
-const TagGroup = ({ group }) => {
+const TagGroup = ({ group, name }) => {
   const { uiStore } = useStores();
-  const isOpen = uiStore.openTagGroup == group.level;
+  const isOpen = uiStore.filterStore.openTagGroup == name;
   return (
-    <TagGroupWrapper key={`${group.level}-taggroup`}>
-      <TagGroupTitle
-        key={`${group.level}-title`}
-        onClick={() => uiStore.handleToggleOpen(group.level)}
-      >
-        <LocalizedText id={group.name} />
-        <NumberItems>{group.numberItems}</NumberItems>
+    <TagGroupWrapper>
+      <TagGroupTitle onClick={() => uiStore.filterStore.handleToggleOpen(name)}>
+        <LocalizedText id={name} />
+        <NumberItems>{group?.length}</NumberItems>
         {isOpen ? (
           <ToggleIcon>&#8595;</ToggleIcon>
         ) : (
@@ -76,32 +66,29 @@ const TagGroup = ({ group }) => {
         animate={isOpen ? "open" : "closed"}
         variants={variants}
         initial={false}
-        key={`${group.level}-stretch`}
         transition={{ type: "linear", duration: 0.5 }}
       >
-        {Object.entries(group.children).map(([subgroup, children]) => (
-          <TagSubGroup key={`${subgroup}-subgroup`}>
-            <TagSubGroupTitle>{subgroup}</TagSubGroupTitle>
-            <Tags>
-              {children.map(child => (
-                <Tag
-                  onClick={() =>
-                    uiStore.setSelected(
-                      group.level,
-                      child.id,
-                      child.parent,
-                      child.grandparent,
-                    )
-                  }
-                  selected={uiStore.selected[group.level] == child.id}
-                  levelSelected={uiStore.selected[group.level] !== null}
-                  key={child.id}
-                  tagtitle={child.name}
-                />
-              ))}
-            </Tags>
-          </TagSubGroup>
-        ))}
+        <TagSubGroup>
+          <Tags>
+            {group.map((child, i) => (
+              <Tag
+                onClick={() =>
+                  uiStore.filterStore.setSelected(
+                    name,
+                    child.id,
+                    child.parent,
+                    child.grandparent,
+                    child.greatgrandparent,
+                  )
+                }
+                selected={uiStore.filterStore.selected[name] == child.id}
+                levelSelected={uiStore.filterStore.selected[name] !== null}
+                key={`${i}-tag-${child.id}`}
+                tagtitle={child.name}
+              />
+            ))}
+          </Tags>
+        </TagSubGroup>
       </TagGroupStretch>
     </TagGroupWrapper>
   );

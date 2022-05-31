@@ -49,8 +49,13 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     dataStore.initialize();
-    uiStore.initialize();
   }, []);
+
+  useEffect(() => {
+    if (dataStore.api.isLoaded) {
+      uiStore.initialize();
+    }
+  }, [dataStore.api.isLoaded]);
 
   useEffect(() => {
     let pid = router.query.pid;

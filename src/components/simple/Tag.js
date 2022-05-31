@@ -11,6 +11,12 @@ const TagWrapper = styled.span`
   white-space: nowrap;
   cursor: pointer;
   line-height: 1;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  margin: ${({ theme }) => theme.spacing.xs};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+    margin: ${({ theme }) => theme.spacing.xxs};
+  }
   ${({ theme, selected, levelSelected }) => {
     let color = theme.colors.black;
     let background = theme.colors.white;
@@ -21,10 +27,8 @@ const TagWrapper = styled.span`
       color = theme.colors.lightgray;
     }
     return {
-      fontSize: theme.fontSizes.sm,
       borderRadius: theme.spacing.md,
       padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
-      margin: theme.spacing.xs,
       color: color,
       backgroundColor: background,
       borderColor: color,

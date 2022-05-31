@@ -63,15 +63,18 @@ const Filter = ({ onFocus, onClose }) => {
           <>
             <TagMenu />
             <GoButton
-              active={uiStore.isTagSelected}
+              active={uiStore.filterStore.isTagSelected}
               onClick={() => {
                 onClose();
-                dataStore.api.getIdFromLink(uiStore.selectedId, true);
+                dataStore.api.getIdFromLink(
+                  uiStore.filterStore.selectedId,
+                  true,
+                );
               }}
             >
               &#8594;
             </GoButton>
-            <ResetButton onClick={() => uiStore.handleReset()}>
+            <ResetButton onClick={() => uiStore.filterStore.handleReset()}>
               <LocalizedText id="reset" />
             </ResetButton>
           </>

@@ -4,7 +4,7 @@
   "orte": "PLACES",
   "zeiten": "TIMES",
   "katalog": "CATALOGUE",
-  "beratungsangebote": "CONSULTATION OFFERS",
+  "beratungsangebote_index": "CONSULTATION OFFERS",
   "imprint": "IMPRINT",
   "contact": "CONTACT",
   "privacy": "PRIVACY",
@@ -16,7 +16,11 @@
   "download": "download",
   "projects": "projects",
   "events": "events",
-  "level0": "Faculties, Centers and Consultation Offers",
-  "level1": "Intitutes and Initiatives",
-  "level2": "Courses and Classes"
+  "beratungsangebote": "Consultation Offers",
+  "fakultaeten": "Faculties", 
+  "zentren": "Centers",
+  "institute": "Institutes",
+  "studiengaenge": "Programs",
+  "fachgebiete": "Subjects",
+  "klassen": "Courses and Classes"
 }

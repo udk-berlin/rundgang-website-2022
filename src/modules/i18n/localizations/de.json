@@ -4,7 +4,7 @@
   "orte": "ORTE",
   "zeiten": "ZEITEN",
   "katalog": "KATALOG",
-  "beratungsangebote": "BERATUNGSANGEBOTE",
+  "beratungsangebote_index": "BERATUNGSANGEBOTE",
   "advice": "FÜR STUDIENINTERESSIERTE",
   "imprint": "IMPRESSUM",
   "contact": "KONTAKT",
@@ -17,7 +17,11 @@
   "download": "Download",
   "projects": "Projekte",
   "events": "Veranstaltungen",
-  "level0": "Fakultäten, Zentren und Beratungsangebote",
-  "level1": "Studiengänge, Fachbereiche und Initiativen",
-  "level2": "Kurse und Klassen"
+  "beratungsangebote": "Beratungsangebote",
+  "fakultaeten": "Fakultäten", 
+  "zentren": "Zentren",
+  "institute": "Institute",
+  "studiengaenge": "Studiengänge",
+  "fachgebiete": "Fachgebiete",
+  "klassen": "Kurse und Klassen"
 }

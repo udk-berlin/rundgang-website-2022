@@ -10,13 +10,12 @@ const FilterMenuWrapper = styled.div`
   height: fit-content;
 `;
 
-
 const TagMenu = () => {
   const { uiStore } = useStores();
   return (
     <FilterMenuWrapper>
-      {uiStore.currentTags.map(group => (
-        <TagGroup key={`${group.level}-taggroup`} group={group} />
+      {_.entries(uiStore.filterStore.currentTags).map(([name, group]) => (
+        <TagGroup key={`${name}-taggroupwerapper`} group={group} name={name} />
       ))}
     </FilterMenuWrapper>
   );
