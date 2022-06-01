@@ -74,6 +74,21 @@ class ApiStore {
     return this.get(`${id}${PATH_URL}`);
   };
 
+  getParentsFromId = async item => {
+    return Promise.all(
+      item.parents.map(parent => this.getPathToId(parent)),
+    ).then(res =>
+      res
+        .flat()
+        .filter(
+          x =>
+            !["structure-root", "Universität", "location-university"].includes(
+              x.template,
+            ),
+        ),
+    );
+  };
+
   getTreeFromId = async id => {
     return this.get(`${id}${TREE_URL}`);
   };

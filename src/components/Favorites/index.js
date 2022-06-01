@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import FavouriteStarSvg from "@/components/simple/FavouriteStar";
 import FavouritesList from "./FavouritesList";
-import ClickAwayListener from "@/components/simple/ClickAwayListener";
 
 const variants = {
   favourites: { height: "fit-content", width: "99vw", overflowY: "auto" },
@@ -28,15 +27,14 @@ const FavouritesWrapper = styled(motion.div)`
 
 const FavouritesHeader = styled.div`
   display: flex;
-  width: 70px;
-  justify-content: space-between;
+  width: 60px;
+  justify-content: space-around;
   text-align: center;
   align-items: center;
   cursor: pointer;
 `;
 const FavouritesSavedItems = styled.div`
   color: ${({ theme }) => theme.colors.primary};
-  margin: ${({ theme }) => `0 ${theme.spacing.xs}`};
   font-weight: bold;
   font-size: 30px;
 `;
@@ -65,7 +63,7 @@ const Favourites = ({ onClick, onClose }) => {
     >
       <FavouritesHeader onClick={onClick}>
         <FavouritesSavedItems>{uiStore.numberSavedItems}</FavouritesSavedItems>
-        <FavouriteStarSvg saved={true} size={30} />
+        <FavouriteStarSvg saved={true} size={16} />
       </FavouritesHeader>
       <AnimatePresence>
         {uiStore.isOpen == "favourites" && (

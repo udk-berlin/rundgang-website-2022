@@ -90,6 +90,7 @@ const FavouriteItem = ({ element }) => {
               key={t.id}
               levelSelected={false}
               tagtitle={t.name}
+              showCross={false}
             />
           ))}
         </Tags>

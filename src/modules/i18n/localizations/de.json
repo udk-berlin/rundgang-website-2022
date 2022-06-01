@@ -6,7 +6,7 @@
   "katalog": "KATALOG",
   "beratungsangebote_index": "BERATUNGSANGEBOTE",
   "advice": "FÜR STUDIENINTERESSIERTE",
-  "imprint": "IMPRESSUM",
+  "imprint": "Impressum & Datenschutz",
   "contact": "KONTAKT",
   "privacy": "DATENSCHUTZ",
   "search": "SUCHE...",
@@ -18,10 +18,15 @@
   "projects": "Projekte",
   "events": "Veranstaltungen",
   "beratungsangebote": "Beratungsangebote",
-  "fakultaeten": "Fakultäten", 
+  "fakultaeten": "Fakultäten",
   "zentren": "Zentren",
   "institute": "Institute",
   "studiengaenge": "Studiengänge",
   "fachgebiete": "Fachgebiete",
-  "klassen": "Kurse und Klassen"
+  "klassen": "Kurse und Klassen",
+  "location-building": " ",
+  "location-level": "Etage: ",
+  "location-room": "Raum: ",
+  "save": "speichern",
+  "saved": "gespeichert"
 }

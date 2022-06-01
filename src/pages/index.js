@@ -33,7 +33,7 @@ const IndexPage = () => {
         </Stretch>
         <Stretch
           title={intl.formatMessage({ id: "orte" })}
-          preferredSize={27.5}
+          preferredSize={27}
           direction="right"
         >
           <LinkWrapper>

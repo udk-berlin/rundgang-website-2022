@@ -35,18 +35,24 @@ const TagWrapper = styled.span`
     };
   }}
 `;
-const Tag = ({ selected, levelSelected, onClick, tagtitle }) => {
+const Tag = ({
+  selected,
+  levelSelected,
+  onClick,
+  showCross = true,
+  children,
+}) => {
   return (
     <TagWrapper
       onClick={onClick}
       selected={selected}
       levelSelected={levelSelected}
     >
-      {tagtitle}
-      {selected ? (
+      {children}
+      {selected && showCross ? (
         <TagIcon size="12px">&#57344;</TagIcon>
       ) : (
-        <TagIcon size="20px">+</TagIcon>
+        showCross && <TagIcon size="20px">+</TagIcon>
       )}
     </TagWrapper>
   );

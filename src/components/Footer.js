@@ -27,6 +27,12 @@ const LinkWrapper = styled.div`
   flex-grow: ${({ grow }) => grow};
 `;
 
+const RestyledLink = styled(LocalizedLink)`
+  &:hover {
+    color: #888;
+  }
+`;
+
 const LanguageSwitch = styled(LinkWrapper)`
   display: flex;
 `;
@@ -58,9 +64,9 @@ const Footer = () => {
     <>
       <FooterContainer>
         <LinkWrapper grow={0}>
-          <LocalizedLink to="/">
+          <RestyledLink to="/">
             <LocalizedText id="maintitle" />
-          </LocalizedLink>
+          </RestyledLink>
         </LinkWrapper>
         <LinkWrapper grow={0}>23.-24.07.2022</LinkWrapper>
         {router.pathname == "/" ? (
@@ -87,18 +93,18 @@ const Footer = () => {
 
         {router.pathname == "/" ? (
           <LinkWrapper grow={0}>
-            <LocalizedLink to="/imprint">
+            <RestyledLink to="/imprint">
               <LocalizedText id="imprint" />
-            </LocalizedLink>
+            </RestyledLink>
           </LinkWrapper>
         ) : null}
       </FooterContainer>
       {router.pathname !== "/" ? (
         <FooterBelow>
           <LinkWrapper grow={1}>
-            <LocalizedLink to="/">
+            <RestyledLink to="/">
               <LocalizedText id="maintitle" />
-            </LocalizedLink>
+            </RestyledLink>
           </LinkWrapper>
           <LinkWrapper grow={1}>23.-24.07.2022</LinkWrapper>
           <LanguageSwitch grow={1}>
@@ -126,9 +132,9 @@ const Footer = () => {
           </LanguageSwitch>
 
           <LinkWrapper grow={0}>
-            <LocalizedLink to="/imprint">
+            <RestyledLink to="/imprint" shadowing={true}>
               <LocalizedText id="imprint" />
-            </LocalizedLink>
+            </RestyledLink>
           </LinkWrapper>
         </FooterBelow>
       ) : null}

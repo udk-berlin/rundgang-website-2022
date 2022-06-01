@@ -158,6 +158,7 @@ class FilterStore {
 
     const filterTemplate = (list, template) => {
       let res = list.filter(c => template.includes(c.template));
+      //let filternames = [...new Map(res.map(v => [v.name, v])).values()];
       return [...new Map(res.map(v => [v.id, v])).values()];
     };
 

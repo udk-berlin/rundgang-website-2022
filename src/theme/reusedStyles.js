@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-
 const StyledLink = ({ as, children, className, href }) => (
   <Link href={href} as={as} passHref scroll={false}>
     <a className={className}>{children}</a>
@@ -13,7 +12,7 @@ export const DefaultLink = styled(StyledLink)`
   text-decoration: none;
 
   &:hover {
-    color: #222222;
+    color: #e2ff5d;
   }
 
   &:focus {

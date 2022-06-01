@@ -51,6 +51,8 @@ const ResetButton = styled.button`
 const Filter = ({ onFocus, onClose }) => {
   const { dataStore, uiStore } = useStores();
 
+  console.log(uiStore.filterStore.selectedId);
+
   return (
     <FilterWrapper
       animate={uiStore.isOpen !== null ? uiStore.isOpen : "closed"}

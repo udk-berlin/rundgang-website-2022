@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useStores } from "@/stores/index";
 import Layout from "@/components/simple/Layout";
 import Map from "@/components/Map";
 import ListView from "@/components/ListView";
@@ -8,15 +7,18 @@ import ListView from "@/components/ListView";
 const OrteWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 const OrteKatalog = styled.div`
   flex-grow: 0;
   padding: ${({ theme }) => theme.spacing.lg};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    width: 100%;
+  }
 `;
 
 const OrtePage = () => {
-  const { uiStore } = useStores();
   return (
     <Layout growing={1} direction="right">
       <OrteWrapper>

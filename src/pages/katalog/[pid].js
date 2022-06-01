@@ -29,8 +29,6 @@ const KatalogView = () => {
   return dataStore.api.currentRoot ? (
     <Layout growing={1} direction="right">
       <KatalogViewWrapper>
-        <div>ID: {pid}</div>
-        <div>Name: {dataStore.api.currentRoot.name}</div>
         <div>
           {uiStore.items?.map(child => (
             <ChildName key={child.id}>
@@ -40,8 +38,6 @@ const KatalogView = () => {
             </ChildName>
           ))}
         </div>
-        <div>description: {dataStore.api.currentRoot.description?.default}</div>
-        <div>type: {dataStore.api.currentRoot.type}</div>
         {dataStore.api.currentRoot.type == "item" && <ItemView />}
         {uiStore.items?.length && <ListView />}
       </KatalogViewWrapper>

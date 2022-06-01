@@ -84,8 +84,9 @@ const TagGroup = ({ group, name }) => {
                 selected={uiStore.filterStore.selected[name] == child.id}
                 levelSelected={uiStore.filterStore.selected[name] !== null}
                 key={`${i}-tag-${child.id}`}
-                tagtitle={child.name}
-              />
+              >
+                {child.name}
+              </Tag>
             ))}
           </Tags>
         </TagSubGroup>

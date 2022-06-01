@@ -35,12 +35,13 @@ const SaveIcon = styled.div`
 `;
 const Title = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.md};
+  font-family: "DiatypeBold";
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
 const Authors = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-size: ${({ theme }) => theme.fontSizes.md};
   flex-grow: 0;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
@@ -48,7 +49,9 @@ const Authors = styled.div`
 `;
 
 const Time = styled.div`
-  padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
+  border-radius: ${({ theme }) => theme.spacing.md};
+  background-color: white;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     min-width: 50px;
     height: 50px;
@@ -63,8 +66,7 @@ const ListItem = ({ element }) => {
     : `${router.pathname}/${makeUrlFromId(element.id)}`;
 
   const handleAddSaved = (e, id) => {
-    e.preventDefault();
-    uiStore.addToSaved(id);
+    uiStore.addToSaved(e,id);
   };
 
   return (
@@ -84,22 +86,22 @@ const ListItem = ({ element }) => {
             onClick={e => handleAddSaved(e, element.id)}
           />
         </SaveIcon>
+        {element.template == "event" && element.allocation?.temporal?.length
+          ? element.allocation?.temporal?.map((t, i) => (
+              <Time>
+                <FormattedDateTimeRange
+                  key={`time-range-${i}-${element.id}`}
+                  from={t.start}
+                  weekday="long"
+                  hour="numeric"
+                  minute="numeric"
+                  to={t.end}
+                />
+              </Time>
+            ))
+          : null}
         <Title>{element.name}</Title>
         <Authors>{element.origin.authors.map(a => a.name).join(",")}</Authors>
-        {element.template == "event" ? (
-          <Time>
-            {element.allocation?.temporal?.map((t, i) => (
-              <FormattedDateTimeRange
-                key={`time-range-${i}-${element.id}`}
-                from={t.start}
-                weekday="long"
-                hour="numeric"
-                minute="numeric"
-                to={t.end}
-              />
-            ))}
-          </Time>
-        ) : null}
       </LocalizedLink>
     </ListItemWrapper>
   );

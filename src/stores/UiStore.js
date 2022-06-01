@@ -1,7 +1,6 @@
 import { makeAutoObservable, toJS } from "mobx";
 import FilterStore from "./FilterStore";
 
-
 class UiStore {
   constructor() {
     this.isOpen = false;
@@ -44,7 +43,12 @@ class UiStore {
     return this.savedItemIds.map(id => this.dataStore.api.cachedIds[id]);
   }
 
-  addToSaved(id) {
+  isSaved(id) {
+    return this.savedItemIds.find(x => x == id);
+  }
+
+  addToSaved(e, id) {
+    e.preventDefault();
     if (this.savedItemIds.includes(id)) {
       this.savedItemIds = this.savedItemIds.filter(i => i !== id);
     } else {

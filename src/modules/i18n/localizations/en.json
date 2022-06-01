@@ -5,7 +5,7 @@
   "zeiten": "TIMES",
   "katalog": "CATALOGUE",
   "beratungsangebote_index": "CONSULTATION OFFERS",
-  "imprint": "IMPRINT",
+  "imprint": "Imprint & Privacy Policy",
   "contact": "CONTACT",
   "privacy": "PRIVACY",
   "search": "SEARCH...",
@@ -17,10 +17,15 @@
   "projects": "projects",
   "events": "events",
   "beratungsangebote": "Consultation Offers",
-  "fakultaeten": "Faculties", 
+  "fakultaeten": "Faculties",
   "zentren": "Centers",
   "institute": "Institutes",
   "studiengaenge": "Programs",
   "fachgebiete": "Subjects",
-  "klassen": "Courses and Classes"
+  "klassen": "Courses and Classes",
+  "location-building": " ",
+  "location-level": "Floor: ",
+  "location-room": "Room: ",
+  "save": "save",
+  "saved": "saved"
 }

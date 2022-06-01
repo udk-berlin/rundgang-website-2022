@@ -4,7 +4,6 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import FavouriteItem from "./FavouriteItem";
-import { favData } from "./favData";
 
 const FavouritesListWrapper = styled.div``;
 
