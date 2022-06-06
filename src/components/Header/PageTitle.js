@@ -33,10 +33,7 @@ const PageTitle = () => {
   useEffect(() => {
     if (router.query && dataStore?.api?.currentPath) {
       let parent = dataStore?.api?.currentPath.slice(-2)[0];
-      if (
-        parent &&
-        parent.id !== "!yGwpTLQiIMoyuhGggS:dev.medienhaus.udk-berlin.de"
-      ) {
+      if (parent && parent.id !== dataStore?.api?.root?.id) {
         let url = makeUrlFromId(parent.id);
         if (!router.pathname.includes(url)) {
           url = router.pathname.replace("[pid]", url);

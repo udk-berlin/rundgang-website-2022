@@ -9,9 +9,9 @@ const FILTER_URL = "/list/filter";
 const TYPE_ITEM = "/type/item";
 const TYPE_CONTEXT = "/type/context";
 const RENDER_JSON = "/render/json";
-const ROOT = "!yGwpTLQiIMoyuhGggS:dev.medienhaus.udk-berlin.de";
-const STRUCTURE_ROOT = "!YPRUkokMRFexJfMRtB:dev.medienhaus.udk-berlin.de";
-const LOCATIONS_ROOT = "!ZfLuOQsYLtkuIvswLv:dev.medienhaus.udk-berlin.de";
+const ROOT = "!ZHxOBBJSDIRTvbpMRw:dev.medienhaus.udk-berlin.de";
+const STRUCTURE_ROOT = "!gzsKJXOMipzIxsoqYk:dev.medienhaus.udk-berlin.de";
+const LOCATIONS_ROOT = "!mYrhgyDxLiGjDyLrzW:dev.medienhaus.udk-berlin.de";
 
 const GET_OPTIONS = {
   method: "GET",

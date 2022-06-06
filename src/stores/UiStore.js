@@ -14,16 +14,17 @@ class UiStore {
 
   connect = ({ dataStore }) => {
     this.dataStore = dataStore;
-    this.allStores.forEach(store => store?.connect?.(this, dataStore));
+    this.allStores.forEach((store) => store?.connect?.(this, dataStore));
   };
 
   initialize = () => {
-    this.allStores.forEach(store => store?.initialize?.(this));
+    this.allStores.forEach((store) => store?.initialize?.(this));
   };
 
   get isLoaded() {
     return (
-      this.allStores.filter(store => store.isInitialized === false).length === 0
+      this.allStores.filter((store) => store.isInitialized === false).length ===
+      0
     );
   }
 
@@ -40,17 +41,17 @@ class UiStore {
   }
 
   get savedItems() {
-    return this.savedItemIds.map(id => this.dataStore.api.cachedIds[id]);
+    return this.savedItemIds.map((id) => this.dataStore.api.cachedIds[id]);
   }
 
   isSaved(id) {
-    return this.savedItemIds.find(x => x == id);
+    return this.savedItemIds.find((x) => x == id);
   }
 
   addToSaved(e, id) {
     e.preventDefault();
     if (this.savedItemIds.includes(id)) {
-      this.savedItemIds = this.savedItemIds.filter(i => i !== id);
+      this.savedItemIds = this.savedItemIds.filter((i) => i !== id);
     } else {
       this.savedItemIds.push(id);
     }
@@ -58,7 +59,7 @@ class UiStore {
 
   setTitle(title, id) {
     if (
-      id == "!yGwpTLQiIMoyuhGggS:dev.medienhaus.udk-berlin.de" ||
+      id == this.dataStore?.api?.root.id ||
       title == "rundgang22-struct-root"
     ) {
       this.title = "rundgang";
