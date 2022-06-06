@@ -8,12 +8,13 @@ import useIsSticky from "@/utils/useIsSticky";
 import { useStores } from "@/stores/index";
 
 const SearchBarWrapper = styled.div`
-  position: ${({ position }) => position};
   top: 0;
   left: 0;
   width: 100%;
   background: white;
   z-index: 4000;
+  position: sticky;
+  position: -webkit-sticky;
 `;
 
 const FlexContainer = styled.div`
@@ -25,7 +26,6 @@ const FlexContainer = styled.div`
 
 const SearchBar = () => {
   const { uiStore } = useStores();
-  const isSticky = useIsSticky(100);
 
   const handleOpen = useCallback(
     item => {
@@ -43,7 +43,7 @@ const SearchBar = () => {
   );
 
   return (
-    <SearchBarWrapper position={uiStore.isOpen ? "relative" : isSticky}>
+    <SearchBarWrapper >
       <ClickAwayListener onClickAway={() => uiStore.setIsOpen(null)}>
         <FlexContainer>
           <Filter

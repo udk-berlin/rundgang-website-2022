@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useWindowSize from "@/utils/useWindowSize";
 
 const StretchWrapper = styled.div`
   position: relative;
+  display: flex;
+  flex-wrap: nowrap;
   line-height: ${({ lineh }) => lineh};
   letter-spacing: 0.1px;
-  font-size: ${({ fontSize }) => `${fontSize}vh`};
+  font-size: ${({ fontSize }) => fontSize}vh;
   @media ${({ theme }) => theme.breakpoints.md} {
     font-size: ${({ fontSize }) => `${fontSize - 3}vh`};
   }
@@ -31,16 +33,40 @@ const Shadow = styled.div`
   text-align: left;
 `;
 
-const Stretch = ({ children, title, preferredSize, lineh = 0.9 }) => {
+const ArrowStyled = styled.span`
+  position: absolute;
+  right: 20px;
+`;
+
+const Stretch = ({ children, title, preferredSize, arrowDir, lineh = 0.9 }) => {
   const stretchRef = useRef();
   const size = useWindowSize();
   const [fontSize, setFontSize] = useState(null);
   const [factor, setFactor] = useState(1);
 
+  const Arrow = () => {
+    switch (arrowDir) {
+      case "left":
+        return <span>&#8592;</span>;
+      case "right":
+        return <ArrowStyled>&#8594;</ArrowStyled>;
+      case "top":
+        return <span>&#8593;</span>;
+      case "bottom":
+        return <ArrowStyled>&#8595;</ArrowStyled>;
+      default:
+        return "";
+    }
+  };
+
   useEffect(() => {
     if (fontSize && stretchRef?.current?.clientWidth) {
-      let factor = (size.width - 20) / stretchRef?.current?.clientWidth;
-      setFactor(factor);
+      const arrWidth = arrowDir ? 5.7 : 0;
+      let f =
+        (size.width - 20 - arrWidth * preferredSize) /
+        stretchRef?.current?.clientWidth;
+
+      setFactor(f);
     }
   }, [title, size]);
 
@@ -49,7 +75,6 @@ const Stretch = ({ children, title, preferredSize, lineh = 0.9 }) => {
     if (preferredSize) {
       setFontSize(preferredSize);
     } else if (title.length > 15) {
-      console.log(title);
       setFontSize(9);
     } else {
       setFontSize(11);
@@ -57,8 +82,12 @@ const Stretch = ({ children, title, preferredSize, lineh = 0.9 }) => {
   }, [title]);
   return (
     <StretchWrapper fontSize={fontSize} lineh={lineh}>
+      {arrowDir && (arrowDir == "left" || arrowDir == "top") ? <Arrow /> : null}
       <Shadow ref={stretchRef}>{children}</Shadow>
       <StretchLayout factor={factor}>{children}</StretchLayout>
+      {arrowDir && (arrowDir == "right" || arrowDir == "bottom") ? (
+        <Arrow />
+      ) : null}
     </StretchWrapper>
   );
 };
