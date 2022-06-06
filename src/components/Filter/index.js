@@ -24,14 +24,12 @@ const FilterWrapper = styled(motion.div)`
   }
 `;
 
-const GoButton = styled.div`
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
+const GoButton = styled.button`
+  border: none;
+  background: none;
   font-family: "Inter";
   cursor: pointer;
   flex-grow: 0;
-  padding: ${({ theme }) => `${theme.spacing.sm}`};
   font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ active, theme }) =>
     active ? theme.colors.black : theme.colors.lightgrey};
@@ -39,13 +37,19 @@ const GoButton = styled.div`
 `;
 
 const ResetButton = styled.button`
-  border: 3px solid black;
-  background: white;
+  border: none;
+  background: ${({ theme }) => theme.colors.lightgrey};
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  margin: ${({ theme }) => `${theme.spacing.xl} ${theme.spacing.md}`};
+  padding: ${({ theme }) => theme.spacing.sm};
+  height: fit-content;
+  margin-top: auto;
+  margin-bottom: auto;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: ${({ theme }) => `0 ${theme.spacing.mm}`};
 `;
 
 const Filter = ({ onFocus, onClose }) => {
@@ -64,21 +68,23 @@ const Filter = ({ onFocus, onClose }) => {
         {uiStore.isOpen == "filter" && (
           <>
             <TagMenu />
-            <GoButton
-              active={uiStore.filterStore.isTagSelected}
-              onClick={() => {
-                onClose();
-                dataStore.api.getIdFromLink(
-                  uiStore.filterStore.selectedId,
-                  true,
-                );
-              }}
-            >
-              &#8594;
-            </GoButton>
-            <ResetButton onClick={() => uiStore.filterStore.handleReset()}>
-              <LocalizedText id="reset" />
-            </ResetButton>
+            <Buttons>
+              <ResetButton onClick={() => uiStore.filterStore.handleReset()}>
+                <LocalizedText id="reset" />
+              </ResetButton>
+              <GoButton
+                active={uiStore.filterStore.isTagSelected}
+                onClick={() => {
+                  onClose();
+                  dataStore.api.getIdFromLink(
+                    uiStore.filterStore.selectedId,
+                    true
+                  );
+                }}
+              >
+                &#8594;
+              </GoButton>
+            </Buttons>
           </>
         )}
       </AnimatePresence>
