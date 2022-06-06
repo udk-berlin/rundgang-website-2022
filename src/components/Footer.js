@@ -5,11 +5,13 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import LanguageSwitch from "./LanguageSwitch";
 
+export const FOOTER_HEIGHT = 30
+
 const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 30px;
+  height: ${FOOTER_HEIGHT}px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
@@ -43,10 +45,17 @@ const FooterBelow = styled.div`
   display: none;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: flex;
+    bottom: -${FOOTER_HEIGHT}px);
   }
 `;
 const FooterWrapper = styled.div`
   width: 100%;
+  position: fixed;
+  bottom: 0;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    bottom: auto;
+    top: calc(100vh - ${FOOTER_HEIGHT}px);
+  }
 `;
 
 const Footer = () => {

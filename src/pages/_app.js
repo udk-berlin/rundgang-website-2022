@@ -11,17 +11,19 @@ import GlobalStyle from "theme/globalStyle";
 import GlobalFonts from "public/fonts/globalFonts";
 import { useStoreInstances } from "../stores/index";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import SearchBar from "@/components/SearchBar";
+import PageTitle from "@/components/PageTitle";
 import CursorLine from "@/components/CursorLine";
 import { useIsMobile } from "@/utils/useWindowSize";
 import { makeUrlFromId } from "@/utils/idUtils";
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 30px);
   position: relative;
   box-sizing: border-box;
   overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   scroll-behavior: smooth;
@@ -87,14 +89,15 @@ export default function App({ Component, pageProps }) {
             onError={() => null}
           >
             <MotionConfig reducedMotion="user">
-              <Container scrollable={Boolean(router.pathname !== "/")}>
-                <Header key={router.pathname} />
+              <Container>
+                <PageTitle key={`PageTitle-${router.pathname}`} />
+                <SearchBar key={`SearchBar-${router.pathname}`} />
                 <AnimatePresence exitBeforeEnter initial={true}>
                   <Component key={router.pathname} {...pageProps} />
                 </AnimatePresence>
-                <Footer />
                 {/* {showLine ? <CursorLine /> : null} */}
               </Container>
+              <Footer />
             </MotionConfig>
           </IntlProvider>
         </Provider>

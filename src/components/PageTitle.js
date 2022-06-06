@@ -74,21 +74,3 @@ const PageTitle = () => {
 };
 
 export default observer(PageTitle);
-{
-  /* (
-          <Stretch
-            title="RUNDGANG"
-            preferredSize={10}
-            direction="right"
-            key="rundgang_title"
-            duration={0.7}
-          >
-            <Title>
-              RUNDGANG{" "}
-              <span style={{ fontSize: "4vh", whiteSpace: "nowrap" }}>
-                23.07-24.07
-              </span>
-            </Title>
-          </Stretch>
-        ) */
-}

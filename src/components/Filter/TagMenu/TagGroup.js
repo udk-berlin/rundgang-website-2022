@@ -59,7 +59,7 @@ const TagGroup = ({ group, name }) => {
         {isOpen ? (
           <ToggleIcon>&#8595;</ToggleIcon>
         ) : (
-          <ToggleIcon>&#8594;</ToggleIcon>
+          <ToggleIcon>&#8593;</ToggleIcon>
         )}
       </TagGroupTitle>
       <TagGroupStretch

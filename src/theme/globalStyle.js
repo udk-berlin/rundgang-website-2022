@@ -10,7 +10,7 @@ body {
   max-height: 100vh;
   box-sizing: border-box;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y:  hidden;
   scroll-behavior: smooth;
 }
 a {

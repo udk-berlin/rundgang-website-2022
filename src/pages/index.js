@@ -21,36 +21,33 @@ const IndexPage = () => {
       <IndexWrapper>
         <Stretch
           title={intl.formatMessage({ id: "katalog" })}
-          preferredSize={27.5}
-          direction="right"
+          preferredSize={29}
+          arrowDir="top"
         >
           <LinkWrapper>
             <LocalizedLink to="/katalog">
-              <span style={{ fontFamily: "Inter" }}>&#8593;</span>
               <LocalizedText id="katalog" />
             </LocalizedLink>
           </LinkWrapper>
         </Stretch>
         <Stretch
           title={intl.formatMessage({ id: "orte" })}
-          preferredSize={27}
-          direction="right"
+          preferredSize={29}
+          arrowDir="right"
         >
           <LinkWrapper>
             <LocalizedLink to="/orte">
               <LocalizedText id="orte" />
-              <span style={{ fontFamily: "Inter" }}>&#8594;</span>
             </LocalizedLink>
           </LinkWrapper>
         </Stretch>
         <Stretch
           title={intl.formatMessage({ id: "zeiten" })}
-          preferredSize={27.5}
-          direction="right"
+          preferredSize={29}
+          arrowDir="left"
         >
           <LinkWrapper>
             <LocalizedLink to="/zeiten">
-              <span style={{ fontFamily: "Inter" }}>&#8592;</span>
               <LocalizedText id="zeiten" />
             </LocalizedLink>
           </LinkWrapper>
@@ -58,12 +55,11 @@ const IndexPage = () => {
         <Stretch
           title={intl.formatMessage({ id: "beratungsangebote" })}
           preferredSize={12}
-          direction="right"
+          arrowDir="bottom"
         >
           <LinkWrapper>
             <LocalizedLink to="/katalog/beratungsangebote">
               <LocalizedText id="beratungsangebote_index" />
-              <span style={{ fontFamily: "Inter" }}>&#8595;</span>
             </LocalizedLink>
           </LinkWrapper>
         </Stretch>
