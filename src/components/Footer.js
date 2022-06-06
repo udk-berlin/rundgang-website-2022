@@ -1,144 +1,86 @@
 import React from "react";
 import { observer } from "mobx-react";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
+import LanguageSwitch from "./LanguageSwitch";
 
 const FooterContainer = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: ${({ theme }) => theme.fontSizes.md};
+  height: 30px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
-
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
-  }
+  z-index: 100;
 `;
 
 const LinkWrapper = styled.div`
   padding: ${({ theme }) => ` 0 ${theme.spacing.sm}`};
-  flex-grow: ${({ grow }) => grow};
+  flex-grow: 0;
+
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    display: ${({ hideMobile }) => (hideMobile ? "none" : "block")};
+  }
 `;
 
 const RestyledLink = styled(LocalizedLink)`
   &:hover {
-    color: #888;
+    color: ${({ theme }) => theme.colors.darkgrey};
   }
-`;
-
-const LanguageSwitch = styled(LinkWrapper)`
-  display: flex;
-`;
-const LanguageItem = styled.div`
-  cursor: pointer;
-  color: ${({ selected }) => (selected ? "#000000" : "#888888")};
 `;
 
 const FooterBelow = styled.div`
-  position: sticky;
-  top: 100vh;
-  left: 0;
+  padding-top: ${({ theme }) => theme.spacing.lg};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: ${({ theme }) => theme.fontSizes.xl};
+  height: 100px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
-
+  display: none;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
+    display: flex;
   }
+`;
+const FooterWrapper = styled.div`
+  width: 100%;
 `;
 
 const Footer = () => {
-  const router = useRouter();
   return (
-    <>
+    <FooterWrapper>
       <FooterContainer>
-        <LinkWrapper grow={0}>
+        <LinkWrapper>
           <RestyledLink to="/">
-            <LocalizedText id="maintitle" />
+            <LocalizedText id="footer_title" />
           </RestyledLink>
         </LinkWrapper>
-        <LinkWrapper grow={0}>23.-24.07.2022</LinkWrapper>
-        {router.pathname == "/" ? (
-          <LanguageSwitch grow={0}>
-            <LanguageItem
-              onClick={() => {
-                router.push(router.pathname, router.pathname, { locale: "en" });
-              }}
-              selected={router.locale == "en"}
-            >
-              EN
-            </LanguageItem>
-            |
-            <LanguageItem
-              onClick={() => {
-                router.push(router.pathname, router.pathname, { locale: "de" });
-              }}
-              selected={router.locale == "de"}
-            >
-              DE
-            </LanguageItem>
-          </LanguageSwitch>
-        ) : null}
-
-        {router.pathname == "/" ? (
-          <LinkWrapper grow={0}>
-            <RestyledLink to="/imprint">
-              <LocalizedText id="imprint" />
-            </RestyledLink>
-          </LinkWrapper>
-        ) : null}
+        <LinkWrapper>
+          <LocalizedText id="footer_date" />
+        </LinkWrapper>
+        <LinkWrapper hideMobile={true}>
+          <LanguageSwitch />
+        </LinkWrapper>
+        <LinkWrapper hideMobile={true}>
+          <RestyledLink to="/imprint">
+            <LocalizedText id="imprint" />
+          </RestyledLink>
+        </LinkWrapper>
       </FooterContainer>
-      {router.pathname !== "/" ? (
-        <FooterBelow>
-          <LinkWrapper grow={1}>
-            <RestyledLink to="/">
-              <LocalizedText id="maintitle" />
-            </RestyledLink>
-          </LinkWrapper>
-          <LinkWrapper grow={1}>23.-24.07.2022</LinkWrapper>
-          <LanguageSwitch grow={1}>
-            <LanguageItem
-              onClick={() => {
-                router.push(router.pathname, router.pathname, {
-                  locale: "en",
-                });
-              }}
-              selected={router.locale == "en"}
-            >
-              EN
-            </LanguageItem>
-            |
-            <LanguageItem
-              onClick={() => {
-                router.push(router.pathname, router.pathname, {
-                  locale: "de",
-                });
-              }}
-              selected={router.locale == "de"}
-            >
-              DE
-            </LanguageItem>
-          </LanguageSwitch>
-
-          <LinkWrapper grow={0}>
-            <RestyledLink to="/imprint" shadowing={true}>
-              <LocalizedText id="imprint" />
-            </RestyledLink>
-          </LinkWrapper>
-        </FooterBelow>
-      ) : null}
-    </>
+      <FooterBelow>
+        <LinkWrapper>
+          <LanguageSwitch />
+        </LinkWrapper>
+        <LinkWrapper>
+          <RestyledLink to="/imprint">
+            <LocalizedText id="imprint" />
+          </RestyledLink>
+        </LinkWrapper>
+      </FooterBelow>
+    </FooterWrapper>
   );
 };
 
