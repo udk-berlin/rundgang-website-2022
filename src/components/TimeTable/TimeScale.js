@@ -1,46 +1,45 @@
 import React from "react";
 import styled from "styled-components";
-import { times, LOCATION_HEIGHT } from "./testdata";
-
-const TimeLegend = styled.div`
-  position: absolute;
-  top: 0;
-  left: ${({ x }) => `${x}px`};
-  box-sizing: border-box;
-
-`;
+import { times } from "./testdata";
 
 const TimeLine = styled.div`
-  height: ${({ height }) => `${height}px`};
+  height: 100%;
   border-left: 1px solid black;
+  top: 0;
+  left: ${({ x }) => x}px;
+  position: absolute;
 `;
 
 const TimeHour = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.md};
   padding: ${({ theme }) => `${theme.spacing.xs} 0`};
   margin-left: -7px;
-  z-index: 11;
+  z-index: 15;
   height: fit-content;
   width: fit-content;
   background: ${({ theme }) => theme.background.primary};
-  position: sticky;
-  top: 0;
+  top: 0px;
+  left: ${({ x }) => x}px;
+  position: absolute;
 `;
 
 const TimeScaleWrapper = styled.div`
-  position: relative;
   display: flex;
   top: 0px;
   left: 0px;
+  position: sticky;
+  position: -webkit-sticky;
 `;
-const TimeScale = ({ scaleX, maxY }) => {
+const TimeScale = ({ scaleX }) => {
   return (
     <TimeScaleWrapper>
-      {times.map(t => (
-        <TimeLegend key={`timeline-${t}`} x={scaleX(t)}>
-          <TimeHour>{t}</TimeHour>
-          <TimeLine height={maxY} />
-        </TimeLegend>
+      {times.map((t) => (
+        <TimeLine x={scaleX(t)} key={`timeline-${t}`} />
+      ))}
+      {times.map((t) => (
+        <TimeHour x={scaleX(t)} key={`timehour-${t}`}>
+          {t}
+        </TimeHour>
       ))}
     </TimeScaleWrapper>
   );

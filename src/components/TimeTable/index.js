@@ -23,16 +23,14 @@ const TimeTableWrapper = styled.div`
 `;
 
 const TimeTableContainer = styled.div`
-  display: flex;
   width: 100%;
-  justify-content: space-between;
-`;
-
-const Day = styled.div`
-  flex-grow: 1;
-  width: 90vw;
   height: 100%;
+  flex-grow: 1;
+  justify-content: space-between;
   overflow-x: auto;
+  transform: rotateX(180deg);
+  -ms-transform: rotateX(180deg);
+  -webkit-transform: rotateX(180deg);
 `;
 
 const DayMenu = styled.div`
@@ -58,9 +56,12 @@ const TimeWrapper = styled.div`
   width: ${TIME_WIDTH}px;
   height: ${({ height }) => `${height}px`};
   display: flex;
+  transform: rotateX(180deg);
+  -ms-transform: rotateX(180deg);
+  -webkit-transform: rotateX(180deg);
 `;
 /* 
-into timewrapper and Day
+into timewrapper and TimeTableContainer
 transform: rotateX(180deg);
 -ms-transform: rotateX(180deg); 
 -webkit-transform: rotateX(180deg); */
@@ -94,16 +95,11 @@ const TimeTable = () => {
         </DayName>
       </DayMenu>
       <TimeTableContainer>
-        <Day>
-          <TimeWrapper height={scaleY(dataStore.eventRooms?.length + 2)}>
-            <LocationList scaleY={index => scaleY(index)} />
-            <EventList selected={selectedDay} scaleX={scaleX} scaleY={scaleY} />
-            <TimeScale
-              scaleX={scaleX}
-              maxY={scaleY(dataStore.eventRooms?.length)}
-            />
-          </TimeWrapper>
-        </Day>
+        <TimeWrapper height={scaleY(dataStore.eventRooms?.length + 2)}>
+          <LocationList scaleY={(index) => scaleY(index)} />
+          <EventList selected={selectedDay} scaleX={scaleX} scaleY={scaleY} />
+          <TimeScale scaleX={scaleX} />
+        </TimeWrapper>
       </TimeTableContainer>
     </TimeTableWrapper>
   );
