@@ -7,10 +7,9 @@ body {
   font-family: "Diatype", sans-serif;
   width: 100%;
   height: 100%;
-  max-height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
   overflow-x: hidden;
-  overflow-y:  hidden;
   scroll-behavior: smooth;
 }
 a {

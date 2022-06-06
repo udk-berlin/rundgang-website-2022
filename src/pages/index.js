@@ -8,6 +8,7 @@ import Stretch from "@/components/simple/Stretch";
 
 const LinkWrapper = styled(LocalizedLink)`
   width: fit-content;
+  white-space: nowrap;
 `;
 
 const IndexWrapper = styled.div`

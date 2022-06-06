@@ -15,6 +15,7 @@ const SearchBarWrapper = styled.div`
   z-index: 4000;
   position: sticky;
   position: -webkit-sticky;
+  padding-bottom: 10px;
 `;
 
 const FlexContainer = styled.div`

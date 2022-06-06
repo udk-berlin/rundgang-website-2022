@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useWindowSize from "@/utils/useWindowSize";
 
@@ -6,6 +6,7 @@ const StretchWrapper = styled.div`
   position: relative;
   display: flex;
   flex-wrap: nowrap;
+  white-space: nowrap;
   line-height: ${({ lineh }) => lineh};
   letter-spacing: 0.1px;
   font-size: ${({ fontSize }) => fontSize}vh;
@@ -34,8 +35,9 @@ const Shadow = styled.div`
 `;
 
 const ArrowStyled = styled.span`
-  position: absolute;
-  right: 18px;
+  position: ${({ right }) => (right ? "absolute" : "relative")};
+  right: ${({ right }) => (right ? "0px" : "auto")};
+  font-size: inherit;
 `;
 
 const Stretch = ({ children, title, preferredSize, arrowDir, lineh = 0.9 }) => {
@@ -47,13 +49,13 @@ const Stretch = ({ children, title, preferredSize, arrowDir, lineh = 0.9 }) => {
   const Arrow = () => {
     switch (arrowDir) {
       case "left":
-        return <span>&#8592;</span>;
+        return <ArrowStyled>&#8592;</ArrowStyled>;
       case "right":
-        return <ArrowStyled>&#8594;</ArrowStyled>;
+        return <ArrowStyled right>&#8594;</ArrowStyled>;
       case "top":
-        return <span>&#8593;</span>;
+        return <ArrowStyled>&#8593;</ArrowStyled>;
       case "bottom":
-        return <ArrowStyled>&#8595;</ArrowStyled>;
+        return <ArrowStyled right>&#8595;</ArrowStyled>;
       default:
         return "";
     }

@@ -4,8 +4,9 @@ import styled from "styled-components";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import LanguageSwitch from "./LanguageSwitch";
+import useWindowSize from "@/utils/useWindowSize";
 
-export const FOOTER_HEIGHT = 30
+export const FOOTER_HEIGHT = 30;
 
 const FooterContainer = styled.div`
   display: flex;
@@ -35,30 +36,29 @@ const RestyledLink = styled(LocalizedLink)`
 
 const FooterBelow = styled.div`
   padding-top: ${({ theme }) => theme.spacing.lg};
-  display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
+  height: 80px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
   display: none;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: flex;
-    bottom: -${FOOTER_HEIGHT}px);
+    font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
 const FooterWrapper = styled.div`
   width: 100%;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    bottom: auto;
-    top: calc(100vh - ${FOOTER_HEIGHT}px);
+    bottom: -110px;
   }
 `;
 
 const Footer = () => {
+  const size = useWindowSize();
   return (
     <FooterWrapper>
       <FooterContainer>
