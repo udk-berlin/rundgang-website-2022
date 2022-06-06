@@ -1,18 +1,20 @@
 export const ALIASES = {
-  yGwpTLQiIMoyuhGggS: "index",
-  ZfLuOQsYLtkuIvswLv: "orte",
-  YPRUkokMRFexJfMRtB: "katalog",
-  YPRUkokMRFexJfMRtB: "zeiten",
+  ZHxOBBJSDIRTvbpMRw: "index",
+  mYrhgyDxLiGjDyLrzW: "orte",
+  gzsKJXOMipzIxsoqYk: "katalog",
+  ZHxOBBJSDIRTvbpMRw: "zeiten",
+  gzsKJXOMipzIxsoqYk: "beratungsangebote",
 };
 
 export const ALIAS_IDS = {
   index: "yGwpTLQiIMoyuhGggS",
-  orte: "ZfLuOQsYLtkuIvswLv",
-  katalog: "YPRUkokMRFexJfMRtB",
-  zeiten: "YPRUkokMRFexJfMRtB",
+  orte: "mYrhgyDxLiGjDyLrzW",
+  katalog: "gzsKJXOMipzIxsoqYk",
+  zeiten: "ZHxOBBJSDIRTvbpMRw",
+  beratungsangebote: "gzsKJXOMipzIxsoqYk",
 };
 
-export const makeUrlFromId = idString => {
+export const makeUrlFromId = (idString) => {
   if (!idString) return "";
   let [id] = idString.split(":");
   let code = encodeURI(id.replace("!", ""));
@@ -25,15 +27,12 @@ export const makeUrlFromId = idString => {
 export const idsfromAliases = () => {
   console.log(
     JSON.stringify(
-      Object.entries(ALIASES).reduce(
-        (obj, e) => ({ ...obj, [e[1]]: e[0] }),
-        {},
-      ),
-    ),
+      Object.entries(ALIASES).reduce((obj, e) => ({ ...obj, [e[1]]: e[0] }), {})
+    )
   );
 };
 
-export const makeIdFromUrl = url => {
+export const makeIdFromUrl = (url) => {
   //idsfromAliases();
   if (!url) return null;
   url = url in ALIAS_IDS ? ALIAS_IDS[url] : url;

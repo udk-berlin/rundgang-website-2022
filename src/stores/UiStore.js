@@ -75,7 +75,7 @@ class UiStore {
   get items() {
     if (
       this.dataStore.api.currentRoot &&
-      this.dataStore.api.currentRoot.id !== this.dataStore.api.root.id
+      this.dataStore.api.currentRoot?.id !== this.dataStore.api.root.id
     ) {
       return this.dataStore.api.currentItems;
     }

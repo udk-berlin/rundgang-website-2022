@@ -24,7 +24,7 @@ const TagWrapper = styled.span`
       color = theme.colors.white;
       background = theme.colors.black;
     } else if (levelSelected) {
-      color = theme.colors.lightgray;
+      color = theme.colors.lightgrey;
     }
     return {
       borderRadius: theme.spacing.md,

@@ -61,7 +61,7 @@ const IndexPage = () => {
           direction="right"
         >
           <LinkWrapper>
-            <LocalizedLink to="/beratungsangebote">
+            <LocalizedLink to="/katalog/beratungsangebote">
               <LocalizedText id="beratungsangebote_index" />
               <span style={{ fontFamily: "Inter" }}>&#8595;</span>
             </LocalizedLink>

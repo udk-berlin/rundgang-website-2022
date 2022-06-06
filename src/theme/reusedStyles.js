@@ -12,11 +12,11 @@ export const DefaultLink = styled(StyledLink)`
   text-decoration: none;
 
   &:hover {
-    color: #e2ff5d;
+    color: ${({ theme }) => theme.colors.highlight};
   }
 
   &:focus {
-    color: #888888;
+    color: ${({ theme }) => theme.colors.darkgrey};
     outline: none;
     border: 0;
   }

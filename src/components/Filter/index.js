@@ -34,7 +34,7 @@ const GoButton = styled.div`
   padding: ${({ theme }) => `${theme.spacing.sm}`};
   font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ active, theme }) =>
-    active ? theme.colors.black : theme.colors.lightgray};
+    active ? theme.colors.black : theme.colors.lightgrey};
   text-align: right;
 `;
 
