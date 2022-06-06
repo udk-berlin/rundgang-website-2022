@@ -35,7 +35,7 @@ const Shadow = styled.div`
 
 const ArrowStyled = styled.span`
   position: absolute;
-  right: 20px;
+  right: 18px;
 `;
 
 const Stretch = ({ children, title, preferredSize, arrowDir, lineh = 0.9 }) => {

@@ -6,7 +6,7 @@ import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import Layout from "@/components/simple/Layout";
 import Stretch from "@/components/simple/Stretch";
 
-const LinkWrapper = styled.div`
+const LinkWrapper = styled(LocalizedLink)`
   width: fit-content;
 `;
 
@@ -19,50 +19,42 @@ const IndexPage = () => {
   return (
     <Layout growing={0} direction="right">
       <IndexWrapper>
-        <Stretch
-          title={intl.formatMessage({ id: "katalog" })}
-          preferredSize={29}
-          arrowDir="top"
-        >
-          <LinkWrapper>
-            <LocalizedLink to="/katalog">
-              <LocalizedText id="katalog" />
-            </LocalizedLink>
-          </LinkWrapper>
-        </Stretch>
-        <Stretch
-          title={intl.formatMessage({ id: "orte" })}
-          preferredSize={29}
-          arrowDir="right"
-        >
-          <LinkWrapper>
-            <LocalizedLink to="/orte">
-              <LocalizedText id="orte" />
-            </LocalizedLink>
-          </LinkWrapper>
-        </Stretch>
-        <Stretch
-          title={intl.formatMessage({ id: "zeiten" })}
-          preferredSize={29}
-          arrowDir="left"
-        >
-          <LinkWrapper>
-            <LocalizedLink to="/zeiten">
-              <LocalizedText id="zeiten" />
-            </LocalizedLink>
-          </LinkWrapper>
-        </Stretch>
-        <Stretch
-          title={intl.formatMessage({ id: "beratungsangebote" })}
-          preferredSize={12}
-          arrowDir="bottom"
-        >
-          <LinkWrapper>
-            <LocalizedLink to="/katalog/beratungsangebote">
-              <LocalizedText id="beratungsangebote_index" />
-            </LocalizedLink>
-          </LinkWrapper>
-        </Stretch>
+        <LinkWrapper to="/katalog">
+          <Stretch
+            title={intl.formatMessage({ id: "katalog" })}
+            preferredSize={29}
+            arrowDir="top"
+          >
+            <LocalizedText id="katalog" />
+          </Stretch>
+        </LinkWrapper>
+        <LinkWrapper to="/orte">
+          <Stretch
+            title={intl.formatMessage({ id: "orte" })}
+            preferredSize={29}
+            arrowDir="right"
+          >
+            <LocalizedText id="orte" />
+          </Stretch>
+        </LinkWrapper>
+        <LinkWrapper to="/zeiten">
+          <Stretch
+            title={intl.formatMessage({ id: "zeiten" })}
+            preferredSize={29}
+            arrowDir="left"
+          >
+            <LocalizedText id="zeiten" />
+          </Stretch>
+        </LinkWrapper>
+        <LinkWrapper to="/katalog/beratungsangebote">
+          <Stretch
+            title={intl.formatMessage({ id: "beratungsangebote" })}
+            preferredSize={12}
+            arrowDir="bottom"
+          >
+            <LocalizedText id="beratungsangebote_index" />
+          </Stretch>
+        </LinkWrapper>
       </IndexWrapper>
     </Layout>
   );
