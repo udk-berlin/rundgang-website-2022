@@ -40,7 +40,6 @@ const Stretch = ({ children, title, preferredSize, lineh = 0.9 }) => {
   useEffect(() => {
     if (fontSize && stretchRef?.current?.clientWidth) {
       let factor = (size.width - 20) / stretchRef?.current?.clientWidth;
-      console.log(factor, stretchRef?.current?.clientWidth);
       setFactor(factor);
     }
   }, [title, size]);
@@ -51,7 +50,7 @@ const Stretch = ({ children, title, preferredSize, lineh = 0.9 }) => {
       setFontSize(preferredSize);
     } else if (title.length > 15) {
       console.log(title);
-      setFontSize();
+      setFontSize(9);
     } else {
       setFontSize(11);
     }

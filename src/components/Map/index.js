@@ -14,8 +14,8 @@ const MapWrapper = styled.div`
   position: relative;
   top: 0vh;
   left: 1vw;
-  width: 70vw;
-  height: 60vh;
+  width: 60vw;
+  height: 70vh;
   padding: ${({ theme }) => theme.spacing.lg};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 90vw;
@@ -42,7 +42,7 @@ const Map = () => {
 
   useEffect(() => {
     if (exactLocations && dataStore.api.locations) {
-      const adrr = exactLocations.map(a => ({
+      const adrr = exactLocations.map((a) => ({
         ...a,
         ...(a.id in dataStore.api.locations.children
           ? dataStore.api.locations.children[a.id]
@@ -55,7 +55,7 @@ const Map = () => {
   useEffect(() => {
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: "https://osm.udk-berlin.de/styles/toner/style.json",
+      style: "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY",
       center: [FIRSTLNG, FIRSTLAT],
       zoom: ZOOM,
       maxZoom: 18,
@@ -75,7 +75,7 @@ const Map = () => {
         const popupElement = document.createElement("div");
         ReactDOM.render(
           <GrundrissPopup el={el} locale={locale} />,
-          popupElement,
+          popupElement
         );
 
         const popup = new maplibregl.Popup()
@@ -94,22 +94,22 @@ const Map = () => {
         });
       });
 
-      map.current.on("zoomend", e => {
+      map.current.on("zoomend", (e) => {
         let bounds = map.current.getBounds();
-        let filteredLocations = addresses.filter(el =>
-          bounds.contains([el.lng, el.lat]),
+        let filteredLocations = addresses.filter((el) =>
+          bounds.contains([el.lng, el.lat])
         );
-        filteredLocations.map(el => {
+        filteredLocations.map((el) => {
           const scale = map.current.getZoom() - el.maxZoom;
           if (scale > 0) {
             ReactDOM.render(
               <GrundrissMarker el={el} size={60 * 2 ** scale} />,
-              markers[el.id].markerElement,
+              markers[el.id].markerElement
             );
           } else {
             ReactDOM.render(
               <GrundrissMarker el={el} size={60} />,
-              markers[el.id].markerElement,
+              markers[el.id].markerElement
             );
           }
         });

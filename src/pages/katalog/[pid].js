@@ -39,7 +39,7 @@ const KatalogView = () => {
           ))}
         </div>
         {dataStore.api.currentRoot.type == "item" && <ItemView />}
-        {uiStore.items?.length && <ListView />}
+        <ListView />
       </KatalogViewWrapper>
     </Layout>
   ) : null;

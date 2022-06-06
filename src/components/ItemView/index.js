@@ -50,8 +50,10 @@ const SaveTag = styled.span`
   margin: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  background: black;
-  color: ${({ theme }) => theme.colors.highlight};
+  background: ${({ theme, saved }) =>
+    saved ? theme.colors.black : theme.colors.highlight};
+  color: ${({ theme, saved }) =>
+    saved ? theme.colors.highlight : theme.colors.white};
   border-radius: ${({ theme }) => theme.spacing.md};
   align-items: baseline;
   text-align: center;
@@ -84,7 +86,7 @@ const Tags = styled.div`
   padding: ${({ theme }) => `${theme.spacing.md} 0`};
 `;
 
-const renderContent = item => {
+const renderContent = (item) => {
   if (item.type == "heading") {
     return <Heading>{item.content}</Heading>;
   } else if (item.type == "text") {
@@ -113,31 +115,34 @@ const ItemView = () => {
     ? locale.toUpperCase()
     : "DE";
 
-  const tagPrefix = template =>
+  const tagPrefix = (template) =>
     template.startsWith("location") ? intl.formatMessage({ id: template }) : "";
 
   const [tags, setTags] = useState([]);
   useEffect(() => {
-    dataStore.api.getParentsFromId(item).then(parents => setTags(parents));
+    dataStore.api.getParentsFromId(item).then((parents) => setTags(parents));
   }, []);
 
-  return item ? (
+  return item && item?.id ? (
     <Layout growing={1} direction="right">
       <ItemViewWrapper>
         <Tags>
-          <SaveTag onClick={e => uiStore.addToSaved(e, item.id)}>
+          <SaveTag
+            saved={uiStore.isSaved(item.id)}
+            onClick={(e) => uiStore.addToSaved(e, item.id)}
+          >
             {intl.formatMessage({
               id: uiStore.isSaved(item.id) ? "saved" : "save",
             })}
             <SaveStar>
               <FavouriteStarSvg
                 size={10}
-                saved={uiStore.isSaved(item.id)}
-                color="#E2FF5D"
+                saved={true}
+                color={uiStore.isSaved(item.id) ? "#E2FF5D" : "null"}
               />
             </SaveStar>
           </SaveTag>
-          {tags.map(t => (
+          {tags.map((t) => (
             <Tag
               selected={false}
               key={t.id}
@@ -149,17 +154,16 @@ const ItemView = () => {
         <ItemHeaderWrapper>
           <TitleImage src={item.thumbnail} />
           <DescriptionWrapper>
-            {item?.origin?.authors?.map(a => (
+            {item?.origin?.authors?.map((a) => (
               <AuthorTag>{a.name ?? a.id}</AuthorTag>
             ))}
-            <AuthorTag>Lilli Joppien</AuthorTag>
             <TitleText>{item.description[loc]}</TitleText>
           </DescriptionWrapper>
         </ItemHeaderWrapper>
         <ContentWrapper>
           {item.rendered.languages[loc] &&
             _.entries(item.rendered.languages[loc].content).map(([k, c]) =>
-              renderContent(c),
+              renderContent(c)
             )}
         </ContentWrapper>
       </ItemViewWrapper>

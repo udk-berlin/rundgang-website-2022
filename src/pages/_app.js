@@ -22,7 +22,6 @@ const Container = styled.div`
   position: relative;
   box-sizing: border-box;
   overflow-x: hidden;
-  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   scroll-behavior: smooth;

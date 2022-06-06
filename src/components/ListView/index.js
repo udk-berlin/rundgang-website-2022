@@ -9,19 +9,19 @@ const ListViewWrapper = styled.div`
   height: 100%;
   position: relative;
   display: grid;
-  grid-gap: ${({ theme }) => theme.spacing.md};
+  justify-content: space-evenly;
   ${({ numCol }) => {
     if (numCol == 2) {
       return {
-        gridTemplateColumns: "49% 49%",
+        gridTemplateColumns: "50% 50%",
       };
     }
     return {
-      gridTemplateColumns: "19% 19% 19% 19% 19%",
+      gridTemplateColumns: "20% 20% 20% 20% 20%",
     };
   }}
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    grid-template-columns: 49% 49%;
+    grid-template-columns: 50% 50%;
   }
 `;
 

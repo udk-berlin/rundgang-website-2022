@@ -8,7 +8,7 @@ const KatalogPage = () => {
   const { uiStore } = useStores();
   return (
     <Layout growing={1} direction="left">
-      {uiStore.items?.length && <ListView />}
+      <ListView />
     </Layout>
   );
 };

@@ -15,7 +15,7 @@ const TagGroupWrapper = styled.div`
   padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.sm}`};
 `;
 const NumberItems = styled.span`
-  color: ${({ theme }) => theme.colors.lightgray};
+  color: ${({ theme }) => theme.colors.lightgrey};
   font-size: ${({ theme }) => theme.fontSizes.xs};
   margin: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.sm}`};
 `;
