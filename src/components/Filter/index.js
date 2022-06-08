@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { observer } from "mobx-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
@@ -27,35 +27,39 @@ const FilterWrapper = styled(motion.div)`
 const GoButton = styled.button`
   border: none;
   background: none;
-  font-family: "Inter";
   cursor: pointer;
   flex-grow: 0;
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  color: ${({ active, theme }) =>
-    active ? theme.colors.black : theme.colors.lightgrey};
+  font-size: ${({ theme }) => theme.fontSizes.xl};
   text-align: right;
+  font-family: "Inter";
+  margin-left: auto;
+  margin-top: auto;
 `;
 
 const ResetButton = styled.button`
+  font-family: "Diatype";
+  cursor: pointer;
   border: none;
   background: ${({ theme }) => theme.colors.lightgrey};
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => theme.spacing.sm};
+  font-size: ${({ theme }) => theme.fontSizes.lm};
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   height: fit-content;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.xs}`};
 `;
 
 const Buttons = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: ${({ theme }) => `0 ${theme.spacing.mm}`};
+  margin: ${({ theme }) => `0 ${theme.spacing.sm}`};
 `;
 
-const Filter = ({ onFocus, onClose }) => {
+const Filter = ({ onClick, onClose }) => {
   const { dataStore, uiStore } = useStores();
 
-  console.log(uiStore.filterStore.selectedId);
+  const handleSubmit = () => {
+    onClose();
+    dataStore.api.getIdFromLink(uiStore.filterStore.selectedId, true);
+  };
 
   return (
     <FilterWrapper
@@ -63,7 +67,7 @@ const Filter = ({ onFocus, onClose }) => {
       variants={variants}
       transition={{ type: "linear", duration: 0.5 }}
     >
-      <InputField onFocus={onFocus} />
+      <InputField handleFocus={onClick} handleSubmit={handleSubmit} />
       <AnimatePresence>
         {uiStore.isOpen == "filter" && (
           <>
@@ -74,15 +78,13 @@ const Filter = ({ onFocus, onClose }) => {
               </ResetButton>
               <GoButton
                 active={uiStore.filterStore.isTagSelected}
-                onClick={() => {
-                  onClose();
-                  dataStore.api.getIdFromLink(
-                    uiStore.filterStore.selectedId,
-                    true
-                  );
-                }}
+                onClick={() => handleSubmit()}
               >
-                &#8594;
+                {uiStore.filterStore.isTagSelected ? (
+                  <span>&#8594;</span>
+                ) : (
+                  <span>&#x2715;</span>
+                )}
               </GoButton>
             </Buttons>
           </>

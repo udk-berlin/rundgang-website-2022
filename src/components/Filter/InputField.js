@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import { useIntl } from "react-intl";
+import AutoComplete from "./AutoComplete";
 
 const Field = styled.input`
   color: ${({ theme }) => theme.colors.primary};
@@ -16,7 +17,7 @@ const Field = styled.input`
   width: 100%;
   align-items: center;
   font-size: ${({ isOpen }) => (isOpen ? "3vh" : "5vh")};
-  margin: ${({ theme, isOpen }) => (isOpen ? `${theme.spacing.xs}` : "0px")};
+  margin: ${({ theme, isOpen }) => (isOpen ? `${theme.spacing.sm}` : "0px")};
   :focus {
     outline: none;
   }
@@ -43,7 +44,7 @@ const InputFieldWrapper = styled.div`
 `;
 
 const CloseButton = styled.div`
-  font-family: "Inter";
+  font-family: "Diatype";
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -52,20 +53,32 @@ const CloseButton = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 
-const InputField = ({ onFocus }) => {
+const InputField = ({ handleFocus, handleSubmit }) => {
   const { uiStore } = useStores();
   const { messages } = useIntl();
   const [value, setValue] = useState("");
+  const [autocompleteOpen, setAutocompleteOpen] = useState(false);
   const hasContent = useMemo(() => value.length > 0, [value]);
 
   const handleChange = e => {
     setValue(e.target.value);
   };
 
+  const _handleFocus = () => {
+    handleFocus();
+    setAutocompleteOpen(true);
+  };
+
   const handleReset = e => {
     setValue("");
     e.stopPropagation();
     e.preventDefault();
+  };
+
+  const handleSelect = () => {
+    setValue("");
+    setAutocompleteOpen(false);
+    handleSubmit();
   };
 
   return (
@@ -76,11 +89,16 @@ const InputField = ({ onFocus }) => {
         autoCapitalize="false"
         value={value}
         onChange={handleChange}
-        onFocus={onFocus}
+        onFocus={_handleFocus}
         isOpen={uiStore.isOpen == "filter"}
-        placeholder={uiStore.isOpen == "filter" ? messages.search : messages.filter}
+        placeholder={
+          uiStore.isOpen == "filter" ? messages.search : messages.filter
+        }
       />
       {hasContent && <CloseButton onClick={handleReset}>&#57344;</CloseButton>}
+      {hasContent && autocompleteOpen && (
+        <AutoComplete searchValue={value} handleSelect={handleSelect} />
+      )}
     </InputFieldWrapper>
   );
 };

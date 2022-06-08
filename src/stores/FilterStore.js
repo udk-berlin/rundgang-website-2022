@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from "mobx";
+import { makeAutoObservable, observable, toJS } from "mobx";
 const INITIAL_SELECTION = {
   fakultaeten: null,
   zentren: null,
@@ -28,13 +28,17 @@ class FilterStore {
     this.openTagGroup = openTagGroup;
   }
 
-  handleToggleOpen = (group) => {
+  handleToggleOpen = group => {
     if (group == this.openTagGroup) {
       this.setOpenTagGroup(null);
     } else {
       this.setOpenTagGroup(group);
     }
   };
+
+  setIsTagSelected(isSel) {
+    this.isTagSelected = isSel;
+  }
 
   handleReset = () => {
     this.selected = INITIAL_SELECTION;
@@ -47,17 +51,17 @@ class FilterStore {
       this.selectedId = null;
     } else {
       this.selectedId = id;
-      const selectAncestors = (categories) => {
+      const selectAncestors = categories => {
         return categories.reduce((obj, cat) => {
           let selId = "none";
-          if (this.initialTags[cat].find((x) => x.id == id)) {
+          if (this.initialTags[cat].find(x => x.id == id)) {
             selId = id;
-          } else if (this.initialTags[cat].find((x) => x.id == parent)) {
+          } else if (this.initialTags[cat].find(x => x.id == parent)) {
             selId = parent;
-          } else if (this.initialTags[cat].find((x) => x.id == grandparent)) {
+          } else if (this.initialTags[cat].find(x => x.id == grandparent)) {
             selId = grandparent;
           } else if (
-            this.initialTags[cat].find((x) => x.id == greatgrandparent)
+            this.initialTags[cat].find(x => x.id == greatgrandparent)
           ) {
             selId = greatgrandparent;
           }
@@ -145,22 +149,22 @@ class FilterStore {
   get initialTags() {
     let wholeStructure = this.dataStore.api.structure?.children;
 
-    const getChildList = (list) =>
+    const getChildList = list =>
       list
-        .map((c) =>
-          _.values(c.children).map((child) => ({
+        .map(c =>
+          _.values(c.children).map(child => ({
             ...child,
             parent: c.id,
             grandparent: c.parent,
             greatgrandparent: c.grandparent,
-          }))
+          })),
         )
         .flat();
 
     const filterTemplate = (list, template) => {
-      let res = list.filter((c) => template.includes(c.template));
+      let res = list.filter(c => template.includes(c.template));
       //let filternames = [...new Map(res.map(v => [v.name, v])).values()];
-      return [...new Map(res.map((v) => [v.id, v])).values()];
+      return [...new Map(res.map(v => [v.id, v])).values()];
     };
 
     const fakultaeten = filterTemplate(_.values(wholeStructure), ["Fakultät"]);
@@ -173,7 +177,7 @@ class FilterStore {
     const ebene0children = getChildList(ebene0);
     const institute = filterTemplate(ebene0children, ["Institut"]);
     const studienganglist = getChildList(
-      ebene0children.concat(institute)
+      ebene0children.concat(institute),
     ).concat(ebene0children);
     const studiengaenge = filterTemplate(studienganglist, ["Studiengang"]);
 
@@ -197,16 +201,24 @@ class FilterStore {
     };
   }
 
+  get contextList() {
+    return Object.values(this.initialTags)
+      .flat()
+      .concat(Object.values(this.dataStore.api.locations?.children));
+  }
+
   get currentTags() {
-    let isTagSelected = Boolean(
-      _.values(this.selected).find((v) => v !== null && v !== "none")
+    let sel = Boolean(
+      _.values(this.selected).find(v => v !== null && v !== "none"),
     );
-    if (isTagSelected) {
+    if (sel) {
       let allTags = this.initialTags;
       const flEl = (group, sel) =>
         group.filter(
-          (k) =>
-            k.parent == sel || k.grandparent == sel || k.greatgrandparent == sel
+          k =>
+            k.parent == sel ||
+            k.grandparent == sel ||
+            k.greatgrandparent == sel,
         );
       if (this.selected.klassen !== null) {
         return allTags;
@@ -261,10 +273,10 @@ class FilterStore {
           klassen: flEl(allTags.klassen, this.selected.fakultaeten),
         };
       }
-      this.isTagSelected = true;
+      this.setIsTagSelected(true);
       return allTags;
     } else {
-      this.isTagSelected = false;
+      this.setIsTagSelected(false);
       return this.initialTags;
     }
   }

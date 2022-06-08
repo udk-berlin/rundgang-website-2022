@@ -12,7 +12,7 @@ const variants = {
 };
 
 const TagGroupWrapper = styled.div`
-  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
 `;
 const NumberItems = styled.span`
   color: ${({ theme }) => theme.colors.lightgrey};
@@ -26,7 +26,7 @@ const ToggleIcon = styled.span`
 `;
 const TagGroupTitle = styled.div`
   cursor: pointer;
-  font-size: ${({ theme }) => theme.fontSizes.md};
+  font-size: ${({ theme }) => theme.fontSizes.lm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }

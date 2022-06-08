@@ -38,6 +38,7 @@ const ArrowStyled = styled.span`
   position: ${({ right }) => (right ? "absolute" : "relative")};
   right: ${({ right }) => (right ? "0px" : "auto")};
   font-size: inherit;
+  font-family: "Inter";
 `;
 
 const Stretch = ({ children, title, preferredSize, arrowDir, lineh = 0.9 }) => {
@@ -118,6 +119,7 @@ const Stretch = ({ children, title, preferredSize, arrowDir, lineh = 0.9 }) => {
       setFontSize(11);
     }
   }, [title]);
+
   return isMobile ? <StretchWithArrowMobile /> : <StretchWithArrowDesktop />;
 };
 

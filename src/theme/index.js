@@ -1,7 +1,7 @@
 const COLORS = {
   white: "#FFFFFF",
   darkgrey: "#444444",
-  lightgrey: "#adadad",
+  lightgrey: "#d9d9d9",
   highlight: "#E2FF5D",
   black: "#000",
 };
@@ -32,7 +32,7 @@ export const theme = {
   fontSizes: {
     xxs: "0.6em",
     xs: "0.8em",
-    sm: "1em",
+    sm: "1.1em",
     md: "1.2em",
     mm: "1.5em",
     lm: "2em",

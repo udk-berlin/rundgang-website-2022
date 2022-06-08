@@ -66,6 +66,12 @@ class ApiStore {
     );
   };
 
+  getContexts = async () => {
+    return this.getFilteredListFromId(ROOT, TYPE_CONTEXT).catch(() =>
+      console.log("no list of contexts id"),
+    );
+  };
+
   getId = async id => {
     return this.get(id);
   };

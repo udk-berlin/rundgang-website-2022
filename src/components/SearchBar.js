@@ -48,7 +48,7 @@ const SearchBar = () => {
       <ClickAwayListener onClickAway={() => uiStore.setIsOpen(null)}>
         <FlexContainer>
           <Filter
-            onFocus={() => handleOpen("filter")}
+            onClick={() => handleOpen("filter")}
             onClose={() => handleClose("filter")}
           />
           <Favorites
