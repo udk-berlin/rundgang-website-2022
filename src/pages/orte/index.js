@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Layout from "@/components/simple/Layout";
 import Map from "@/components/Map";
 import ListView from "@/components/ListView";
+import JumpToTop from "@/components/JumpToTop";
 
 const OrteWrapper = styled.div`
   display: flex;
@@ -38,6 +39,7 @@ const OrtePage = () => {
           <ListView numCol={2} />
         </OrteKatalog>
       </OrteWrapper>
+      <JumpToTop />
     </Layout>
   );
 };

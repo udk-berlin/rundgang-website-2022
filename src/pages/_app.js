@@ -65,8 +65,10 @@ export default function App({ Component, pageProps }) {
       dataStore.api.getIdFromLink(pid, true);
     } else if (router.pathname !== "/") {
       let id = router.pathname.replaceAll("/", "").replaceAll("[pid]", "");
+      uiStore.filterStore.handleReset();
       dataStore.api.getIdFromLink(id, true);
     } else if (dataStore.api.root) {
+      uiStore.filterStore.handleReset();
       dataStore.api.getIdFromLink(dataStore.api.root.id, true);
     }
   }, [router.query, router.pathname]);

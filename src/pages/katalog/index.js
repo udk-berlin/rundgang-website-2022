@@ -3,12 +3,14 @@ import styled from "styled-components";
 import { useStores } from "@/stores/index";
 import Layout from "@/components/simple/Layout";
 import ListView from "@/components/ListView";
+import JumpToTop from "@/components/JumpToTop";
 
 const KatalogPage = () => {
   const { uiStore } = useStores();
   return (
     <Layout growing={1} direction="left">
       <ListView />
+      <JumpToTop />
     </Layout>
   );
 };
