@@ -1,23 +1,27 @@
 import React from "react";
 import styled from "styled-components";
+import { FOOTER_HEIGHT } from "./Footer";
+import useIsScrolled from "@/utils/useIsScrolled";
 
 const JumpToTopWrapper = styled.div`
-  position: absolute;
+  position: fixed;
+  bottom: ${FOOTER_HEIGHT}px;
+  left: 0;
+  width: fit-content;
   margin: auto;
-  bottom: 0;
   font-size: ${({ theme }) => theme.spacing.xl};
   font-family: "Inter";
   cursor: pointer;
 `;
 
 const JumpToTop = () => {
+  const isScrolled = useIsScrolled(0);
   const handleClick = () => {
-    console.log("scroll");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  return (
+  return isScrolled ? (
     <JumpToTopWrapper onClick={() => handleClick()}>&#8593;</JumpToTopWrapper>
-  );
+  ) : null;
 };
 
 export default JumpToTop;

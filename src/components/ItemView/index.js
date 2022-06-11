@@ -53,7 +53,7 @@ const SaveTag = styled.span`
   background: ${({ theme, saved }) =>
     saved ? theme.colors.black : theme.colors.highlight};
   color: ${({ theme, saved }) =>
-    saved ? theme.colors.highlight : theme.colors.white};
+    saved ? theme.colors.highlight : theme.colors.black};
   border-radius: ${({ theme }) => theme.spacing.md};
   align-items: baseline;
   text-align: center;

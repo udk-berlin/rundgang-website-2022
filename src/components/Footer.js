@@ -4,11 +4,13 @@ import styled from "styled-components";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import LanguageSwitch from "./LanguageSwitch";
-import useWindowSize from "@/utils/useWindowSize";
 
 export const FOOTER_HEIGHT = 30;
 
 const FooterContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,6 +19,9 @@ const FooterContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
   z-index: 100;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    z-index: 1;
+  }
 `;
 
 const LinkWrapper = styled.div`
@@ -35,30 +40,30 @@ const RestyledLink = styled(LocalizedLink)`
 `;
 
 const FooterBelow = styled.div`
-  padding-top: ${({ theme }) => theme.spacing.lg};
-  justify-content: space-between;
+position: relative;
   align-items: center;
-  height: 80px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
   display: none;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    display: flex;
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+    display: block;
+    z-index: 10;
   }
 `;
+const FooterLine = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: ${({ theme }) => theme.spacing.sm};
+  padding-bottom: ${({ theme }) => theme.spacing.lg};
+`;
+
 const FooterWrapper = styled.div`
   width: 100%;
-  position: absolute;
-  bottom: 0;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    bottom: -110px;
-  }
 `;
 
 const Footer = () => {
-  const size = useWindowSize();
   return (
     <FooterWrapper>
       <FooterContainer>
@@ -80,14 +85,26 @@ const Footer = () => {
         </LinkWrapper>
       </FooterContainer>
       <FooterBelow>
-        <LinkWrapper>
-          <LanguageSwitch />
-        </LinkWrapper>
-        <LinkWrapper>
-          <RestyledLink to="/imprint">
-            <LocalizedText id="imprint" />
-          </RestyledLink>
-        </LinkWrapper>
+        <FooterLine>
+          <LinkWrapper>
+            <RestyledLink to="/">
+              <LocalizedText id="footer_title" />
+            </RestyledLink>
+          </LinkWrapper>
+          <LinkWrapper>
+            <LocalizedText id="footer_date" />
+          </LinkWrapper>
+        </FooterLine>
+        <FooterLine>
+          <LinkWrapper>
+            <LanguageSwitch />
+          </LinkWrapper>
+          <LinkWrapper>
+            <RestyledLink to="/imprint">
+              <LocalizedText id="imprint" />
+            </RestyledLink>
+          </LinkWrapper>
+        </FooterLine>
       </FooterBelow>
     </FooterWrapper>
   );

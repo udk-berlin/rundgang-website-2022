@@ -25,7 +25,7 @@ const CursorLine = () => {
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.beginPath();
-    context.lineWidth = 3;
+    context.lineWidth = 5;
     context.moveTo(arr[0].x, arr[0].y);
     arr.map(c => {
       context.lineTo(c.x, c.y);

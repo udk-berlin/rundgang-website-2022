@@ -1,65 +1,78 @@
 import React from "react";
+import _ from "lodash";
 import { observer } from "mobx-react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
-import { TIME_WIDTH, TIME_PADDING } from "./testdata";
+import { makeUrlFromId } from "@/utils/idUtils";
+import { TIME_WIDTH } from "./constants";
 import { useStores } from "@/stores/index";
+import EventBar from "./EventBar";
 
 const LocationWrapper = styled.div`
-  position: sticky;
-  display: flex;
-  top: 0px;
-  left: 0px;
+  height: fit-content;
   z-index: 400;
 `;
 
 const Room = styled.div`
-  position: absolute;
   width: ${TIME_WIDTH}px;
-  top: ${({ y0 }) => `${y0}px`};
-  height: ${({ y0, y1 }) => `${y1 - y0 - 3}px`};
   border-bottom: 1px solid black;
-  left: 0px;
+  position: relative;
+  align-items: end;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px 0px;
 `;
 
-const House = styled(Room)``;
+const House = styled(Room)`
+  height: 100px;
+`;
 
 const RoomTitle = styled.div`
   background: ${({ theme }) => theme.background.primary};
   white-space: nowrap;
-  width: fit-content;
-  height: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  width: ${({ width }) => width}px;
+  position: sticky;
+  left: 0;
   font-size: ${({ theme }) => theme.fontSizes.md};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
-  }
-`;
-
-const HouseTitle = styled(RoomTitle)`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  line-height: 0.9;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
 
-const LocationList = ({ scaleY }) => {
+const RelativeWrapper = styled.div`
+  position: relative;
+`;
+
+const LocationList = ({ scaleX }) => {
   const { dataStore } = useStores();
+  const { pathname } = useRouter();
+  const locWidth = scaleX(1658559600);
   return (
     <LocationWrapper>
-      {dataStore?.eventRooms && dataStore.eventRooms?.length
-        ? dataStore.eventRooms.map(room =>
-            room.children?.length ? (
-              <House y0={scaleY(room.index)} y1={scaleY(room.index + 1)}>
-                <HouseTitle>{room.name}</HouseTitle>
+      {dataStore?.eventLocations
+        ? _.entries(dataStore.eventLocations).map(([house, rooms]) => (
+            <RelativeWrapper key={`house-${house}`}>
+              <House>
+                <RoomTitle width={locWidth}>{house}</RoomTitle>
               </House>
-            ) : (
-              <Room y0={scaleY(room.index)} y1={scaleY(room.index + 1)}>
-                <RoomTitle>{room.name}</RoomTitle>
-              </Room>
-            ),
-          )
+              {_.entries(rooms).map(([room, events]) => (
+                <Room key={`room-${room}-${house}`}>
+                  <RoomTitle width={locWidth}>{room}</RoomTitle>
+                  <RelativeWrapper>
+                    {events?.map((ev, i) => (
+                      <EventBar
+                        key={`ev-${room}-${ev.id}-${i}`}
+                        ev={ev}
+                        start={scaleX(ev.time.start) - locWidth}
+                        end={scaleX(ev.time.end) - locWidth}
+                        link={`${pathname}/${makeUrlFromId(ev.id)}`}
+                      />
+                    ))}
+                  </RelativeWrapper>
+                </Room>
+              ))}
+            </RelativeWrapper>
+          ))
         : null}
     </LocationWrapper>
   );

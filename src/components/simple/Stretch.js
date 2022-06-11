@@ -10,8 +10,8 @@ const StretchWrapper = styled.div`
   line-height: ${({ lineh }) => lineh};
   letter-spacing: 0.1px;
   font-size: ${({ fontSize }) => fontSize}vh;
-  @media ${({ theme }) => theme.breakpoints.md} {
-    font-size: ${({ fontSize }) => `${fontSize - 3}vh`};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    line-height: ${({ lineh }) => 0.8 * lineh};
   }
 `;
 
@@ -101,8 +101,9 @@ const Stretch = ({ children, title, preferredSize, arrowDir, lineh = 0.9 }) => {
   useEffect(() => {
     if (fontSize && stretchRef?.current?.clientWidth) {
       const arrWidth = arrowDir && !isMobile ? 5.7 : 0;
+      const padding = isMobile ? 20 : 50
       let f =
-        (size.width - 20 - arrWidth * preferredSize) /
+        (size.width - padding - arrWidth * preferredSize) /
         stretchRef?.current?.clientWidth;
 
       setFactor(f);

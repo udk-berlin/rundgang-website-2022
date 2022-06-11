@@ -4,17 +4,16 @@ import { observer } from "mobx-react";
 import Filter from "@/components/Filter";
 import Favorites from "@/components/Favorites";
 import ClickAwayListener from "@/components/simple/ClickAwayListener";
-import useIsSticky from "@/utils/useIsSticky";
 import { useStores } from "@/stores/index";
+import useIsScrolled from "@/utils/useIsScrolled";
 
 const SearchBarWrapper = styled.div`
+  position: ${({ isScrolled }) => (isScrolled ? "fixed" : "relative")};
   top: 0;
   left: 0;
   width: 100%;
   background: white;
   z-index: 4000;
-  position: sticky;
-  position: -webkit-sticky;
   padding-bottom: 10px;
 `;
 
@@ -27,6 +26,7 @@ const FlexContainer = styled.div`
 
 const SearchBar = () => {
   const { uiStore } = useStores();
+  const isScrolled = useIsScrolled(0);
 
   const handleOpen = useCallback(
     item => {
@@ -44,7 +44,7 @@ const SearchBar = () => {
   );
 
   return (
-    <SearchBarWrapper >
+    <SearchBarWrapper isScrolled={isScrolled}>
       <ClickAwayListener onClickAway={() => uiStore.setIsOpen(null)}>
         <FlexContainer>
           <Filter

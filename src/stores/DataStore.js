@@ -1,6 +1,6 @@
 import { toJS, makeAutoObservable, reaction } from "mobx";
+import _ from "lodash";
 import ApiStore from "./ApiStore";
-import { eventlocations } from "./test_data";
 
 class DataStore {
   constructor() {
@@ -20,16 +20,31 @@ class DataStore {
     });
   }
 
-  get eventHouses() {
-    return eventlocations;
-  }
-
-  get eventRooms() {
-    let res = eventlocations
-      .map((house, i) => [house, ...house.children])
-      .flat()
-      .map((place, i) => ({ ...place, index: i }));
-    return res;
+  get eventLocations() {
+    if (this.api.eventlist) {
+      let sorted = this.api.eventlist
+        .map(ev => ev.allocation.temporal.map(t => ({ ...ev, time: t })))
+        .flat()
+        .slice()
+        .sort((a, b) => a.time.start - b.time.start);
+      let res = sorted.reduce((obj, ev) => {
+        if (obj && ev.building.name in obj) {
+          if (ev.room.name in obj[ev.building.name]) {
+            obj[ev.building.name][ev.room.name].push(ev);
+          } else {
+            obj[ev.building.name] = {
+              ...obj[ev.building.name],
+              [ev.room.name]: [ev],
+            };
+          }
+        } else {
+          obj = { ...obj, [ev.building.name]: { [ev.room.name]: [ev] } };
+        }
+        return obj;
+      }, {});
+      return res;
+    }
+    return null;
   }
 
   get isLoaded() {

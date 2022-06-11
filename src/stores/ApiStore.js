@@ -30,6 +30,7 @@ class ApiStore {
     this.root = null;
     this.locations = null;
     this.structure = null;
+    this.eventlist = null;
     this.cachedIds = {};
     this.currentRoot = null;
     this.currentPath = null;
@@ -70,6 +71,25 @@ class ApiStore {
     return this.getFilteredListFromId(ROOT, TYPE_CONTEXT).catch(() =>
       console.log("no list of contexts id"),
     );
+  };
+
+  getEventList = async () => {
+    return this.getFilteredListFromId(ROOT, "/allocation/temporal")
+      .then(res =>
+        Promise.all(
+          res.map(async ev => {
+            let locpath = await this.getPathToId(ev.id);
+            return {
+              ...ev,
+              building: locpath.find(
+                loc => loc.template == "location-building",
+              ),
+              room: locpath.find(loc => loc.template == "location-room"),
+            };
+          }),
+        ),
+      )
+      .catch(() => console.log("no eventlist"));
   };
 
   getId = async id => {
@@ -185,10 +205,12 @@ class ApiStore {
       const data = await this.getRoot();
       const structure = await this.getStructure();
       const locations = await this.getLocations();
+      const eventlist = await this.getEventList();
       runInAction(() => {
         this.root = data;
         this.locations = locations;
         this.structure = structure;
+        this.eventlist = eventlist;
         this.status = "success";
         this.isLoaded = true;
         console.log("isLoaded Api");
