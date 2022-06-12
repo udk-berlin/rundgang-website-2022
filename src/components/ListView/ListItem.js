@@ -37,7 +37,6 @@ const SaveIcon = styled.div`
   z-index: 100;
 `;
 
-// 
 const RestyledLink = styled(LocalizedLink)`
   &:hover {
     color: black;
@@ -116,20 +115,19 @@ const ListItem = ({ element }) => {
             <FavouriteStar
               saved={uiStore.savedItemIds.includes(element.id)}
               size={25}
-              onClick={(e) => handleAddSaved(e, element.id)}
+              onClick={e => handleAddSaved(e, element.id)}
             />
           </SaveIcon>
           <TimeWrapper>
             {element.template == "event" && element.allocation?.temporal?.length
-              ? element.allocation?.temporal?.slice(0,3).map((t, i) => (
-                  <Time>
+              ? element.allocation?.temporal?.slice(0, 3).map((t, i) => (
+                  <Time key={`time-range-${t.start}-${i}-${t.end}`}>
                     <FormattedDateTimeRange
-                      key={`time-range-${t.start}-${i}-${t.end}`}
-                      from={t.start}
+                      from={t.start * 1000}
                       weekday="long"
                       hour="numeric"
                       minute="numeric"
-                      to={t.end}
+                      to={t.end * 1000}
                     />
                   </Time>
                 ))
@@ -137,7 +135,7 @@ const ListItem = ({ element }) => {
           </TimeWrapper>
         </ImageWrapper>
         <Title>{element.name}</Title>
-        <Authors>{element.origin.authors.map((a) => a.name).join(",")}</Authors>
+        <Authors>{element.origin.authors.map(a => a.name).join(",")}</Authors>
       </RestyledLink>
     </ListItemWrapper>
   );

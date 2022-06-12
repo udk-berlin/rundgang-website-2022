@@ -20,29 +20,33 @@ class DataStore {
     });
   }
 
+  createEventStructure(eventlist) {
+    let sorted = eventlist
+      .map(ev => ev.allocation.temporal.map(t => ({ ...ev, time: t })))
+      .flat()
+      .slice()
+      .sort((a, b) => a.time.start - b.time.start);
+    let res = sorted.reduce((obj, ev) => {
+      if (obj && ev.building.name in obj) {
+        if (ev.room.name in obj[ev.building.name]) {
+          obj[ev.building.name][ev.room.name].push(ev);
+        } else {
+          obj[ev.building.name] = {
+            ...obj[ev.building.name],
+            [ev.room.name]: [ev],
+          };
+        }
+      } else {
+        obj = { ...obj, [ev.building.name]: { [ev.room.name]: [ev] } };
+      }
+      return obj;
+    }, {});
+    return res;
+  }
+
   get eventLocations() {
     if (this.api.eventlist) {
-      let sorted = this.api.eventlist
-        .map(ev => ev.allocation.temporal.map(t => ({ ...ev, time: t })))
-        .flat()
-        .slice()
-        .sort((a, b) => a.time.start - b.time.start);
-      let res = sorted.reduce((obj, ev) => {
-        if (obj && ev.building.name in obj) {
-          if (ev.room.name in obj[ev.building.name]) {
-            obj[ev.building.name][ev.room.name].push(ev);
-          } else {
-            obj[ev.building.name] = {
-              ...obj[ev.building.name],
-              [ev.room.name]: [ev],
-            };
-          }
-        } else {
-          obj = { ...obj, [ev.building.name]: { [ev.room.name]: [ev] } };
-        }
-        return obj;
-      }, {});
-      return res;
+      return this.createEventStructure(this.api.eventlist);
     }
     return null;
   }
@@ -59,9 +63,9 @@ class DataStore {
     this.sideEffects = [
       reaction(
         () => this.api.currentRoot,
-        root => {
-          if (root) {
-            this.uiStore.setTitle(root.name, root.id);
+        rootNode => {
+          if (rootNode?.name && rootNode?.id) {
+            this.uiStore.setTitle(rootNode.name, rootNode.id);
           }
         },
       ),

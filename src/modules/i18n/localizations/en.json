@@ -28,5 +28,7 @@
   "location-level": "Floor: ",
   "location-room": "Room: ",
   "save": "save",
-  "saved": "saved"
+  "saved": "saved",
+  "projectsandevents": "My saved Projects and Events",
+  "timetable": "Timetable"
 }

@@ -86,7 +86,7 @@ const Tags = styled.div`
   padding: ${({ theme }) => `${theme.spacing.md} 0`};
 `;
 
-const renderContent = (item) => {
+const renderContent = item => {
   if (item.type == "heading") {
     return <Heading>{item.content}</Heading>;
   } else if (item.type == "text") {
@@ -115,21 +115,13 @@ const ItemView = () => {
     ? locale.toUpperCase()
     : "DE";
 
-  const tagPrefix = (template) =>
-    template.startsWith("location") ? intl.formatMessage({ id: template }) : "";
-
-  const [tags, setTags] = useState([]);
-  useEffect(() => {
-    dataStore.api.getParentsFromId(item).then((parents) => setTags(parents));
-  }, []);
-
   return item && item?.id ? (
     <Layout growing={1} direction="right">
       <ItemViewWrapper>
         <Tags>
           <SaveTag
             saved={uiStore.isSaved(item.id)}
-            onClick={(e) => uiStore.addToSaved(e, item.id)}
+            onClick={e => uiStore.addToSaved(e, item.id)}
           >
             {intl.formatMessage({
               id: uiStore.isSaved(item.id) ? "saved" : "save",
@@ -142,19 +134,22 @@ const ItemView = () => {
               />
             </SaveStar>
           </SaveTag>
-          {tags.map((t) => (
+          {item.tags.map(t => (
             <Tag
               selected={false}
               key={t.id}
               levelSelected={false}
               showCross={false}
-            >{`${tagPrefix(t.template)}${t.name}`}</Tag>
+              template={t.template}
+            >
+              {t.name}
+            </Tag>
           ))}
         </Tags>
         <ItemHeaderWrapper>
           <TitleImage src={item.thumbnail} />
           <DescriptionWrapper>
-            {item?.origin?.authors?.map((a) => (
+            {item?.origin?.authors?.map(a => (
               <AuthorTag>{a.name ?? a.id}</AuthorTag>
             ))}
             <TitleText>{item.description[loc]}</TitleText>
@@ -163,7 +158,7 @@ const ItemView = () => {
         <ContentWrapper>
           {item.rendered.languages[loc] &&
             _.entries(item.rendered.languages[loc].content).map(([k, c]) =>
-              renderContent(c)
+              renderContent(c),
             )}
         </ContentWrapper>
       </ItemViewWrapper>

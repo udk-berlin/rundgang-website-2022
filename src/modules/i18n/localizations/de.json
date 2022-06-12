@@ -29,5 +29,7 @@
   "location-level": "Etage: ",
   "location-room": "Raum: ",
   "save": "speichern",
-  "saved": "gespeichert"
+  "saved": "gespeichert",
+  "projectsandevents": "Meine gespeicherten Projekte und Events",
+  "timetable": "Zeitplan"
 }

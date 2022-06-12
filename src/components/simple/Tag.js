@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
+import { useIntl } from "react-intl";
 
 const TagIcon = styled.span`
   font-size: ${({ size }) => size};
@@ -41,13 +42,23 @@ const Tag = ({
   onClick,
   showCross = true,
   children,
+  template,
 }) => {
+  const intl = useIntl();
+  const tagPrefix = useMemo(
+    () =>
+      template?.startsWith("location")
+        ? intl.formatMessage({ id: template })
+        : "",
+    [template],
+  );
   return (
     <TagWrapper
       onClick={onClick}
       selected={selected}
       levelSelected={levelSelected}
     >
+      {tagPrefix}
       {children}
       {selected && showCross ? (
         <TagIcon size="12px">&#57344;</TagIcon>

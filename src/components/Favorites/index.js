@@ -32,6 +32,7 @@ const FavouritesHeader = styled.div`
   text-align: center;
   align-items: center;
   cursor: pointer;
+  padding: ${({ isOpen }) => (isOpen == "favourites" ? "20px" : "0px")};
 `;
 const FavouritesSavedItems = styled.div`
   color: ${({ theme }) => theme.colors.primary};
@@ -61,7 +62,7 @@ const Favourites = ({ onClick, onClose }) => {
       variants={variants}
       transition={{ type: "linear", duration: 0.5 }}
     >
-      <FavouritesHeader onClick={onClick}>
+      <FavouritesHeader onClick={onClick} isOpen={uiStore.isOpen}>
         <FavouritesSavedItems>{uiStore.numberSavedItems}</FavouritesSavedItems>
         <FavouriteStarSvg saved={true} size={16} />
       </FavouritesHeader>

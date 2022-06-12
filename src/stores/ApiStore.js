@@ -103,16 +103,17 @@ class ApiStore {
   getParentsFromId = async item => {
     return Promise.all(
       item.parents.map(parent => this.getPathToId(parent)),
-    ).then(res =>
-      res
+    ).then(res => {
+      res = res
         .flat()
         .filter(
           x =>
             !["structure-root", "Universität", "location-university"].includes(
               x.template,
             ),
-        ),
-    );
+        );
+      return [...new Map(res.map(v => [v.id, v])).values()];
+    });
   };
 
   getTreeFromId = async id => {
@@ -144,9 +145,9 @@ class ApiStore {
     return response;
   };
 
-  setCachedId = data => {
+  setCachedId = (data, tags) => {
     if (data.id && !(data.id in this.cachedIds)) {
-      this.cachedIds[data.id] = data;
+      this.cachedIds[data.id] = { ...data, tags: tags };
     }
   };
 
@@ -157,17 +158,22 @@ class ApiStore {
         searchId = makeIdFromUrl(searchId);
       }
       let data = searchId in this.cachedIds ? this.cachedIds[searchId] : null;
-      let path = "";
+      let tags = data?.tags ? data.tags : [];
       if (!data) {
         data = await this.getId(searchId);
-        path = await this.getPathToId(searchId);
-        this.setCachedId(data);
+        if (!tags?.length && data.localDepth > 2) {
+          tags = await this.getParentsFromId(data);
+          data = { ...data, tags: tags };
+        }
+
+        this.setCachedId(data, tags);
       }
       let currentItems = data?.allItemsBelow?.length
         ? data.allItemsBelow.map(item => this.cachedIds[item.id])
         : null;
       if (data?.type == "context" && asroot && !currentItems) {
         let items = await this.getFilteredListFromId(searchId, TYPE_ITEM);
+
         data = { ...data, allItemsBelow: items.map(i => i.id) };
         currentItems = await Promise.all(
           items.map(async item => {
@@ -175,8 +181,9 @@ class ApiStore {
               return this.cachedIds[item.id];
             } else {
               let res = await this.getId(item.id);
-              this.setCachedId(res);
-              return res;
+              let itemTags = await this.getParentsFromId(res);
+              this.setCachedId(res, itemTags);
+              return { ...res, tags: itemTags };
             }
           }),
         );
@@ -185,11 +192,12 @@ class ApiStore {
         data = { ...data, rendered: renderedItem };
       }
       data.name = title in ALIAS_IDS ? title : data.name;
+
       runInAction(() => {
         if (asroot) {
+          this.currentItems = currentItems;
           this.currentRoot = data;
           this.currentPath = path;
-          this.currentItems = currentItems;
         }
         this.status = "success";
       });
@@ -220,6 +228,10 @@ class ApiStore {
         this.status = "error";
       });
     }
+  };
+
+  hydrate = snapshot => {
+    console.log(snapshot);
   };
 
   initialize = () => {
