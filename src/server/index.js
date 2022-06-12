@@ -9,7 +9,7 @@ const nextApp = next({ dev, dir: "./src" });
 const nextAppHandle = nextApp.getRequestHandler();
 
 // prevents mobx server memory leak
-mobxReact.useStaticRendering(true);
+mobxReact.enableStaticRendering(true);
 
 // boots the custom server
 async function boostrap() {

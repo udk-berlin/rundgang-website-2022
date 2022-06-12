@@ -14,17 +14,16 @@ class UiStore {
 
   connect = ({ dataStore }) => {
     this.dataStore = dataStore;
-    this.allStores.forEach((store) => store?.connect?.(this, dataStore));
+    this.allStores.forEach(store => store?.connect?.(this, dataStore));
   };
 
   initialize = () => {
-    this.allStores.forEach((store) => store?.initialize?.(this));
+    this.allStores.forEach(store => store?.initialize?.(this));
   };
 
   get isLoaded() {
     return (
-      this.allStores.filter((store) => store.isInitialized === false).length ===
-      0
+      this.allStores.filter(store => store.isInitialized === false).length === 0
     );
   }
 
@@ -41,25 +40,33 @@ class UiStore {
   }
 
   get savedItems() {
-    return this.savedItemIds.map((id) => this.dataStore.api.cachedIds[id]);
+    return this.savedItemIds.map(id => this.dataStore.api.cachedIds[id]);
+  }
+
+  get savedEvents() {
+    let savedEvents = this.dataStore.api.eventlist.filter(ev =>
+      this.savedItemIds.find(sav => sav == ev.id),
+    );
+    return this.dataStore.createEventStructure(savedEvents);
   }
 
   isSaved(id) {
-    return this.savedItemIds.find((x) => x == id);
+    return this.savedItemIds.find(x => x == id);
   }
 
   addToSaved(e, id) {
     e.preventDefault();
     if (this.savedItemIds.includes(id)) {
-      this.savedItemIds = this.savedItemIds.filter((i) => i !== id);
+      this.savedItemIds = this.savedItemIds.filter(i => i !== id);
     } else {
       this.savedItemIds.push(id);
     }
   }
 
   setTitle(title, id) {
+    console.log(title, id);
     if (
-      id == this.dataStore?.api?.root.id ||
+      id == this.dataStore?.api?.root?.id ||
       title == "rundgang22-struct-root"
     ) {
       this.title = "rundgang";
@@ -75,7 +82,8 @@ class UiStore {
   get items() {
     if (
       this.dataStore.api.currentRoot &&
-      this.dataStore.api.currentRoot?.id !== this.dataStore.api.root.id
+      this.dataStore.api.currentRoot?.id !== this.dataStore.api.root.id &&
+      this.dataStore.api.currentItems
     ) {
       return this.dataStore.api.currentItems;
     }

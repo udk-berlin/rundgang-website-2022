@@ -56,7 +56,7 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     let pid = router.query.pid;
     setShowLine(false);
-    if (pid) {
+    if (pid && dataStore.api.isLoaded) {
       dataStore.api.getIdFromLink(pid, true);
     } else if (router.pathname !== "/") {
       let id = router.pathname.replaceAll("/", "").replaceAll("[pid]", "");
@@ -66,7 +66,7 @@ export default function App({ Component, pageProps }) {
       uiStore.filterStore.handleReset();
       dataStore.api.getIdFromLink(dataStore.api.root.id, true);
     }
-  }, [router.query, router.pathname]);
+  }, [router.query, router.pathname, dataStore.api.isLoaded]);
 
   useEffect(() => {
     if (router.pathname == "/" && !isMobile) {
