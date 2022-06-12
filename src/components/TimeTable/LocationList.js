@@ -63,7 +63,7 @@ const LocationList = ({ scaleX }) => {
               </House>
               {_.entries(rooms).map(([room, events]) => (
                 <Room key={`room-${room}-${house}`}>
-                  <RoomTitle width={locWidth}>{house}</RoomTitle>
+                  <RoomTitle width={locWidth}>{room}</RoomTitle>
                   <EventsWrapper>
                     {events?.map((ev, i) => (
                       <EventBar
