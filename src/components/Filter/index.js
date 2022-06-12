@@ -22,6 +22,12 @@ const FilterWrapper = styled(motion.div)`
   @media ${({ theme }) => theme.breakpoints.tablet} {
     margin: ${({ theme }) => `0 ${theme.spacing.xs}`};
   }
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 `;
 
 const GoButton = styled.button`

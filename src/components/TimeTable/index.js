@@ -14,7 +14,13 @@ const TimeTableWrapper = styled.div`
   padding: ${({ theme }) => `0 ${theme.spacing.md}`};
   height: fit-content;
   font-family: "Diatype";
-  margin-bottom: 50px;
+  margin-bottom: ${({ theme }) => theme.spacing.lg};
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 `;
 
 const TimeTableContainer = styled.div`

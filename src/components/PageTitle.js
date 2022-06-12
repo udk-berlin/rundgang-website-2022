@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useIntl } from "react-intl";
@@ -6,68 +6,93 @@ import { useRouter } from "next/router";
 import { AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
-import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import Stretch from "@/components/simple/Stretch";
-import { makeUrlFromId } from "@/utils/idUtils";
+import useWindowSize from "@/utils/useWindowSize";
 
 const PageTitleWrapper = styled.div`
   width: 100%;
   font-family: "Diatype";
   background: white;
   height: fit-content;
-  display: flex;
 `;
 
-const Title = styled.div`
-  display: flex;
-  white-space: nowrap;
-  width: max-content;
+const BackRouting = styled.a`
+  cursor: pointer;
+  &:hover {
+    color: ${({ theme }) => theme.colors.highlight};
+  }
 `;
+
+const splitLongTitles = (title, titleId) => {
+  if (titleId == "rundgang") {
+    return title.split(" ");
+  }
+  var words = title.split(/[\s]+/);
+  var newtext = [words[0]];
+  for (let i = 1; i < words.length; i++) {
+    if (newtext[newtext.length - 1].length <= 50) {
+      newtext[newtext.length - 1] += " " + words[i];
+    } else {
+      newtext.push(words[i]);
+    }
+  }
+  if (newtext.length > 2) {
+    newtext[1] += "...";
+    newtext = newtext.slice(0, 2);
+  }
+  return newtext;
+};
 
 const PageTitle = () => {
-  const { uiStore, dataStore } = useStores();
+  const { uiStore } = useStores();
   const intl = useIntl();
   const router = useRouter();
-  const [backRoute, setBackRoute] = useState("/");
 
-  useEffect(() => {
-    if (router.query && dataStore?.api?.currentPath) {
-      let parent = dataStore?.api?.currentPath.slice(-2)[0];
-      if (parent && parent.id !== dataStore?.api?.root?.id) {
-        let url = makeUrlFromId(parent.id);
-        if (!router.pathname.includes(url)) {
-          url = router.pathname.replace("[pid]", url);
-          setBackRoute(url);
-        } else {
-          url = router.pathname.replace("/[pid]", "");
-          setBackRoute(url);
-        }
-      } else {
-        setBackRoute("/");
-      }
-    } else {
-      setBackRoute("/");
-    }
-  }, [dataStore.api.currentPath]);
+  const size = useWindowSize();
+  const isMobile = useMemo(() => size.width < 786, [size]);
+  
+  const titleStrings = useMemo(
+    () =>
+      isMobile
+        ? splitLongTitles(
+            intl.formatMessage({ id: uiStore.title }),
+            uiStore.title,
+          )
+        : intl.formatMessage({ id: uiStore.title }),
+    [isMobile, uiStore.title, router.locale],
+  );
 
   return (
     <PageTitleWrapper>
       <AnimatePresence initial={true}>
-        <Stretch
-          title={intl.formatMessage({ id: uiStore.title })}
-          key={`${uiStore.title}_title`}
-          lineh={1}
-          preferredSize={13}
-        >
-          <Title>
-            {uiStore.title !== "rundgang" && (
-              <LocalizedLink to={backRoute}>
-                <span style={{ fontFamily: "Inter" }}>&#8592;</span>
-              </LocalizedLink>
-            )}
-            <LocalizedText id={uiStore.title} />
-          </Title>
-        </Stretch>
+        {isMobile ? (
+          titleStrings.map((line, i) => (
+            <BackRouting onClick={() => router.back()}>
+              <Stretch
+                titleId={`${uiStore.title}-${i}-${router.locale}`}
+                key={`${uiStore.title}-line-${i}`}
+                lineh={1.2}
+                preferredSize={5}
+                onClick={() => router.back()}
+                arrowDir={uiStore.title !== "rundgang" ? "left" : null}
+              >
+                {line}
+              </Stretch>
+            </BackRouting>
+          ))
+        ) : (
+          <BackRouting onClick={() => router.back()}>
+            <Stretch
+              titleId={`${uiStore.title}-${router.locale}`}
+              key={`${uiStore.title}_title`}
+              lineh={1}
+              preferredSize={11}
+              arrowDir={uiStore.title !== "rundgang" ? "left" : null}
+            >
+              <LocalizedText id={uiStore.title} />
+            </Stretch>
+          </BackRouting>
+        )}
       </AnimatePresence>
     </PageTitleWrapper>
   );

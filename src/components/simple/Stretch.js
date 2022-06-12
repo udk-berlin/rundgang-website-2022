@@ -41,7 +41,13 @@ const ArrowStyled = styled.span`
   font-family: "Inter";
 `;
 
-const Stretch = ({ children, title, preferredSize, arrowDir, lineh = 0.9 }) => {
+const Stretch = ({
+  children,
+  titleId,
+  preferredSize,
+  arrowDir,
+  lineh = 0.9,
+}) => {
   const stretchRef = useRef();
   const size = useWindowSize();
   const isMobile = useMemo(() => size.width < 786, [size]);
@@ -101,25 +107,23 @@ const Stretch = ({ children, title, preferredSize, arrowDir, lineh = 0.9 }) => {
   useEffect(() => {
     if (fontSize && stretchRef?.current?.clientWidth) {
       const arrWidth = arrowDir && !isMobile ? 5.7 : 0;
-      const padding = isMobile ? 20 : 50
+      const padding = isMobile ? 20 : 50;
       let f =
         (size.width - padding - arrWidth * preferredSize) /
         stretchRef?.current?.clientWidth;
 
       setFactor(f);
     }
-  }, [title, size]);
+  }, [titleId, size]);
 
   useEffect(() => {
     // TODO: multiple conditions to perfect sizing
     if (preferredSize) {
       setFontSize(preferredSize);
-    } else if (title.length > 15) {
-      setFontSize(9);
     } else {
       setFontSize(11);
     }
-  }, [title]);
+  }, [titleId]);
 
   return isMobile ? <StretchWithArrowMobile /> : <StretchWithArrowDesktop />;
 };

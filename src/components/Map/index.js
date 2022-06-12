@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { useRouter } from "next/router";
 import maplibregl from "maplibre-gl";
 import { useStores } from "@/stores/index";
@@ -42,7 +42,7 @@ const Map = () => {
 
   useEffect(() => {
     if (exactLocations && dataStore.api.locations) {
-      const adrr = exactLocations.map((a) => ({
+      const adrr = exactLocations.map(a => ({
         ...a,
         ...(a.id in dataStore.api.locations.children
           ? dataStore.api.locations.children[a.id]
@@ -55,7 +55,8 @@ const Map = () => {
   useEffect(() => {
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY",
+      style:
+        "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY",
       center: [FIRSTLNG, FIRSTLAT],
       zoom: ZOOM,
       maxZoom: 18,
@@ -70,13 +71,12 @@ const Map = () => {
         const markerElement = document.createElement("div");
         markerElement.pitchAlignment = "map";
         markerElement.rotationAlignment = "map";
-        ReactDOM.render(<GrundrissMarker el={el} size={60} />, markerElement);
+        const mRoot = createRoot(markerElement);
+        mRoot.render(<GrundrissMarker el={el} size={60} />, markerElement);
 
         const popupElement = document.createElement("div");
-        ReactDOM.render(
-          <GrundrissPopup el={el} locale={locale} />,
-          popupElement
-        );
+        const pRoot = createRoot(popupElement);
+        pRoot.render(<GrundrissPopup el={el} locale={locale} />, popupElement);
 
         const popup = new maplibregl.Popup()
           .setLngLat([el.lng, el.lat])
@@ -88,28 +88,26 @@ const Map = () => {
           .setPopup(popup)
           .addTo(map.current);
 
-        markers[el.id] = { marker, markerElement };
+        markers[el.id] = { marker, mRoot };
         marker.getElement().addEventListener("click", () => {
           console.log("Clicked", el.id);
         });
       });
 
-      map.current.on("zoomend", (e) => {
+      map.current.on("zoomend", e => {
         let bounds = map.current.getBounds();
-        let filteredLocations = addresses.filter((el) =>
-          bounds.contains([el.lng, el.lat])
+        let filteredLocations = addresses.filter(el =>
+          bounds.contains([el.lng, el.lat]),
         );
-        filteredLocations.map((el) => {
+        filteredLocations.map(el => {
           const scale = map.current.getZoom() - el.maxZoom;
           if (scale > 0) {
-            ReactDOM.render(
+            markers[el.id].markerElement.render(
               <GrundrissMarker el={el} size={60 * 2 ** scale} />,
-              markers[el.id].markerElement
             );
           } else {
-            ReactDOM.render(
+            markers[el.id].markerElement.render(
               <GrundrissMarker el={el} size={60} />,
-              markers[el.id].markerElement
             );
           }
         });
