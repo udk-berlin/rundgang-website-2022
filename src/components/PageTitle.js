@@ -50,7 +50,7 @@ const PageTitle = () => {
 
   const size = useWindowSize();
   const isMobile = useMemo(() => size.width < 786, [size]);
-  
+
   const titleStrings = useMemo(
     () =>
       isMobile
@@ -74,7 +74,9 @@ const PageTitle = () => {
                 lineh={1.2}
                 preferredSize={5}
                 onClick={() => router.back()}
-                arrowDir={uiStore.title !== "rundgang" ? "left" : null}
+                arrowDir={
+                  uiStore.title !== "rundgang" && i == 0 ? "left" : null
+                }
               >
                 {line}
               </Stretch>
