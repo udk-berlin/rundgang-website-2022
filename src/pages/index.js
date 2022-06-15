@@ -12,7 +12,6 @@ const LinkWrapper = styled(LocalizedLink)`
 `;
 
 const IndexWrapper = styled.div`
-  overflow: hidden;
 `;
 
 const IndexPage = () => {

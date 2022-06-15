@@ -115,6 +115,8 @@ const ItemView = () => {
     ? locale.toUpperCase()
     : "DE";
 
+  console.log(item.rendered.languages[loc].content);
+
   return item && item?.id ? (
     <Layout growing={1} direction="right">
       <ItemViewWrapper>

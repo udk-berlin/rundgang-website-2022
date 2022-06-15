@@ -24,6 +24,13 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
+const HeaderWrapper = styled.div`
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+`;
+
 export default function App({ Component, pageProps }) {
   const { data } = pageProps;
   const snapshot = data?.dataStore;
@@ -87,8 +94,10 @@ export default function App({ Component, pageProps }) {
           >
             <MotionConfig reducedMotion="user">
               <Container>
-                <PageTitle key={`PageTitle-${router.pathname}`} />
-                <SearchBar key={`SearchBar-${router.pathname}`} />
+                <HeaderWrapper>
+                  <PageTitle key={`PageTitle-${router.pathname}`} />
+                  <SearchBar key={`SearchBar-${router.pathname}`} />
+                </HeaderWrapper>
                 <AnimatePresence exitBeforeEnter initial={true}>
                   <Component key={router.pathname} {...pageProps} />
                 </AnimatePresence>

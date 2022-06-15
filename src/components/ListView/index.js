@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useStores } from "@/stores/index";
-import { testListData } from "./testListData";
 import ListItem from "./ListItem";
 
 const ListViewWrapper = styled.div`
@@ -10,6 +9,7 @@ const ListViewWrapper = styled.div`
   position: relative;
   display: grid;
   justify-content: space-evenly;
+  margin: auto;
   ${({ numCol }) => {
     if (numCol == 2) {
       return {
@@ -21,6 +21,7 @@ const ListViewWrapper = styled.div`
     };
   }}
   @media ${({ theme }) => theme.breakpoints.tablet} {
+    width: 100%;
     grid-template-columns: 50% 50%;
   }
   margin-bottom: ${({ theme }) => theme.spacing.lg};

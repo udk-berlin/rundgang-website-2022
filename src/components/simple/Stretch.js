@@ -7,6 +7,7 @@ const StretchWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
   white-space: nowrap;
+  max-width: 100vw;
   line-height: ${({ lineh }) => lineh};
   letter-spacing: 0.1px;
   font-size: ${({ fontSize }) => fontSize}vh;

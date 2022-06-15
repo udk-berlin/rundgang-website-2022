@@ -5,8 +5,7 @@
       "@/components/*": ["components/*"],
       "@/utils/*": ["utils/*"],
       "@/stores/*": ["stores/*"],
-      "@/theme/*": ["theme/*"],
-      "@/hooks/*": ["hooks/*"]
+      "@/theme/*": ["theme/*"]
     }
   }
 }

@@ -8,8 +8,8 @@ import { useStores } from "@/stores/index";
 import useIsScrolled from "@/utils/useIsScrolled";
 
 const SearchBarWrapper = styled.div`
-  position: ${({ isScrolled }) => (isScrolled ? "fixed" : "relative")};
-  top: 0;
+  /* position: ${({ isScrolled }) => (isScrolled ? "fixed" : "relative")};
+  top: 0; */
   width: 100%;
   background: white;
   z-index: 4000;
@@ -51,7 +51,7 @@ const SearchBar = () => {
 
   return (
     <>
-      <SearchBarReplacer isScrolled={isScrolled}></SearchBarReplacer>
+      {/* <SearchBarReplacer isScrolled={isScrolled}></SearchBarReplacer> */}
       <SearchBarWrapper isScrolled={isScrolled}>
         <ClickAwayListener onClickAway={() => uiStore.setIsOpen(null)}>
           <FlexContainer>

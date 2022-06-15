@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
 import Layout from "@/components/simple/Layout";
-import { makeUrlFromId } from "@/utils/idUtils";
-import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import ListView from "@/components/ListView";
 import ItemView from "@/components/ItemView";
 
@@ -17,27 +15,15 @@ const KatalogViewWrapper = styled.div`
   flex-grow: 1;
 `;
 
-const ChildName = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-`;
-
 const KatalogView = () => {
   const router = useRouter();
-  const { dataStore, uiStore } = useStores();
+  const { dataStore } = useStores();
   const { pid } = router.query;
 
   return dataStore.api.currentRoot ? (
-    <Layout growing={1} direction="right">
+    <Layout growing={1}>
       <KatalogViewWrapper>
-        <div>
-          {uiStore.items?.map(child => (
-            <ChildName key={child.id}>
-              <LocalizedLink to={`/katalog/${makeUrlFromId(child.id)}`}>
-                {child.name}
-              </LocalizedLink>
-            </ChildName>
-          ))}
-        </div>
+        {pid == "beratungsangebote" ? "beratungsangebote" : null}
         {dataStore.api.currentRoot.type == "item" && <ItemView />}
         <ListView />
       </KatalogViewWrapper>

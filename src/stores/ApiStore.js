@@ -1,4 +1,12 @@
 import _ from "lodash";
+import {
+  makeAutoObservable,
+  runInAction,
+  observable,
+  action,
+  toJS,
+} from "mobx";
+
 import { makeIdFromUrl, ALIAS_IDS } from "@/utils/idUtils";
 
 const BASE_URL = "https://api.dev.medienhaus.udk-berlin.de/api/v2/";
@@ -16,14 +24,6 @@ const LOCATIONS_ROOT = "!mYrhgyDxLiGjDyLrzW:dev.medienhaus.udk-berlin.de";
 const GET_OPTIONS = {
   method: "GET",
 };
-
-import {
-  makeAutoObservable,
-  runInAction,
-  observable,
-  action,
-  toJS,
-} from "mobx";
 
 class ApiStore {
   constructor() {
@@ -190,6 +190,15 @@ class ApiStore {
       } else if (data?.type == "item" && asroot) {
         let renderedItem = await this.getRenderedItem(searchId);
         data = { ...data, rendered: renderedItem };
+      }
+
+      if (title == "beratungsangebote") {
+        currentItems = currentItems.filter(l =>
+          l.tags.find(tag => tag.template == "Beratungsangebot"),
+        );
+      }
+      if (data.template == "location-building") {
+        console.log(toJS(currentItems));
       }
       data.name = title in ALIAS_IDS ? title : data.name;
 

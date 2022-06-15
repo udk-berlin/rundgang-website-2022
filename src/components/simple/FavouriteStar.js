@@ -9,8 +9,11 @@ const FavouriteStarWrapper = styled.svg`
 const FillPath = styled.path`
   fill: ${({ onClick, saved, color }) =>
     onClick !== undefined || saved ? color : "#fff"};
-  &:hover {
-    fill: ${({ color }) => color};
+
+  @media ${({ theme }) => theme.breakpoints.laptop} {
+    &:hover {
+      fill: ${({ color }) => color};
+    }
   }
 `;
 

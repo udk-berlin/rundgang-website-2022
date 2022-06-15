@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { createRoot } from "react-dom/client";
-import { useRouter } from "next/router";
 import maplibregl from "maplibre-gl";
 import { useStores } from "@/stores/index";
 import useWindowSize from "@/utils/useWindowSize";
@@ -11,12 +10,9 @@ import GrundrissMarker from "./GrundrissMarker";
 import GrundrissPopup from "./GrundrissPopup";
 
 const MapWrapper = styled.div`
-  position: relative;
-  top: 0vh;
-  left: 1vw;
   width: 60vw;
   height: 70vh;
-  padding: ${({ theme }) => theme.spacing.lg};
+  margin: auto;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 90vw;
     height: 70vh;
@@ -28,13 +24,16 @@ const MapContainerDiv = styled.div`
   height: 100%;
 `;
 
+const Popups = styled.div`
+  display: none;
+`;
+
 const ZOOM = 11.3;
 const FIRSTLAT = 52.513661;
 const FIRSTLNG = 13.3286892;
 
 const Map = () => {
   const { dataStore } = useStores();
-  const { locale } = useRouter();
   const mapContainer = useRef(null);
   const map = useRef(null);
   const size = useWindowSize();
@@ -47,76 +46,81 @@ const Map = () => {
         ...(a.id in dataStore.api.locations.children
           ? dataStore.api.locations.children[a.id]
           : {}),
+        name: a.name,
+        isFound: dataStore.api.locations.children[a.id]?.name,
       }));
       setAddresses(adrr);
     }
   }, [exactLocations, dataStore.api.locations]);
 
   useEffect(() => {
-    map.current = new maplibregl.Map({
-      container: mapContainer.current,
-      style:
-        "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY",
-      center: [FIRSTLNG, FIRSTLAT],
-      zoom: ZOOM,
-      maxZoom: 18,
-      minZoom: 11,
-    });
-    map.current.on("load", () => {
-      map.current.resize();
-      const markers = [];
+    if (addresses?.length) {
+      map.current = new maplibregl.Map({
+        container: mapContainer.current,
+        style:
+          "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY",
+        center: [FIRSTLNG, FIRSTLAT],
+        zoom: ZOOM,
+        maxZoom: 18,
+        minZoom: 11,
+      });
+      map.current.on("load", () => {
+        map.current.resize();
+        let markers = {};
 
-      addresses.forEach((el, i) => {
-        // create a DOM element for the marker
-        const markerElement = document.createElement("div");
-        markerElement.pitchAlignment = "map";
-        markerElement.rotationAlignment = "map";
-        const mRoot = createRoot(markerElement);
-        mRoot.render(<GrundrissMarker el={el} size={60} />, markerElement);
+        addresses.forEach((el, i) => {
+          // create a DOM element for the marker
+          const markerElement = document.createElement("div");
+          markerElement.pitchAlignment = "map";
+          markerElement.rotationAlignment = "map";
+          const mRoot = createRoot(markerElement);
+          mRoot.render(<GrundrissMarker el={el} size={60} />);
 
-        const popupElement = document.createElement("div");
-        const pRoot = createRoot(popupElement);
-        pRoot.render(<GrundrissPopup el={el} locale={locale} />, popupElement);
+          // add marker to map
+          const marker = new maplibregl.Marker(markerElement)
+            .setLngLat([el.lng, el.lat])
+            .addTo(map.current);
 
-        const popup = new maplibregl.Popup()
-          .setLngLat([el.lng, el.lat])
-          .setDOMContent(popupElement);
+          markers[el.id] = { marker, mRoot };
 
-        // add marker to map
-        const marker = new maplibregl.Marker(markerElement)
-          .setLngLat([el.lng, el.lat])
-          .setPopup(popup)
-          .addTo(map.current);
+          marker.getElement().addEventListener("click", () => {
+            const popupElement = document.getElementById(`popup-${el.id}`);
+            const popup = new maplibregl.Popup()
+              .setLngLat([el.lng, el.lat])
+              .setDOMContent(popupElement);
+            marker.setPopup(popup);
+          });
+        });
 
-        markers[el.id] = { marker, mRoot };
-        marker.getElement().addEventListener("click", () => {
-          console.log("Clicked", el.id);
+        map.current.on("zoomend", e => {
+          let bounds = map.current.getBounds();
+          let filteredLocations = addresses.filter(el =>
+            bounds.contains([el.lng, el.lat]),
+          );
+          filteredLocations.map(el => {
+            const scale = map.current.getZoom() - el.maxZoom;
+            if (scale > 0) {
+              markers[el.id].mRoot.render(
+                <GrundrissMarker el={el} size={60 * 2 ** scale} />,
+              );
+            } else {
+              markers[el.id].mRoot.render(
+                <GrundrissMarker el={el} size={60} />,
+              );
+            }
+          });
         });
       });
-
-      map.current.on("zoomend", e => {
-        let bounds = map.current.getBounds();
-        let filteredLocations = addresses.filter(el =>
-          bounds.contains([el.lng, el.lat]),
-        );
-        filteredLocations.map(el => {
-          const scale = map.current.getZoom() - el.maxZoom;
-          if (scale > 0) {
-            markers[el.id].markerElement.render(
-              <GrundrissMarker el={el} size={60 * 2 ** scale} />,
-            );
-          } else {
-            markers[el.id].markerElement.render(
-              <GrundrissMarker el={el} size={60} />,
-            );
-          }
-        });
-      });
-    });
-  }, [size, dataStore.api.locations]);
+    }
+  }, [size, dataStore.api.locations, addresses]);
 
   return (
     <MapWrapper size={size}>
+      <Popups>
+        {addresses.map(house => (
+          <GrundrissPopup key={`popup-${house.id}`} el={house} size={180} />
+        ))}
+      </Popups>
       <MapContainerDiv ref={mapContainer} />
     </MapWrapper>
   );

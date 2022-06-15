@@ -4,7 +4,6 @@ const GlobalStyle = createGlobalStyle`
 html {
   height: 100%; 
   box-sizing: border-box;
-  overflow:auto; }
 body {
   margin: 0;
   padding: 0;

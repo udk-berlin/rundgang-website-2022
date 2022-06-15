@@ -1,41 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useRouter } from "next/router";
-import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import { useStores } from "@/stores/index";
-import { makeUrlFromId } from "@/utils/idUtils";
+import Layout from "@/components/simple/Layout";
 import ListView from "@/components/ListView";
 import ItemView from "@/components/ItemView";
 
-const PlaceWrapper = styled.div`
+const OrteViewWrapper = styled.div`
+  width: 100%;
+  height: 100%;
   padding: ${({ theme }) => theme.spacing.sm};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   flex-grow: 1;
 `;
 
-const ChildName = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-`;
-
-const Place = () => {
+const OrteView = () => {
   const router = useRouter();
   const { dataStore, uiStore } = useStores();
+  const { pid } = router.query;
 
   return dataStore.api.currentRoot ? (
-    <PlaceWrapper>
-      <div>Name: {dataStore.api.currentRoot.name}</div>
-      <div>
-        {dataStore.api.currentRoot.context.map(child => (
-          <LocalizedLink key={child.id} to={`/orte/${makeUrlFromId(child.id)}`}>
-            <ChildName>{child.name}</ChildName>
-          </LocalizedLink>
-        ))}
-      </div>
+    <Layout growing={1}>
+      <OrteViewWrapper>
         {dataStore.api.currentRoot.type == "item" && <ItemView />}
         {uiStore.items?.length && <ListView />}
-    </PlaceWrapper>
+      </OrteViewWrapper>
+    </Layout>
   ) : null;
 };
 
-export default observer(Place);
+export default observer(OrteView);

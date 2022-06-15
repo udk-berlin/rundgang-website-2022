@@ -64,7 +64,6 @@ class UiStore {
   }
 
   setTitle(title, id) {
-    console.log(title, id);
     if (
       id == this.dataStore?.api?.root?.id ||
       title == "rundgang22-struct-root"

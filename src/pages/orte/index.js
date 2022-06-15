@@ -24,17 +24,18 @@ const OrteKatalog = styled.div`
 const MapContainer = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
+  position: sticky;
+  top: 18vh;
 `;
 
 const OrtePage = () => {
   return (
-    <Layout growing={1} direction="right">
+    <Layout growing={0} direction="right">
       <OrteWrapper>
         <MapContainer>
           <Map />
         </MapContainer>
-        <OrteKatalog>
+        <OrteKatalog className="sticky-element">
           <ListView numCol={2} />
         </OrteKatalog>
       </OrteWrapper>

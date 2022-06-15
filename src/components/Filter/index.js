@@ -64,7 +64,9 @@ const Filter = ({ onClick, onClose }) => {
 
   const handleSubmit = () => {
     onClose();
-    dataStore.api.getIdFromLink(uiStore.filterStore.selectedId, true);
+    if (uiStore.filterStore.isTagSelected) {
+      dataStore.api.getIdFromLink(uiStore.filterStore.selectedId, true);
+    }
   };
 
   return (
