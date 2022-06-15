@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 html {
   height: 100%; 
-  box-sizing: border-box;
+  box-sizing: border-box; }
 body {
   margin: 0;
   padding: 0;

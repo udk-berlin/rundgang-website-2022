@@ -21,7 +21,7 @@ const OrteView = () => {
   const { pid } = router.query;
 
   return dataStore.api.currentRoot ? (
-    <Layout growing={1}>
+    <Layout>
       <OrteViewWrapper>
         {dataStore.api.currentRoot.type == "item" && <ItemView />}
         {uiStore.items?.length && <ListView />}

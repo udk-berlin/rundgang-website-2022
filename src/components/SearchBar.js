@@ -5,22 +5,12 @@ import Filter from "@/components/Filter";
 import Favorites from "@/components/Favorites";
 import ClickAwayListener from "@/components/simple/ClickAwayListener";
 import { useStores } from "@/stores/index";
-import useIsScrolled from "@/utils/useIsScrolled";
 
 const SearchBarWrapper = styled.div`
-  /* position: ${({ isScrolled }) => (isScrolled ? "fixed" : "relative")};
-  top: 0; */
   width: 100%;
   background: white;
   z-index: 4000;
   padding-bottom: 10px;
-`;
-
-const SearchBarReplacer = styled.div`
-  width: 100%;
-  height: "calc(5vh)";
-  position: ${({ isScrolled }) => (isScrolled ? "relative" : "fixed")};
-  content: "";
 `;
 
 const FlexContainer = styled.div`
@@ -32,7 +22,6 @@ const FlexContainer = styled.div`
 
 const SearchBar = () => {
   const { uiStore } = useStores();
-  const isScrolled = useIsScrolled(100);
 
   const handleOpen = useCallback(
     item => {
@@ -50,23 +39,20 @@ const SearchBar = () => {
   );
 
   return (
-    <>
-      {/* <SearchBarReplacer isScrolled={isScrolled}></SearchBarReplacer> */}
-      <SearchBarWrapper isScrolled={isScrolled}>
-        <ClickAwayListener onClickAway={() => uiStore.setIsOpen(null)}>
-          <FlexContainer>
-            <Filter
-              onClick={() => handleOpen("filter")}
-              onClose={() => handleClose("filter")}
-            />
-            <Favorites
-              onClick={() => handleOpen("favourites")}
-              onClose={() => handleClose("favourites")}
-            />
-          </FlexContainer>
-        </ClickAwayListener>
-      </SearchBarWrapper>
-    </>
+    <SearchBarWrapper>
+      <ClickAwayListener onClickAway={() => uiStore.setIsOpen(null)}>
+        <FlexContainer>
+          <Filter
+            onClick={() => handleOpen("filter")}
+            onClose={() => handleClose("filter")}
+          />
+          <Favorites
+            onClick={() => handleOpen("favourites")}
+            onClose={() => handleClose("favourites")}
+          />
+        </FlexContainer>
+      </ClickAwayListener>
+    </SearchBarWrapper>
   );
 };
 

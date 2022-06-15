@@ -25,7 +25,6 @@ const Container = styled.div`
 `;
 
 const HeaderWrapper = styled.div`
-  width: 100%;
   position: sticky;
   top: 0;
   z-index: 200;

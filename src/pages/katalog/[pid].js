@@ -21,7 +21,7 @@ const KatalogView = () => {
   const { pid } = router.query;
 
   return dataStore.api.currentRoot ? (
-    <Layout growing={1}>
+    <Layout>
       <KatalogViewWrapper>
         {pid == "beratungsangebote" ? "beratungsangebote" : null}
         {dataStore.api.currentRoot.type == "item" && <ItemView />}

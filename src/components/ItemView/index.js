@@ -22,6 +22,7 @@ import FavouriteStarSvg from "@/components/simple/FavouriteStar";
 
 const ItemViewWrapper = styled.div`
   width: 100%;
+  overflow-x: hidden;
   height: 100%;
   padding: ${({ theme }) => theme.spacing.sm};
   font-size: ${({ theme }) => theme.fontSizes.sm};
@@ -31,25 +32,32 @@ const ItemViewWrapper = styled.div`
 const ItemHeaderWrapper = styled.div`
   display: grid;
   grid-template-columns: 60% 40%;
+  width: 100%;
+  margin: auto;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    display: block;
+  }
 `;
 
 const TitleImage = styled.img`
   width: 100%;
+  margin: auto;
 `;
 
 const AuthorTag = styled.div`
-  width: fit-content;
   margin: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.xs}`};
   font-size: ${({ theme }) => theme.fontSizes.lg};
   border: 1px solid black;
   border-radius: ${({ theme }) => theme.spacing.md};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
 `;
 
 const SaveTag = styled.span`
   margin: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
-  font-size: ${({ theme }) => theme.fontSizes.sm};
   background: ${({ theme, saved }) =>
     saved ? theme.colors.black : theme.colors.highlight};
   color: ${({ theme, saved }) =>
@@ -83,6 +91,9 @@ const ContentWrapper = styled.div`
 `;
 
 const Tags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
   padding: ${({ theme }) => `${theme.spacing.md} 0`};
 `;
 
@@ -118,7 +129,7 @@ const ItemView = () => {
   console.log(item.rendered.languages[loc].content);
 
   return item && item?.id ? (
-    <Layout growing={1} direction="right">
+    <Layout direction="right">
       <ItemViewWrapper>
         <Tags>
           <SaveTag

@@ -24,13 +24,16 @@ const OrteKatalog = styled.div`
 const MapContainer = styled.div`
   width: 100%;
   height: 100%;
-  position: sticky;
-  top: 18vh;
+  position: relative;
+  @media ${({ theme }) => theme.breakpoints.laptop} {
+    position: sticky;
+    top: 18vh;
+  }
 `;
 
 const OrtePage = () => {
   return (
-    <Layout growing={0} direction="right">
+    <Layout direction="right">
       <OrteWrapper>
         <MapContainer>
           <Map />

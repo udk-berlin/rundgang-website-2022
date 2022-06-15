@@ -11,13 +11,12 @@ const LinkWrapper = styled(LocalizedLink)`
   white-space: nowrap;
 `;
 
-const IndexWrapper = styled.div`
-`;
+const IndexWrapper = styled.div``;
 
 const IndexPage = () => {
   const intl = useIntl();
   return (
-    <Layout growing={0} direction="right">
+    <Layout direction="right">
       <IndexWrapper>
         <LinkWrapper to="/katalog">
           <Stretch
