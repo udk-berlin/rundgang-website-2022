@@ -21,7 +21,6 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 import FavouriteStarSvg from "@/components/simple/FavouriteStar";
 
 const ItemViewWrapper = styled.div`
-  width: 100%;
   overflow-x: hidden;
   height: 100%;
   padding: ${({ theme }) => theme.spacing.sm};

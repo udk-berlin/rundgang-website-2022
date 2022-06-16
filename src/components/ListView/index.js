@@ -21,7 +21,6 @@ const ListViewWrapper = styled.div`
     };
   }}
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    width: 100%;
     grid-template-columns: 50% 50%;
   }
   margin-bottom: ${({ theme }) => theme.spacing.lg};

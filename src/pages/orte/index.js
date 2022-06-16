@@ -5,6 +5,7 @@ import Map from "@/components/Map";
 import ListView from "@/components/ListView";
 
 const OrteWrapper = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   @media ${({ theme }) => theme.breakpoints.tablet} {
