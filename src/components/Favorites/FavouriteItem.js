@@ -8,9 +8,9 @@ const FavouriteItemWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   display: flex;
   width: 100%;
-  padding-bottom: ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme }) => theme.spacing.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding-bottom: ${({ theme }) => `0 ${theme.spacing.sm}`};
+    padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
   }
 `;
 
@@ -90,17 +90,21 @@ const FavouriteItem = ({ element }) => {
         <Title>{element.name}</Title>
         <Authors>{element.origin.authors.map(a => a.name).join(",")}</Authors>
         <Tags>
-          {element.tags.map(t => (
-            <Tag
-              selected={false}
-              key={t.id}
-              levelSelected={false}
-              showCross={false}
-              template={t.template}
-            >
-              {t.name}
-            </Tag>
-          ))}
+          {element.tags
+            .filter(t =>
+              ["location-room", "location-building"].includes(t.template),
+            )
+            .map(t => (
+              <Tag
+                selected={false}
+                key={t.id}
+                levelSelected={false}
+                showCross={false}
+                template={t.template}
+              >
+                {t.name}
+              </Tag>
+            ))}
         </Tags>
       </Info>
     </FavouriteItemWrapper>
