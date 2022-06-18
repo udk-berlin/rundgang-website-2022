@@ -1,8 +1,8 @@
 export const ALIASES = {
-  ZHxOBBJSDIRTvbpMRw: "index",
+  gzsKJXOMipzIxsoqYk: "index",
   mYrhgyDxLiGjDyLrzW: "orte",
   gzsKJXOMipzIxsoqYk: "katalog",
-  ZHxOBBJSDIRTvbpMRw: "zeiten",
+  gzsKJXOMipzIxsoqYk: "zeiten",
   gzsKJXOMipzIxsoqYk: "beratungsangebote",
 };
 
@@ -10,7 +10,7 @@ export const ALIAS_IDS = {
   index: "yGwpTLQiIMoyuhGggS",
   orte: "mYrhgyDxLiGjDyLrzW",
   katalog: "gzsKJXOMipzIxsoqYk",
-  zeiten: "ZHxOBBJSDIRTvbpMRw",
+  zeiten: "gzsKJXOMipzIxsoqYk",
   beratungsangebote: "gzsKJXOMipzIxsoqYk",
 };
 

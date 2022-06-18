@@ -8,6 +8,8 @@ class UiStore {
     this.allStores = [this.filterStore];
     this.savedItemIds = [];
     this.title = "rundgang";
+    this.floorLevel = null;
+    this.selectedRoom = null;
 
     makeAutoObservable(this, {});
   }
@@ -78,12 +80,51 @@ class UiStore {
     }
   }
 
+  setFloorLevel(level) {
+    this.floorLevel = level;
+  }
+
+  setSelectedRoom(r) {
+    this.selectedRoom = r;
+  }
+
+  get floorPlan() {
+    if (this.dataStore.api.currentRoot?.template == "location-building") {
+      return this.dataStore.api.currentRoot.levels.find(
+        i => i.name == this.floorLevel,
+      );
+    }
+    return null;
+  }
+
+  get buildingLevels() {
+    return this.dataStore.api.currentRoot?.levels?.filter(
+      c => c.template == "location-level",
+    );
+  }
+
+  get currentContext() {
+    if (this.dataStore.api.currentRoot) {
+      return this.dataStore.api.currentRoot;
+    }
+    return null;
+  }
+
   get items() {
     if (
       this.dataStore.api.currentRoot &&
       this.dataStore.api.currentRoot?.id !== this.dataStore.api.root.id &&
       this.dataStore.api.currentItems
     ) {
+      if (
+        this.dataStore.api.currentRoot?.template == "location-building" &&
+        this.floorLevel
+      ) {
+        let tag = this.selectedRoom ? this.selectedRoom.name : this.floorLevel;
+        return this.dataStore.api.currentItems.filter(el =>
+          el.tags.find(t => t.name == tag),
+        );
+      }
       return this.dataStore.api.currentItems;
     }
     return [];

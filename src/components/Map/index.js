@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import _ from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { createRoot } from "react-dom/client";
@@ -27,7 +28,8 @@ const MapContainerDiv = styled.div`
 const Popups = styled.div`
   display: none;
 `;
-
+const MAP_STYLE =
+  "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY";
 const ZOOM = 11.3;
 const FIRSTLAT = 52.513661;
 const FIRSTLNG = 13.3286892;
@@ -43,9 +45,9 @@ const Map = () => {
     if (exactLocations && dataStore.api.locations) {
       const adrr = exactLocations.map(a => ({
         ...a,
-        ...(a.id in dataStore.api.locations.children
-          ? dataStore.api.locations.children[a.id]
-          : {}),
+        ..._.values(dataStore.api.locations.children).find(
+          c => c.name == a.image,
+        ),
         name: a.name,
         isFound: dataStore.api.locations.children[a.id]?.name,
       }));
@@ -57,8 +59,7 @@ const Map = () => {
     if (addresses?.length) {
       map.current = new maplibregl.Map({
         container: mapContainer.current,
-        style:
-          "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY",
+        style: MAP_STYLE,
         center: [FIRSTLNG, FIRSTLAT],
         zoom: ZOOM,
         maxZoom: 18,
@@ -81,7 +82,7 @@ const Map = () => {
             .setLngLat([el.lng, el.lat])
             .addTo(map.current);
 
-          markers[el.id] = { marker, mRoot };
+          markers[el.id] = { marker, mRoot, scale: 0 };
 
           marker.getElement().addEventListener("click", () => {
             const popupElement = document.getElementById(`popup-${el.id}`);
@@ -99,11 +100,14 @@ const Map = () => {
           );
           filteredLocations.map(el => {
             const scale = map.current.getZoom() - el.maxZoom;
-            if (scale > 0) {
+            if (el.image == "haus9") {
+            }
+            if (scale !== markers[el.id].scale && scale > 0) {
               markers[el.id].mRoot.render(
                 <GrundrissMarker el={el} size={60 * 2 ** scale} />,
               );
-            } else {
+            } else if (markers[el.id].scale > 0 && scale < 0) {
+              console.log(markers[el.id].mRoot);
               markers[el.id].mRoot.render(
                 <GrundrissMarker el={el} size={60} />,
               );
@@ -118,7 +122,7 @@ const Map = () => {
     <MapWrapper size={size}>
       <Popups>
         {addresses.map(house => (
-          <GrundrissPopup key={`popup-${house.id}`} el={house} size={180} />
+          <GrundrissPopup key={`popup-${house.image}`} el={house} size={180} />
         ))}
       </Popups>
       <MapContainerDiv ref={mapContainer} />

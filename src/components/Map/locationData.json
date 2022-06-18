@@ -9,7 +9,7 @@
     ],
     "maxZoom": 13.7,
     "image": "haus2",
-    "id": "!dtjgwrdMPItWQIaoSt:dev.medienhaus.udk-berlin.de"
+    "id": "!RoplWetVwBJXxKZPGr:dev.medienhaus.udk-berlin.de"
   },
   {
     "name": "Universitätsbibliothek, Fasanenstr. 88",
@@ -45,7 +45,7 @@
     ],
     "maxZoom": 14.66,
     "image": "haus4",
-    "id": "!SLHPcitdKliABtGyyt:dev.medienhaus.udk-berlin.de"
+    "id": "!FQcGktOAOcPMpBqJxd:dev.medienhaus.udk-berlin.de"
   },
   {
     "name": "Lietzenburger Str. 45",
@@ -116,8 +116,8 @@
       { "start": 1658653200000, "end": 1658685600000 }
     ],
     "maxZoom": 14,
-    "image": "haus5",
-    "id": "!tbzskmejuZweqmVLuh:dev.medienhaus.udk-berlin.de"
+    "image": "4001",
+    "id": "!dtjgwrdMPItWQIaoSt:dev.medienhaus.udk-berlin.de"
   },
   {
     "name": "Fasanenstr. 1b",
@@ -133,13 +133,13 @@
   },
   {
     "name": "Jazz-Institut Berlin, Einsteinufer 43-53",
-    "lat": "52.51702833511489",
-    "lng": "13.322340551980432",
+    "lat": "52.5168",
+    "lng": "13.3224",
     "times": [
       { "start": 1658566800000, "end": 1658599200000 },
       { "start": 1658653200000, "end": 1658685600000 }
     ],
-    "maxZoom": 14.2,
+    "maxZoom": 14.7,
     "image": "haus9",
     "id": "!fKbywfzCCNWPpoTFAr:dev.medienhaus.udk-berlin.de"
   },
@@ -151,8 +151,8 @@
       { "start": 1658566800000, "end": 1658599200000 },
       { "start": 1658653200000, "end": 1658685600000 }
     ],
-    "maxZoom": 14.2,
-    "image": "haus9",
+    "maxZoom": 14.7,
+    "image": "haus15",
     "id": "!fKbywfzCCNWPpoTFAr:dev.medienhaus.udk-berlin.de"
   },
   {

@@ -6,6 +6,7 @@ import { useStores } from "@/stores/index";
 import Layout from "@/components/simple/Layout";
 import ListView from "@/components/ListView";
 import ItemView from "@/components/ItemView";
+import Floorplan from "@/components/Floorplan";
 
 const OrteViewWrapper = styled.div`
   width: 100%;
@@ -24,7 +25,10 @@ const OrteView = () => {
     <Layout>
       <OrteViewWrapper>
         {dataStore.api.currentRoot.type == "item" && <ItemView />}
-        {uiStore.items?.length && <ListView />}
+        {dataStore.api.currentRoot.template == "location-building" && (
+          <Floorplan />
+        )}
+        <ListView />
       </OrteViewWrapper>
     </Layout>
   ) : null;

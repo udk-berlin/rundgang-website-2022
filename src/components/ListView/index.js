@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import ListItem from "./ListItem";
 
@@ -43,4 +44,4 @@ const ListView = ({ numCol }) => {
   );
 };
 
-export default ListView;
+export default observer(ListView);

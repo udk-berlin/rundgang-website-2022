@@ -31,5 +31,7 @@
   "saved": "saved",
   "projectsandevents": "My saved Projects and Events",
   "timetable": "Timetable",
-  "rooms": "Rooms"
+  "rooms": "Rooms",
+  "selected-topic": "Room: {name} ({topic})",
+  "allfloors": "all floors"
 }

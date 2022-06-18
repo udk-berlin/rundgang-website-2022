@@ -180,6 +180,7 @@ class ApiStore {
             if (item.id in this.cachedIds) {
               return this.cachedIds[item.id];
             } else {
+              console.log(item.name, " not in cache");
               let res = await this.getId(item.id);
               let itemTags = await this.getParentsFromId(res);
               this.setCachedId(res, itemTags);
@@ -198,7 +199,22 @@ class ApiStore {
         );
       }
       if (data.template == "location-building") {
-        console.log(toJS(currentItems));
+        data.context = data.context.sort(
+          (a, b) => parseInt(a.name) - parseInt(b.name),
+        );
+        let levels = await Promise.all(
+          data.context.map(async level => {
+            if (level.id in this.cachedIds) {
+              return this.cachedIds[level.id];
+            } else {
+              let res = await this.getId(level.id);
+              this.setCachedId(res);
+              return res;
+            }
+          }),
+        );
+        console.log(toJS(levels));
+        data.levels = levels;
       }
       data.name = title in ALIAS_IDS ? title : data.name;
 
