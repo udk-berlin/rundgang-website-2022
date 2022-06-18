@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useIntl } from "react-intl";
@@ -62,12 +62,22 @@ const PageTitle = () => {
     [isMobile, uiStore.title, router.locale],
   );
 
+  const handleBack = () => {
+    if (uiStore.floorLevel) {
+      uiStore.setFloorLevel(null);
+    }
+    if (uiStore.selectedRoom) {
+      uiStore.setSelectedRoom(null);
+    }
+    router.back();
+  };
+
   return (
     <PageTitleWrapper>
       <AnimatePresence initial={true}>
         {isMobile ? (
           titleStrings.map((line, i) => (
-            <BackRouting onClick={() => router.back()}>
+            <BackRouting onClick={() => handleBack()}>
               <Stretch
                 titleId={`${uiStore.title}-${i}-${router.locale}`}
                 key={`${uiStore.title}-line-${i}`}
@@ -83,11 +93,11 @@ const PageTitle = () => {
             </BackRouting>
           ))
         ) : (
-          <BackRouting onClick={() => router.back()}>
+          <BackRouting onClick={() => handleBack()}>
             <Stretch
               titleId={`${uiStore.title}-${router.locale}`}
               key={`${uiStore.title}_title`}
-              lineh={1}
+              lineh={1.2}
               preferredSize={11}
               arrowDir={uiStore.title !== "rundgang" ? "left" : null}
             >

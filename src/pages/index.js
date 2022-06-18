@@ -22,6 +22,7 @@ const IndexPage = () => {
           <Stretch
             title={intl.formatMessage({ id: "katalog" })}
             preferredSize={25.5}
+            lineh={0.88}
             arrowDir="top"
           >
             <LocalizedText id="katalog" />
@@ -31,6 +32,7 @@ const IndexPage = () => {
           <Stretch
             title={intl.formatMessage({ id: "orte" })}
             preferredSize={25.5}
+            lineh={0.88}
             arrowDir="right"
           >
             <LocalizedText id="orte" />
@@ -40,6 +42,7 @@ const IndexPage = () => {
           <Stretch
             title={intl.formatMessage({ id: "zeiten" })}
             preferredSize={25.5}
+            lineh={0.88}
             arrowDir="left"
           >
             <LocalizedText id="zeiten" />

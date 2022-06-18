@@ -52,7 +52,7 @@ const LanguageSwitch = ({ grow }) => {
     <LanguageSwitchWrapper grow>
       <LanguageItem
         onClick={() => {
-          router.push(router.pathname, router.pathname, { locale: "en" });
+          router.replace(router.asPath, router.asPath, { locale: "en" });
         }}
       >
         EN
@@ -60,10 +60,10 @@ const LanguageSwitch = ({ grow }) => {
       <Switch
         onClick={() => {
           if (router.locale == "de") {
-            router.push(router.pathname, router.pathname, { locale: "en" });
+            router.replace(router.asPath, router.asPath, { locale: "en" });
           }
           if (router.locale == "en") {
-            router.push(router.pathname, router.pathname, { locale: "de" });
+            router.replace(router.asPath, router.asPath, { locale: "de" });
           }
         }}
       >
@@ -72,7 +72,7 @@ const LanguageSwitch = ({ grow }) => {
       </Switch>
       <LanguageItem
         onClick={() => {
-          router.push(router.pathname, router.pathname, { locale: "de" });
+          router.replace(router.asPath, router.asPath, { locale: "de" });
         }}
       >
         DE

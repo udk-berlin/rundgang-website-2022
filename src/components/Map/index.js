@@ -107,7 +107,6 @@ const Map = () => {
                 <GrundrissMarker el={el} size={60 * 2 ** scale} />,
               );
             } else if (markers[el.id].scale > 0 && scale < 0) {
-              console.log(markers[el.id].mRoot);
               markers[el.id].mRoot.render(
                 <GrundrissMarker el={el} size={60} />,
               );

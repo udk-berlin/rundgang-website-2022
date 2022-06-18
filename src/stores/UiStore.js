@@ -74,7 +74,7 @@ class UiStore {
     } else if (title == "locations") {
       this.title = "orte";
     } else if (title == "Universität der Künste Berlin") {
-      this.title = "katalog";
+      this.title = "index";
     } else {
       this.title = title;
     }

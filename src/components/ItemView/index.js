@@ -30,7 +30,7 @@ const ItemViewWrapper = styled.div`
 
 const ItemHeaderWrapper = styled.div`
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 55% 45%;
   width: 100%;
   margin: auto;
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -49,6 +49,8 @@ const AuthorTag = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lg};
   border: 1px solid black;
   border-radius: ${({ theme }) => theme.spacing.md};
+  width: fit-content;
+  word-wrap: break-word;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }
@@ -124,8 +126,6 @@ const ItemView = () => {
   const loc = item.description[locale.toUpperCase()]?.length
     ? locale.toUpperCase()
     : "DE";
-
-  console.log(item.rendered.languages[loc].content);
 
   return item && item?.id ? (
     <Layout direction="right">

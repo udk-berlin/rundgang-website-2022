@@ -180,7 +180,6 @@ class ApiStore {
             if (item.id in this.cachedIds) {
               return this.cachedIds[item.id];
             } else {
-              console.log(item.name, " not in cache");
               let res = await this.getId(item.id);
               let itemTags = await this.getParentsFromId(res);
               this.setCachedId(res, itemTags);
@@ -213,7 +212,6 @@ class ApiStore {
             }
           }),
         );
-        console.log(toJS(levels));
         data.levels = levels;
       }
       data.name = title in ALIAS_IDS ? title : data.name;

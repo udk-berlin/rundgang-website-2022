@@ -56,7 +56,7 @@ const LevelNumber = styled.button`
 `;
 const ImageWrapper = styled.div`
   height: 600px;
-  width: 1000px;
+  width: 80%;
   margin: auto;
   position: relative;
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -85,16 +85,16 @@ const Floorplan = () => {
 
   const handleSelectRoom = useCallback(
     e => {
-      console.log(e.target?.dataset);
       if (uiStore.floorPlan) {
         if (uiStore.selectedRoom) {
           let oldRoomRect = document.querySelectorAll(
             `[data-id="${uiStore.selectedRoom.id}"]`,
           )[0];
-          oldRoomRect.style.fill = "#888";
+          oldRoomRect.style.fill = "#d9d9d9";
         }
         if (!e.target?.dataset?.id) {
           uiStore.setSelectedRoom(null);
+          uiStore.setTitle(`Etage ${uiStore.floorLevel}`);
         } else {
           let data = e.target.dataset;
           let roomRect = document.querySelectorAll(`[data-id="${data.id}"]`)[0];

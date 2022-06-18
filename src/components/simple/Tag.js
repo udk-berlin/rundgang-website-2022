@@ -50,7 +50,7 @@ const Tag = ({
       template?.startsWith("location")
         ? intl.formatMessage({ id: template })
         : "",
-    [template],
+    [template, intl.locale],
   );
   return (
     <TagWrapper
