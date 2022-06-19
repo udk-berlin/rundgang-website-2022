@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from "mobx";
+import { action, makeAutoObservable, observable, toJS } from "mobx";
 import FilterStore from "./FilterStore";
 
 class UiStore {
@@ -11,7 +11,10 @@ class UiStore {
     this.floorLevel = null;
     this.selectedRoom = null;
 
-    makeAutoObservable(this, {});
+    makeAutoObservable(this, {
+      setIsOpen: action,
+      isOpen: observable,
+    });
   }
 
   connect = ({ dataStore }) => {
@@ -113,7 +116,7 @@ class UiStore {
   get items() {
     if (
       this.dataStore.api.currentRoot &&
-      this.dataStore.api.currentRoot?.id !== this.dataStore.api.root.id &&
+      this.dataStore.api.currentRoot?.id !== this.dataStore.api.root?.id &&
       this.dataStore.api.currentItems
     ) {
       if (

@@ -33,7 +33,6 @@ class ApiStore {
     this.eventlist = null;
     this.cachedIds = {};
     this.currentRoot = null;
-    this.currentPath = null;
     this.currentItems = null;
     this.isLoaded = false;
     this.status = "initial";
@@ -151,87 +150,104 @@ class ApiStore {
     }
   };
 
+  setStatus = s => {
+    this.status = s;
+  };
+
   getIdFromLink = async (searchId, asroot = false) => {
+    this.setStatus("pending");
     try {
-      let title = searchId;
-      if (!searchId.includes(":dev.medienhaus.udk-berlin.de")) {
-        searchId = makeIdFromUrl(searchId);
-      }
       let data = searchId in this.cachedIds ? this.cachedIds[searchId] : null;
-      let tags = data?.tags ? data.tags : [];
-      if (!data) {
-        data = await this.getId(searchId);
-        if (!tags?.length && data.localDepth > 2) {
-          tags = await this.getParentsFromId(data);
-          data = { ...data, tags: tags };
+      if (data) {
+        runInAction(() => {
+          if (asroot) {
+            this.currentItems = data.allItemsBelow.map(
+              item => this.cachedIds[item.id],
+            );
+            this.currentRoot = data;
+          }
+          this.setStatus("success");
+        });
+      } else {
+        let title = searchId;
+        if (!searchId.includes(":dev.medienhaus.udk-berlin.de")) {
+          searchId = makeIdFromUrl(searchId);
+        }
+        let tags = data?.tags ? data.tags : [];
+        if (!data) {
+          data = await this.getId(searchId);
+          if (!tags?.length && data.localDepth > 2) {
+            tags = await this.getParentsFromId(data);
+            data = { ...data, tags: tags };
+          }
+
+          this.setCachedId(data, tags);
+        }
+        let currentItems = data?.allItemsBelow?.length
+          ? data.allItemsBelow.map(item => this.cachedIds[item.id])
+          : null;
+        if (data?.type == "context" && asroot && !currentItems) {
+          let items = await this.getFilteredListFromId(searchId, TYPE_ITEM);
+
+          data = { ...data, allItemsBelow: items.map(i => i.id) };
+          currentItems = await Promise.all(
+            items.map(async item => {
+              if (item.id in this.cachedIds) {
+                return this.cachedIds[item.id];
+              } else {
+                let res = await this.getId(item.id);
+                let itemTags = await this.getParentsFromId(res);
+                this.setCachedId(res, itemTags);
+                return { ...res, tags: itemTags };
+              }
+            }),
+          );
+        } else if (data?.type == "item" && asroot) {
+          let renderedItem = await this.getRenderedItem(searchId);
+          data = { ...data, rendered: renderedItem };
         }
 
-        this.setCachedId(data, tags);
-      }
-      let currentItems = data?.allItemsBelow?.length
-        ? data.allItemsBelow.map(item => this.cachedIds[item.id])
-        : null;
-      if (data?.type == "context" && asroot && !currentItems) {
-        let items = await this.getFilteredListFromId(searchId, TYPE_ITEM);
-
-        data = { ...data, allItemsBelow: items.map(i => i.id) };
-        currentItems = await Promise.all(
-          items.map(async item => {
-            if (item.id in this.cachedIds) {
-              return this.cachedIds[item.id];
-            } else {
-              let res = await this.getId(item.id);
-              let itemTags = await this.getParentsFromId(res);
-              this.setCachedId(res, itemTags);
-              return { ...res, tags: itemTags };
-            }
-          }),
-        );
-      } else if (data?.type == "item" && asroot) {
-        let renderedItem = await this.getRenderedItem(searchId);
-        data = { ...data, rendered: renderedItem };
-      }
-
-      if (title == "beratungsangebote") {
-        currentItems = currentItems.filter(l =>
-          l.tags.find(tag => tag.template == "Beratungsangebot"),
-        );
-      }
-      if (data.template == "location-building") {
-        data.context = data.context.sort(
-          (a, b) => parseInt(a.name) - parseInt(b.name),
-        );
-        let levels = await Promise.all(
-          data.context.map(async level => {
-            if (level.id in this.cachedIds) {
-              return this.cachedIds[level.id];
-            } else {
-              let res = await this.getId(level.id);
-              this.setCachedId(res);
-              return res;
-            }
-          }),
-        );
-        data.levels = levels;
-      }
-      data.name = title in ALIAS_IDS ? title : data.name;
-
-      runInAction(() => {
-        if (asroot) {
-          this.currentItems = currentItems;
-          this.currentRoot = data;
-          this.currentPath = path;
+        if (title == "beratungsangebote") {
+          currentItems = currentItems.filter(l =>
+            l.tags.find(tag => tag.template == "Beratungsangebot"),
+          );
         }
-        this.status = "success";
-      });
+        if (data.template == "location-building") {
+          data.context = data.context.sort(
+            (a, b) => parseInt(a.name) - parseInt(b.name),
+          );
+          let levels = await Promise.all(
+            data.context.map(async level => {
+              if (level.id in this.cachedIds) {
+                return this.cachedIds[level.id];
+              } else {
+                let res = await this.getId(level.id);
+                this.setCachedId(res, tags);
+                return res;
+              }
+            }),
+          );
+          data.levels = levels;
+        }
+        data.name = title in ALIAS_IDS ? title : data.name;
+
+        runInAction(() => {
+          if (asroot) {
+            this.currentItems = currentItems;
+            this.currentRoot = data;
+          }
+          this.setStatus("success");
+        });
+      }
     } catch (error) {
       runInAction(() => {
-        this.status = "error";
+        this.setStatus("error");
       });
     }
   };
 
   initializeRoot = async () => {
+    this.setStatus("pending");
     try {
       const data = await this.getRoot();
       const structure = await this.getStructure();
@@ -242,13 +258,12 @@ class ApiStore {
         this.locations = locations;
         this.structure = structure;
         this.eventlist = eventlist;
-        this.status = "success";
+        this.setStatus("success");
         this.isLoaded = true;
-        console.log("isLoaded Api");
       });
     } catch (error) {
       runInAction(() => {
-        this.status = "error";
+        this.setStatus("error");
       });
     }
   };

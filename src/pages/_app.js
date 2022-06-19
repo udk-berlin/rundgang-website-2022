@@ -17,6 +17,7 @@ import CursorLine from "@/components/CursorLine";
 import { useIsMobile } from "@/utils/useWindowSize";
 import { makeUrlFromId } from "@/utils/idUtils";
 import JumpToTop from "@/components/JumpToTop";
+import IntroAnimation from "@/components/IntroAnimation";
 
 const Container = styled.div`
   width: 100%;
@@ -37,6 +38,7 @@ export default function App({ Component, pageProps }) {
   const router = useRouter();
   const isMobile = useIsMobile();
   const [showLine, setShowLine] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
 
   const messages = useMemo(() => {
     switch (router.locale) {
@@ -54,25 +56,45 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
-    if (dataStore.api.isLoaded) {
+    if (dataStore.isLoaded) {
       uiStore.initialize();
     }
-  }, [dataStore.api.isLoaded]);
+  }, [dataStore.isLoaded]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (
+        dataStore.api.status === "success" ||
+        dataStore.api.status === "error"
+      ) {
+        setShowIntro(false);
+      } 
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [router.pathname, dataStore.api.status]);
 
   useEffect(() => {
     let pid = router.query.pid;
     setShowLine(false);
-    if (pid && dataStore.api.isLoaded) {
+    if (dataStore.isLoaded && pid) {
       dataStore.api.getIdFromLink(pid, true);
-    } else if (router.pathname !== "/") {
+    } else if (
+      dataStore.isLoaded &&
+      router.pathname !== "/" &&
+      !router.pathname.includes("[pid]")
+    ) {
       let id = router.pathname.replaceAll("/", "").replaceAll("[pid]", "");
       uiStore.filterStore.handleReset();
       dataStore.api.getIdFromLink(id, true);
-    } else if (dataStore.api.root) {
+    } else if (
+      dataStore.isLoaded &&
+      dataStore.api.root &&
+      !router.pathname.includes("[pid]")
+    ) {
       uiStore.filterStore.handleReset();
       dataStore.api.getIdFromLink(dataStore.api.root.id, true);
     }
-  }, [router.query, router.pathname, dataStore.api.isLoaded]);
+  }, [router.query.pid, router.pathname, dataStore.isLoaded]);
 
   useEffect(() => {
     if (router.pathname == "/" && !isMobile) {
@@ -93,17 +115,22 @@ export default function App({ Component, pageProps }) {
           >
             <MotionConfig reducedMotion="user">
               <Container>
-                <HeaderWrapper>
-                  <PageTitle key={`PageTitle-${router.pathname}`} />
-                  <SearchBar key={`SearchBar-${router.pathname}`} />
-                </HeaderWrapper>
-                <AnimatePresence exitBeforeEnter initial={true}>
-                  <Component key={router.pathname} {...pageProps} />
-                </AnimatePresence>
+                {!showIntro && (
+                  <>
+                    <HeaderWrapper>
+                      <PageTitle key={`PageTitle-${router.pathname}`} />
+                      <SearchBar key={`SearchBar-${router.pathname}`} />
+                    </HeaderWrapper>
+                    <AnimatePresence exitBeforeEnter initial={true}>
+                      <Component key={router.pathname} {...pageProps} />
+                    </AnimatePresence>
+                    {showLine ? null : <JumpToTop />}
+                  </>
+                )}
                 {showLine ? <CursorLine /> : null}
-                {showLine ? null : <JumpToTop />}
+                {showIntro && <IntroAnimation key={"intro"} />}
+                <Footer />
               </Container>
-              <Footer />
             </MotionConfig>
           </IntlProvider>
         </Provider>

@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable, toJS } from "mobx";
+import { action, makeAutoObservable, observable, toJS } from "mobx";
 const INITIAL_SELECTION = {
   fakultaeten: null,
   zentren: null,
@@ -16,7 +16,13 @@ class FilterStore {
     this.selectedId = null;
     this.isTagSelected = false;
 
-    makeAutoObservable(this, {});
+    makeAutoObservable(this, {
+      setIsTagSelected: action,
+      setOpenTagGroup: action,
+      handleReset: action,
+      openTagGroup: observable,
+      isTagSelected: observable,
+    });
   }
 
   connect = ({ store, dataStore }) => {
