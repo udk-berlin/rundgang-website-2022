@@ -8,7 +8,6 @@ import { useStores } from "@/stores/index";
 
 const SearchBarWrapper = styled.div`
   width: 100%;
-  background: white;
   z-index: 4000;
   padding-bottom: 10px;
 `;
@@ -38,7 +37,8 @@ const SearchBar = () => {
     [uiStore.isOpen],
   );
 
-  return (
+  return !uiStore.currentContext?.type ||
+    uiStore.currentContext?.type !== "item" ? (
     <SearchBarWrapper>
       <ClickAwayListener onClickAway={() => handleClose()}>
         <FlexContainer>
@@ -53,7 +53,7 @@ const SearchBar = () => {
         </FlexContainer>
       </ClickAwayListener>
     </SearchBarWrapper>
-  );
+  ) : null;
 };
 
 export default observer(SearchBar);

@@ -12,8 +12,9 @@ import useWindowSize from "@/utils/useWindowSize";
 const PageTitleWrapper = styled.div`
   width: 100%;
   font-family: "Diatype";
-  background: white;
   height: fit-content;
+  background-color: ${({ isEvent, theme }) =>
+    isEvent ? theme.colors.lightHighlight : theme.colors.white};
 `;
 
 const BackRouting = styled.span`
@@ -79,7 +80,7 @@ const PageTitle = () => {
   };
 
   return (
-    <PageTitleWrapper>
+    <PageTitleWrapper isEvent={uiStore.currentContext?.template === "event"}>
       <AnimatePresence initial={true}>
         {isMobile ? (
           titleStrings.map((line, i) => (

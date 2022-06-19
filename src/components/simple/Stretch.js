@@ -19,14 +19,14 @@ const StretchWrapper = styled.div`
 const StretchLayout = styled.div`
   transform-origin: 0% 0%;
   text-align: left;
-  width: max-content;
+  width: min(max-content, fit-content);
   height: fit-content;
   transform: ${({ factor }) => `scaleX(${factor})`};
 `;
 
 const Shadow = styled.div`
   opacity: 0;
-  width: max-content;
+  width: min(max-content, fit-content);
   height: fit-content;
   pointer-events: none;
   position: absolute;

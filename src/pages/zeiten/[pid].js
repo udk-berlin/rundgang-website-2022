@@ -10,21 +10,20 @@ import ItemView from "@/components/ItemView";
 const ZeitenViewWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: ${({ theme }) => theme.spacing.sm};
   font-size: ${({ theme }) => theme.fontSizes.sm};
   flex-grow: 1;
 `;
 
 const ZeitenView = () => {
   const router = useRouter();
-  const { dataStore } = useStores();
+  const { uiStore } = useStores();
   const { pid } = router.query;
 
-  return dataStore.api.currentRoot ? (
+  return uiStore.currentContext ? (
     <Layout>
       <ZeitenViewWrapper>
         {pid == "beratungsangebote" ? "beratungsangebote" : null}
-        {dataStore.api.currentRoot.type == "item" && <ItemView />}
+        {uiStore.currentContext.type == "item" && <ItemView />}
       </ZeitenViewWrapper>
     </Layout>
   ) : null;

@@ -17,14 +17,14 @@ const KatalogViewWrapper = styled.div`
 
 const KatalogView = () => {
   const router = useRouter();
-  const { dataStore } = useStores();
+  const { uiStore } = useStores();
   const { pid } = router.query;
 
-  return dataStore.api.currentRoot ? (
+  return uiStore.currentContext ? (
     <Layout>
       <KatalogViewWrapper>
         {pid == "beratungsangebote" ? "beratungsangebote" : null}
-        {dataStore.api.currentRoot.type == "item" && <ItemView />}
+        {uiStore.currentContext.type == "item" && <ItemView />}
         <ListView />
       </KatalogViewWrapper>
     </Layout>

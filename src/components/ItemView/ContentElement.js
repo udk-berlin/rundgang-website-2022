@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import styled from "styled-components";
-import LocalizedLink from "modules/i18n/components/LocalizedLink";
 
 export const Heading = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lm};
@@ -58,3 +57,25 @@ export const UnorderedList = styled.ul`
   white-space: pre;
   place-self: start;
 `;
+
+const ContentElement = ({ item }) => {
+  if (item.type == "heading") {
+    return <Heading>{item.content}</Heading>;
+  } else if (item.type == "text") {
+    return <Paragraph>{item.content}</Paragraph>;
+  } else if (item.type == "image") {
+    return <Image src={item.content} />;
+  } else if (item.type == "audio") {
+    return <Audio src={item.content} />;
+  } else if (item.type == "ul") {
+    return <UnorderedList>{item.content}</UnorderedList>;
+  } else if (item.type == "ol") {
+    return <OrderedList>{item.content}</OrderedList>;
+  } else if (item.type == "quote") {
+    return <Quote>{item.content}</Quote>;
+  } else if (item.type == "code") {
+    return <Code>{item.content}</Code>;
+  }
+};
+
+export default ContentElement;

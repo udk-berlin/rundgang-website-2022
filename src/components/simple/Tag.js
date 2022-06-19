@@ -20,7 +20,7 @@ const TagWrapper = styled.span`
   }
   ${({ theme, selected, levelSelected }) => {
     let color = theme.colors.black;
-    let background = theme.colors.white;
+    let background = "transparent";
     if (selected) {
       color = theme.colors.white;
       background = theme.colors.black;

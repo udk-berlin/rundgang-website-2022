@@ -6,26 +6,15 @@ import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
 import { useIntl } from "react-intl";
 import Layout from "@/components/simple/Layout";
-import {
-  Paragraph,
-  Heading,
-  Image,
-  Audio,
-  Code,
-  Quote,
-  OrderedList,
-  UnorderedList,
-} from "./textElements";
+import ContentElement from "./ContentElement";
 import Tag from "@/components/simple/Tag";
-import LocalizedText from "modules/i18n/components/LocalizedText";
 import FavouriteStarSvg from "@/components/simple/FavouriteStar";
 
 const ItemViewWrapper = styled.div`
-  overflow-x: hidden;
   height: 100%;
+  width: 100%;
   padding: ${({ theme }) => theme.spacing.sm};
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  flex-grow: 1;
 `;
 
 const ItemHeaderWrapper = styled.div`
@@ -39,14 +28,17 @@ const ItemHeaderWrapper = styled.div`
 `;
 
 const TitleImage = styled.img`
-  width: 100%;
+  height: min(100%, 50vw);
   margin: auto;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    height: auto;
+    width: 100%;
+  }
 `;
 
 const AuthorTag = styled.div`
-  margin: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
-  padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.xs}`};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.sm}`};
+  font-size: ${({ theme }) => theme.fontSizes.lm};
   border: 1px solid black;
   border-radius: ${({ theme }) => theme.spacing.md};
   width: fit-content;
@@ -57,8 +49,6 @@ const AuthorTag = styled.div`
 `;
 
 const SaveTag = styled.span`
-  margin: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   background: ${({ theme, saved }) =>
     saved ? theme.colors.black : theme.colors.highlight};
   color: ${({ theme, saved }) =>
@@ -68,10 +58,20 @@ const SaveTag = styled.span`
   text-align: center;
   cursor: pointer;
   justify-content: space-between;
+  white-space: nowrap;
+  line-height: 1;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
+  margin: ${({ theme }) => theme.spacing.xs};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+    margin: ${({ theme }) => theme.spacing.xxs};
+  }
 `;
 
 const SaveStar = styled.span`
-  margin-left: 4px;
+  font-size: ${({ size }) => size};
+  padding-left: ${({ theme }) => theme.spacing.xs};
 `;
 
 const DescriptionWrapper = styled.div`
@@ -80,15 +80,19 @@ const DescriptionWrapper = styled.div`
 
 const TitleText = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.md};
-  padding: ${({ theme }) => theme.spacing.md};
+  padding-top: ${({ theme }) => theme.spacing.md};
 `;
 
 const ContentWrapper = styled.div`
-  display: grid;
   padding-top: ${({ theme }) => theme.spacing.xl};
-  grid-template-columns: 40% 40%;
-  gap: ${({ theme }) => theme.spacing.xl};
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  width: 100%;
+  margin: auto;
+  word-wrap: break-word;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    display: block;
+  }
 `;
 
 const Tags = styled.div`
@@ -98,37 +102,20 @@ const Tags = styled.div`
   padding: ${({ theme }) => `${theme.spacing.md} 0`};
 `;
 
-const renderContent = item => {
-  if (item.type == "heading") {
-    return <Heading>{item.content}</Heading>;
-  } else if (item.type == "text") {
-    return <Paragraph>{item.content}</Paragraph>;
-  } else if (item.type == "image") {
-    return <Image src={item.content} />;
-  } else if (item.type == "audio") {
-    return <Audio src={item.content} />;
-  } else if (item.type == "ul") {
-    return <UnorderedList>{item.content}</UnorderedList>;
-  } else if (item.type == "ol") {
-    return <OrderedList>{item.content}</OrderedList>;
-  } else if (item.type == "quote") {
-    return <Quote>{item.content}</Quote>;
-  } else if (item.type == "code") {
-    return <Code>{item.content}</Code>;
-  }
-};
-
 const ItemView = () => {
-  const { query, locale } = useRouter();
-  const { dataStore, uiStore } = useStores();
+  const { locale } = useRouter();
+  const { uiStore } = useStores();
   const intl = useIntl();
-  const item = dataStore.api.currentRoot;
+  const item = uiStore.currentContext;
   const loc = item.description[locale.toUpperCase()]?.length
     ? locale.toUpperCase()
     : "DE";
 
   return item && item?.id ? (
-    <Layout direction="right">
+    <Layout
+      direction="right"
+      isEvent={uiStore.currentContext?.template === "event"}
+    >
       <ItemViewWrapper>
         <Tags>
           <SaveTag
@@ -140,7 +127,7 @@ const ItemView = () => {
             })}
             <SaveStar>
               <FavouriteStarSvg
-                size={10}
+                size={8}
                 saved={true}
                 color={uiStore.isSaved(item.id) ? "#E2FF5D" : "null"}
               />
@@ -162,16 +149,19 @@ const ItemView = () => {
           <TitleImage src={item.thumbnail} />
           <DescriptionWrapper>
             {item?.origin?.authors?.map(a => (
-              <AuthorTag>{a.name ?? a.id}</AuthorTag>
+              <AuthorTag key={`author-${a.id}`}>{a.name ?? a.id}</AuthorTag>
             ))}
             <TitleText>{item.description[loc]}</TitleText>
           </DescriptionWrapper>
         </ItemHeaderWrapper>
         <ContentWrapper>
-          {item.rendered.languages[loc] &&
-            _.entries(item.rendered.languages[loc].content).map(([k, c]) =>
-              renderContent(c),
-            )}
+          <div>
+            {item.rendered.languages[loc] &&
+              _.entries(item.rendered.languages[loc].content).map(([k, c]) => (
+                <ContentElement key={k} item={c} />
+              ))}
+          </div>
+          <div></div>
         </ContentWrapper>
       </ItemViewWrapper>
     </Layout>

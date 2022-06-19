@@ -68,7 +68,7 @@ export default function App({ Component, pageProps }) {
         dataStore.api.status === "error"
       ) {
         setShowIntro(false);
-      } 
+      }
     }, 4000);
     return () => clearTimeout(timer);
   }, [router.pathname, dataStore.api.status]);

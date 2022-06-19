@@ -36,15 +36,15 @@ const FloorplanContainer = styled.div`
 `;
 
 const OrteView = () => {
-  const { dataStore } = useStores();
+  const { uiStore } = useStores();
 
-  return dataStore.api.currentRoot ? (
+  return uiStore.currentContext ? (
     <Layout>
       <OrteViewWrapper>
-        {dataStore.api.currentRoot.type == "item" ? (
+        {uiStore.currentContext.type == "item" ? (
           <ItemView />
         ) : (
-          dataStore.api.currentRoot.template == "location-building" && (
+          uiStore.currentContext.template == "location-building" && (
             <FloorplanContainer>
               <Floorplan />
             </FloorplanContainer>

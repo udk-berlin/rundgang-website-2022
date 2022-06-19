@@ -8,6 +8,7 @@ import AutoComplete from "./AutoComplete";
 
 const Field = styled.input`
   color: ${({ theme }) => theme.colors.primary};
+  background: inherit;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
