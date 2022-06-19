@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useCallback } from "react";
 import { observer } from "mobx-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import InputField from "./InputField";
 import TagMenu from "./TagMenu";
 import LocalizedText from "modules/i18n/components/LocalizedText";
+import { useRouter } from "next/router";
+import { makeUrlFromId } from "@/utils/idUtils";
 
 const variants = {
   favourites: { height: "5vh", width: "0px" },
@@ -60,24 +62,36 @@ const Buttons = styled.div`
 `;
 
 const Filter = ({ onClick, onClose }) => {
-  const { dataStore, uiStore } = useStores();
+  const { uiStore } = useStores();
+  const router = useRouter();
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     onClose();
     if (uiStore.filterStore.isTagSelected) {
-      dataStore.api.getIdFromLink(uiStore.filterStore.selectedId, true);
+      let link = router.pathname;
+      let pid = makeUrlFromId(uiStore.filterStore.selectedId);
+      if (router.pathname == "/") {
+        link = `katalog/${pid}`;
+      } else if (router.pathname.includes("[pid]")) {
+        link = link.replace("[pid]", pid);
+      } else {
+        link = `${router.pathname}/${pid}`;
+      }
+      router.push(link);
     }
-  };
+  }, [uiStore.filterStore.isTagSelected]);
 
   return (
     <FilterWrapper
-      animate={uiStore.isOpen !== null ? uiStore.isOpen : "closed"}
+      animate={
+        uiStore.isOpen && uiStore.isOpen !== null ? uiStore.isOpen : "closed"
+      }
       variants={variants}
       transition={{ type: "linear", duration: 0.5 }}
     >
       <InputField handleFocus={onClick} handleSubmit={handleSubmit} />
       <AnimatePresence>
-        {uiStore.isOpen == "filter" && (
+        {uiStore.isOpen && uiStore.isOpen == "filter" && (
           <>
             <TagMenu />
             <Buttons>

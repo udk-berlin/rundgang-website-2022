@@ -26,13 +26,15 @@ const nextConfig = {
     /**
      * Provide the locales you want to support in your application
      */
-    locales: ["de", "en"],
+    locales: ["default", "de", "en"],
     /**
      * This is the default locale you want to be used when visiting
      * a non-locale prefixed path.
      */
-    defaultLocale: "de",
+    defaultLocale: "default",
+    localeDetection: false,
   },
+  trailingSlash: true,
 };
 
 module.exports = nextConfig;

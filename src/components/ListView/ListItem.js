@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { FormattedDateTimeRange } from "react-intl";
@@ -92,10 +92,14 @@ const ImageWrapper = styled.div`
 const ListItem = ({ element }) => {
   const { uiStore } = useStores();
   const router = useRouter();
-  const linklocation = router.pathname.includes("[pid]")
-    ? router.pathname.replace("[pid]", makeUrlFromId(element.id))
-    : `${router.pathname}/${makeUrlFromId(element.id)}`;
-
+  const linklocation = useMemo(() => {
+    const pid = makeUrlFromId(element.id);
+    if (router.pathname.includes("[pid]"))
+      return router.pathname.replace("[pid]", pid);
+    else if (router.pathname !== "/") {
+      return `${router.pathname}/${pid}`;
+    } else return `katalog/${pid}`;
+  }, []);
   const handleAddSaved = (e, id) => {
     uiStore.addToSaved(e, id);
   };

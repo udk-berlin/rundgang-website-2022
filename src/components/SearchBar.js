@@ -31,7 +31,7 @@ const SearchBar = () => {
   );
   const handleClose = useCallback(
     item => {
-      if (item === uiStore.isOpen) {
+      if (!item || item === uiStore.isOpen) {
         uiStore.setIsOpen(null);
       }
     },
@@ -40,7 +40,7 @@ const SearchBar = () => {
 
   return (
     <SearchBarWrapper>
-      <ClickAwayListener onClickAway={() => uiStore.setIsOpen(null)}>
+      <ClickAwayListener onClickAway={() => handleClose()}>
         <FlexContainer>
           <Filter
             onClick={() => handleOpen("filter")}

@@ -1,11 +1,15 @@
 const next = require("next");
 const express = require("express");
-const cookieParser = require("cookie-parser");
 const mobxReact = require("mobx-react");
 const dev = process.env.NODE_ENV !== "production";
 
 // create a next server instance
-const nextApp = next({ dev, dir: "./src" });
+const nextApp = next({
+  dev,
+  dir: "./src",
+  port: 8080,
+  hostname: 'localhost',
+});
 const nextAppHandle = nextApp.getRequestHandler();
 
 // prevents mobx server memory leak
@@ -17,7 +21,6 @@ async function boostrap() {
   await nextApp.prepare();
   // open express to have a custom server
   const server = express();
-  server.use(cookieParser());
   // bind the next routing handles for the other
   server.use(nextAppHandle);
   server.listen(process.env.PORT, process.env.HOSTNAME, error => {

@@ -16,7 +16,7 @@ const PageTitleWrapper = styled.div`
   height: fit-content;
 `;
 
-const BackRouting = styled.a`
+const BackRouting = styled.span`
   cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.colors.highlight};
@@ -63,13 +63,19 @@ const PageTitle = () => {
   );
 
   const handleBack = () => {
-    if (uiStore.floorLevel) {
-      uiStore.setFloorLevel(null);
+    let link = router.pathname;
+    if (router.pathname.includes("[pid]")) {
+      if (uiStore.selectedRoom) {
+        uiStore.setSelectedRoom(null);
+      } else if (uiStore.floorLevel) {
+        uiStore.setFloorLevel(null);
+      } else {
+        link = link.replace("[pid]", "");
+      }
+      router.replace(link);
+    } else {
+      router.replace("/");
     }
-    if (uiStore.selectedRoom) {
-      uiStore.setSelectedRoom(null);
-    }
-    router.back();
   };
 
   return (
@@ -83,7 +89,6 @@ const PageTitle = () => {
                 key={`${uiStore.title}-line-${i}`}
                 lineh={1.2}
                 preferredSize={5}
-                onClick={() => router.back()}
                 arrowDir={
                   uiStore.title !== "rundgang" && i == 0 ? "left" : null
                 }
