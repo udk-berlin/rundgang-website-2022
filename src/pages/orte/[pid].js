@@ -39,7 +39,7 @@ const OrteView = () => {
   const { uiStore } = useStores();
 
   return uiStore.currentContext ? (
-    <Layout>
+    <Layout isEvent={uiStore.currentContext.template === "event"}>
       <OrteViewWrapper>
         {uiStore.currentContext.type == "item" ? (
           <ItemView />

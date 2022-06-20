@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
 import Layout from "@/components/simple/Layout";
-import ListView from "@/components/ListView";
 import ItemView from "@/components/ItemView";
 
 const ZeitenViewWrapper = styled.div`
@@ -20,7 +19,7 @@ const ZeitenView = () => {
   const { pid } = router.query;
 
   return uiStore.currentContext ? (
-    <Layout>
+    <Layout isEvent={uiStore.currentContext.template === "event"}>
       <ZeitenViewWrapper>
         {pid == "beratungsangebote" ? "beratungsangebote" : null}
         {uiStore.currentContext.type == "item" && <ItemView />}

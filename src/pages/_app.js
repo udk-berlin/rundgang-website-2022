@@ -23,12 +23,14 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  background: inherit;
 `;
 
 const HeaderWrapper = styled.div`
   position: sticky;
   top: 0;
   z-index: 200;
+  background: inherit;
 `;
 
 export default function App({ Component, pageProps }) {

@@ -112,59 +112,54 @@ const ItemView = () => {
     : "DE";
 
   return item && item?.id ? (
-    <Layout
-      direction="right"
-      isEvent={uiStore.currentContext?.template === "event"}
-    >
-      <ItemViewWrapper>
-        <Tags>
-          <SaveTag
-            saved={uiStore.isSaved(item.id)}
-            onClick={e => uiStore.addToSaved(e, item.id)}
+    <ItemViewWrapper>
+      <Tags>
+        <SaveTag
+          saved={uiStore.isSaved(item.id)}
+          onClick={e => uiStore.addToSaved(e, item.id)}
+        >
+          {intl.formatMessage({
+            id: uiStore.isSaved(item.id) ? "saved" : "save",
+          })}
+          <SaveStar>
+            <FavouriteStarSvg
+              size={8}
+              saved={true}
+              color={uiStore.isSaved(item.id) ? "#E2FF5D" : "null"}
+            />
+          </SaveStar>
+        </SaveTag>
+        {item.tags.map(t => (
+          <Tag
+            selected={false}
+            key={t.id}
+            levelSelected={false}
+            showCross={false}
+            template={t.template}
           >
-            {intl.formatMessage({
-              id: uiStore.isSaved(item.id) ? "saved" : "save",
-            })}
-            <SaveStar>
-              <FavouriteStarSvg
-                size={8}
-                saved={true}
-                color={uiStore.isSaved(item.id) ? "#E2FF5D" : "null"}
-              />
-            </SaveStar>
-          </SaveTag>
-          {item.tags.map(t => (
-            <Tag
-              selected={false}
-              key={t.id}
-              levelSelected={false}
-              showCross={false}
-              template={t.template}
-            >
-              {t.name}
-            </Tag>
+            {t.name}
+          </Tag>
+        ))}
+      </Tags>
+      <ItemHeaderWrapper>
+        <TitleImage src={item.thumbnail} />
+        <DescriptionWrapper>
+          {item?.origin?.authors?.map(a => (
+            <AuthorTag key={`author-${a.id}`}>{a.name ?? a.id}</AuthorTag>
           ))}
-        </Tags>
-        <ItemHeaderWrapper>
-          <TitleImage src={item.thumbnail} />
-          <DescriptionWrapper>
-            {item?.origin?.authors?.map(a => (
-              <AuthorTag key={`author-${a.id}`}>{a.name ?? a.id}</AuthorTag>
+          <TitleText>{item.description[loc]}</TitleText>
+        </DescriptionWrapper>
+      </ItemHeaderWrapper>
+      <ContentWrapper>
+        <div>
+          {item.rendered.languages[loc] &&
+            _.entries(item.rendered.languages[loc].content).map(([k, c]) => (
+              <ContentElement key={k} item={c} />
             ))}
-            <TitleText>{item.description[loc]}</TitleText>
-          </DescriptionWrapper>
-        </ItemHeaderWrapper>
-        <ContentWrapper>
-          <div>
-            {item.rendered.languages[loc] &&
-              _.entries(item.rendered.languages[loc].content).map(([k, c]) => (
-                <ContentElement key={k} item={c} />
-              ))}
-          </div>
-          <div></div>
-        </ContentWrapper>
-      </ItemViewWrapper>
-    </Layout>
+        </div>
+        <div></div>
+      </ContentWrapper>
+    </ItemViewWrapper>
   ) : null;
 };
 

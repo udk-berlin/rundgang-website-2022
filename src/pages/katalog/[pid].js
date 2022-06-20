@@ -21,7 +21,10 @@ const KatalogView = () => {
   const { pid } = router.query;
 
   return uiStore.currentContext ? (
-    <Layout>
+    <Layout
+      direction="right"
+      isEvent={uiStore.currentContext.template === "event"}
+    >
       <KatalogViewWrapper>
         {pid == "beratungsangebote" ? "beratungsangebote" : null}
         {uiStore.currentContext.type == "item" && <ItemView />}

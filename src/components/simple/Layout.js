@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
@@ -30,17 +30,26 @@ const variants = {
   exitright: { scaleX: 0, originX: "0%", x: "0%", y: "0%" },
 };
 
-const Layout = ({ children, direction = "left", isEvent }) => (
-  <MainLayout
-    initial="hidden"
-    animate={`enter${direction}`}
-    exit={`exit${direction}`}
-    variants={variants}
-    isEvent={isEvent}
-    transition={{ type: "linear", duration: 0.8 }}
-  >
-    {children}
-  </MainLayout>
-);
+const Layout = ({ children, direction = "left", isEvent }) => {
+  useEffect(() => {
+    if (isEvent) {
+      document.body.style = "background: #F1FFB3;";
+    } else {
+      document.body.style = "background: white;";
+    }
+  }, [isEvent]);
+  return (
+    <MainLayout
+      initial="hidden"
+      animate={`enter${direction}`}
+      exit={`exit${direction}`}
+      variants={variants}
+      isEvent={isEvent}
+      transition={{ type: "linear", duration: 0.8 }}
+    >
+      {children}
+    </MainLayout>
+  );
+};
 
 export default Layout;
