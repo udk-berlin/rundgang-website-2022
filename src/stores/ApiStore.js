@@ -46,8 +46,13 @@ class ApiStore {
 
   get = async (urlParams = "") => {
     const request = new Request(`${BASE_URL}${urlParams}`, GET_OPTIONS);
-    const response = await fetch(request);
-    return response.json();
+    const response = await fetch(request).then(res => {
+      if (!res.ok) {
+        return null;
+      }
+      return res.json();
+    });
+    return response;
   };
 
   getRoot = async () => {
@@ -196,12 +201,15 @@ class ApiStore {
                 return this.cachedIds[item.id];
               } else {
                 let res = await this.getId(item.id);
-                let itemTags = await this.getParentsFromId(res);
-                this.setCachedId(res, itemTags);
-                return { ...res, tags: itemTags };
+                if (res) {
+                  let itemTags = await this.getParentsFromId(res);
+                  this.setCachedId(res, itemTags);
+                  return { ...res, tags: itemTags };
+                } else return null;
               }
             }),
           );
+          currentItems = currentItems.filter(a => a);
         } else if (data?.type == "item" && asroot) {
           let renderedItem = await this.getRenderedItem(searchId);
           data = { ...data, rendered: renderedItem };
