@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import _ from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
+import { toJS } from "mobx";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
 import { useIntl } from "react-intl";
-import Layout from "@/components/simple/Layout";
 import ContentElement from "./ContentElement";
 import Tag from "@/components/simple/Tag";
 import FavouriteStarSvg from "@/components/simple/FavouriteStar";
+import ImageDetailView from "./ImageDetailView";
 
 const ItemViewWrapper = styled.div`
   height: 100%;
   width: 100%;
-  padding: ${({ theme }) => theme.spacing.sm};
   font-size: ${({ theme }) => theme.fontSizes.sm};
 `;
 
@@ -21,15 +21,19 @@ const ItemHeaderWrapper = styled.div`
   display: grid;
   grid-template-columns: 55% 45%;
   width: 100%;
-  margin: auto;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
   }
 `;
-
+const TitleImageWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+`;
 const TitleImage = styled.img`
-  height: min(100%, 50vw);
-  margin: auto;
+  cursor: pointer;
+  margin: ${({ theme }) => theme.spacing.sm};
+  width: 100%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     height: auto;
     width: 100%;
@@ -76,6 +80,8 @@ const SaveStar = styled.span`
 
 const DescriptionWrapper = styled.div`
   align-self: start;
+  width: 100%;
+  margin: ${({ theme }) => theme.spacing.sm};
 `;
 
 const TitleText = styled.div`
@@ -110,6 +116,9 @@ const ItemView = () => {
   const loc = item.description[locale.toUpperCase()]?.length
     ? locale.toUpperCase()
     : "DE";
+  const [imageDetailOpen, setImageDetailOpen] = useState(false);
+
+  console.log(toJS(_.values(item.rendered.languages[loc].content)));
 
   return item && item?.id ? (
     <ItemViewWrapper>
@@ -142,7 +151,17 @@ const ItemView = () => {
         ))}
       </Tags>
       <ItemHeaderWrapper>
-        <TitleImage src={item.thumbnail} />
+        <TitleImageWrapper>
+          <TitleImage
+            src={item.thumbnail}
+            onClick={() => setImageDetailOpen(true)}
+          />
+          <ImageDetailView
+            src={item.thumbnail}
+            open={imageDetailOpen}
+            handleClose={() => setImageDetailOpen(false)}
+          />
+        </TitleImageWrapper>
         <DescriptionWrapper>
           {item?.origin?.authors?.map(a => (
             <AuthorTag key={`author-${a.id}`}>{a.name ?? a.id}</AuthorTag>

@@ -1,8 +1,9 @@
 import React from "react";
 
 export const formatValues = {
-  b: chunks => <b>{chunks}</b>,
-  i: chunks => <i>{chunks}</i>,
+  strong: chunks => <b>{chunks}</b>,
+  em: chunks => <i>{chunks}</i>,
+  s: chunks => <s>{chunks}</s>,
   br: <br />,
   p: chunks => (
     <span>
@@ -11,6 +12,9 @@ export const formatValues = {
       <br />
     </span>
   ),
+  ul: chunks => <ul>{chunks}</ul>,
+  ol: chunks => <ol>{chunks}</ol>,
+  li: chunks => <li>{chunks}</li>,
   h1: chunks => <h1>{chunks}</h1>,
   h2: chunks => <h2>{chunks}</h2>,
   h3: chunks => <h3>{chunks}</h3>,
