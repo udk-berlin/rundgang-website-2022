@@ -7,11 +7,11 @@ const Canvas = styled.canvas`
   position: absolute;
   top: 0;
   bottom: 0;
-  z-index: 10000;
+  z-index: 1000;
   pointer-events: none;
 `;
 
-const segNum = 50;
+const segNum = 80;
 const INIT_ARR = [...Array(segNum)].map((_, i) => ({ x: 0, y: 0 }));
 
 const CursorLine = () => {

@@ -15,8 +15,8 @@ const Floorplan = styled.div`
     &:hover {
       fill: ${({ theme }) => theme.colors.highlight};
     }
-    stroke: ${({ theme }) => theme.colors.highlight};
-    stroke-width: 3px;;
+    stroke: ${({ theme }) => theme.colors.black};
+    stroke-width: 10px;
   }
 `;
 

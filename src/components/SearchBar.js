@@ -8,7 +8,6 @@ import { useStores } from "@/stores/index";
 
 const SearchBarWrapper = styled.div`
   width: 100%;
-  z-index: 4000;
   padding-bottom: 10px;
   background-color: white;
 `;

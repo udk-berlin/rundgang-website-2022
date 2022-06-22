@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
 
-const MainLayout = styled(motion.main)`
+const MainLayout = styled.main`
   width: 100%;
+  height: 100%;
+  position: relative;
   background-color: ${({ isEvent, theme }) =>
     isEvent ? theme.colors.lightHighlight : theme.colors.white};
 `;
@@ -38,18 +39,7 @@ const Layout = ({ children, direction = "left", isEvent }) => {
       document.body.style = "background: white;";
     }
   }, [isEvent]);
-  return (
-    <MainLayout
-      initial="hidden"
-      animate={`enter${direction}`}
-      exit={`exit${direction}`}
-      variants={variants}
-      isEvent={isEvent}
-      transition={{ type: "linear", duration: 0.8 }}
-    >
-      {children}
-    </MainLayout>
-  );
+  return <MainLayout isEvent={isEvent}>{children}</MainLayout>;
 };
 
 export default Layout;

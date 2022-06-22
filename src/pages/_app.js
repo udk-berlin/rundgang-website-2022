@@ -29,7 +29,9 @@ const Container = styled.div`
 const HeaderWrapper = styled.div`
   position: sticky;
   top: 0;
-  z-index: 200;
+  left: 0;
+  z-index: 400;
+  width: 100%;
   background: inherit;
 `;
 
@@ -130,7 +132,7 @@ export default function App({ Component, pageProps }) {
                   </>
                 )}
                 {showLine ? <CursorLine /> : null}
-                {showIntro && <IntroAnimation key={"intro"} />}
+                {/* {showIntro && <IntroAnimation key={"intro"} />} */}
                 <Footer />
               </Container>
             </MotionConfig>

@@ -15,7 +15,7 @@ const useMousePosition = () => {
   useInterval(() => {
     // Your custom logic here
     setIntervalPosition(position);
-  }, 100);
+  }, 40);
 
   return intervalPosition;
 };
