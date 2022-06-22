@@ -9,7 +9,7 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 const PopupWrapper = styled.div`
   width: ${({ size }) => `${size * 1.2}px`};
   min-height: ${({ size }) => `${size}px`};
-  font-size: ${({ theme }) => theme.fontSizes.mm};
+  font-size: ${({ theme }) => theme.fontSizes.md};
   z-index: 40;
   padding: ${({ theme }) => theme.spacing.xs};
   display: flex;

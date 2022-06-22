@@ -93,7 +93,7 @@ const Map = () => {
           });
         });
 
-        map.current.on("zoomend", e => {
+        map.current.on("zoom", e => {
           let bounds = map.current.getBounds();
           let filteredLocations = addresses.filter(el =>
             bounds.contains([el.lng, el.lat]),
@@ -103,10 +103,12 @@ const Map = () => {
             if (el.image == "haus9") {
             }
             if (scale !== markers[el.id].scale && scale > 0) {
+              markers[el.id].scale = scale;
               markers[el.id].mRoot.render(
                 <GrundrissMarker el={el} size={60 * 2 ** scale} />,
               );
-            } else if (markers[el.id].scale > 0 && scale < 0) {
+            } else if (markers[el.id].scale > 0 && scale <= 0) {
+              markers[el.id].scale = scale;
               markers[el.id].mRoot.render(
                 <GrundrissMarker el={el} size={60} />,
               );
