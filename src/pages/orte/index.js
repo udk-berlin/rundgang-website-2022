@@ -15,7 +15,6 @@ const OrteWrapper = styled.div`
 
 const OrteKatalog = styled.div`
   flex-grow: 0;
-  padding: ${({ theme }) => theme.spacing.lg};
   width: 40%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 100%;
@@ -28,7 +27,7 @@ const MapContainer = styled.div`
   position: relative;
   @media ${({ theme }) => theme.breakpoints.laptop} {
     position: sticky;
-    top: 18vh;
+    top: 19vh;
   }
 `;
 

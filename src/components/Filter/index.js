@@ -11,14 +11,27 @@ import { useRouter } from "next/router";
 import { makeUrlFromId } from "@/utils/idUtils";
 
 const variants = {
-  favourites: { height: "5vh", width: "0px" },
-  filter: { height: "fit-content", width: "98vw" },
-  closed: { height: "5vh", width: "100%" },
+  favourites: {
+    height: "5vh",
+    width: "0px",
+    opacity: 0,
+    margin: "0px 0px",
+    borderWidth: 0,
+  },
+  filter: {
+    height: "80vh",
+    width: "100%",
+    opacity: 1,
+    margin: "0px 8px",
+    borderWidth: "4px",
+  },
+  closed: { height: "5vh", width: "100%", opacity: 1, margin: "0px 8px" },
 };
 
 const FilterWrapper = styled(motion.div)`
   width: 100%;
   position: relative;
+  overflow-x: auto;
   margin: ${({ theme }) => `0 ${theme.spacing.md}`};
   border: ${({ theme }) => `4px solid ${theme.colors.highlight}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -50,7 +63,8 @@ const ResetButton = styled.button`
   border: none;
   background: ${({ theme }) => theme.colors.lightgrey};
   font-size: ${({ theme }) => theme.fontSizes.lm};
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
+  padding: ${({ isOpen, theme }) =>
+    isOpen == "filter" ? `${theme.spacing.xs} ${theme.spacing.sm}` : "0px"};
   height: fit-content;
   margin: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.xs}`};
 `;

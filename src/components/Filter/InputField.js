@@ -14,10 +14,11 @@ const Field = styled.input`
   -webkit-box-sizing: border-box;
   border: ${({ theme, isOpen }) =>
     isOpen ? `4px solid ${theme.colors.highlight}` : "none"};
-  height: 5vh;
+  height: ${({ isOpen }) => (isOpen ? "50px" : "100%")};
   width: 100%;
   align-items: center;
-  font-size: ${({ isOpen }) => (isOpen ? "3vh" : "5vh")};
+  font-size: ${({ theme, isOpen }) =>
+    isOpen ? theme.fontSizes.md : theme.fontSizes.lg};
   margin: ${({ theme, isOpen }) => (isOpen ? `${theme.spacing.sm}` : "0px")};
   :focus {
     outline: none;
@@ -36,6 +37,9 @@ const Field = styled.input`
   ::-ms-input-placeholder {
     /* Microsoft Edge */
     color: ${({ theme }) => theme.colors.primary};
+  }
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    height: 32px;
   }
 `;
 

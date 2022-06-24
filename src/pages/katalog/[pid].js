@@ -10,23 +10,16 @@ import ItemView from "@/components/ItemView";
 const KatalogViewWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: ${({ theme }) => theme.spacing.sm};
-  font-size: ${({ theme }) => theme.fontSizes.sm};
   flex-grow: 1;
 `;
 
 const KatalogView = () => {
   const router = useRouter();
   const { uiStore } = useStores();
-  const { pid } = router.query;
 
   return uiStore.currentContext ? (
-    <Layout
-      direction="right"
-      isEvent={uiStore.currentContext.template === "event"}
-    >
+    <Layout direction="left">
       <KatalogViewWrapper>
-        {pid == "beratungsangebote" ? "beratungsangebote" : null}
         {uiStore.currentContext.type == "item" && <ItemView />}
         <ListView />
       </KatalogViewWrapper>

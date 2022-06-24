@@ -73,7 +73,7 @@ export default function App({ Component, pageProps }) {
       ) {
         setShowIntro(false);
       }
-    }, 4000);
+    }, 2000);
     return () => clearTimeout(timer);
   }, [router.pathname, dataStore.api.status]);
 
@@ -132,7 +132,7 @@ export default function App({ Component, pageProps }) {
                   </>
                 )}
                 {showLine ? <CursorLine /> : null}
-                {/* {showIntro && <IntroAnimation key={"intro"} />} */}
+                {showIntro && <IntroAnimation key={"intro"} />}
                 <Footer />
               </Container>
             </MotionConfig>

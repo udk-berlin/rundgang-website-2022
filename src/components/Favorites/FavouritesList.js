@@ -4,7 +4,7 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import FavouriteItem from "./FavouriteItem";
-import FavouriteStarSvg from "@/components/simple/FavouriteStar";
+import FavouriteIcon from "@/components/simple/FavouriteIcon";
 import dynamic from "next/dynamic";
 const FavouritePrintout = dynamic(() => import("./FavouritePrintout"), {
   ssr: false,
@@ -87,51 +87,53 @@ const FavouritesList = ({ onClose }) => {
   };
   return (
     <>
-      {uiStore.savedItems.length > 0 ? (
-        <FavouritesListWrapper>
-          <FavouritesHeader>
-            <FavouritesSavedItems>
-              <FavouriteStarSvg saved={true} size={8} />
-              {uiStore.numberSavedItems}
-            </FavouritesSavedItems>
+      <FavouritesListWrapper>
+        <FavouritesHeader>
+          <FavouritesSavedItems>
+            <FavouriteIcon saved={true} size={8} />
+            {uiStore.numberSavedItems}
+          </FavouritesSavedItems>
+        </FavouritesHeader>
+        {uiStore.savedItems.length > 0 ? (
+          <>
             <DownloadButton onClick={() => downloadImage()}>
               <LocalizedText id="download" />
             </DownloadButton>
-          </FavouritesHeader>
-          <DownloadPng>
-            <FavouritePrintout
-              savedItems={uiStore.savedItems}
-              savedEvents={uiStore.savedEvents}
-              width={1800}
-              height={1000}
-              reference={ref}
-            />
-          </DownloadPng>
-          <Favourites>
-            <FavouritesTitle>
-              <LocalizedText id="projects" />
-            </FavouritesTitle>
-            {uiStore.savedItems
-              .filter(item => item.template == "studentproject")
-              .map(item => (
-                <FavouriteItem key={item.id} element={item} />
-              ))}
-          </Favourites>
-          <Favourites>
-            <FavouritesTitle>
-              <LocalizedText id="events" />
-            </FavouritesTitle>
-            {uiStore.savedItems
-              .filter(item => item.template == "event")
-              .map(item => (
-                <FavouriteItem key={item.id} element={item} />
-              ))}
-          </Favourites>
-          <CloseButton onClick={onClose}>&#57344;</CloseButton>
-        </FavouritesListWrapper>
-      ) : (
-        "no events or projects saved yet"
-      )}
+            <DownloadPng>
+              <FavouritePrintout
+                savedItems={uiStore.savedItems}
+                savedEvents={uiStore.savedEvents}
+                width={1800}
+                height={1000}
+                reference={ref}
+              />
+            </DownloadPng>
+            <Favourites>
+              <FavouritesTitle>
+                <LocalizedText id="projects" />
+              </FavouritesTitle>
+              {uiStore.savedItems
+                .filter(item => item.template == "studentproject")
+                .map(item => (
+                  <FavouriteItem key={item.id} element={item} />
+                ))}
+            </Favourites>
+            <Favourites>
+              <FavouritesTitle>
+                <LocalizedText id="events" />
+              </FavouritesTitle>
+              {uiStore.savedItems
+                .filter(item => item.template == "event")
+                .map(item => (
+                  <FavouriteItem key={item.id} element={item} />
+                ))}
+            </Favourites>
+          </>
+        ) : (
+          "no events or projects saved yet"
+        )}
+        <CloseButton onClick={onClose}>&#57344;</CloseButton>
+      </FavouritesListWrapper>
     </>
   );
 };

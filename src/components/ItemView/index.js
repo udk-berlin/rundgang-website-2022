@@ -5,10 +5,10 @@ import { observer } from "mobx-react";
 import { toJS } from "mobx";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
-import { useIntl } from "react-intl";
+import { FormattedDateTimeRange, useIntl } from "react-intl";
 import ContentElement from "./ContentElement";
 import Tag from "@/components/simple/Tag";
-import FavouriteStarSvg from "@/components/simple/FavouriteStar";
+import FavouriteIcon from "@/components/simple/FavouriteIcon";
 import ImageDetailView from "./ImageDetailView";
 
 const ItemViewWrapper = styled.div`
@@ -30,9 +30,9 @@ const TitleImageWrapper = styled.div`
   display: flex;
   justify-content: space-around;
 `;
+
 const TitleImage = styled.img`
   cursor: pointer;
-  margin: ${({ theme }) => theme.spacing.sm};
   width: 100%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     height: auto;
@@ -41,41 +41,51 @@ const TitleImage = styled.img`
 `;
 
 const AuthorTag = styled.div`
+  margin: ${({ theme }) => theme.spacing.md} 0px;
   padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.sm}`};
   font-size: ${({ theme }) => theme.fontSizes.lm};
   border: 1px solid black;
-  border-radius: ${({ theme }) => theme.spacing.md};
+  border-radius: ${({ theme }) => theme.spacing.lg};
   width: fit-content;
   word-wrap: break-word;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+    font-size: ${({ theme }) => theme.fontSizes.mm};
+  }
+`;
+
+const Time = styled.div`
+  padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.sm}`};
+  font-size: ${({ theme }) => theme.fontSizes.lm};
+  margin: ${({ theme }) => theme.spacing.md} 0px;
+  border-radius: ${({ theme }) => theme.spacing.lg};
+  border: 2px solid ${({ theme }) => theme.colors.highlight};
+  background-color: ${({ theme }) => theme.colors.maingrey};
+  color: ${({ theme }) => theme.colors.highlight};
+  white-space: nowrap;
+  text-align: center;
+  width: fit-content;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.mm};
   }
 `;
 
 const SaveTag = styled.span`
   background: ${({ theme, saved }) =>
-    saved ? theme.colors.black : theme.colors.highlight};
+    saved ? theme.colors.black : theme.colors.white};
   color: ${({ theme, saved }) =>
-    saved ? theme.colors.highlight : theme.colors.black};
-  border-radius: ${({ theme }) => theme.spacing.md};
-  align-items: baseline;
+    saved ? theme.colors.white : theme.colors.black};
+  border: 1px solid
+    ${({ theme, saved }) => (saved ? theme.colors.white : theme.colors.black)};
+  align-items: center;
   text-align: center;
   cursor: pointer;
-  justify-content: space-between;
-  white-space: nowrap;
   line-height: 1;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   margin: ${({ theme }) => theme.spacing.xs};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
-    margin: ${({ theme }) => theme.spacing.xxs};
   }
-`;
-
-const SaveStar = styled.span`
-  font-size: ${({ size }) => size};
-  padding-left: ${({ theme }) => theme.spacing.xs};
 `;
 
 const DescriptionWrapper = styled.div`
@@ -105,7 +115,7 @@ const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  padding: ${({ theme }) => `${theme.spacing.md} 0`};
+  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.sm}`};
 `;
 
 const ItemView = () => {
@@ -130,13 +140,6 @@ const ItemView = () => {
           {intl.formatMessage({
             id: uiStore.isSaved(item.id) ? "saved" : "save",
           })}
-          <SaveStar>
-            <FavouriteStarSvg
-              size={8}
-              saved={true}
-              color={uiStore.isSaved(item.id) ? "#E2FF5D" : "null"}
-            />
-          </SaveStar>
         </SaveTag>
         {item.tags.map(t => (
           <Tag
@@ -162,10 +165,26 @@ const ItemView = () => {
             handleClose={() => setImageDetailOpen(false)}
           />
         </TitleImageWrapper>
-        <DescriptionWrapper>
+        <DescriptionWrapper mobile>
           {item?.origin?.authors?.map(a => (
             <AuthorTag key={`author-${a.id}`}>{a.name ?? a.id}</AuthorTag>
           ))}
+          {item.template == "event" && item.allocation?.temporal?.length
+            ? item.allocation?.temporal?.slice(0, 3).map((t, i) => (
+                <Time key={`time-item-${t.start}-${i}-${t.end}`}>
+                  <FormattedDateTimeRange
+                    from={t.start * 1000}
+                    to={t.end * 1000}
+                    weekday="short"
+                    year="numeric"
+                    month="numeric"
+                    day="numeric"
+                    hour="numeric"
+                    minute="numeric"
+                  />
+                </Time>
+              ))
+            : null}
           <TitleText>{item.description[loc]}</TitleText>
         </DescriptionWrapper>
       </ItemHeaderWrapper>

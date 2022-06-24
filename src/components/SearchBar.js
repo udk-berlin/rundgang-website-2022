@@ -37,6 +37,7 @@ const SearchBar = () => {
     [uiStore.isOpen],
   );
 
+  console.log(uiStore.isOpen);
   return !uiStore.currentContext?.type ||
     uiStore.currentContext?.type !== "item" ? (
     <SearchBarWrapper>

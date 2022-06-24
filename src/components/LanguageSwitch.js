@@ -52,10 +52,10 @@ const LanguageSwitch = ({ grow }) => {
     <LanguageSwitchWrapper grow>
       <LanguageItem
         onClick={() => {
-          router.replace(router.asPath, router.asPath, { locale: "en" });
+          router.replace(router.asPath, router.asPath, { locale: "de" });
         }}
       >
-        EN
+        DE
       </LanguageItem>
       <Switch
         onClick={() => {
@@ -67,15 +67,15 @@ const LanguageSwitch = ({ grow }) => {
           }
         }}
       >
-        <SliderBall isOn={router.locale == "de"} />
+        <SliderBall isOn={router.locale == "en"} />
         <Slider></Slider>
       </Switch>
       <LanguageItem
         onClick={() => {
-          router.replace(router.asPath, router.asPath, { locale: "de" });
+          router.replace(router.asPath, router.asPath, { locale: "en" });
         }}
       >
-        DE
+        EN
       </LanguageItem>
     </LanguageSwitchWrapper>
   );

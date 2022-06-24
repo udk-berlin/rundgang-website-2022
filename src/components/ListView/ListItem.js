@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
-import { FormattedDateTimeRange } from "react-intl";
+import { FormattedTime } from "react-intl";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
-import FavouriteStar from "@/components/simple/FavouriteStar";
+import FavouriteIcon from "@/components/simple/FavouriteIcon";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import { makeUrlFromId } from "@/utils/idUtils";
 
@@ -18,6 +18,7 @@ const ListItemWrapper = styled.div`
   padding: ${({ theme }) => theme.spacing.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     padding: ${({ theme }) => theme.spacing.sm};
+    margin: ${({ theme }) => theme.spacing.xs};
   }
 `;
 
@@ -32,6 +33,8 @@ const Image = styled.img`
 
 const SaveIcon = styled.div`
   position: absolute;
+  background: white;
+  padding: 0px 4px;
   top: 5%;
   right: 5%;
   z-index: 100;
@@ -67,8 +70,10 @@ const Time = styled.div`
   padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   margin: ${({ theme }) => theme.spacing.sm};
   border-radius: ${({ theme }) => theme.spacing.md};
-  border: 1px solid black;
-  background-color: white;
+  border: 1px solid ${({ theme }) => theme.colors.highlight};
+  background-color: ${({ theme }) => theme.colors.maingrey};
+  color: ${({ theme }) => theme.colors.highlight};
+  white-space: nowrap;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
     padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.xs}`};
@@ -85,8 +90,8 @@ const TimeWrapper = styled.div`
 
 const ImageWrapper = styled.div`
   width: 100%;
-  height: fit-content;
   position: relative;
+  height: fit-content;
 `;
 
 const ListItem = ({ element }) => {
@@ -115,23 +120,16 @@ const ListItem = ({ element }) => {
                 : "/assets/img/missing.svg"
             }
           />
-          <SaveIcon>
-            <FavouriteStar
-              saved={uiStore.savedItemIds.includes(element.id)}
-              size={25}
-              onClick={e => handleAddSaved(e, element.id)}
-            />
-          </SaveIcon>
+          <SaveIcon>MERKEN</SaveIcon>
           <TimeWrapper>
             {element.template == "event" && element.allocation?.temporal?.length
               ? element.allocation?.temporal?.slice(0, 3).map((t, i) => (
                   <Time key={`time-range-${t.start}-${i}-${t.end}`}>
-                    <FormattedDateTimeRange
-                      from={t.start * 1000}
-                      weekday="long"
+                    <FormattedTime
+                      value={t.start * 1000}
+                      weekday="short"
                       hour="numeric"
                       minute="numeric"
-                      to={t.end * 1000}
                     />
                   </Time>
                 ))

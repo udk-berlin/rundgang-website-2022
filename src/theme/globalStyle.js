@@ -3,7 +3,13 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 html {
   height: 100%; 
-  box-sizing: border-box; }
+  width: 100%;
+  box-sizing: border-box;
+  *::selection {
+    background: black;
+    color: #E2FF5D;
+  } 
+}
 body {
   margin: 0;
   padding: 0;

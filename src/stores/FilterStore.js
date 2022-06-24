@@ -1,12 +1,10 @@
 import { action, makeAutoObservable, observable, toJS } from "mobx";
 const INITIAL_SELECTION = {
-  fakultaeten: null,
-  zentren: null,
-  beratungsangebote: null,
-  institute: null,
-  studiengaenge: null,
-  fachgebiete: null,
-  klassen: null,
+  ebene0: null,
+  initiatives: null,
+  ebene1: null,
+  classes: null,
+  seminars: null,
 };
 class FilterStore {
   constructor() {
@@ -53,6 +51,7 @@ class FilterStore {
 
   setSelected = (name, id, parent, grandparent, greatgrandparent) => {
     if (this.selected[name] == id) {
+      console.log("here"), name, id;
       this.selected = INITIAL_SELECTION;
       this.selectedId = null;
     } else {
@@ -75,75 +74,36 @@ class FilterStore {
         }, {});
       };
       switch (name) {
-        case "fakultaeten":
+        case "ebene0":
           this.selected = {
             ...INITIAL_SELECTION,
-            fakultaeten: id,
-            zentren: "none",
+            ebene0: id,
           };
           break;
-        case "zentren":
+        case "initiatives":
           this.selected = {
             ...INITIAL_SELECTION,
-            zentren: id,
-            fakultaeten: "none",
+            initiatives: id,
           };
           break;
-        case "beratungsangebote":
+        case "ebene1":
           this.selected = {
             ...INITIAL_SELECTION,
-            ...selectAncestors(["fakultaeten", "zentren"]),
-            beratungsangebote: id,
+            ebene1: id,
+            ...selectAncestors(["ebene0"]),
           };
           break;
-        case "institute":
+        case "classes":
           this.selected = {
             ...INITIAL_SELECTION,
-            institute: id,
-            ...selectAncestors([
-              "fakultaeten",
-              "zentren",
-              "studiengaenge",
-              "beratungsangebote",
-            ]),
+            classes: id,
+            ...selectAncestors(["ebene0", "initiatives", "ebene1"]),
           };
           break;
-        case "studiengaenge":
+        case "seminars":
           this.selected = {
-            ...INITIAL_SELECTION,
-            studiengaenge: id,
-            ...selectAncestors([
-              "fakultaeten",
-              "zentren",
-              "institute",
-              "beratungsangebote",
-            ]),
-          };
-          break;
-        case "fachgebiete":
-          this.selected = {
-            ...INITIAL_SELECTION,
-            fachgebiete: id,
-            ...selectAncestors([
-              "fakultaeten",
-              "zentren",
-              "institute",
-              "beratungsangebote",
-              "studiengaenge",
-            ]),
-          };
-          break;
-        case "klassen":
-          this.selected = {
-            klassen: id,
-            ...selectAncestors([
-              "fakultaeten",
-              "zentren",
-              "institute",
-              "beratungsangebote",
-              "studiengaenge",
-              "fachgebiete",
-            ]),
+            seminars: id,
+            ...selectAncestors(["ebene0", "initiatives", "ebene1", "classes"]),
           };
           break;
         default:
@@ -170,45 +130,48 @@ class FilterStore {
     const filterTemplate = (list, template) => {
       let res = list.filter(c => template.includes(c.template));
       //let filternames = [...new Map(res.map(v => [v.name, v])).values()];
-      return [...new Map(res.map(v => [v.id, v])).values()];
+      return res;
     };
 
-    const fakultaeten = filterTemplate(_.values(wholeStructure), ["Fakultät"]);
-    const zentren = filterTemplate(_.values(wholeStructure), ["Institut"]);
+    const faculties = filterTemplate(_.values(wholeStructure), ["faculty"]);
+    const centres = filterTemplate(_.values(wholeStructure), ["centre"]);
     const beratungsangebote = filterTemplate(_.values(wholeStructure), [
-      "Beratungsangebot",
+      "consulting service",
+    ]);
+    const initiatives = filterTemplate(_.values(wholeStructure), [
+      "initiative",
     ]);
 
-    const ebene0 = fakultaeten.concat(zentren).concat(beratungsangebote);
+    const ebene0 = faculties.concat(centres).concat(beratungsangebote);
     const ebene0children = getChildList(ebene0);
-    const institute = filterTemplate(ebene0children, ["Institut"]);
+    const institutes = filterTemplate(ebene0children, ["institute"]);
     const studienganglist = getChildList(
-      ebene0children.concat(institute),
+      ebene0children.concat(institutes),
     ).concat(ebene0children);
-    const studiengaenge = filterTemplate(studienganglist, ["Studiengang"]);
+    const subjects = filterTemplate(studienganglist, ["subject"]);
 
-    const ebene1 = studiengaenge.concat(institute);
+    const ebene1 = subjects.concat(institutes);
     let ebene1children = getChildList(ebene1);
     ebene1children = ebene1children.concat(getChildList(ebene1children));
-    const fachgebiete = filterTemplate(ebene1children, ["Fachgebiet"]);
-    const klassen = filterTemplate(ebene1children.concat(ebene0children), [
-      "class",
-      "Beratungsangebot",
+    const classes = filterTemplate(ebene1children, ["class"]);
+    const seminars = filterTemplate(ebene1children.concat(ebene0children), [
+      "seminar",
+      "consulting service",
+      "course",
     ]);
 
-    return {
-      fakultaeten,
-      zentren,
-      beratungsangebote,
-      institute,
-      studiengaenge,
-      fachgebiete,
-      klassen,
-    };
+    return { ebene0, initiatives, ebene1, classes, seminars };
   }
 
   get contextList() {
-    return Object.values(this.initialTags)
+    console.log("changes");
+    return [
+      ...new Map(
+        _.values(this.initialTags)
+          .flat()
+          .map(item => [item.name, item]),
+      ).values(),
+    ]
       .flat()
       .concat(Object.values(this.dataStore.api.locations?.children));
   }
@@ -219,64 +182,50 @@ class FilterStore {
     );
     if (sel) {
       let allTags = this.initialTags;
-      const flEl = (group, sel) =>
-        group.filter(
+      const flEl = (group, sel) => {
+        let res = group.filter(
           k =>
             k.parent == sel ||
             k.grandparent == sel ||
             k.greatgrandparent == sel,
         );
-      if (this.selected.klassen !== null) {
+        res = [...new Map(res.map(item => [item.name, item])).values()];
+        return res;
+      };
+      if (this.selected.seminars !== null) {
         return allTags;
       }
-      if (
-        this.selected.fachgebiete !== null &&
-        this.selected.fachgebiete !== "none"
-      ) {
+      if (this.selected.classes !== null && this.selected.classes !== "none") {
         allTags = {
           ...allTags,
-          klassen: flEl(allTags.klassen, this.selected.fachgebiete),
+          seminars: flEl(allTags.seminars, this.selected.classes),
+        };
+      }
+      if (this.selected.ebene1 !== null && this.selected.ebene1 !== "none") {
+        allTags = {
+          ...allTags,
+          initiatives: flEl(allTags.initiatives, this.selected.ebene1),
+          classes: flEl(allTags.classes, this.selected.ebene1),
+          seminars: flEl(allTags.seminars, this.selected.ebene1),
         };
       }
       if (
-        this.selected.studiengaenge !== null &&
-        this.selected.studiengaenge !== "none"
+        this.selected.initiatives !== null &&
+        this.selected.initiatives !== "none"
       ) {
         allTags = {
           ...allTags,
-          fachgebiete: flEl(allTags.fachgebiete, this.selected.studiengaenge),
-          klassen: flEl(allTags.klassen, this.selected.studiengaenge),
+          classes: flEl(allTags.classes, this.selected.initiatives),
+          seminars: flEl(allTags.seminars, this.selected.initiatives),
         };
       }
-      if (
-        this.selected.institute !== null &&
-        this.selected.institute !== "none"
-      ) {
+      if (this.selected.ebene0 !== null && this.selected.ebene0 !== "none") {
         allTags = {
           ...allTags,
-          studiengaenge: flEl(allTags.studiengaenge, this.selected.institute),
-          fachgebiete: flEl(allTags.fachgebiete, this.selected.institute),
-          klassen: flEl(allTags.klassen, this.selected.institute),
-        };
-      }
-      if (this.selected.zentren !== null && this.selected.zentren !== "none") {
-        allTags = {
-          ...allTags,
-          studiengaenge: flEl(allTags.studiengaenge, this.selected.zentren),
-          fachgebiete: flEl(allTags.fachgebiete, this.selected.zentren),
-          klassen: flEl(allTags.klassen, this.selected.zentren),
-        };
-      }
-      if (
-        this.selected.fakultaeten !== null &&
-        this.selected.fakultaeten !== "none"
-      ) {
-        allTags = {
-          ...allTags,
-          institute: flEl(allTags.institute, this.selected.fakultaeten),
-          studiengaenge: flEl(allTags.studiengaenge, this.selected.fakultaeten),
-          fachgebiete: flEl(allTags.fachgebiete, this.selected.fakultaeten),
-          klassen: flEl(allTags.klassen, this.selected.fakultaeten),
+          ebene1: flEl(allTags.ebene1, this.selected.ebene0),
+          initiatives: flEl(allTags.initiatives, this.selected.ebene0),
+          classes: flEl(allTags.classes, this.selected.ebene0),
+          seminars: flEl(allTags.seminars, this.selected.ebene0),
         };
       }
       this.setIsTagSelected(true);

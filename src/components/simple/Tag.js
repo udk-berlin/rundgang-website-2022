@@ -9,14 +9,13 @@ const TagIcon = styled.span`
 
 const TagWrapper = styled.span`
   border: 1px solid black;
-  white-space: nowrap;
   cursor: pointer;
   line-height: 1;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   margin: ${({ theme }) => theme.spacing.xs};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
-    margin: ${({ theme }) => theme.spacing.xxs};
+    margin: ${({ theme }) => theme.spacing.xs};
   }
   ${({ theme, selected, levelSelected }) => {
     let color = theme.colors.black;

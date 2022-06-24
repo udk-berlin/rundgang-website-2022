@@ -9,7 +9,7 @@ const AutoCompleteWrapper = styled.div`
   left: 16px;
   background: white;
   z-index: 100;
-  box-shadow: 7px 7px 7px 2px #E2FF5D88, -7px 7px 7px 2px #E2FF5D88;
+  box-shadow: 7px 7px 7px 2px #e2ff5d88, -7px 7px 7px 2px #e2ff5d88;
 `;
 
 const AutoCompleteItem = styled.div`
@@ -34,7 +34,7 @@ const AutoComplete = ({ searchValue, handleSelect }) => {
 
   const onItemClicked = item => {
     uiStore.filterStore.setSelected(
-      "klassen",
+      item.template,
       item.id,
       item.parent,
       item.grandparent,
@@ -42,6 +42,8 @@ const AutoComplete = ({ searchValue, handleSelect }) => {
     );
     handleSelect(item.name);
   };
+
+  console.log(uiStore.filterStore.isTagSelected);
 
   return (
     <AutoCompleteWrapper>

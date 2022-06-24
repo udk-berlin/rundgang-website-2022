@@ -13,8 +13,7 @@ const PageTitleWrapper = styled.div`
   width: 100%;
   font-family: "Diatype";
   height: fit-content;
-  background-color: ${({ isEvent, theme }) =>
-    isEvent ? theme.colors.lightHighlight : theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const BackRouting = styled.span`
@@ -26,7 +25,7 @@ const BackRouting = styled.span`
 
 const splitLongTitles = (title, titleId) => {
   if (titleId == "rundgang") {
-    return title.split(" ");
+    return [title];
   }
   var words = title.split(/[\s]+/);
   var newtext = [words[0]];
@@ -80,9 +79,9 @@ const PageTitle = () => {
   };
 
   return (
-    <PageTitleWrapper isEvent={uiStore.currentContext?.template === "event"}>
+    <PageTitleWrapper>
       <AnimatePresence initial={true}>
-        {isMobile ? (
+        {isMobile && titleStrings?.length > 1 ? (
           titleStrings.map((line, i) => (
             <BackRouting onClick={() => handleBack()}>
               <Stretch

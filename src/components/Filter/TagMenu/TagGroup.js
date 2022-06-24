@@ -1,5 +1,6 @@
-import React from "react";
-import styled, { css } from "styled-components";
+import React, { useMemo } from "react";
+import _ from "lodash";
+import styled from "styled-components";
 import { observer } from "mobx-react";
 import { motion } from "framer-motion";
 import { useStores } from "@/stores/index";
@@ -16,8 +17,11 @@ const TagGroupWrapper = styled.div`
 `;
 const NumberItems = styled.span`
   color: ${({ theme }) => theme.colors.lightgrey};
-  font-size: ${({ theme }) => theme.fontSizes.xs};
   margin: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.sm}`};
+  font-size: ${({ theme }) => theme.fontSizes.mm};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.md};
+  }
 `;
 const ToggleIcon = styled.span`
   font-family: "Inter";
@@ -25,10 +29,11 @@ const ToggleIcon = styled.span`
   margin: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.xs}`};
 `;
 const TagGroupTitle = styled.div`
+  text-align: left;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.lm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+    font-size: ${({ theme }) => theme.fontSizes.mm};
   }
 `;
 
@@ -42,6 +47,10 @@ const TagSubGroup = styled.div`
   width: 100%;
 `;
 
+const TagSubGroupTitle = styled.div`
+  padding: 8px 4px;
+`;
+
 const Tags = styled.div`
   width: 99%;
   display: flex;
@@ -51,15 +60,19 @@ const Tags = styled.div`
 const TagGroup = ({ group, name }) => {
   const { uiStore } = useStores();
   const isOpen = uiStore.filterStore.openTagGroup == name;
+  const groups = useMemo(
+    () => _.entries(_.groupBy(group, "template")),
+    [uiStore.filterStore.selected],
+  );
   return (
     <TagGroupWrapper>
       <TagGroupTitle onClick={() => uiStore.filterStore.handleToggleOpen(name)}>
         <LocalizedText id={name} />
         <NumberItems>{group?.length}</NumberItems>
         {isOpen ? (
-          <ToggleIcon>&#8595;</ToggleIcon>
-        ) : (
           <ToggleIcon>&#8593;</ToggleIcon>
+        ) : (
+          <ToggleIcon>&#8595;</ToggleIcon>
         )}
       </TagGroupTitle>
       <TagGroupStretch
@@ -68,28 +81,35 @@ const TagGroup = ({ group, name }) => {
         initial={false}
         transition={{ type: "linear", duration: 0.5 }}
       >
-        <TagSubGroup>
-          <Tags>
-            {group.map((child, i) => (
-              <Tag
-                onClick={() =>
-                  uiStore.filterStore.setSelected(
-                    name,
-                    child.id,
-                    child.parent,
-                    child.grandparent,
-                    child.greatgrandparent,
-                  )
-                }
-                selected={uiStore.filterStore.selected[name] == child.id}
-                levelSelected={uiStore.filterStore.selected[name] !== null}
-                key={`${i}-tag-${child.id}`}
-              >
-                {child.name}
-              </Tag>
-            ))}
-          </Tags>
-        </TagSubGroup>
+        {groups.map(([k, v]) => (
+          <TagSubGroup key={`${k}-taggroup-${name}`}>
+            {groups.length > 1 && (
+              <TagSubGroupTitle>
+                <LocalizedText id={k} />
+              </TagSubGroupTitle>
+            )}
+            <Tags>
+              {v.map((child, i) => (
+                <Tag
+                  onClick={() =>
+                    uiStore.filterStore.setSelected(
+                      name,
+                      child.id,
+                      child.parent,
+                      child.grandparent,
+                      child.greatgrandparent,
+                    )
+                  }
+                  selected={uiStore.filterStore.selected[name] == child.id}
+                  levelSelected={uiStore.filterStore.selected[name] !== null}
+                  key={`${i}-tag-${child.id}-${name}`}
+                >
+                  {child.name}
+                </Tag>
+              ))}
+            </Tags>
+          </TagSubGroup>
+        ))}
       </TagGroupStretch>
     </TagGroupWrapper>
   );

@@ -23,7 +23,7 @@ const baseStyle = {
 const leftStyle = {
   ...baseStyle,
   transformOrigin: "center left",
-  backgroundImage: "url('/assets/img/haus2.svg')",
+  backgroundImage: "url('/assets/img/4004.svg')",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
@@ -41,7 +41,7 @@ const topStyle = {
 const rightStyle = {
   ...baseStyle,
   transformOrigin: "center right",
-  backgroundImage: "url('/assets/img/haus4.svg')",
+  backgroundImage: "url('/assets/img/4002.svg')",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
@@ -50,7 +50,7 @@ const rightStyle = {
 const bottomStyle = {
   ...baseStyle,
   transformOrigin: "bottom center",
-  backgroundImage: "url('/assets/img/haus7.svg')",
+  backgroundImage: "url('/assets/img/4003.svg')",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",

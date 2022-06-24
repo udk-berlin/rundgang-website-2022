@@ -19,7 +19,7 @@ const ZeitenView = () => {
   const { pid } = router.query;
 
   return uiStore.currentContext ? (
-    <Layout isEvent={uiStore.currentContext.template === "event"}>
+    <Layout>
       <ZeitenViewWrapper>
         {pid == "beratungsangebote" ? "beratungsangebote" : null}
         {uiStore.currentContext.type == "item" && <ItemView />}

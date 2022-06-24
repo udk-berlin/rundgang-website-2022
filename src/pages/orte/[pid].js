@@ -18,7 +18,6 @@ const OrteViewWrapper = styled.div`
 
 const OrteKatalog = styled.div`
   flex-grow: 0;
-  padding: ${({ theme }) => theme.spacing.lg};
   width: 40%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 100%;
@@ -39,7 +38,7 @@ const OrteView = () => {
   const { uiStore } = useStores();
 
   return uiStore.currentContext ? (
-    <Layout isEvent={uiStore.currentContext.template === "event"}>
+    <Layout>
       <OrteViewWrapper>
         {uiStore.currentContext.type == "item" ? (
           <ItemView />

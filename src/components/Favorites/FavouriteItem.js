@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FormattedDateTimeRange } from "react-intl";
-import FavouriteStarSvg from "@/components/simple/FavouriteStar";
+import FavouriteIcon from "@/components/simple/FavouriteIcon";
 import Tag from "@/components/simple/Tag";
 
 const FavouriteItemWrapper = styled.div`
@@ -62,7 +62,7 @@ const TimeRange = styled.div`
 const FavouriteItem = ({ element }) => {
   return (
     <FavouriteItemWrapper>
-      <FavouriteStarSvg saved={true} size={20} />
+      <FavouriteIcon saved={true} size={20} />
       {element.template == "studentproject" ? (
         <Image
           src={
