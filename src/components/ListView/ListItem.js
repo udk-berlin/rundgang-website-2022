@@ -15,9 +15,10 @@ const ListItemWrapper = styled.div`
   left: 0;
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme }) => theme.spacing.sm};
+  padding-bottom: ${({ theme }) => theme.spacing.lg};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding: ${({ theme }) => theme.spacing.md};
+  padding-bottom: ${({ theme }) => theme.spacing.md};
   }
 `;
 
@@ -34,8 +35,9 @@ const SaveIcon = styled.div`
   position: absolute;
   background: white;
   padding: 0px 4px;
-  top: 5%;
-  right: 5%;
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  top: 8px;
+  right: 8px;
   z-index: 100;
   background: ${({ theme, saved }) =>
     saved ? theme.colors.black : theme.colors.white};
@@ -66,23 +68,19 @@ const Authors = styled.div`
 `;
 
 const Time = styled.div`
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
-  margin: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.sm}`};
+  margin: ${({ theme }) => `${theme.spacing.xs} 0px`};
   border-radius: ${({ theme }) => theme.spacing.md};
   border: 1px solid ${({ theme }) => theme.colors.highlight};
   background-color: ${({ theme }) => theme.colors.maingrey};
   color: ${({ theme }) => theme.colors.highlight};
   white-space: nowrap;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
-    padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.xs}`};
-    margin: ${({ theme }) => theme.spacing.xs};
-  }
+  font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 
 const TimeWrapper = styled.div`
   position: absolute;
-  bottom: ${({ theme }) => theme.spacing.md};
+  bottom: ${({ theme }) => theme.spacing.sm};
   left: ${({ theme }) => theme.spacing.sm};
   z-index: 100;
 `;

@@ -13,8 +13,9 @@ const variants = {
 };
 
 const TagGroupWrapper = styled.div`
+  height: fit-content;
   padding: ${({ theme }) =>
-    `${theme.spacing.md} ${theme.spacing.sm} ${theme.spacing.md} ${theme.spacing.md}`};
+    `${theme.spacing.sm} ${theme.spacing.sm} ${theme.spacing.sm} ${theme.spacing.md}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     padding: ${({ theme }) =>
       `${theme.spacing.sm} ${theme.spacing.sm} ${theme.spacing.sm} ${theme.spacing.sm}`};
@@ -25,25 +26,30 @@ const NumberItems = styled.span`
   margin: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.sm}`};
   font-size: ${({ theme }) => theme.fontSizes.mm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.md};
+    font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
 const ToggleIcon = styled.span`
   font-family: "Inter";
-  font-size: ${({ theme }) => theme.fontSizes.xs};
+  font-size: ${({ theme }) => theme.fontSizes.mm};
   margin: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.xs}`};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
 `;
 const TagGroupTitle = styled.div`
   text-align: left;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.lm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.mm};
+    font-size: ${({ theme }) => theme.fontSizes.md};
   }
 `;
 
 const TagGroupStretch = styled(motion.div)`
   height: 100%;
+  max-height: 30vh;
+  overflow-y: auto;
   display: flex;
   width: 100%;
   flex-wrap: wrap;

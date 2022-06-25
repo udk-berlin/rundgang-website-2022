@@ -9,7 +9,6 @@ import { useStores } from "@/stores/index";
 const FilterMenuWrapper = styled.div`
   width: 100%;
   height: 100%;
-  overflow-y: auto;
 `;
 const GoButton = styled.button`
   border: none;
@@ -27,7 +26,7 @@ const GoButton = styled.button`
 const ResetButton = styled.button`
   font-family: "Diatype";
   cursor: pointer;
-  border: 2px solid black;
+  border: 1px solid black;
   background: ${({ theme }) => theme.colors.lightgrey};
   border-radius: ${({ theme }) => theme.spacing.lg};
   font-size: ${({ theme }) => theme.fontSizes.sm};
@@ -45,11 +44,11 @@ const Buttons = styled.div`
   justify-content: space-between;
   position: sticky;
   align-items: center;
-  bottom: 70px;
+  bottom: 0px;
   padding-left: 16px;
   padding-right: 8px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    bottom: 60px;
+    padding-left: 8px;
   }
 `;
 
@@ -58,6 +57,10 @@ const FilterMenu = styled.div`
   height: 100%;
   position: relative;
   max-height: calc(80vh - 66px);
+  overflow-y: hidden;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    max-height: calc(80vh - 50px);
+  }
 `;
 
 const TagMenu = ({ handleSubmit }) => {
