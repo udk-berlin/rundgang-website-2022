@@ -7,6 +7,7 @@ const AutoCompleteWrapper = styled.div`
   position: absolute;
   top: calc(5vh + 14px);
   left: 16px;
+  min-width: 50%;
   background: white;
   z-index: 100;
   box-shadow: 7px 7px 7px 2px #e2ff5d88, -7px 7px 7px 2px #e2ff5d88;

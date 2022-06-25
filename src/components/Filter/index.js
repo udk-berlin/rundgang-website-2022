@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import InputField from "./InputField";
 import TagMenu from "./TagMenu";
-import LocalizedText from "modules/i18n/components/LocalizedText";
 import { useRouter } from "next/router";
 import { makeUrlFromId } from "@/utils/idUtils";
 
@@ -30,8 +29,8 @@ const variants = {
 
 const FilterWrapper = styled(motion.div)`
   width: 100%;
+  height: 100%;
   position: relative;
-  overflow-x: auto;
   margin: ${({ theme }) => `0 ${theme.spacing.md}`};
   border: ${({ theme }) => `4px solid ${theme.colors.highlight}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -43,36 +42,6 @@ const FilterWrapper = styled(motion.div)`
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
-`;
-
-const GoButton = styled.button`
-  border: none;
-  background: none;
-  cursor: pointer;
-  flex-grow: 0;
-  font-size: ${({ theme }) => theme.fontSizes.xl};
-  text-align: right;
-  font-family: "Inter";
-  margin-left: auto;
-  margin-top: auto;
-`;
-
-const ResetButton = styled.button`
-  font-family: "Diatype";
-  cursor: pointer;
-  border: none;
-  background: ${({ theme }) => theme.colors.lightgrey};
-  font-size: ${({ theme }) => theme.fontSizes.lm};
-  padding: ${({ isOpen, theme }) =>
-    isOpen == "filter" ? `${theme.spacing.xs} ${theme.spacing.sm}` : "0px"};
-  height: fit-content;
-  margin: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.xs}`};
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: ${({ theme }) => `0 ${theme.spacing.sm}`};
 `;
 
 const Filter = ({ onClick, onClose }) => {
@@ -106,24 +75,7 @@ const Filter = ({ onClick, onClose }) => {
       <InputField handleFocus={onClick} handleSubmit={handleSubmit} />
       <AnimatePresence>
         {uiStore.isOpen && uiStore.isOpen == "filter" && (
-          <>
-            <TagMenu />
-            <Buttons>
-              <ResetButton onClick={() => uiStore.filterStore.handleReset()}>
-                <LocalizedText id="reset" />
-              </ResetButton>
-              <GoButton
-                active={uiStore.filterStore.isTagSelected}
-                onClick={() => handleSubmit()}
-              >
-                {uiStore.filterStore.isTagSelected ? (
-                  <span>&#8594;</span>
-                ) : (
-                  <span>&#x2715;</span>
-                )}
-              </GoButton>
-            </Buttons>
-          </>
+          <TagMenu handleSubmit={handleSubmit} />
         )}
       </AnimatePresence>
     </FilterWrapper>

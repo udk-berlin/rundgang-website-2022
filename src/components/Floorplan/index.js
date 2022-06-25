@@ -90,10 +90,13 @@ const Floorplan = () => {
           let oldRoomRect = document.querySelectorAll(
             `[data-id="${uiStore.selectedRoom.id}"]`,
           )[0];
-          oldRoomRect.style.fill = "#d9d9d9";
+          if (oldRoomRect) {
+            oldRoomRect.style.fill = "#d9d9d9";
+          }
         }
         if (!e.target?.dataset?.id) {
           uiStore.setSelectedRoom(null);
+          uiStore.setFloorLevel(uiStore.floorLevel);
           uiStore.setTitle(`Etage ${uiStore.floorLevel}`);
         } else {
           let data = e.target.dataset;
@@ -101,6 +104,7 @@ const Floorplan = () => {
           if (roomRect) {
             roomRect.style.fill = "#E2FF5D";
             uiStore.setSelectedRoom(data);
+            uiStore.setFloorLevel(uiStore.floorLevel);
             uiStore.setTitle(`Raum ${data.name}`);
           }
         }
@@ -108,6 +112,12 @@ const Floorplan = () => {
     },
     [uiStore.floorPlan, uiStore.selectedRoom],
   );
+
+  const handleSelectAll = () => {
+    uiStore.setSelectedRoom(null);
+    uiStore.setFloorLevel(null);
+    uiStore.setTitle(uiStore.currentContext?.name);
+  };
 
   return (
     <FloorplanWrapper>
@@ -119,23 +129,12 @@ const Floorplan = () => {
           url={uiStore.floorPlan ? uiStore.floorPlan.thumbnail_full_size : null}
           handleSelectRoom={handleSelectRoom}
         />
-        {uiStore.selectedRoom && (
-          <SelectedTitle>
-            <LocalizedText
-              id="selected-topic"
-              values={{
-                name: uiStore.selectedRoom?.name,
-                topic: uiStore.selectedRoom?.topic,
-              }}
-            />
-          </SelectedTitle>
-        )}
         <Levels>
           <LevelNumber
             key="alllevels"
             isAll
             selected={uiStore.floorLevel == null}
-            onClick={() => uiStore.setFloorLevel(null)}
+            onClick={() => handleSelectAll()}
           >
             <LocalizedText id="allfloors" />
           </LevelNumber>

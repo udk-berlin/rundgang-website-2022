@@ -7,7 +7,12 @@ import LocationList from "./LocationList";
 import TimeScale from "./TimeScale";
 import { useStores } from "@/stores/index";
 import { useIsMobile } from "@/utils/useWindowSize";
-import { TIME_PADDING, TIME_PADDING_MOBILE, TIME_WIDTH } from "./constants";
+import {
+  TIME_PADDING,
+  TIME_PADDING_MOBILE,
+  TIME_WIDTH,
+  TIME_WIDTH_MOBILE,
+} from "./constants";
 import { useIsScrolledX } from "@/utils/useIsScrolled";
 
 const TimeTableWrapper = styled.div`
@@ -67,7 +72,7 @@ const TimeTable = () => {
 
   const scaleX = scaleLinear()
     .domain([1658563200, 1658696400])
-    .range([padding, TIME_WIDTH]);
+    .range([padding, isMobile ? TIME_WIDTH_MOBILE : TIME_WIDTH]);
 
   const isSunday = useIsScrolledX(scaleX(1658613600), "time-table-container");
 

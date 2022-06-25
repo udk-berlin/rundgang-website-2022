@@ -12,6 +12,8 @@ const JumpToTopWrapper = styled.div`
   font-size: ${({ theme }) => theme.spacing.xl};
   font-family: "Inter";
   cursor: pointer;
+  text-shadow: 4px 4px 8px #fff, -4px 4px 8px #fff, 4px -4px 8px #fff,
+    -4px -4px 8px #fff;
 `;
 
 const JumpToTop = () => {

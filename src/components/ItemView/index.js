@@ -8,7 +8,6 @@ import { useStores } from "@/stores/index";
 import { FormattedDateTimeRange, useIntl } from "react-intl";
 import ContentElement from "./ContentElement";
 import Tag from "@/components/simple/Tag";
-import FavouriteIcon from "@/components/simple/FavouriteIcon";
 import ImageDetailView from "./ImageDetailView";
 
 const ItemViewWrapper = styled.div`

@@ -13,7 +13,12 @@ const variants = {
 };
 
 const TagGroupWrapper = styled.div`
-  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+  padding: ${({ theme }) =>
+    `${theme.spacing.md} ${theme.spacing.sm} ${theme.spacing.md} ${theme.spacing.md}`};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    padding: ${({ theme }) =>
+      `${theme.spacing.sm} ${theme.spacing.sm} ${theme.spacing.sm} ${theme.spacing.sm}`};
+  }
 `;
 const NumberItems = styled.span`
   color: ${({ theme }) => theme.colors.lightgrey};

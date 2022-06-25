@@ -4,9 +4,9 @@ import { observer } from "mobx-react";
 import { FormattedTime } from "react-intl";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
-import FavouriteIcon from "@/components/simple/FavouriteIcon";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import { makeUrlFromId } from "@/utils/idUtils";
+import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const ListItemWrapper = styled.div`
   cursor: pointer;
@@ -38,6 +38,12 @@ const SaveIcon = styled.div`
   top: 5%;
   right: 5%;
   z-index: 100;
+  background: ${({ theme, saved }) =>
+    saved ? theme.colors.black : theme.colors.white};
+  color: ${({ theme, saved }) =>
+    saved ? theme.colors.white : theme.colors.black};
+  border: 1px solid
+    ${({ theme, saved }) => (saved ? theme.colors.white : theme.colors.black)};
 `;
 
 const RestyledLink = styled(LocalizedLink)`
@@ -120,7 +126,12 @@ const ListItem = ({ element }) => {
                 : "/assets/img/missing.svg"
             }
           />
-          <SaveIcon>MERKEN</SaveIcon>
+          <SaveIcon
+            saved={uiStore.isSaved(element.id)}
+            onClick={e => handleAddSaved(e, element.id)}
+          >
+            <LocalizedText id={uiStore.isSaved(element.id) ? "saved" : "save"} />
+          </SaveIcon>
           <TimeWrapper>
             {element.template == "event" && element.allocation?.temporal?.length
               ? element.allocation?.temporal?.slice(0, 3).map((t, i) => (

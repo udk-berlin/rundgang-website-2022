@@ -23,6 +23,12 @@ const BackRouting = styled.span`
   }
 `;
 
+const StyledText = styled.span`
+  &:hover {
+    color: black;
+  }
+`;
+
 const splitLongTitles = (title, titleId) => {
   if (titleId == "rundgang") {
     return [title];
@@ -65,14 +71,26 @@ const PageTitle = () => {
   const handleBack = () => {
     let link = router.pathname;
     if (router.pathname.includes("[pid]")) {
-      if (uiStore.selectedRoom) {
+      if (
+        uiStore.selectedRoom &&
+        uiStore.currentContext.template == "location-building"
+      ) {
         uiStore.setSelectedRoom(null);
-      } else if (uiStore.floorLevel) {
+        uiStore.setTitle(`Etage ${uiStore.floorLevel}`);
+      } else if (
+        uiStore.floorLevel &&
+        uiStore.currentContext.template == "location-building"
+      ) {
+        uiStore.setSelectedRoom(null);
         uiStore.setFloorLevel(null);
-      } else {
+        uiStore.setTitle(uiStore.currentContext?.name);
         link = link.replace("[pid]", "");
+      } else {
+        uiStore.setSelectedRoom(null);
+        uiStore.setFloorLevel(null);
+        link = link.replace("[pid]", "");
+        router.replace(link);
       }
-      router.replace(link);
     } else {
       router.replace("/");
     }
@@ -93,7 +111,7 @@ const PageTitle = () => {
                   uiStore.title !== "rundgang" && i == 0 ? "left" : null
                 }
               >
-                {line}
+                <StyledText>{line}</StyledText>
               </Stretch>
             </BackRouting>
           ))
@@ -106,7 +124,9 @@ const PageTitle = () => {
               preferredSize={11}
               arrowDir={uiStore.title !== "rundgang" ? "left" : null}
             >
-              <LocalizedText id={uiStore.title} />
+              <StyledText>
+                <LocalizedText id={uiStore.title} />
+              </StyledText>
             </Stretch>
           </BackRouting>
         )}

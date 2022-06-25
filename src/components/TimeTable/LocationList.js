@@ -20,7 +20,9 @@ const Room = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 0px;
+  &::after {
+    height: 100%;
+  }
 `;
 
 const House = styled(Room)`
@@ -28,17 +30,21 @@ const House = styled(Room)`
 `;
 
 const RoomTitle = styled.div`
-  background: ${({ theme }) => theme.background.primary};
   white-space: nowrap;
-  width: ${({ width }) => width}px;
-  height: 100%;
-  position: sticky;
-  left: 0;
-  z-index: 100;
-  font-size: ${({ theme }) => theme.fontSizes.md};
+  width: fit-content;
+  background-color: white;
+  font-size: ${({ theme }) => theme.fontSizes.mm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }
+`;
+const RoomTitleWrapper = styled.div`
+  width: ${({ width }) => width}px;
+  z-index: 100;
+  position: sticky;
+  line-height: 1;
+  left: 0;
+  height: 100%;
 `;
 
 const RelativeWrapper = styled.div`
@@ -47,33 +53,41 @@ const RelativeWrapper = styled.div`
 const EventsWrapper = styled.div`
   position: relative;
   display: flex;
+  padding: 4px 0px;
 `;
 
 const LocationList = ({ scaleX }) => {
   const { dataStore } = useStores();
   const { pathname } = useRouter();
-  const locWidth = scaleX(1658559600);
+  const locWidth = scaleX(1658565000);
   return (
     <LocationWrapper>
       {dataStore?.eventLocations
         ? _.entries(dataStore.eventLocations).map(([house, rooms]) => (
             <RelativeWrapper key={`house-${house}`}>
-              <House fixed>
-                <RoomTitle width={locWidth}>{house}</RoomTitle>
+              <House>
+                <RoomTitleWrapper width={locWidth}>
+                  <RoomTitle>{house}</RoomTitle>
+                </RoomTitleWrapper>
               </House>
               {_.entries(rooms).map(([room, events]) => (
                 <Room key={`room-${room}-${house}`}>
-                  <RoomTitle width={locWidth}>{room}</RoomTitle>
+                  <RoomTitleWrapper width={locWidth}>
+                    <RoomTitle>{room}</RoomTitle>
+                  </RoomTitleWrapper>
                   <EventsWrapper>
-                    {events?.map((ev, i) => (
-                      <EventBar
-                        key={`ev-${room}-${ev.id}-${i}`}
-                        ev={ev}
-                        start={scaleX(ev.time.start) - locWidth}
-                        end={scaleX(ev.time.end) - locWidth}
-                        link={`${pathname}/${makeUrlFromId(ev.id)}`}
-                      />
-                    ))}
+                    {_.values(_.groupBy(events, "time.start")).map(starttime =>
+                      starttime.map((ev, i) => (
+                        <EventBar
+                          key={`ev-${room}-${ev.id}-${i}`}
+                          ev={ev}
+                          top={i}
+                          start={scaleX(ev.time.start) - locWidth}
+                          end={scaleX(ev.time.end) - locWidth}
+                          link={`${pathname}/${makeUrlFromId(ev.id)}`}
+                        />
+                      )),
+                    )}
                   </EventsWrapper>
                 </Room>
               ))}
