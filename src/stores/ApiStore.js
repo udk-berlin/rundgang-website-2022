@@ -217,7 +217,7 @@ class ApiStore {
 
         if (title == "beratungsangebote") {
           currentItems = currentItems.filter(l =>
-            l.tags.find(tag => tag.template == "Beratungsangebot"),
+            l.tags.find(tag => tag.template == "consulting service"),
           );
         }
         if (data.template == "location-building") {

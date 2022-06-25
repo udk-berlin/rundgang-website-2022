@@ -50,7 +50,7 @@ const splitLongTitles = (title, titleId) => {
 };
 
 const PageTitle = () => {
-  const { uiStore } = useStores();
+  const { uiStore, dataStore } = useStores();
   const intl = useIntl();
   const router = useRouter();
 
@@ -93,9 +93,11 @@ const PageTitle = () => {
       }
     } else {
       router.replace("/");
+      uiStore.setTitle(dataStore.api.root.name, dataStore.api.root.id);
     }
   };
 
+  console.log(uiStore.title);
   return (
     <PageTitleWrapper>
       <AnimatePresence initial={true}>

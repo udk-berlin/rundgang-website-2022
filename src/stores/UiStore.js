@@ -69,15 +69,17 @@ class UiStore {
   }
 
   setTitle(title, id) {
-    if (
-      id == this.dataStore?.api?.root?.id ||
-      title == "rundgang22-struct-root"
-    ) {
-      this.title = "rundgang";
-    } else if (title == "locations") {
+    if (title == "locations") {
       this.title = "orte";
-    } else if (title == "Universität der Künste Berlin") {
-      this.title = "index";
+    } else if (title == "Universität der Künste Berlin" || title == "katalog") {
+      console.log(title, id);
+      this.title = "katalog";
+    } else if (
+      id == this.dataStore?.api?.root?.id ||
+      title == "rundgang22-root"
+    ) {
+      console.log(title, id);
+      this.title = "rundgang";
     } else {
       this.title = title;
     }
@@ -114,11 +116,7 @@ class UiStore {
   }
 
   get items() {
-    if (
-      this.dataStore.api.currentRoot &&
-      this.dataStore.api.currentRoot?.id !== this.dataStore.api.root?.id &&
-      this.dataStore.api.currentItems
-    ) {
+    if (this.dataStore.api.currentRoot && this.dataStore.api.currentItems) {
       if (
         this.dataStore.api.currentRoot?.template == "location-building" &&
         this.floorLevel

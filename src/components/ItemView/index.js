@@ -127,8 +127,6 @@ const ItemView = () => {
     : "DE";
   const [imageDetailOpen, setImageDetailOpen] = useState(false);
 
-  console.log(toJS(_.values(item.rendered.languages[loc].content)));
-
   return item && item?.id ? (
     <ItemViewWrapper>
       <Tags>

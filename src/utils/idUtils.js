@@ -1,17 +1,17 @@
 export const ALIASES = {
-  gzsKJXOMipzIxsoqYk: "index",
+  ZHxOBBJSDIRTvbpMRw: "index",
   mYrhgyDxLiGjDyLrzW: "orte",
-  gzsKJXOMipzIxsoqYk: "katalog",
-  gzsKJXOMipzIxsoqYk: "zeiten",
-  gzsKJXOMipzIxsoqYk: "beratungsangebote",
+  ZHxOBBJSDIRTvbpMRw: "katalog",
+  ZHxOBBJSDIRTvbpMRw: "zeiten",
+  ZHxOBBJSDIRTvbpMRw: "beratungsangebote",
 };
 
 export const ALIAS_IDS = {
-  index: "yGwpTLQiIMoyuhGggS",
+  index: "ZHxOBBJSDIRTvbpMRw",
   orte: "mYrhgyDxLiGjDyLrzW",
-  katalog: "gzsKJXOMipzIxsoqYk",
-  zeiten: "gzsKJXOMipzIxsoqYk",
-  beratungsangebote: "gzsKJXOMipzIxsoqYk",
+  katalog: "ZHxOBBJSDIRTvbpMRw",
+  zeiten: "ZHxOBBJSDIRTvbpMRw",
+  beratungsangebote: "ZHxOBBJSDIRTvbpMRw",
 };
 
 export const makeUrlFromId = (idString) => {

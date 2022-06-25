@@ -82,7 +82,6 @@ const FavouritesList = ({ onClose }) => {
 
   const downloadImage = () => {
     const dataURL = ref.current.toDataURL({ pixelRatio: 2 });
-    console.log("download");
     downloadURI(dataURL, "rundgangudk2022.png");
   };
   return (

@@ -41,10 +41,8 @@ const AutoComplete = ({ searchValue, handleSelect }) => {
       item.grandparent,
       item.greatgrandparent,
     );
-    handleSelect(item.name);
+    handleSelect();
   };
-
-  console.log(uiStore.filterStore.isTagSelected);
 
   return (
     <AutoCompleteWrapper>

@@ -34,7 +34,7 @@ const FavouriteIcon = ({
     >
       <path
         d="M42 25.1919L6.26866 58L22.7164 32.5455H4L35.194 2L21.5821 25.1919H42Z"
-        stroke-width="3"
+        strokeWidth="3"
       />
 
       <FillPath
@@ -42,7 +42,7 @@ const FavouriteIcon = ({
         clipRule="evenodd"
         saved={saved}
         color={color}
-        stroke-width={3}
+        strokeWidth={3}
         d="M42 25.1919L6.26866 58L22.7164 32.5455H4L35.194 2L21.5821 25.1919H42Z"
       />
     </FavouriteIconWrapper>

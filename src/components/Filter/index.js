@@ -60,7 +60,7 @@ const Filter = ({ onClick, onClose }) => {
       } else {
         link = `${router.pathname}/${pid}`;
       }
-      router.push(link);
+      router.replace(link);
     }
   }, [uiStore.filterStore.isTagSelected]);
 

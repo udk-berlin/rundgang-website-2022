@@ -51,7 +51,6 @@ class FilterStore {
 
   setSelected = (name, id, parent, grandparent, greatgrandparent) => {
     if (this.selected[name] == id) {
-      console.log("here"), name, id;
       this.selected = INITIAL_SELECTION;
       this.selectedId = null;
     } else {
@@ -80,6 +79,24 @@ class FilterStore {
             ebene0: id,
           };
           break;
+        case "faculty":
+          this.selected = {
+            ...INITIAL_SELECTION,
+            ebene0: id,
+          };
+          break;
+        case "consulting service":
+          this.selected = {
+            ...INITIAL_SELECTION,
+            ebene0: id,
+          };
+          break;
+        case "centre":
+          this.selected = {
+            ...INITIAL_SELECTION,
+            ebene0: id,
+          };
+          break;
         case "initiatives":
           this.selected = {
             ...INITIAL_SELECTION,
@@ -90,7 +107,21 @@ class FilterStore {
           this.selected = {
             ...INITIAL_SELECTION,
             ebene1: id,
-            ...selectAncestors(["ebene0"]),
+            ...selectAncestors(["ebene0", "initiatives"]),
+          };
+          break;
+        case "institute":
+          this.selected = {
+            ...INITIAL_SELECTION,
+            ebene1: id,
+            ...selectAncestors(["ebene0", "initiatives"]),
+          };
+          break;
+        case "subject":
+          this.selected = {
+            ...INITIAL_SELECTION,
+            ebene1: id,
+            ...selectAncestors(["ebene0", "initiatives"]),
           };
           break;
         case "classes":
@@ -100,7 +131,26 @@ class FilterStore {
             ...selectAncestors(["ebene0", "initiatives", "ebene1"]),
           };
           break;
+        case "class":
+          this.selected = {
+            ...INITIAL_SELECTION,
+            classes: id,
+            ...selectAncestors(["ebene0", "initiatives", "ebene1"]),
+          };
+          break;
         case "seminars":
+          this.selected = {
+            seminars: id,
+            ...selectAncestors(["ebene0", "initiatives", "ebene1", "classes"]),
+          };
+          break;
+        case "seminar":
+          this.selected = {
+            seminars: id,
+            ...selectAncestors(["ebene0", "initiatives", "ebene1", "classes"]),
+          };
+          break;
+        case "course":
           this.selected = {
             seminars: id,
             ...selectAncestors(["ebene0", "initiatives", "ebene1", "classes"]),
@@ -164,7 +214,6 @@ class FilterStore {
   }
 
   get contextList() {
-    console.log("changes");
     return [
       ...new Map(
         _.values(this.initialTags)
