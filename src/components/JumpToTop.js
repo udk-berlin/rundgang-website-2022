@@ -6,9 +6,10 @@ import useIsScrolled from "@/utils/useIsScrolled";
 const JumpToTopWrapper = styled.div`
   position: fixed;
   bottom: ${FOOTER_HEIGHT}px;
-  left: 0;
+  right: 0;
   width: fit-content;
   margin: auto;
+  z-index: 500;
   font-size: ${({ theme }) => theme.spacing.xl};
   font-family: "Inter";
   cursor: pointer;

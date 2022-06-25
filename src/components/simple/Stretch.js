@@ -107,8 +107,9 @@ const Stretch = ({
 
   useEffect(() => {
     if (fontSize && stretchRef?.current?.clientWidth) {
-      console.log(stretchRef?.current?.clientWidth);
-      const arrWidth = arrowDir && !isMobile ? 5.7 : 1;
+      console.log(stretchRef?.current?.clientWidth, size.width);
+      let arrWidth = arrowDir ? 1 : 0;
+      arrWidth = isMobile ? arrWidth : arrWidth * 5.7;
       const padding = isMobile ? 0 : 50;
       let f =
         (size.width - padding - arrWidth * preferredSize) /

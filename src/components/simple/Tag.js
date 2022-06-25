@@ -4,12 +4,16 @@ import { useIntl } from "react-intl";
 
 const TagIcon = styled.span`
   font-size: ${({ size }) => size};
-  padding-left: ${({ theme }) => theme.spacing.xs};
+  padding-left: ${({ theme }) => theme.spacing.sm};
+  line-height: 0.6;
+  margin: auto;
 `;
 
 const TagWrapper = styled.span`
   border: 1px solid black;
   cursor: pointer;
+  width: fit-content;
+  word-wrap: break-word;
   line-height: 1;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   margin: ${({ theme }) => theme.spacing.xs};
@@ -27,8 +31,8 @@ const TagWrapper = styled.span`
       color = theme.colors.lightgrey;
     }
     return {
-      borderRadius: theme.spacing.md,
-      padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
+      borderRadius: theme.spacing.lg,
+      padding: `6px 8px 6px ${theme.spacing.sm} `,
       color: color,
       backgroundColor: background,
       borderColor: color,
@@ -62,7 +66,7 @@ const Tag = ({
       {selected && showCross ? (
         <TagIcon size="12px">&#57344;</TagIcon>
       ) : (
-        showCross && <TagIcon size="20px">+</TagIcon>
+        showCross && <TagIcon size="22px">+</TagIcon>
       )}
     </TagWrapper>
   );

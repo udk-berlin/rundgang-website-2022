@@ -24,17 +24,22 @@ const variants = {
     margin: "0px 8px",
     borderWidth: "4px",
   },
-  closed: { height: "5vh", width: "100%", opacity: 1, margin: "0px 8px" },
+  closed: {
+    height: "5vh",
+    width: "100%",
+    opacity: 1,
+    margin: "0px 0px 0px 8px",
+  },
 };
 
 const FilterWrapper = styled(motion.div)`
   width: 100%;
   height: 100%;
   position: relative;
-  margin: ${({ theme }) => `0 ${theme.spacing.md}`};
+  margin: ${({ theme }) => ` 0 0 0 ${theme.spacing.md}`};
   border: ${({ theme }) => `4px solid ${theme.colors.highlight}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin: ${({ theme }) => `0 ${theme.spacing.xs}`};
+    margin: ${({ theme }) => ` 0 0 0 ${theme.spacing.xs}`};
   }
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

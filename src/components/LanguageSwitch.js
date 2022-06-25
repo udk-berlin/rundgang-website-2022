@@ -22,11 +22,11 @@ const Switch = styled.div`
 const Slider = styled.div`
   position: absolute;
   cursor: pointer;
-  top: 4px;
+  top: 5px;
   left: 0;
   right: 0;
   bottom: 0;
-  border: 3px solid black;
+  border: 2px solid black;
   -webkit-transition: 0.4s;
   transition: 0.4s;
   border-radius: 34px;

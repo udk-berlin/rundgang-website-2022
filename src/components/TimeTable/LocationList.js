@@ -10,7 +10,7 @@ import EventBar from "./EventBar";
 
 const LocationWrapper = styled.div`
   height: fit-content;
-  z-index: 400;
+  z-index: 100;
 `;
 
 const Room = styled.div`
@@ -40,7 +40,7 @@ const RoomTitle = styled.div`
 `;
 const RoomTitleWrapper = styled.div`
   width: ${({ width }) => width}px;
-  z-index: 100;
+  z-index: 50;
   position: sticky;
   line-height: 1;
   left: 0;
@@ -59,7 +59,7 @@ const EventsWrapper = styled.div`
 const LocationList = ({ scaleX }) => {
   const { dataStore } = useStores();
   const { pathname } = useRouter();
-  const locWidth = scaleX(1658565000);
+  const locWidth = scaleX(1658566800);
   return (
     <LocationWrapper>
       {dataStore?.eventLocations

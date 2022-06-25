@@ -15,6 +15,8 @@ const Field = styled.input`
   border: ${({ theme, isOpen }) =>
     isOpen ? `4px solid ${theme.colors.highlight}` : "none"};
   height: ${({ isOpen }) => (isOpen ? "50px" : "100%")};
+  padding: 0;
+  padding-left: 8px;
   width: 100%;
   align-items: center;
   font-size: ${({ theme, isOpen }) =>
@@ -39,7 +41,10 @@ const Field = styled.input`
     color: ${({ theme }) => theme.colors.primary};
   }
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    height: 32px;
+    height: 34px;
+    padding-left: 4px;
+    font-size: ${({ theme, isOpen }) =>
+      isOpen ? theme.fontSizes.md : theme.fontSizes.lm};
   }
 `;
 
@@ -54,7 +59,7 @@ const CloseButton = styled.div`
   display: flex;
   align-items: center;
   flex-grow: 0;
-  padding: ${({ theme }) => `0 ${theme.spacing.md}`};
+  padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
   font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 

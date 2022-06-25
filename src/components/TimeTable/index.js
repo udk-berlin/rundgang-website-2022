@@ -18,7 +18,6 @@ import { useIsScrolledX } from "@/utils/useIsScrolled";
 const TimeTableWrapper = styled.div`
   padding: ${({ theme }) => `0 ${theme.spacing.md}`};
   height: fit-content;
-  font-family: "Diatype";
   margin-bottom: ${({ theme }) => theme.spacing.lg};
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -33,16 +32,16 @@ const TimeTableContainer = styled.div`
   overflow-x: auto;
   flex-grow: 1;
   justify-content: space-between;
-  transform: rotateX(180deg);
-  -ms-transform: rotateX(180deg);
-  -webkit-transform: rotateX(180deg);
 `;
 
 const DayMenu = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-top: ${({ theme }) => theme.spacing.xs};
+  background-color: white;
+  position: sticky;
+  top: 18.5vh;
+  z-index: 300;
 `;
 
 const DayName = styled.div`
@@ -55,24 +54,22 @@ const TimeWrapper = styled.div`
   position: relative;
   width: 100%;
   display: flex;
-  transform: rotateX(180deg);
-  -ms-transform: rotateX(180deg);
-  -webkit-transform: rotateX(180deg);
 `;
 
 const TimeTable = () => {
-  const { dataStore } = useStores();
   const isMobile = useIsMobile();
   const [selectedDay, setSelectedDay] = useState(0);
   const [padding, setPadding] = useState(0);
+  const [width, setWidth] = useState(0);
 
   useEffect(() => {
     setPadding(isMobile ? TIME_PADDING_MOBILE : TIME_PADDING);
+    setWidth(isMobile ? TIME_WIDTH_MOBILE : TIME_WIDTH);
   }, [isMobile]);
 
   const scaleX = scaleLinear()
-    .domain([1658563200, 1658696400])
-    .range([padding, isMobile ? TIME_WIDTH_MOBILE : TIME_WIDTH]);
+    .domain([1658566800, 1658696400])
+    .range([padding, width]);
 
   const isSunday = useIsScrolledX(scaleX(1658613600), "time-table-container");
 

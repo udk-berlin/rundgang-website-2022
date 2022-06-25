@@ -10,12 +10,11 @@ import { theme } from "theme/index";
 import GlobalStyle from "theme/globalStyle";
 import GlobalFonts from "public/fonts/globalFonts";
 import { useStoreInstances } from "../stores/index";
-import Footer, { FOOTER_HEIGHT } from "@/components/Footer";
+import Footer from "@/components/Footer";
 import SearchBar from "@/components/SearchBar";
 import PageTitle from "@/components/PageTitle";
 import CursorLine from "@/components/CursorLine";
 import { useIsMobile } from "@/utils/useWindowSize";
-import { makeUrlFromId } from "@/utils/idUtils";
 import JumpToTop from "@/components/JumpToTop";
 import IntroAnimation from "@/components/IntroAnimation";
 
@@ -26,7 +25,7 @@ const Container = styled.div`
   background: inherit;
 `;
 
-const HeaderWrapper = styled.div`
+const HeaderWrapper = styled.header`
   position: sticky;
   top: 0;
   left: 0;

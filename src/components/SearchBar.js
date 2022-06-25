@@ -15,7 +15,6 @@ const SearchBarWrapper = styled.div`
 const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  text-align: justify;
   width: 100%;
 `;
 
@@ -24,7 +23,12 @@ const SearchBar = () => {
 
   const handleOpen = useCallback(
     item => {
-      uiStore.setIsOpen(item);
+      if (
+        (item == "favourites" && uiStore.numberSavedItems) ||
+        item !== "favourites"
+      ) {
+        uiStore.setIsOpen(item);
+      }
     },
     [uiStore.isOpen],
   );

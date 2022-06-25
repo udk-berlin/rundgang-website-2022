@@ -8,10 +8,15 @@ import Layout from "@/components/simple/Layout";
 import Stretch from "@/components/simple/Stretch";
 
 const LinkWrapper = styled(LocalizedLink)`
-  width: fit-content;
+  width: 100%;
   white-space: nowrap;
+  &:hover {
+    color: #333;
+    
+  }
 `;
-
+/* text-shadow: 5px 5px 20px #e2ff5d, -5px 5px 20px #e2ff5d,
+      5px -5px 20px #e2ff5d, -5px -5px 20px #e2ff5d; */
 const IndexWrapper = styled.div``;
 
 const IndexPage = () => {

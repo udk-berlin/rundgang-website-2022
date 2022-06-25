@@ -7,7 +7,7 @@ import LanguageSwitch from "./LanguageSwitch";
 
 export const FOOTER_HEIGHT = 30;
 
-const FooterContainer = styled.div`
+const FooterContainer = styled.footer`
   position: fixed;
   bottom: 0;
   left: 0;
@@ -19,9 +19,9 @@ const FooterContainer = styled.div`
   width: inherit;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
-  z-index: 100;
+  z-index: 1000;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    z-index: 1;
+    z-index: 400;
   }
 `;
 
@@ -48,7 +48,7 @@ const FooterBelow = styled.div`
   display: none;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
-    z-index: 10;
+    z-index: 500;
   }
 `;
 const FooterLine = styled.div`

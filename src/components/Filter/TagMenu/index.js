@@ -16,9 +16,12 @@ const GoButton = styled.button`
   background: none;
   cursor: pointer;
   flex-grow: 0;
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: 70px;
+  padding: 0px;
   text-align: right;
   font-family: "Inter";
+  line-height: 1;
+  transform: ${({ active }) => (active ? "scaleY(1)" : "scaleY(0.7)")};
 `;
 
 const ResetButton = styled.button`
@@ -27,17 +30,27 @@ const ResetButton = styled.button`
   border: 2px solid black;
   background: ${({ theme }) => theme.colors.lightgrey};
   border-radius: ${({ theme }) => theme.spacing.lg};
-  font-size: ${({ theme }) => theme.fontSizes.lm};
+  font-size: ${({ theme }) => theme.fontSizes.sm};
   padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   height: fit-content;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    margin: auto;
+    margin-left: 0;
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
 `;
 
 const Buttons = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: ${({ theme }) => `0 ${theme.spacing.md}`};
   position: sticky;
-  bottom: 66px;
+  align-items: center;
+  bottom: 70px;
+  padding-left: 16px;
+  padding-right: 8px;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    bottom: 60px;
+  }
 `;
 
 const FilterMenu = styled.div`

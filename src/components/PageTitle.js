@@ -36,7 +36,7 @@ const splitLongTitles = (title, titleId) => {
   var words = title.split(/[\s]+/);
   var newtext = [words[0]];
   for (let i = 1; i < words.length; i++) {
-    if (newtext[newtext.length - 1].length <= 50) {
+    if (newtext[newtext.length - 1].length <= 45) {
       newtext[newtext.length - 1] += " " + words[i];
     } else {
       newtext.push(words[i]);

@@ -11,7 +11,7 @@ const variants = {
     height: "fit-content",
     width: "100%",
     opacity: 1,
-    margin: "0px 8px",
+    margin: "2px 8px",
     borderWidth: "4px",
     minHeight: "5vh",
   },
@@ -21,34 +21,39 @@ const variants = {
     opacity: 0,
     margin: "0px 0px",
     borderWidth: 0,
+    padding: "0px",
   },
-  closed: { height: "5vh", opacity: 1, margin: "0px 8px" },
+  closed: { height: "5vh", opacity: 1, margin: "2px 8px", padding: "0px 8px" },
 };
 
 const FavouritesWrapper = styled(motion.div)`
   position: relative;
-  width: 25%;
+  width: fit-content;
   min-height: 5vh;
   border: ${({ theme }) => `2px solid ${theme.colors.primary}`};
-  margin: ${({ theme }) => `0 ${theme.spacing.md}`};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin: ${({ theme }) => `0 ${theme.spacing.xs}`};
-  }
+  margin: ${({ theme }) => `2px ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `0px ${theme.spacing.sm}`};
 `;
 
 const FavouritesHeader = styled.div`
-  width: 100%;
+  width: fit-content;
   height: 100%;
   text-align: center;
   align-items: middle;
   cursor: pointer;
+  display: flex;
+  margin: 0px 4px;
 `;
 const FavouritesSavedItems = styled.span`
   width: 100%;
   color: ${({ theme }) => theme.colors.primary};
-  font-weight: bold;
   font-size: ${({ theme }) => theme.fontSizes.ll};
   margin: auto;
+  text-align: center;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.lm};
+    line-height: 0.9;
+  }
 `;
 const IconWrapper = styled.span`
   margin: auto;

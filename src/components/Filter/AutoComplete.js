@@ -3,21 +3,29 @@ import styled from "styled-components";
 import { useStores } from "@/stores/index";
 
 const AutoCompleteWrapper = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.mm};
   position: absolute;
   top: calc(5vh + 14px);
-  left: 16px;
+  left: 8px;
+  max-width: calc(100% - 52px);
   min-width: 50%;
   background: white;
   z-index: 100;
-  box-shadow: 7px 7px 7px 2px #e2ff5d88, -7px 7px 7px 2px #e2ff5d88;
+  box-shadow: 5px 5px 5px 0px #d9d9d9, -5px 5px 5px 0px #d9d9d9;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    top: 5vh;
+  }
 `;
 
 const AutoCompleteItem = styled.div`
   cursor: pointer;
   padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+  border-bottom: 1px solid #d9d9d9;
+  font-size: ${({ theme }) => theme.fontSizes.md};
   &:hover {
     background: ${({ theme }) => theme.colors.highlight};
+  }
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   }
 `;
 
