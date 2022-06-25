@@ -27,7 +27,7 @@ const MapContainer = styled.div`
   position: relative;
   @media ${({ theme }) => theme.breakpoints.laptop} {
     position: sticky;
-    top: 19vh;
+    top: 18.2vh;
   }
 `;
 

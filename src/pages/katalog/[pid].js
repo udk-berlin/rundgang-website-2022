@@ -20,8 +20,7 @@ const KatalogView = () => {
   return uiStore.currentContext ? (
     <Layout direction="left">
       <KatalogViewWrapper>
-        {uiStore.currentContext.type == "item" && <ItemView />}
-        <ListView />
+        {uiStore.currentContext.type == "item" ? <ItemView /> : <ListView />}
       </KatalogViewWrapper>
     </Layout>
   ) : null;

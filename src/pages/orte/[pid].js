@@ -9,6 +9,7 @@ import Floorplan from "@/components/Floorplan";
 
 const OrteViewWrapper = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -49,9 +50,11 @@ const OrteView = () => {
             </FloorplanContainer>
           )
         )}
-        <OrteKatalog>
-          <ListView numCol={2} />
-        </OrteKatalog>
+        {uiStore.currentContext.type !== "item" ? (
+          <OrteKatalog>
+            <ListView numCol={2} />
+          </OrteKatalog>
+        ) : null}
       </OrteViewWrapper>
     </Layout>
   ) : null;

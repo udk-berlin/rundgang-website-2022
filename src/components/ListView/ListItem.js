@@ -17,8 +17,7 @@ const ListItemWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   padding: ${({ theme }) => theme.spacing.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding: ${({ theme }) => theme.spacing.sm};
-    margin: ${({ theme }) => theme.spacing.xs};
+    padding: ${({ theme }) => theme.spacing.md};
   }
 `;
 
@@ -53,11 +52,8 @@ const RestyledLink = styled(LocalizedLink)`
 `;
 
 const Title = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.md};
+  font-size: ${({ theme }) => theme.fontSizes.xs};
   font-family: "DiatypeBold";
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
-  }
   &:hover {
     color: ${({ theme }) => theme.colors.darkgrey};
   }
@@ -65,11 +61,8 @@ const Title = styled.div`
   word-wrap: break-word;
 `;
 const Authors = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.md};
   flex-grow: 0;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
-  }
+  font-size: ${({ theme }) => theme.fontSizes.xs};
 `;
 
 const Time = styled.div`
@@ -130,7 +123,9 @@ const ListItem = ({ element }) => {
             saved={uiStore.isSaved(element.id)}
             onClick={e => handleAddSaved(e, element.id)}
           >
-            <LocalizedText id={uiStore.isSaved(element.id) ? "saved" : "save"} />
+            <LocalizedText
+              id={uiStore.isSaved(element.id) ? "saved" : "save"}
+            />
           </SaveIcon>
           <TimeWrapper>
             {element.template == "event" && element.allocation?.temporal?.length

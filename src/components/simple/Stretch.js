@@ -11,22 +11,22 @@ const StretchWrapper = styled.div`
   line-height: ${({ lineh }) => lineh};
   letter-spacing: 0.1px;
   font-size: ${({ fontSize }) => fontSize}vh;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    line-height: ${({ lineh }) => 0.8 * lineh};
-  }
 `;
 
 const StretchLayout = styled.div`
   transform-origin: 0% 0%;
   text-align: left;
-  width: min(max-content, fit-content);
+  z-index: 1;
+  width: fit-content;
   height: fit-content;
   transform: ${({ factor }) => `scaleX(${factor})`};
 `;
 
 const Shadow = styled.div`
   opacity: 0;
-  width: min(max-content, fit-content);
+  z-index: 0;
+  transform-origin: 0% 0%;
+  width: fit-content;
   height: fit-content;
   pointer-events: none;
   position: absolute;
@@ -107,24 +107,23 @@ const Stretch = ({
 
   useEffect(() => {
     if (fontSize && stretchRef?.current?.clientWidth) {
-      const arrWidth = arrowDir && !isMobile ? 5.7 : 0;
-      const padding = isMobile ? 20 : 50;
+      console.log(stretchRef?.current?.clientWidth);
+      const arrWidth = arrowDir && !isMobile ? 5.7 : 1;
+      const padding = isMobile ? 0 : 50;
       let f =
         (size.width - padding - arrWidth * preferredSize) /
         stretchRef?.current?.clientWidth;
-
       setFactor(f);
     }
-  }, [titleId, size]);
+  }, [titleId, size, isMobile]);
 
   useEffect(() => {
-    // TODO: multiple conditions to perfect sizing
     if (preferredSize) {
       setFontSize(preferredSize);
     } else {
       setFontSize(11);
     }
-  }, [titleId]);
+  }, [titleId, size]);
 
   return isMobile ? <StretchWithArrowMobile /> : <StretchWithArrowDesktop />;
 };

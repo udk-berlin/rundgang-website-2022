@@ -5,6 +5,10 @@ const MainLayout = styled.main`
   width: 100%;
   height: 100%;
   position: relative;
+  min-height: 100%;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    min-height: calc(100vh - 30px);
+  }
 `;
 const variants = {
   hidden: {
@@ -16,12 +20,14 @@ const variants = {
   enterleft: {
     scaleX: 1,
     originX: "100%",
+    height: "100%",
     x: "0%",
     y: "0%",
   },
   enterright: {
     scaleX: 1,
     originX: "0%",
+    height: "100%",
     x: "0%",
     y: "0%",
   },

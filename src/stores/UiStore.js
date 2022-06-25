@@ -69,16 +69,16 @@ class UiStore {
   }
 
   setTitle(title, id) {
-    if (title == "locations") {
+    if (title == "locations" || title == "orte") {
       this.title = "orte";
     } else if (title == "Universität der Künste Berlin" || title == "katalog") {
-      console.log(title, id);
       this.title = "katalog";
+    } else if (title == "zeiten") {
+      this.title = "zeiten";
     } else if (
       id == this.dataStore?.api?.root?.id ||
       title == "rundgang22-root"
     ) {
-      console.log(title, id);
       this.title = "rundgang";
     } else {
       this.title = title;

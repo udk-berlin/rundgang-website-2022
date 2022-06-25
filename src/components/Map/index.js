@@ -15,8 +15,8 @@ const MapWrapper = styled.div`
   height: 70vh;
   margin: auto;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    width: 90vw;
-    height: 70vh;
+    width: calc(100vw - 32px);
+    height: 60vh;
   }
 `;
 

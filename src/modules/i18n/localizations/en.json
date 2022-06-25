@@ -39,5 +39,5 @@
   "timetable": "Timetable",
   "rooms": "Rooms",
   "selected-topic": "Room: {name} ({topic})",
-  "allfloors": "all floors"
+  "allfloors": "all"
 }

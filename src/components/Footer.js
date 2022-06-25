@@ -13,9 +13,10 @@ const FooterContainer = styled.div`
   left: 0;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   height: ${FOOTER_HEIGHT}px;
-  width: 100%;
+  width: inherit;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
   z-index: 100;
@@ -27,7 +28,6 @@ const FooterContainer = styled.div`
 const LinkWrapper = styled.div`
   padding: ${({ theme }) => ` 0 ${theme.spacing.sm}`};
   flex-grow: 0;
-
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: ${({ hideMobile }) => (hideMobile ? "none" : "block")};
   }
@@ -40,7 +40,7 @@ const RestyledLink = styled(LocalizedLink)`
 `;
 
 const FooterBelow = styled.div`
-position: relative;
+  position: relative;
   align-items: center;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
@@ -54,7 +54,6 @@ position: relative;
 const FooterLine = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
   padding-top: ${({ theme }) => theme.spacing.sm};
   padding-bottom: ${({ theme }) => theme.spacing.lg};
 `;

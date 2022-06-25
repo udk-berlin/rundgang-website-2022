@@ -107,7 +107,7 @@ const PageTitle = () => {
               <Stretch
                 titleId={`${uiStore.title}-${i}-${router.locale}`}
                 key={`${uiStore.title}-line-${i}`}
-                lineh={1.2}
+                lineh={1}
                 preferredSize={5}
                 arrowDir={
                   uiStore.title !== "rundgang" && i == 0 ? "left" : null
@@ -122,7 +122,7 @@ const PageTitle = () => {
             <Stretch
               titleId={`${uiStore.title}-${router.locale}`}
               key={`${uiStore.title}_title`}
-              lineh={1.2}
+              lineh={1}
               preferredSize={11}
               arrowDir={uiStore.title !== "rundgang" ? "left" : null}
             >
