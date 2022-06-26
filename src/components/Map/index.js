@@ -11,12 +11,24 @@ import GrundrissMarker from "./GrundrissMarker";
 import GrundrissPopup from "./GrundrissPopup";
 
 const MapWrapper = styled.div`
-  width: 60vw;
-  height: 70vh;
+  width: 100%;
   margin: auto;
+  height: 700px;
+  @media only screen and (max-height: 900px) {
+    height: 640px;
+  }
+  @media only screen and (max-width: 999px) {
+    height: 640px;
+  }
+  @media only screen and (max-width: 690px) {
+    height: 524px;
+  }
+  @media only screen and (max-width: 479px) {
+    height: 500px;
+  }
+
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: calc(100vw - 32px);
-    height: 60vh;
   }
 `;
 
@@ -30,26 +42,24 @@ const Popups = styled.div`
 `;
 const MAP_STYLE =
   "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY";
-const ZOOM = 11.3;
-const FIRSTLAT = 52.513661;
-const FIRSTLNG = 13.3286892;
+const FIRSTLAT = 52.5093753;
+const FIRSTLNG = 13.3302138;
 
 const Map = () => {
   const { dataStore } = useStores();
   const mapContainer = useRef(null);
   const map = useRef(null);
   const size = useWindowSize();
+
+  const ZOOM = size?.width > 999 ? 12.5 : 11.3;
   const [addresses, setAddresses] = useState([]);
 
   useEffect(() => {
     if (exactLocations && dataStore.api.locations) {
       const adrr = exactLocations.map(a => ({
         ...a,
-        ..._.values(dataStore.api.locations.children).find(
-          c => c.name == a.image,
-        ),
-        name: a.name,
-        isFound: dataStore.api.locations.children[a.id]?.name,
+        ...dataStore.api.locations.find(c => c.id == a.id),
+        isFound: dataStore.api.locations.find(c => c.id == a.id)?.name,
       }));
       setAddresses(adrr);
     }
@@ -65,6 +75,8 @@ const Map = () => {
         maxZoom: 18,
         minZoom: 11,
       });
+      var nav = new maplibregl.NavigationControl();
+      map.current.addControl(nav, "bottom-right");
       map.current.on("load", () => {
         map.current.resize();
         let markers = {};
@@ -123,7 +135,7 @@ const Map = () => {
     <MapWrapper size={size}>
       <Popups>
         {addresses.map(house => (
-          <GrundrissPopup key={`popup-${house.image}`} el={house} size={180} />
+          <GrundrissPopup key={`popup-${house.image}`} el={house} size={210} />
         ))}
       </Popups>
       <MapContainerDiv ref={mapContainer} />

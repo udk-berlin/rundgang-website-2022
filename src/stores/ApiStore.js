@@ -60,9 +60,19 @@ class ApiStore {
   };
 
   getLocations = async () => {
-    return this.get(`${LOCATIONS_ROOT}/tree/filter${TYPE_CONTEXT}`).catch(() =>
-      console.log("no LOCATIONS_ROOT id"),
-    );
+    return this.get(`${LOCATIONS_ROOT}/tree/filter${TYPE_CONTEXT}`)
+      .then(res =>
+        Promise.all(
+          _.values(res.children).map(async building => {
+            let data = await this.getId(building.id);
+            return {
+              ...building,
+              extra: data,
+            };
+          }),
+        ),
+      )
+      .catch(() => console.log("no list of locations ids"));
   };
 
   getStructure = async () => {
@@ -81,16 +91,20 @@ class ApiStore {
     return this.getFilteredListFromId(ROOT, "/allocation/temporal")
       .then(res =>
         Promise.all(
-          res.map(async ev => {
-            let locpath = await this.getPathToId(ev.id);
-            return {
-              ...ev,
-              building: locpath.find(
-                loc => loc.template == "location-building",
-              ),
-              room: locpath.find(loc => loc.template == "location-room"),
-            };
-          }),
+          res
+            .map(async ev => {
+              if (ev.type == "item") {
+                let locpath = await this.getPathToId(ev.id);
+                return {
+                  ...ev,
+                  building: locpath.find(
+                    loc => loc.template == "location-building",
+                  ),
+                  room: locpath.find(loc => loc.template == "location-room"),
+                };
+              } else return null;
+            })
+            .filter(a => a),
         ),
       )
       .catch(() => console.log("no eventlist"));
@@ -191,7 +205,7 @@ class ApiStore {
         let currentItems = data?.allItemsBelow?.length
           ? data.allItemsBelow.map(item => this.cachedIds[item.id])
           : null;
-        if (data?.type == "context" && asroot && !currentItems) {
+        if (data?.type == "context" && !currentItems) {
           let items = await this.getFilteredListFromId(searchId, TYPE_ITEM);
 
           data = { ...data, allItemsBelow: items.map(i => i.id) };

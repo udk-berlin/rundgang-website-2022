@@ -97,7 +97,6 @@ const PageTitle = () => {
     }
   };
 
-  console.log(uiStore.title);
   return (
     <PageTitleWrapper>
       <AnimatePresence initial={true}>

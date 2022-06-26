@@ -7,8 +7,8 @@ import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const PopupWrapper = styled.div`
-  width: ${({ size }) => `${size * 1.2}px`};
-  min-height: ${({ size }) => `${size}px`};
+  width: ${({ size }) => `${size}px`};
+  min-height: ${({ size }) => `${size * 0.7}px`};
   font-size: ${({ theme }) => theme.fontSizes.md};
   z-index: 40;
   padding: ${({ theme }) => theme.spacing.xs};
@@ -16,6 +16,10 @@ const PopupWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    width: ${({ size }) => `${size}px`};
+    min-height: ${({ size }) => `${size * 0.8}px`};
+  }
 `;
 
 const PopupTitle = styled.div``;
@@ -29,6 +33,7 @@ const RoomLink = styled(LocalizedLink)`
   flex-grow: 0;
   background: ${({ theme }) => theme.colors.highlight};
   border-radius: 60px;
+  border: 1px solid black;
   height: fit-content;
   width: fit-content;
   &:hover {
@@ -36,27 +41,30 @@ const RoomLink = styled(LocalizedLink)`
     background: ${({ theme }) => theme.colors.black};
   }
 `;
+const Arrow = styled.span`
+  font-family: "Inter";
+`;
 
 const GrundrissPopup = ({ el, size }) => {
   return (
     <PopupWrapper id={`popup-${el.id}`} size={size}>
       <PopupTitle>{el.name}</PopupTitle>
-      {el.isFound}
       <Times>
-        {el.times.map(time => (
-          <TimeRange key={time.start}>
-            <FormattedDateTimeRange
-              from={time.start}
-              weekday="short"
-              hour="numeric"
-              minute="numeric"
-              to={time.end}
-            />
-          </TimeRange>
-        ))}
+        {el?.extra.allocation?.temporal?.map(time =>
+          time.udk == "rundgang" ? (
+            <TimeRange key={time.start}>
+              <FormattedDateTimeRange
+                from={time.start * 1000}
+                weekday="short"
+                hour="numeric"
+                to={time.end * 1000}
+              />
+            </TimeRange>
+          ) : null,
+        )}
       </Times>
       <RoomLink to={`/orte/${makeUrlFromId(el.id)}`}>
-        <LocalizedText id="rooms" />
+        <LocalizedText id="rooms" /> <Arrow>&#8594;</Arrow>
       </RoomLink>
     </PopupWrapper>
   );

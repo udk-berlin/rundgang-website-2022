@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import _ from "lodash";
 import { observer } from "mobx-react";
 import { useRouter } from "next/router";
@@ -19,7 +19,7 @@ const Room = styled.div`
   border-bottom: 1px solid black;
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   &::after {
     height: 100%;
   }
@@ -27,17 +27,21 @@ const Room = styled.div`
 
 const House = styled(Room)`
   min-height: 100px;
+  align-items: center;
+  padding-bottom: 30px;
 `;
 
 const RoomTitle = styled.div`
   white-space: nowrap;
   width: fit-content;
   background-color: white;
+  padding-top: 4px;
   font-size: ${({ theme }) => theme.fontSizes.mm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
+
 const RoomTitleWrapper = styled.div`
   width: ${({ width }) => width}px;
   z-index: 50;
@@ -59,7 +63,20 @@ const EventsWrapper = styled.div`
 const LocationList = ({ scaleX }) => {
   const { dataStore } = useStores();
   const { pathname } = useRouter();
-  const locWidth = scaleX(1658566800);
+  const locWidth = scaleX(1658564000);
+  const houseInfo = useMemo(
+    () =>
+      dataStore.api.locations.reduce(
+        (obj, item) => ({
+          ...obj,
+          [item.name]: item.extra,
+        }),
+        {},
+      ),
+    [dataStore.api.locations],
+  );
+
+  console.log(houseInfo);
   return (
     <LocationWrapper>
       {dataStore?.eventLocations
@@ -69,6 +86,22 @@ const LocationList = ({ scaleX }) => {
                 <RoomTitleWrapper width={locWidth}>
                   <RoomTitle>{house}</RoomTitle>
                 </RoomTitleWrapper>
+                <EventsWrapper>
+                  {houseInfo[house]
+                    ? houseInfo[house]?.allocation?.temporal?.map(time =>
+                        time.udk == "rundgang" ? (
+                          <EventBar
+                            key={`opening-${house}`}
+                            top={0}
+                            start={scaleX(time.start) - locWidth}
+                            end={scaleX(time.end) - locWidth}
+                          >
+                            {house}
+                          </EventBar>
+                        ) : null,
+                      )
+                    : null}
+                </EventsWrapper>
               </House>
               {_.entries(rooms).map(([room, events]) => (
                 <Room key={`room-${room}-${house}`}>

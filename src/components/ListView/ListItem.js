@@ -16,9 +16,9 @@ const ListItemWrapper = styled.div`
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   padding: ${({ theme }) => theme.spacing.sm};
-  padding-bottom: ${({ theme }) => theme.spacing.lg};
+  padding-bottom: ${({ padding }) => padding}px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-  padding-bottom: ${({ theme }) => theme.spacing.md};
+    padding-bottom: ${({ theme }) => theme.spacing.md};
   }
 `;
 
@@ -91,7 +91,7 @@ const ImageWrapper = styled.div`
   height: fit-content;
 `;
 
-const ListItem = ({ element }) => {
+const ListItem = ({ element, numCol }) => {
   const { uiStore } = useStores();
   const router = useRouter();
   const linklocation = useMemo(() => {
@@ -107,7 +107,7 @@ const ListItem = ({ element }) => {
   };
 
   return (
-    <ListItemWrapper>
+    <ListItemWrapper padding={numCol > 2 ? 48 : 20}>
       <RestyledLink to={linklocation}>
         <ImageWrapper>
           <Image

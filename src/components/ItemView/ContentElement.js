@@ -6,14 +6,14 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const Heading = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lm};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.md};
-  }
 `;
 
 const Paragraph = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => theme.spacing.sm};
+  font-size: ${({ theme }) => theme.fontSizes.mm};
+  padding-top: ${({ theme }) => theme.spacing.sm};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.md};
+  }
 `;
 
 const Image = styled.img`
@@ -34,14 +34,22 @@ const Code = styled.pre`
 `;
 
 const Quote = styled.blockquote`
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-size: ${({ theme }) => theme.fontSizes.mm};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.md};
+  }
 `;
 
 const ListWrapper = styled.div`
-  padding: ${({ theme }) => theme.spacing.sm};
-  ul {
-    
+  font-size: ${({ theme }) => theme.fontSizes.mm};
+  padding-left: ${({ theme }) => theme.spacing.mm};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.md};
   }
+`;
+
+const OLWrapper = styled(ListWrapper)`
+  padding-left: ${({ theme }) => theme.spacing.lg};
 `;
 
 const ContentElement = ({ item }) => {
@@ -65,9 +73,9 @@ const ContentElement = ({ item }) => {
     );
   } else if (item.type == "ol") {
     return (
-      <ListWrapper>
+      <OLWrapper>
         <LocalizedText id="none" defaultMessage={item.content} />
-      </ListWrapper>
+      </OLWrapper>
     );
   } else if (item.type == "quote") {
     return <Quote>{item.content}</Quote>;

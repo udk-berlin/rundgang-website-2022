@@ -12,9 +12,10 @@ const JumpToTopWrapper = styled.div`
   z-index: 500;
   font-size: ${({ theme }) => theme.spacing.xl};
   font-family: "Inter";
+  font-weight: bold;
   cursor: pointer;
-  text-shadow: 4px 4px 8px #e2ff5d, -4px 4px 8px #e2ff5d, 4px -4px 8px #e2ff5d,
-    -4px -4px 8px #e2ff5d;
+  -webkit-text-stroke: 2px white;
+  -webkit-text-fill-color: black;
 `;
 
 const JumpToTop = () => {

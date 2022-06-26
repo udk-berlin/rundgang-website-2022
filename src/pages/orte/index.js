@@ -22,10 +22,12 @@ const OrteKatalog = styled.div`
 `;
 
 const MapContainer = styled.div`
-  width: 100%;
+  width: 60%;
+  padding: 8px;
   height: 100%;
   position: relative;
   @media ${({ theme }) => theme.breakpoints.laptop} {
+    width: 100%;
     position: sticky;
     top: 18.2vh;
   }

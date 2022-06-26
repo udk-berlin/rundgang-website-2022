@@ -28,7 +28,7 @@ const RestyledLink = styled(LocalizedLink)`
     color: black;
   }
 `;
-const EventBar = ({ ev, start, end, link, top }) => {
+const EventBar = ({ ev, start, end, link, top, children = null }) => {
   const [topMargin, setTopMargin] = useState(0);
 
   useEffect(() => {
@@ -42,12 +42,11 @@ const EventBar = ({ ev, start, end, link, top }) => {
     <RestyledLink to={link}>
       <EventBarWrapper
         id={`${start}-${top}`}
-        title={ev.name}
         start={start}
         end={end}
         top={topMargin}
       >
-        {ev.name}
+        {children ?? ev?.name}
       </EventBarWrapper>
     </RestyledLink>
   );

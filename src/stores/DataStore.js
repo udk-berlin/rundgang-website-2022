@@ -27,18 +27,20 @@ class DataStore {
       .slice()
       .sort((a, b) => a.time.start - b.time.start);
     let res = sorted.reduce((obj, ev) => {
-      if (obj && ev.building.name in obj) {
-        if (ev.room.name in obj[ev.building.name]) {
-          obj[ev.building.name][ev.room.name].push(ev);
+      if (ev?.building) {
+        if (obj && ev.building.name in obj) {
+          if (ev.room.name in obj[ev.building.name]) {
+            obj[ev.building.name][ev.room.name].push(ev);
+          } else {
+            obj[ev.building.name] = {
+              ...obj[ev.building.name],
+              [ev.room.name]: [ev],
+            };
+          }
         } else {
-          obj[ev.building.name] = {
-            ...obj[ev.building.name],
-            [ev.room.name]: [ev],
-          };
+          obj = { ...obj, [ev.building.name]: { [ev.room.name]: [ev] } };
         }
-      } else {
-        obj = { ...obj, [ev.building.name]: { [ev.room.name]: [ev] } };
-      }
+      } 
       return obj;
     }, {});
     return res;

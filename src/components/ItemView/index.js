@@ -14,11 +14,12 @@ const ItemViewWrapper = styled.div`
   height: 100%;
   width: 100%;
   font-size: ${({ theme }) => theme.fontSizes.sm};
+  padding: ${({ theme }) => theme.spacing.sm};
 `;
 
 const ItemHeaderWrapper = styled.div`
   display: grid;
-  grid-template-columns: 55% 45%;
+  grid-template-columns: 60% 40%;
   width: 100%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
@@ -26,8 +27,6 @@ const ItemHeaderWrapper = styled.div`
 `;
 const TitleImageWrapper = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-around;
 `;
 
 const TitleImage = styled.img`
@@ -40,20 +39,20 @@ const TitleImage = styled.img`
 `;
 
 const AuthorTag = styled.div`
-  margin: ${({ theme }) => theme.spacing.md} 0px;
-  padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
   font-size: ${({ theme }) => theme.fontSizes.lm};
   border: 1px solid black;
   border-radius: ${({ theme }) => theme.spacing.lg};
   width: fit-content;
   word-wrap: break-word;
   @media ${({ theme }) => theme.breakpoints.tablet} {
+    margin-top: ${({ theme }) => theme.spacing.md};
     font-size: ${({ theme }) => theme.fontSizes.mm};
   }
 `;
 
 const Time = styled.div`
-  padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
   font-size: ${({ theme }) => theme.fontSizes.lm};
   margin: ${({ theme }) => theme.spacing.md} 0px;
   border-radius: ${({ theme }) => theme.spacing.lg};
@@ -78,7 +77,7 @@ const SaveTag = styled.span`
   align-items: center;
   text-align: center;
   cursor: pointer;
-  line-height: 1;
+  line-height: 1.3;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
   margin: ${({ theme }) => theme.spacing.xs};
@@ -88,20 +87,26 @@ const SaveTag = styled.span`
 `;
 
 const DescriptionWrapper = styled.div`
-  align-self: start;
   width: 100%;
-  margin: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    padding: ${({ theme }) => `${theme.spacing.xs} 0px`};
+  }
 `;
 
 const TitleText = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.md};
   padding-top: ${({ theme }) => theme.spacing.md};
+  font-size: ${({ theme }) => theme.fontSizes.mm};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.md};
+  }
 `;
 
 const ContentWrapper = styled.div`
-  padding-top: ${({ theme }) => theme.spacing.xl};
+  padding-top: ${({ theme }) => theme.spacing.sm};
+  padding-bottom: ${({ theme }) => theme.spacing.lg};
   display: grid;
-  grid-template-columns: 55% 45%;
+  grid-template-columns: 60% 40%;
   width: 100%;
   margin: auto;
   word-wrap: break-word;
@@ -114,7 +119,7 @@ const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `${theme.spacing.md} 0px`};
 `;
 
 const ItemView = () => {
@@ -182,7 +187,27 @@ const ItemView = () => {
                 </Time>
               ))
             : null}
-          <TitleText>{item.description[loc]}</TitleText>
+          <TitleText>
+            {item.description[loc]}
+            Until recently, the prevailing view assumed lorem ipsum was born as
+            a nonsense text. “It's not Latin, though it looks like it, and it
+            actually says nothing,” Before & After magazine answered a curious
+            reader, “Its ‘words’ loosely approximate the frequency with which
+            letters occur in English, which is why at a glance it looks pretty
+            real.” As Cicero would put it, “Um, not so fast.” The placeholder
+            text, beginning with the line “Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit”, looks like Latin because in its youth,
+            centuries ago, it was Latin. Richard McClintock, a Latin scholar
+            from Hampden-Sydney College, is credited with discovering the source
+            behind the ubiquitous filler text. In seeing a sample of lorem
+            ipsum, his interest was piqued by consectetur—a genuine, albeit
+            rare, Latin word. Consulting a Latin dictionary led McClintock to a
+            passage from De Finibus Bonorum et Malorum (“On the Extremes of Good
+            and Evil”), a first-century B.C. text from the Roman philosopher
+            Cicero. In particular, the garbled words of lorem ipsum bear an
+            unmistakable resemblance to sections 1.10.32–33 of Cicero's work,
+            with the most notable passage excerpted below:
+          </TitleText>
         </DescriptionWrapper>
       </ItemHeaderWrapper>
       <ContentWrapper>

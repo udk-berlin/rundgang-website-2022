@@ -5,17 +5,23 @@ import ClickAwayListener from "../simple/ClickAwayListener";
 const DetailView = styled.img`
   height: 90%;
   width: auto;
-  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
   margin: auto;
-  margin-top: 2.5%;
+  left: 0;
+  right: 0;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    height: auto;
+    width: 90%;
+  }
 `;
 
 const DetailWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  display: block;
-  z-index: 1000;
+  z-index: 2000;
   width: 100%;
   height: 100%;
   background: ${({ theme }) => theme.colors.highlight};
@@ -23,8 +29,9 @@ const DetailWrapper = styled.div`
 
 const CloseButton = styled.div`
   position: absolute;
-  left: ${({ theme }) => theme.spacing.xs};
-  top: ${({ theme }) => theme.spacing.xs};
+  right: ${({ theme }) => theme.spacing.md};
+  line-height: 0.9;
+  top: ${({ theme }) => theme.spacing.md};
   font-family: "Diatype";
   border: none;
   width: fit-content;

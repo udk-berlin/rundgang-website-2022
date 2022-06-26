@@ -7,6 +7,7 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const FloorplanWrapper = styled.div`
   width: 100%;
+  height: 100%;
   padding-bottom: ${({ theme }) => theme.spacing.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     padding-bottom: ${({ theme }) => `0 ${theme.spacing.sm}`};
@@ -16,7 +17,7 @@ const FloorplanWrapper = styled.div`
 const BackgroundImg = styled.img`
   fill: ${({ selected, theme }) =>
     selected ? theme.colors.highlight : theme.colors.lightgrey};
-  position: absolute;
+  position: relative;
   top: 0px;
   left: 0;
   width: 100%;
@@ -24,12 +25,13 @@ const BackgroundImg = styled.img`
 
 const Levels = styled.div`
   margin: auto;
-  display: flex;
   position: absolute;
-  bottom: 0;
+  top:  ${({ theme }) => theme.spacing.lg};
   left: 0;
   width: 100%;
-  justify-content: space-around;
+  height: 100%;
+  display: flex;
+  justify-content: center;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     justify-content: space-evenly;
   }
@@ -55,28 +57,12 @@ const LevelNumber = styled.button`
   }
 `;
 const ImageWrapper = styled.div`
-  height: 600px;
   width: 80%;
+  height: auto;
   margin: auto;
   position: relative;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    height: 500px;
-    width: 600px;
-  }
-  @media ${({ theme }) => theme.breakpoints.mobileL} {
-    height: 300px;
-    width: 380px;
-  }
-`;
-
-const SelectedTitle = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  position: absolute;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.md};
+    width: 90%;
   }
 `;
 
@@ -121,6 +107,28 @@ const Floorplan = () => {
 
   return (
     <FloorplanWrapper>
+      <Levels>
+        <LevelNumber
+          key="alllevels"
+          isAll
+          selected={uiStore.floorLevel == null}
+          onClick={() => handleSelectAll()}
+        >
+          <LocalizedText id="allfloors" />
+        </LevelNumber>
+        {uiStore.buildingLevels?.map(level => (
+          <LevelNumber
+            key={level.id}
+            selected={level.name == uiStore.floorLevel}
+            onClick={() => {
+              uiStore.setTitle(`Etage ${level.name}`);
+              uiStore.setFloorLevel(level.name);
+            }}
+          >
+            {level.name}
+          </LevelNumber>
+        ))}
+      </Levels>
       <ImageWrapper>
         <BackgroundImg
           src={`/assets/img/${uiStore.currentContext?.name}_building.svg`}
@@ -129,28 +137,6 @@ const Floorplan = () => {
           url={uiStore.floorPlan ? uiStore.floorPlan.thumbnail_full_size : null}
           handleSelectRoom={handleSelectRoom}
         />
-        <Levels>
-          <LevelNumber
-            key="alllevels"
-            isAll
-            selected={uiStore.floorLevel == null}
-            onClick={() => handleSelectAll()}
-          >
-            <LocalizedText id="allfloors" />
-          </LevelNumber>
-          {uiStore.buildingLevels?.map(level => (
-            <LevelNumber
-              key={level.id}
-              selected={level.name == uiStore.floorLevel}
-              onClick={() => {
-                uiStore.setTitle(`Etage ${level.name}`);
-                uiStore.setFloorLevel(level.name);
-              }}
-            >
-              {level.name}
-            </LevelNumber>
-          ))}
-        </Levels>
       </ImageWrapper>
     </FloorplanWrapper>
   );
