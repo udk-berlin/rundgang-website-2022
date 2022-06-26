@@ -8,11 +8,10 @@ import Layout from "@/components/simple/Layout";
 import Stretch from "@/components/simple/Stretch";
 
 const LinkWrapper = styled(LocalizedLink)`
-  width: 100%;
+  width: fit-content;
   white-space: nowrap;
   &:hover {
     color: #333;
-    
   }
 `;
 /* text-shadow: 5px 5px 20px #e2ff5d, -5px 5px 20px #e2ff5d,

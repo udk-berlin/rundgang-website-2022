@@ -16,7 +16,7 @@ const FooterContainer = styled.footer`
   flex-wrap: wrap;
   align-items: center;
   height: ${FOOTER_HEIGHT}px;
-  width: inherit;
+  width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
   z-index: 1000;
@@ -33,7 +33,18 @@ const LinkWrapper = styled.div`
   }
 `;
 
+const SpecialLinks = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const RestyledLink = styled(LocalizedLink)`
+  &:hover {
+    color: ${({ theme }) => theme.colors.darkgrey};
+  }
+`;
+const NormalLink = styled.a`
+  color: black;
   &:hover {
     color: ${({ theme }) => theme.colors.darkgrey};
   }
@@ -77,11 +88,23 @@ const Footer = () => {
         <LinkWrapper hideMobile={true}>
           <LanguageSwitch />
         </LinkWrapper>
-        <LinkWrapper hideMobile={true}>
-          <RestyledLink to="/imprint">
-            <LocalizedText id="imprint" />
-          </RestyledLink>
-        </LinkWrapper>
+        <SpecialLinks>
+          <LinkWrapper hideMobile={true}>
+            <RestyledLink to="/kontakt">
+              <LocalizedText id="contact" />
+            </RestyledLink>
+          </LinkWrapper>
+          <LinkWrapper hideMobile={true}>
+            <NormalLink href="https://www.udk-berlin.de/schnellzugriff/impressum/">
+              <LocalizedText id="imprint" />
+            </NormalLink>
+          </LinkWrapper>
+          <LinkWrapper hideMobile={true}>
+            <NormalLink href="https://www.udk-berlin.de/schnellzugriff/datenschutz/">
+              <LocalizedText id="privacy" />
+            </NormalLink>
+          </LinkWrapper>
+        </SpecialLinks>
       </FooterContainer>
       <FooterBelow>
         <FooterLine>
@@ -99,9 +122,19 @@ const Footer = () => {
             <LanguageSwitch />
           </LinkWrapper>
           <LinkWrapper>
-            <RestyledLink to="/imprint">
-              <LocalizedText id="imprint" />
+            <RestyledLink to="/kontakt">
+              <LocalizedText id="contact" />
             </RestyledLink>
+          </LinkWrapper>
+          <LinkWrapper>
+            <NormalLink href="https://www.udk-berlin.de/schnellzugriff/impressum/">
+              <LocalizedText id="imprint" />
+            </NormalLink>
+          </LinkWrapper>
+          <LinkWrapper>
+            <NormalLink href="https://www.udk-berlin.de/schnellzugriff/datenschutz/">
+              <LocalizedText id="privacy" />
+            </NormalLink>
           </LinkWrapper>
         </FooterLine>
       </FooterBelow>

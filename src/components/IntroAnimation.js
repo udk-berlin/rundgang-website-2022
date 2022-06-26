@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 
 const containerStyle = {
   position: "absolute",
+  top: 0,
+  left: 0,
   width: "100%",
   height: "100%",
   boxSizing: "border-box",
@@ -17,8 +19,8 @@ const baseStyle = {
   position: "absolute",
   margin: "auto",
   display: "block",
-  width: "100vh",
-  height: "100vh",
+  width: "100%",
+  height: "100%",
 };
 
 const leftStyle = {

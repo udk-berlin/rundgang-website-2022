@@ -118,16 +118,14 @@ export default function App({ Component, pageProps }) {
           >
             <MotionConfig reducedMotion="user">
               <Container>
-                <>
-                  <HeaderWrapper>
-                    <PageTitle key={`PageTitle-${router.pathname}`} />
-                    <SearchBar key={`SearchBar-${router.pathname}`} />
-                  </HeaderWrapper>
-                  <AnimatePresence exitBeforeEnter initial={true}>
-                    <Component key={router.pathname} {...pageProps} />
-                  </AnimatePresence>
-                  {showLine ? null : <JumpToTop />}
-                </>
+                <HeaderWrapper>
+                  <PageTitle key={`PageTitle-${router.pathname}`} />
+                  <SearchBar key={`SearchBar-${router.pathname}`} />
+                </HeaderWrapper>
+                <AnimatePresence exitBeforeEnter initial={true}>
+                  <Component key={router.pathname} {...pageProps} />
+                </AnimatePresence>
+                {showLine ? null : <JumpToTop />}
                 {showLine ? <CursorLine /> : null}
                 {showIntro && <IntroAnimation key={"intro"} />}
                 <Footer />
