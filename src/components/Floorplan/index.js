@@ -26,7 +26,7 @@ const BackgroundImg = styled.img`
 const Levels = styled.div`
   margin: auto;
   position: absolute;
-  top:  ${({ theme }) => theme.spacing.lg};
+  top: ${({ theme }) => theme.spacing.lg};
   left: 0;
   width: 100%;
   height: 100%;
@@ -116,6 +116,7 @@ const Floorplan = () => {
         >
           <LocalizedText id="allfloors" />
         </LevelNumber>
+        {uiStore.currentContext?.description.default}
         {uiStore.buildingLevels?.map(level => (
           <LevelNumber
             key={level.id}
@@ -131,7 +132,7 @@ const Floorplan = () => {
       </Levels>
       <ImageWrapper>
         <BackgroundImg
-          src={`/assets/img/${uiStore.currentContext?.name}_building.svg`}
+          src={`/assets/img/${uiStore.currentContext?.description.default}_building.svg`}
         />
         <FloorPlanSvg
           url={uiStore.floorPlan ? uiStore.floorPlan.thumbnail_full_size : null}
