@@ -6,10 +6,10 @@ const containerStyle = {
   width: "100%",
   height: "100%",
   boxSizing: "border-box",
-  zIndex: 200,
+  zIndex: 900,
   display: "flex",
   justifyContent: "center",
-  background: "white",
+  background: "#E2FF5D",
   overflow: "hidden",
 };
 
@@ -89,8 +89,8 @@ export default function IntroAnimation() {
   return (
     <motion.div
       style={containerStyle}
-      animate={{ opacity: 0 }}
-      transition={{ delay: 4 }}
+      animate={{ opacity: [1, 0] }}
+      transition={{ delay: 3.5 }}
     >
       <motion.div
         style={leftStyle}
