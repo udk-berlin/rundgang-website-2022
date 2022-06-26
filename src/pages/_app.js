@@ -72,7 +72,7 @@ export default function App({ Component, pageProps }) {
       ) {
         setShowIntro(false);
       }
-    }, 2000);
+    }, 4000);
     return () => clearTimeout(timer);
   }, [router.pathname, dataStore.api.status]);
 

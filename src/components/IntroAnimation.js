@@ -10,6 +10,7 @@ const containerStyle = {
   display: "flex",
   justifyContent: "center",
   background: "white",
+  overflow: "hidden",
 };
 
 const baseStyle = {
@@ -23,55 +24,58 @@ const baseStyle = {
 const leftStyle = {
   ...baseStyle,
   transformOrigin: "center left",
-  backgroundImage: "url('/assets/img/4004.svg')",
+  backgroundImage: "url('/assets/img/intro1.svg')",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
+  backgroundSize: "contain",
 };
 
 const topStyle = {
   ...baseStyle,
-  transformOrigin: "top center",
-  backgroundImage: "url('/assets/img/4001.svg')",
+  transformOrigin: "top left",
+  backgroundImage: "url('/assets/img/intro2.svg')",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
+  backgroundSize: "contain",
 };
 
 const rightStyle = {
   ...baseStyle,
-  transformOrigin: "center right",
-  backgroundImage: "url('/assets/img/4002.svg')",
+  transformOrigin: "bottom right",
+  backgroundImage: "url('/assets/img/intro3.svg')",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
+  backgroundSize: "contain",
 };
 
 const bottomStyle = {
   ...baseStyle,
-  transformOrigin: "bottom center",
-  backgroundImage: "url('/assets/img/4003.svg')",
+  transformOrigin: "bottom left",
+  backgroundImage: "url('/assets/img/intro4.svg')",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
+  backgroundSize: "contain",
 };
 
 const variants = {
   left: {
-    scaleX: [0, 1, 0, 0, 0, 0, 0, 0, 0],
-    x: ["0%", "0%", "100%", "100%", "100%", "100%", "100%", "100%", "100%"],
+    scaleX: [0.5, 1, 1, 0, 0, 0, 0, 0, 0],
+    scaleY: [1, 1, 0, 0, 0, 0, 0, 1, 1],
+    y: ["0%", "0%", "100%", "100%", "100%", "100%", "100%", "0%", "0%"],
   },
   top: {
-    scaleY: [0, 0, 0, 1, 0, 0, 0, 0, 0],
-    y: ["0%", "0%", "0%", "0%", "100%", "100%", "100%", "100%", "100%"],
+    scaleX: [1, 1, 1, 1, 0, 0, 0, 0, 0],
+    scaleY: [0, 0, 0.5, 1, 1, 0, 0, 0, 0],
   },
   right: {
-    scaleX: [0, 0, 0, 0, 0, 1, 0, 0, 0],
-    x: ["0%", "0%", "0%", "0%", "0%", "0%", "-100%", "-100%", "-100%"],
+    scaleX: [0, 0, 0, 0, 0.5, 1, 1, 0, 0],
+    scaleY: [1, 1, 1, 1, 1, 1, 0, 0, 0],
+    y: ["0%", "0%", "0%", "0%", "0%", "0%", "-100%", "-100%", "-100%"],
   },
   bottom: {
-    scaleY: [0, 0, 0, 0, 0, 0, 0, 1, 0],
-    y: ["0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%", "-100%"],
+    scaleY: [0, 0, 0, 0, 0, 0, 0.5, 1, 1],
+    scaleX: [1, 1, 1, 1, 1, 1, 1, 1, 0],
+    x: ["0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%", "100%"],
   },
 };
 
@@ -86,7 +90,7 @@ export default function IntroAnimation() {
     <motion.div
       style={containerStyle}
       animate={{ opacity: 0 }}
-      transition={{ delay: 3.5 }}
+      transition={{ delay: 4 }}
     >
       <motion.div
         style={leftStyle}
