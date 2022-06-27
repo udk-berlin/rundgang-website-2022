@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import useWindowSize from "@/utils/useWindowSize";
 import { StretchComponent } from "./components";
+import { observer } from "mobx-react";
 
 const Stretch = ({
   children,
@@ -18,26 +19,29 @@ const Stretch = ({
 
   useEffect(() => {
     if (
+      titleId &&
+      size.width &&
       preferredSize &&
       stretchRef?.current?.clientWidth &&
       parentRef?.current?.clientWidth
     ) {
-      let arrWidth = isMobile ? 0 : preferredSize;
-      const padding = isMobile ? 20 : 50 + arrWidth;
-      console.log(
-        parentRef?.current?.clientWidth,
-        stretchRef?.current?.clientWidth,
-        titleId,
-        padding,
-        size.width,
-      );
-      let f =
-        (parentRef?.current?.clientWidth - padding) /
-        stretchRef?.current?.clientWidth;
-      setFactor(f);
+      const timer = setTimeout(() => {
+        let arrWidth = isMobile ? 0 : 7.5;
+        const padding = preferredSize * arrWidth + 8;
+        let f =
+          (parentRef?.current?.clientWidth - padding) /
+          stretchRef?.current?.clientWidth;
+
+        setFactor(f);
+      }, 200);
+      return () => {
+        setFactor(1);
+        clearTimeout(timer);
+      };
     }
   }, [
     titleId,
+    preferredSize,
     parentRef?.current?.clientWidth,
     isMobile,
     stretchRef?.current?.clientWidth,
@@ -60,4 +64,4 @@ const Stretch = ({
   ) : null;
 };
 
-export default Stretch;
+export default observer(Stretch);

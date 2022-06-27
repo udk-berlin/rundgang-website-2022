@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import { useIntl } from "react-intl";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
-import LocalizedText from "modules/i18n/components/LocalizedText";
 import Stretch from "@/components/simple/Stretch/index";
 import useWindowSize from "@/utils/useWindowSize";
 import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
@@ -112,7 +111,7 @@ const PageTitle = () => {
             titleId={`${uiStore.title}-${router.locale}`}
             key={`${uiStore.title}_title`}
             lineh={0.9}
-            preferredSize={10}
+            preferredSize={isMobile ? 12: 10}
             arrowDir={uiStore.title !== "rundgang" ? "left" : null}
           >
             {titleStrings}

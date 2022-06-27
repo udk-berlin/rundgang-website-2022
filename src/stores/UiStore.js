@@ -76,7 +76,7 @@ class UiStore {
     } else if (title == "zeiten") {
       this.title = "zeiten";
     } else if (
-      id == this.dataStore?.api?.root?.id ||
+      id == this.dataStore?.api?.root?.id &&
       title == "rundgang22-root"
     ) {
       this.title = "rundgang";

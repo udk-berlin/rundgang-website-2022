@@ -21,6 +21,7 @@ const StretchLayout = styled.div`
   height: fit-content;
   text-align: left;
   transform: ${({ factor }) => `scaleX(${factor})`};
+  transition: transform, 500ms;
 `;
 
 const Shadow = styled.div`

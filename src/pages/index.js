@@ -19,7 +19,6 @@ const LinkWrapper = styled(LocalizedLink)`
 const IndexWrapper = styled.div`
   height: calc(100vh - 130px);
   overflow-x: hidden;
-  font-size: 20px;
 `;
 
 const IndexPage = () => {
@@ -33,7 +32,7 @@ const IndexPage = () => {
           <Stretch
             arrowDir="top"
             titleId={intl.formatMessage({ id: "katalog" })}
-            preferredSize={isMobile ? 27 : 25.5}
+            preferredSize={isMobile ? 27.5 : 26}
             lineh={isMobile ? 0.76 : 0.88}
           >
             <LocalizedText id="katalog" />
@@ -42,7 +41,7 @@ const IndexPage = () => {
         <LinkWrapper to="/orte">
           <Stretch
             titleId={intl.formatMessage({ id: "orte" })}
-            preferredSize={isMobile ? 27 : 25.5}
+            preferredSize={isMobile ? 27.5 : 26}
             lineh={isMobile ? 0.76 : 0.88}
             arrowDir="right"
           >
@@ -52,7 +51,7 @@ const IndexPage = () => {
         <LinkWrapper to="/zeiten">
           <Stretch
             titleId={intl.formatMessage({ id: "zeiten" })}
-            preferredSize={isMobile ? 27 : 25.5}
+            preferredSize={isMobile ? 27.5 : 26}
             lineh={isMobile ? 0.76 : 0.88}
             arrowDir="left"
           >
@@ -62,8 +61,8 @@ const IndexPage = () => {
         <LinkWrapper to="/katalog/beratungsangebote">
           <Stretch
             titleId={intl.formatMessage({ id: "beratungsangebote" })}
-            preferredSize={11}
-            lineh={isMobile ? 0.76 : 0.88}
+            preferredSize={isMobile ? 11 : 13}
+            lineh={isMobile ? 0.76 : 0.9}
             arrowDir="bottom"
           >
             <LocalizedText id="beratungsangebote_index" />
