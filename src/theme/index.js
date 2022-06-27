@@ -70,7 +70,7 @@ export const theme = {
       paddingBottom: ".3em",
     },
     b: {
-      fontFamily: diatypeRegular,
+      fontFamily: diatypeBold,
       fontWeight: "bold",
     },
   },

@@ -8,6 +8,7 @@ import { FOOTER_HEIGHT } from "@/utils/constants";
 
 const FooterContainer = styled.div`
   position: fixed;
+  width: 100%;
   bottom: 0;
   left: 0;
   display: flex;
@@ -15,13 +16,9 @@ const FooterContainer = styled.div`
   flex-wrap: wrap;
   align-items: center;
   height: ${FOOTER_HEIGHT}px;
-  width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
-  z-index: 1000;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    z-index: 400;
-  }
+  z-index: 100;
 `;
 
 const LinkWrapper = styled.div`
@@ -50,22 +47,23 @@ const NormalLink = styled.a`
 `;
 
 const FooterBelow = styled.div`
-  position: relative;
-  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  z-index: 600;
   width: 100%;
+  height: 200px;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
-  display: none;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    display: block;
-    z-index: 500;
+  @media ${({ theme }) => theme.breakpoints.laptop} {
+    display: none;
   }
 `;
 const FooterLine = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  width: 100%;
   justify-content: space-between;
-  padding-top: ${({ theme }) => theme.spacing.sm};
-  padding-bottom: ${({ theme }) => theme.spacing.lg};
 `;
 
 const FooterWrapper = styled.div`
@@ -125,6 +123,8 @@ const Footer = () => {
               <LocalizedText id="contact" />
             </RestyledLink>
           </LinkWrapper>
+        </FooterLine>
+        <FooterLine>
           <LinkWrapper>
             <NormalLink href="https://www.udk-berlin.de/schnellzugriff/impressum/">
               <LocalizedText id="imprint" />

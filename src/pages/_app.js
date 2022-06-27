@@ -21,19 +21,17 @@ import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
 
 const Container = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  background: inherit;
+  height: 100%;
 `;
 
 const HeaderWrapper = styled.header`
   position: sticky;
   top: 0;
   left: 0;
-  height: ${SEARCHBAR_HEIGHT + TITLE_HEIGHT}px;
+  height: fit-content;
   z-index: 400;
   width: 100%;
-  background: inherit;
+  background: white;
 `;
 
 export default function App({ Component, pageProps }) {
@@ -119,14 +117,12 @@ export default function App({ Component, pageProps }) {
             onError={() => null}
           >
             <MotionConfig reducedMotion="user">
-              <Container>
-                <HeaderWrapper>
-                  <PageTitle key={`PageTitle-${router.pathname}`} />
-                  <SearchBar key={`SearchBar-${router.pathname}`} />
-                </HeaderWrapper>
-                <Component key={router.pathname} {...pageProps} />
-                <Footer />
-              </Container>
+              <HeaderWrapper>
+                <PageTitle key={`PageTitle-${router.pathname}`} />
+                <SearchBar key={`SearchBar-${router.pathname}`} />
+              </HeaderWrapper>
+              <Component key={router.pathname} {...pageProps} />
+              <Footer />
               {showLine ? null : <JumpToTop />}
               {showLine ? <CursorLine /> : null}
               {showIntro && <IntroAnimation key={"intro"} />}

@@ -6,10 +6,14 @@ import Layout from "@/components/simple/Layout";
 import ListView from "@/components/ListView";
 import ItemView from "@/components/ItemView";
 import Floorplan from "@/components/Floorplan";
+import {
+  SEARCHBAR_HEIGHT,
+  SEARCHBAR_PADDING,
+  TITLE_HEIGHT,
+} from "@/utils/constants";
 
 const OrteViewWrapper = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: space-between;
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -26,12 +30,14 @@ const OrteKatalog = styled.div`
 `;
 
 const FloorplanContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 60%;
+  padding: 8px;
+  height: fit-content;
   position: relative;
   @media ${({ theme }) => theme.breakpoints.laptop} {
+    width: 100%;
     position: sticky;
-    top: 18vh;
+    top: ${SEARCHBAR_HEIGHT + SEARCHBAR_PADDING + TITLE_HEIGHT}px;
   }
 `;
 

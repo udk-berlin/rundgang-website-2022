@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
-import Stretch from "@/components/simple/Stretch2";
+import Stretch from "@/components/simple/Stretch";
 import useWindowSize from "@/utils/useWindowSize";
 import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
 
@@ -110,7 +110,7 @@ const PageTitle = () => {
                   titleId={`${uiStore.title}-${i}-${router.locale}`}
                   key={`${uiStore.title}-line-${i}`}
                   lineh={1}
-                  height={40}
+                  preferredSize={4.9}
                   arrowDir={
                     uiStore.title !== "rundgang" && i == 0 ? "left" : null
                   }
@@ -126,8 +126,8 @@ const PageTitle = () => {
               <Stretch
                 titleId={`${uiStore.title}-${router.locale}`}
                 key={`${uiStore.title}_title`}
-                lineh={1}
-                height={80}
+                lineh={0.9}
+                preferredSize={10}
                 arrowDir={uiStore.title !== "rundgang" ? "left" : null}
               >
                 <LocalizedText id={uiStore.title} />

@@ -22,17 +22,19 @@ const CursorLine = () => {
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.beginPath();
-    context.lineWidth = 5;
-    context.moveTo(arr[0].x, arr[0].y);
-    arr.map(c => {
-      context.lineTo(c.x, c.y);
-    });
-    context.strokeStyle = "#E2FF5D";
-    context.stroke();
-    context.closePath();
+    if (canvas && size.width) {
+      const context = canvas.getContext("2d");
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.beginPath();
+      context.lineWidth = 5;
+      context.moveTo(arr[0].x, arr[0].y);
+      arr.map(c => {
+        context.lineTo(c.x, c.y);
+      });
+      context.strokeStyle = "#E2FF5D";
+      context.stroke();
+      context.closePath();
+    }
   }, [arr]);
 
   useEffect(() => {
@@ -44,7 +46,9 @@ const CursorLine = () => {
     draw();
   }, [mousePos]);
 
-  return <Canvas width={size.width} height={size.height} ref={canvasRef} />;
+  return size.width && size.height ? (
+    <Canvas width="100vw" height="100vh" ref={canvasRef} />
+  ) : null;
 };
 
 export default CursorLine;

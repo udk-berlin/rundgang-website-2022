@@ -9,12 +9,10 @@ import ItemView from "@/components/ItemView";
 
 const KatalogViewWrapper = styled.div`
   width: 100%;
-  height: 100%;
-  flex-grow: 1;
+  height: calc(100vh - 110px);
 `;
 
 const KatalogView = () => {
-  const router = useRouter();
   const { uiStore } = useStores();
 
   return uiStore.currentContext ? (

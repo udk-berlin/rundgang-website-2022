@@ -1,10 +1,11 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
 import useWindowSize from "@/utils/useWindowSize";
+import { useIntl } from "react-intl";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import Layout from "@/components/simple/Layout";
-import Stretch from "@/components/simple/Stretch2";
+import Stretch from "@/components/simple/Stretch";
 
 const LinkWrapper = styled(LocalizedLink)`
   width: 100%;
@@ -15,39 +16,55 @@ const LinkWrapper = styled(LocalizedLink)`
   }
 `;
 const IndexWrapper = styled.div`
-  height: calc(100vh - 180px);
+  height: calc(100vh - 160px);
   width: 100%;
   font-size: 20px;
 `;
 
 const IndexPage = () => {
   const size = useWindowSize();
-  const h = size.height ?? 0;
+  const intl = useIntl();
   const isMobile = useMemo(() => size.width < 786, [size]);
   return (
     <Layout direction="right">
       <IndexWrapper>
         <LinkWrapper to="/katalog">
-          <Stretch arrowDir="top" height={0.3 * (h - 170)}>
+          <Stretch
+            arrowDir="top"
+            title={intl.formatMessage({ id: "katalog" })}
+            preferredSize={isMobile ? 27 : 25.5}
+            lineh={isMobile ? 0.76 : 0.88}
+          >
             <LocalizedText id="katalog" />
           </Stretch>
         </LinkWrapper>
         <LinkWrapper to="/orte">
-          <Stretch arrowDir="right" height={0.3 * (h - 170)}>
+          <Stretch
+            title={intl.formatMessage({ id: "orte" })}
+            preferredSize={isMobile ? 27 : 25.5}
+            lineh={isMobile ? 0.76 : 0.88}
+            arrowDir="right"
+          >
             <LocalizedText id="orte" />
           </Stretch>
         </LinkWrapper>
         <LinkWrapper to="/zeiten">
           <Stretch
-            lineh={isMobile ? 0.7 : 1}
+            title={intl.formatMessage({ id: "orte" })}
+            preferredSize={isMobile ? 27 : 25.5}
+            lineh={isMobile ? 0.76 : 0.88}
             arrowDir="left"
-            height={0.3 * (h - 170)}
           >
             <LocalizedText id="zeiten" />
           </Stretch>
         </LinkWrapper>
         <LinkWrapper to="/katalog/beratungsangebote">
-          <Stretch arrowDir="bottom" height={0.1 * (h - 170)}>
+          <Stretch
+            title={intl.formatMessage({ id: "orte" })}
+            preferredSize={11}
+            lineh={isMobile ? 0.76 : 0.88}
+            arrowDir="bottom"
+          >
             <LocalizedText id="beratungsangebote_index" />
           </Stretch>
         </LinkWrapper>

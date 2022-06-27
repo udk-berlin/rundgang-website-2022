@@ -14,21 +14,19 @@ const MapWrapper = styled.div`
   width: 100%;
   margin: auto;
   height: 700px;
-  @media only screen and (max-height: 900px) {
-    height: 640px;
-  }
   @media only screen and (max-width: 999px) {
     height: 640px;
   }
   @media only screen and (max-width: 690px) {
-    height: 524px;
+    height: 500px;
   }
   @media only screen and (max-width: 479px) {
-    height: 500px;
+    height: 400px;
   }
 
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: calc(100vw - 32px);
+    margin: auto;
   }
 `;
 

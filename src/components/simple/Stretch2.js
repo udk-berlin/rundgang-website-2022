@@ -31,18 +31,12 @@ const Stretch = ({ children, arrowDir, height }) => {
   const size = useWindowSize();
   const { fontSize, ref } = useFitText();
   const otherRef = useRef();
-  console.log(
-    fontSize,
-    height,
-    ref?.current?.clientHeight,
-    height / ref?.current?.clientHeight,
-  );
   return (
     <>
       <RealText
         ref={otherRef}
         fontSize={fontSize}
-        height={Math.min(height, ref?.current?.clientHeight)}
+        height={Math.min(height, ref?.current?.clientHeight ?? height)}
         scaling={Math.min(1, height / ref?.current?.clientHeight)}
         lineh={Math.min(1, height / ref?.current?.clientHeight)}
       >

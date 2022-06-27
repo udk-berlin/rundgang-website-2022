@@ -3,6 +3,11 @@ import styled from "styled-components";
 import Layout from "@/components/simple/Layout";
 import Map from "@/components/Map";
 import ListView from "@/components/ListView";
+import {
+  SEARCHBAR_HEIGHT,
+  SEARCHBAR_PADDING,
+  TITLE_HEIGHT,
+} from "@/utils/constants";
 
 const OrteWrapper = styled.div`
   width: 100%;
@@ -29,7 +34,7 @@ const MapContainer = styled.div`
   @media ${({ theme }) => theme.breakpoints.laptop} {
     width: 100%;
     position: sticky;
-    top: 18.2vh;
+    top: ${SEARCHBAR_HEIGHT + SEARCHBAR_PADDING + TITLE_HEIGHT}px;
   }
 `;
 

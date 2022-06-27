@@ -8,10 +8,11 @@ import InputField from "./InputField";
 import TagMenu from "./TagMenu";
 import { useRouter } from "next/router";
 import { makeUrlFromId } from "@/utils/idUtils";
+import { SEARCHBAR_HEIGHT } from "@/utils/constants";
 
 const variants = {
   favourites: {
-    height: "5vh",
+    height: SEARCHBAR_HEIGHT,
     width: "0px",
     opacity: 0,
     margin: "0px 0px",
@@ -25,7 +26,7 @@ const variants = {
     borderWidth: "4px",
   },
   closed: {
-    height: "5vh",
+    height: SEARCHBAR_HEIGHT,
     width: "100%",
     opacity: 1,
     margin: "0px 0px 0px 8px",
@@ -37,6 +38,7 @@ const FilterWrapper = styled(motion.div)`
   height: fit-content;
   max-height: 80vh;
   position: relative;
+  background: white;
   margin: ${({ theme }) => ` 0 0 0 ${theme.spacing.md}`};
   border: ${({ theme }) => `4px solid ${theme.colors.highlight}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {

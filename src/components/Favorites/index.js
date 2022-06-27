@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import FavouriteIcon from "@/components/simple/FavouriteIcon";
 import FavouritesList from "./FavouritesList";
+import { SEARCHBAR_HEIGHT } from "@/utils/constants";
 
 const variants = {
   favourites: {
@@ -13,26 +14,32 @@ const variants = {
     opacity: 1,
     margin: "2px 8px",
     borderWidth: "4px",
-    minHeight: "5vh",
+    minHeight: SEARCHBAR_HEIGHT,
   },
   filter: {
-    height: "5vh",
+    height: SEARCHBAR_HEIGHT,
     width: "0%",
     opacity: 0,
-    margin: "0px 0px",
+    margin: "2px 0px",
     borderWidth: 0,
     padding: "0px",
   },
-  closed: { height: "5vh", opacity: 1, margin: "2px 8px", padding: "0px 8px" },
+  closed: {
+    height: SEARCHBAR_HEIGHT,
+    opacity: 1,
+    margin: "2px 8px",
+    padding: "0px 8px",
+  },
 };
 
 const FavouritesWrapper = styled(motion.div)`
   position: relative;
   width: fit-content;
-  min-height: 5vh;
-  border: ${({ theme }) => `2px solid ${theme.colors.primary}`};
+  background: white;
+  min-height: ${SEARCHBAR_HEIGHT}px;
+  border: ${({ theme }) => `2px inset ${theme.colors.primary}`};
   margin: ${({ theme }) => `2px ${theme.spacing.sm}`};
-  padding: ${({ theme }) => `0px ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `2px ${theme.spacing.sm}`};
 `;
 
 const FavouritesHeader = styled.div`
