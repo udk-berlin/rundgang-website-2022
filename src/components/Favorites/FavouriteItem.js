@@ -50,7 +50,8 @@ const Info = styled.div`
 `;
 
 const Time = styled.div`
-  padding: ${({ theme }) => `${theme.space(6)} 8px 6px ${theme.space(8)} `};
+  padding: ${({ theme }) => theme.space(6)};
+  padding-left: ${({ theme }) => theme.space(8)};
   line-height: 1;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   margin: ${({ theme }) => theme.space(16)} 0px;

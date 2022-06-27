@@ -32,6 +32,7 @@ const DownloadButton = styled.button`
   }
 `;
 const Favourites = styled.div`
+  padding-bottom: ${({ theme }) => theme.space(8)};
   border-top: 3px inset black;
 `;
 const FavouritesTitle = styled.div`
@@ -70,8 +71,9 @@ const CloseButton = styled.div`
   padding: ${({ theme }) => theme.space(8)};
   font-size: ${({ theme }) => theme.fontSizes.xl};
   cursor: pointer;
-  text-shadow: 8px 8px 10px white, -8px 8px 10px white, 3px -3px 10px white,
-    -3px -3px 10px white;
+  font-weight: bold;
+  -webkit-text-stroke: 2px white;
+  -webkit-text-fill-color: black;
 `;
 
 const FavouritesList = ({ onClose }) => {

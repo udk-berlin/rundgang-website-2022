@@ -51,7 +51,7 @@ const FavouritesHeader = styled.div`
   align-items: middle;
   cursor: pointer;
   display: flex;
-  margin: 0px 4px;
+  margin: auto;
 `;
 const FavouritesSavedItems = styled.span`
   width: 100%;
@@ -59,9 +59,9 @@ const FavouritesSavedItems = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.ll};
   margin: auto;
   text-align: center;
+  line-height: 0.9;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.lm};
-    line-height: 0.9;
   }
 `;
 const IconWrapper = styled.span`
