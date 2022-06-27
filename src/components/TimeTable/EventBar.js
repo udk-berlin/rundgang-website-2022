@@ -33,7 +33,6 @@ const EventBar = ({ ev, start, end, link, top, children = null }) => {
     let previous =
       top > 0 ? document.getElementById(`${start}-${top - 1}`) : null;
     if (previous) {
-      console.log(previous.getBoundingClientRect());
       setTopMargin(previous.clientHeight + 4);
     }
   }, [top]);

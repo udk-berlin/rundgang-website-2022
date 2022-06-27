@@ -4,32 +4,14 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import FavouriteItem from "./FavouriteItem";
+import Download from "./Download";
 import FavouriteIcon from "@/components/simple/FavouriteIcon";
-import dynamic from "next/dynamic";
 import { SEARCHBAR_HEIGHT } from "@/utils/constants";
-const FavouritePrintout = dynamic(() => import("./FavouritePrintout"), {
-  ssr: false,
-});
 
 const FavouritesListWrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-`;
-
-const DownloadButton = styled.button`
-  cursor: pointer;
-  height: fit-content;
-  border: 2px solid black;
-  margin: auto;
-  margin-right: 8px;
-  border-radius: ${({ theme }) => theme.space(32)};
-  background: ${({ theme }) => theme.colors.highlight};
-  font-size: ${({ theme }) => theme.fontSizes.lm};
-  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
-  &:hover {
-    background: ${({ theme }) => theme.colors.lightgrey};
-  }
 `;
 const Favourites = styled.div`
   padding-bottom: ${({ theme }) => theme.space(8)};
@@ -38,10 +20,6 @@ const Favourites = styled.div`
 const FavouritesTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lg};
   padding: ${({ theme }) => theme.space(8)};
-`;
-
-const DownloadPng = styled.div`
-  display: none;
 `;
 
 const FavouritesHeader = styled.div`
@@ -77,19 +55,6 @@ const CloseButton = styled.div`
 
 const FavouritesList = ({ onClose }) => {
   const { uiStore } = useStores();
-  const ref = useRef();
-
-  function downloadURI(uri, name) {
-    var link = document.createElement("a");
-    link.download = name;
-    link.href = uri;
-    link.click();
-  }
-
-  const downloadImage = () => {
-    const dataURL = ref.current.toDataURL({ pixelRatio: 2 });
-    downloadURI(dataURL, "rundgangudk2022.png");
-  };
   return (
     <FavouritesListWrapper>
       <FavouritesHeader>
@@ -97,21 +62,10 @@ const FavouritesList = ({ onClose }) => {
           {uiStore.numberSavedItems}
           <FavouriteIcon saved={true} size={0.8} />
         </FavouritesSavedItems>
-        <DownloadButton onClick={() => downloadImage()}>
-          <LocalizedText id="download" />
-        </DownloadButton>
+        <Download />
       </FavouritesHeader>
       {uiStore.savedItems.length > 0 ? (
         <>
-          <DownloadPng>
-            <FavouritePrintout
-              savedItems={uiStore.savedItems}
-              savedEvents={uiStore.savedEvents}
-              width={1800}
-              height={1000}
-              reference={ref}
-            />
-          </DownloadPng>
           <Favourites>
             <FavouritesTitle>
               <LocalizedText id="projects" />

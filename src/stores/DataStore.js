@@ -67,7 +67,6 @@ class DataStore {
         () => this.api.currentRoot,
         rootNode => {
           if (rootNode?.name && rootNode?.id) {
-            console.log("in api: ", rootNode.name, rootNode.id);
             this.uiStore.setTitle(rootNode.name, rootNode.id);
           }
         },

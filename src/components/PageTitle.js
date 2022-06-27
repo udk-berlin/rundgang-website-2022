@@ -35,7 +35,6 @@ const splitLongTitles = (s, titleId) => {
 
   var s1 = s.substr(0, middle);
   var s2 = s.substr(middle + 1);
-  console.log([s1, s2]);
   return [s1, s2];
 };
 
@@ -60,7 +59,6 @@ const PageTitle = () => {
   }, [isMobile, uiStore.title, router.locale]);
 
   const handleBack = () => {
-    console.log("handlebacj");
     let link = router.pathname;
     if (router.pathname.includes("[pid]")) {
       if (

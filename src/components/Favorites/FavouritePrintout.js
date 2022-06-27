@@ -52,7 +52,7 @@ const FavouritePrintout = ({
                   fontSize={30}
                 />
                 {savedItems.map((item, i) => (
-                  <Group key={item.id}>
+                  <Group key={`${item.id}-${i}-print`}>
                     <Text
                       fill={"black"}
                       x={scaleX(START_TIME)}
@@ -102,7 +102,7 @@ const FavouritePrintout = ({
               </Group>
 
               {times.map(t => (
-                <Group key={`timelineCanvas-${t}`}>
+                <Group key={`timelineCanvas-${t}-print`}>
                   <Line
                     strokeWidth={1}
                     points={[
@@ -142,9 +142,9 @@ const FavouritePrintout = ({
                   text={intl.formatMessage({ id: "sunday" })}
                 />
                 {roomsArray.map(([room, events], rIndex) => (
-                  <Group key={`room-${room}`}>
+                  <Group key={`room-${room}-print`}>
                     {rIndex == 0 ? (
-                      <Group key={`house-${events[0]?.building.name}`}>
+                      <Group key={`house-${events[0]?.building.name}-print`}>
                         <Text
                           fill={"black"}
                           x={scaleX(START_TIME)}
@@ -180,7 +180,7 @@ const FavouritePrintout = ({
                     />
                     <Group>
                       {events.map((ev, i) => (
-                        <Group key={`room-${room}-${ev.id}-${i}`}>
+                        <Group key={`room-${room}-${ev.id}-${i}-print`}>
                           <Line
                             strokeWidth={scaleY(1) - scaleY(0.2)}
                             offsetY={scaleY(1) - scaleY(0.9)}
