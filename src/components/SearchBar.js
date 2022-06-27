@@ -5,9 +5,11 @@ import Filter from "@/components/Filter";
 import Favorites from "@/components/Favorites";
 import ClickAwayListener from "@/components/simple/ClickAwayListener";
 import { useStores } from "@/stores/index";
+import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
 
 const SearchBarWrapper = styled.div`
   width: 100%;
+  height: ${SEARCHBAR_HEIGHT}px;
   padding-bottom: 10px;
   background-color: white;
 `;

@@ -4,10 +4,9 @@ import styled from "styled-components";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import LanguageSwitch from "./LanguageSwitch";
+import { FOOTER_HEIGHT } from "@/utils/constants";
 
-export const FOOTER_HEIGHT = 30;
-
-const FooterContainer = styled.footer`
+const FooterContainer = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;

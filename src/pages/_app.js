@@ -5,7 +5,7 @@ import deFile from "modules/i18n/localizations/de.json";
 import enFile from "modules/i18n/localizations/en.json";
 import { Provider } from "mobx-react";
 import styled, { ThemeProvider } from "styled-components";
-import { MotionConfig, AnimatePresence } from "framer-motion";
+import { MotionConfig } from "framer-motion";
 import { theme } from "theme/index";
 import GlobalStyle from "theme/globalStyle";
 import GlobalFonts from "public/fonts/globalFonts";
@@ -17,6 +17,7 @@ import CursorLine from "@/components/CursorLine";
 import { useIsMobile } from "@/utils/useWindowSize";
 import JumpToTop from "@/components/JumpToTop";
 import IntroAnimation from "@/components/IntroAnimation";
+import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
 
 const Container = styled.div`
   width: 100%;
@@ -29,6 +30,7 @@ const HeaderWrapper = styled.header`
   position: sticky;
   top: 0;
   left: 0;
+  height: ${SEARCHBAR_HEIGHT + TITLE_HEIGHT}px;
   z-index: 400;
   width: 100%;
   background: inherit;
@@ -122,14 +124,12 @@ export default function App({ Component, pageProps }) {
                   <PageTitle key={`PageTitle-${router.pathname}`} />
                   <SearchBar key={`SearchBar-${router.pathname}`} />
                 </HeaderWrapper>
-                <AnimatePresence exitBeforeEnter initial={true}>
-                  <Component key={router.pathname} {...pageProps} />
-                </AnimatePresence>
-                {showLine ? null : <JumpToTop />}
-                {showLine ? <CursorLine /> : null}
-                {showIntro && <IntroAnimation key={"intro"} />}
+                <Component key={router.pathname} {...pageProps} />
                 <Footer />
               </Container>
+              {showLine ? null : <JumpToTop />}
+              {showLine ? <CursorLine /> : null}
+              {showIntro && <IntroAnimation key={"intro"} />}
             </MotionConfig>
           </IntlProvider>
         </Provider>

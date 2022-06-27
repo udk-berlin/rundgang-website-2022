@@ -6,14 +6,16 @@ import { useRouter } from "next/router";
 import { AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
-import Stretch from "@/components/simple/Stretch";
+import Stretch from "@/components/simple/Stretch2";
 import useWindowSize from "@/utils/useWindowSize";
+import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
 
 const PageTitleWrapper = styled.div`
   width: 100%;
+  height: ${TITLE_HEIGHT}px;
   font-family: "Diatype";
-  height: fit-content;
   background-color: ${({ theme }) => theme.colors.white};
+  overflow: hidden;
 `;
 
 const BackRouting = styled.span`
@@ -103,32 +105,34 @@ const PageTitle = () => {
         {isMobile && titleStrings?.length > 1 ? (
           titleStrings.map((line, i) => (
             <BackRouting onClick={() => handleBack()}>
-              <Stretch
-                titleId={`${uiStore.title}-${i}-${router.locale}`}
-                key={`${uiStore.title}-line-${i}`}
-                lineh={1}
-                preferredSize={5}
-                arrowDir={
-                  uiStore.title !== "rundgang" && i == 0 ? "left" : null
-                }
-              >
-                <StyledText>{line}</StyledText>
-              </Stretch>
+              <StyledText>
+                <Stretch
+                  titleId={`${uiStore.title}-${i}-${router.locale}`}
+                  key={`${uiStore.title}-line-${i}`}
+                  lineh={1}
+                  height={40}
+                  arrowDir={
+                    uiStore.title !== "rundgang" && i == 0 ? "left" : null
+                  }
+                >
+                  {line}
+                </Stretch>
+              </StyledText>
             </BackRouting>
           ))
         ) : (
           <BackRouting onClick={() => handleBack()}>
-            <Stretch
-              titleId={`${uiStore.title}-${router.locale}`}
-              key={`${uiStore.title}_title`}
-              lineh={1}
-              preferredSize={11}
-              arrowDir={uiStore.title !== "rundgang" ? "left" : null}
-            >
-              <StyledText>
+            <StyledText>
+              <Stretch
+                titleId={`${uiStore.title}-${router.locale}`}
+                key={`${uiStore.title}_title`}
+                lineh={1}
+                height={80}
+                arrowDir={uiStore.title !== "rundgang" ? "left" : null}
+              >
                 <LocalizedText id={uiStore.title} />
-              </StyledText>
-            </Stretch>
+              </Stretch>
+            </StyledText>
           </BackRouting>
         )}
       </AnimatePresence>

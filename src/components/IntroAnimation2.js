@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 /* import styled from "styled-components"; */
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useFlubber, getIndex } from "@/utils/useFlubber";
+import { interpolate } from "flubber";
+
+export const getIndex = (_, index) => index;
+
+export function useFlubber(progress, paths) {
+  return useTransform(progress, paths.map(getIndex), paths, {
+    mixer: (a, b) => interpolate(a, b, { maxSegmentLength: 0.1 }),
+  });
+}
 
 const path1 =
   "M1291 343H954V374H623V343H449V374V390V625H783V876H449V1105V1127V1152H623V1127H954V1152H1291V1127H1663V1152H1837V1127V1105V876H1482V625H1837V390V374V343H1663V374H1291V343ZM1026 826H1239V625H1204.32C1204.77 628.269 1205 631.608 1205 635C1205 675.317 1172.32 708 1132 708C1091.68 708 1059 675.317 1059 635C1059 631.608 1059.23 628.269 1059.68 625H1026V826Z";
