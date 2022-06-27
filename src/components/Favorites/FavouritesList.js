@@ -6,22 +6,27 @@ import { useStores } from "@/stores/index";
 import FavouriteItem from "./FavouriteItem";
 import FavouriteIcon from "@/components/simple/FavouriteIcon";
 import dynamic from "next/dynamic";
+import { SEARCHBAR_HEIGHT } from "@/utils/constants";
 const FavouritePrintout = dynamic(() => import("./FavouritePrintout"), {
   ssr: false,
 });
 
 const FavouritesListWrapper = styled.div`
   width: 100%;
+  height: 100%;
   position: relative;
 `;
 
 const DownloadButton = styled.button`
   cursor: pointer;
-  border: none;
-  border-left: 3px solid black;
+  height: fit-content;
+  border: 2px solid black;
+  margin: auto;
+  margin-right: 8px;
+  border-radius: ${({ theme }) => theme.spacing.mm};
   background: ${({ theme }) => theme.colors.highlight};
   font-size: ${({ theme }) => theme.fontSizes.lm};
-  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.lg}`};
+  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
   &:hover {
     background: ${({ theme }) => theme.colors.lightgrey};
   }
@@ -30,9 +35,8 @@ const Favourites = styled.div`
   border-top: 3px inset black;
 `;
 const FavouritesTitle = styled.div`
-  border-bottom: 3px solid black;
   font-size: ${({ theme }) => theme.fontSizes.lg};
-  padding: ${({ theme }) => `0 ${theme.spacing.xs}`};
+  padding: ${({ theme }) => theme.spacing.sm};
 `;
 
 const DownloadPng = styled.div`
@@ -42,6 +46,7 @@ const DownloadPng = styled.div`
 const FavouritesHeader = styled.div`
   display: flex;
   width: 100%;
+  height: ${SEARCHBAR_HEIGHT * 2}px;
   justify-content: space-between;
   cursor: pointer;
 `;
@@ -49,9 +54,9 @@ const FavouritesHeader = styled.div`
 const FavouritesSavedItems = styled.div`
   color: ${({ theme }) => theme.colors.primary};
   font-weight: bold;
-  margin: auto;
   flex-grow: 1;
-  padding: ${({ theme }) => `0 ${theme.spacing.xs}`};
+  margin: auto;
+  padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
   font-size: ${({ theme }) => theme.fontSizes.lg};
 `;
 
@@ -85,55 +90,53 @@ const FavouritesList = ({ onClose }) => {
     downloadURI(dataURL, "rundgangudk2022.png");
   };
   return (
-    <>
-      <FavouritesListWrapper>
-        <FavouritesHeader>
-          <FavouritesSavedItems>
-            <FavouriteIcon saved={true} size={8} />
-            {uiStore.numberSavedItems}
-          </FavouritesSavedItems>
-        </FavouritesHeader>
-        {uiStore.savedItems.length > 0 ? (
-          <>
-            <DownloadButton onClick={() => downloadImage()}>
-              <LocalizedText id="download" />
-            </DownloadButton>
-            <DownloadPng>
-              <FavouritePrintout
-                savedItems={uiStore.savedItems}
-                savedEvents={uiStore.savedEvents}
-                width={1800}
-                height={1000}
-                reference={ref}
-              />
-            </DownloadPng>
-            <Favourites>
-              <FavouritesTitle>
-                <LocalizedText id="projects" />
-              </FavouritesTitle>
-              {uiStore.savedItems
-                .filter(item => item.template == "studentproject")
-                .map(item => (
-                  <FavouriteItem key={item.id} element={item} />
-                ))}
-            </Favourites>
-            <Favourites>
-              <FavouritesTitle>
-                <LocalizedText id="events" />
-              </FavouritesTitle>
-              {uiStore.savedItems
-                .filter(item => item.template == "event")
-                .map(item => (
-                  <FavouriteItem key={item.id} element={item} />
-                ))}
-            </Favourites>
-          </>
-        ) : (
-          "no events or projects saved yet"
-        )}
-        <CloseButton onClick={onClose}>&#57344;</CloseButton>
-      </FavouritesListWrapper>
-    </>
+    <FavouritesListWrapper>
+      <FavouritesHeader>
+        <FavouritesSavedItems>
+          {uiStore.numberSavedItems}
+          <FavouriteIcon saved={true} size={0.8} />
+        </FavouritesSavedItems>
+        <DownloadButton onClick={() => downloadImage()}>
+          <LocalizedText id="download" />
+        </DownloadButton>
+      </FavouritesHeader>
+      {uiStore.savedItems.length > 0 ? (
+        <>
+          <DownloadPng>
+            <FavouritePrintout
+              savedItems={uiStore.savedItems}
+              savedEvents={uiStore.savedEvents}
+              width={1800}
+              height={1000}
+              reference={ref}
+            />
+          </DownloadPng>
+          <Favourites>
+            <FavouritesTitle>
+              <LocalizedText id="projects" />
+            </FavouritesTitle>
+            {uiStore.savedItems
+              .filter(item => item.template == "studentproject")
+              .map(item => (
+                <FavouriteItem key={item.id} element={item} />
+              ))}
+          </Favourites>
+          <Favourites>
+            <FavouritesTitle>
+              <LocalizedText id="events" />
+            </FavouritesTitle>
+            {uiStore.savedItems
+              .filter(item => item.template == "event")
+              .map(item => (
+                <FavouriteItem key={item.id} element={item} />
+              ))}
+          </Favourites>
+        </>
+      ) : (
+        "no events or projects saved yet"
+      )}
+      <CloseButton onClick={onClose}>&#57344;</CloseButton>
+    </FavouritesListWrapper>
   );
 };
 

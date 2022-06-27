@@ -36,7 +36,7 @@ const variants = {
 const FilterWrapper = styled(motion.div)`
   width: 100%;
   height: fit-content;
-  max-height: 80vh;
+  max-height: calc(100vh - 200px);
   position: relative;
   background: white;
   margin: ${({ theme }) => ` 0 0 0 ${theme.spacing.md}`};

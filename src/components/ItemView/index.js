@@ -20,8 +20,6 @@ const ItemViewWrapper = styled.div`
 const ItemHeaderWrapper = styled.div`
   display: grid;
   grid-template-columns: 59% 39%;
-  width: 100%;
-  height: 100%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
   }
@@ -60,8 +58,9 @@ const Time = styled.div`
   border: 2px solid ${({ theme }) => theme.colors.highlight};
   background-color: ${({ theme }) => theme.colors.maingrey};
   color: ${({ theme }) => theme.colors.highlight};
-  white-space: nowrap;
   text-align: center;
+  word-wrap: break-word;
+    word-break: break-all;
   width: fit-content;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.mm};
@@ -178,7 +177,6 @@ const ItemView = () => {
                     from={t.start * 1000}
                     to={t.end * 1000}
                     weekday="short"
-                    year="numeric"
                     month="numeric"
                     day="numeric"
                     hour="numeric"

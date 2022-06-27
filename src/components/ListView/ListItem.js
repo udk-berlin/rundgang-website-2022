@@ -38,7 +38,6 @@ const SaveIcon = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.md};
   top: 8px;
   right: 8px;
-  z-index: 100;
   background: ${({ theme, saved }) =>
     saved ? theme.colors.black : theme.colors.white};
   color: ${({ theme, saved }) =>
@@ -82,7 +81,6 @@ const TimeWrapper = styled.div`
   position: absolute;
   bottom: ${({ theme }) => theme.spacing.sm};
   left: ${({ theme }) => theme.spacing.sm};
-  z-index: 100;
 `;
 
 const ImageWrapper = styled.div`

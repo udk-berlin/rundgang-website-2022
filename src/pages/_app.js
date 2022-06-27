@@ -1,41 +1,22 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect } from "react";
 import { IntlProvider } from "react-intl";
 import { useRouter } from "next/router";
 import deFile from "modules/i18n/localizations/de.json";
 import enFile from "modules/i18n/localizations/en.json";
 import { Provider } from "mobx-react";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import { MotionConfig } from "framer-motion";
 import { theme } from "theme/index";
 import GlobalStyle from "theme/globalStyle";
 import GlobalFonts from "public/fonts/globalFonts";
 import { useStoreInstances } from "../stores/index";
-import Footer from "@/components/Footer";
-import SearchBar from "@/components/SearchBar";
-import PageTitle from "@/components/PageTitle";
-import CursorLine from "@/components/CursorLine";
-import { useIsMobile } from "@/utils/useWindowSize";
-import JumpToTop from "@/components/JumpToTop";
-import IntroAnimation from "@/components/IntroAnimation";
-
-const HeaderWrapper = styled.header`
-  position: sticky;
-  top: 0;
-  left: 0;
-  height: fit-content;
-  z-index: 400;
-  width: 100%;
-  background: white;
-`;
+import Page from "@/components/Page";
 
 export default function App({ Component, pageProps }) {
   const { data } = pageProps;
   const snapshot = data?.dataStore;
   const { dataStore, uiStore } = useStoreInstances(snapshot);
   const router = useRouter();
-  const isMobile = useIsMobile();
-  const [showLine, setShowLine] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
 
   const messages = useMemo(() => {
     switch (router.locale) {
@@ -58,48 +39,6 @@ export default function App({ Component, pageProps }) {
     }
   }, [dataStore.isLoaded]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (
-        dataStore.api.status === "success" ||
-        dataStore.api.status === "error"
-      ) {
-        setShowIntro(false);
-      }
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, [router.pathname, dataStore.api.status]);
-
-  useEffect(() => {
-    let pid = router.query.pid;
-    setShowLine(false);
-    if (dataStore.isLoaded && pid) {
-      dataStore.api.getIdFromLink(pid, true);
-    } else if (
-      dataStore.isLoaded &&
-      router.pathname !== "/" &&
-      !router.pathname.includes("[pid]")
-    ) {
-      let id = router.pathname.replaceAll("/", "").replaceAll("[pid]", "");
-      uiStore.filterStore.handleReset();
-      dataStore.api.getIdFromLink(id, true);
-    } else if (
-      dataStore.isLoaded &&
-      dataStore.api.root &&
-      !router.pathname.includes("[pid]")
-    ) {
-      uiStore.filterStore.handleReset();
-      dataStore.api.getIdFromLink(dataStore.api.root.id, true);
-      uiStore.setTitle(dataStore.api.root.id, "rundgang");
-    }
-  }, [router.query.pid, router.pathname, dataStore.isLoaded]);
-
-  useEffect(() => {
-    if (router.pathname == "/" && !isMobile) {
-      setShowLine(true);
-    }
-  }, [router.pathname]);
-
   return (
     <>
       <GlobalFonts />
@@ -112,15 +51,9 @@ export default function App({ Component, pageProps }) {
             onError={() => null}
           >
             <MotionConfig reducedMotion="user">
-              <HeaderWrapper>
-                <PageTitle key={`PageTitle-${router.pathname}`} />
-                <SearchBar key={`SearchBar-${router.pathname}`} />
-              </HeaderWrapper>
-              <Component key={router.pathname} {...pageProps} />
-              <Footer />
-              {showLine ? null : <JumpToTop />}
-              {showLine ? <CursorLine /> : null}
-              {showIntro && <IntroAnimation key={"intro"} />}
+              <Page>
+                <Component key={router.pathname} {...pageProps} />
+              </Page>
             </MotionConfig>
           </IntlProvider>
         </Provider>

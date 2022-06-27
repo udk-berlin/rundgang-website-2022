@@ -4,7 +4,7 @@ const COLORS = {
   maingrey: "#939393",
   lightgrey: "#d9d9d9",
   highlight: "#E2FF5D",
-  lightHighlight:"#F1FFB3",
+  lightHighlight: "#F1FFB3",
   black: "#000",
 };
 const size = {
@@ -83,6 +83,7 @@ export const theme = {
     lg: "48px",
     xl: "64px",
   },
+  space: p => `${p}px`,
   breakpoints: {
     mobileS: `(max-width: ${size.mobileS})`,
     mobileM: `(max-width: ${size.mobileM})`,

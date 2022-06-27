@@ -9,12 +9,12 @@ html {
     color: #E2FF5D;
   } 
   *::-webkit-scrollbar {
-    width: 0.8em;
-    height: 0.8em;
+    width:8px;
+    height: 8px;
   }
   *::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.00);
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.00);
+    background-color: #d9d9d9;
+    outline: 1px solid #d9d9d9;
   }
   *::-webkit-scrollbar-thumb {
     background-color: black;

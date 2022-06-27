@@ -90,34 +90,39 @@ const spinTransition = {
 export default function IntroAnimation() {
   return (
     <motion.div
-      style={containerStyle}
-      animate={{ opacity: [1, 0] }}
-      transition={{ delay: 3.5 }}
+      animate={{ display: "none" }}
+      transition={{ delay: 4 }}
     >
       <motion.div
-        style={leftStyle}
-        transition={spinTransition}
-        animate={"left"}
-        variants={variants}
-      />
-      <motion.div
-        style={topStyle}
-        animate={"top"}
-        transition={spinTransition}
-        variants={variants}
-      />
-      <motion.div
-        style={rightStyle}
-        animate={"right"}
-        transition={spinTransition}
-        variants={variants}
-      />
-      <motion.div
-        style={bottomStyle}
-        animate={"bottom"}
-        transition={spinTransition}
-        variants={variants}
-      />
+        style={containerStyle}
+        animate={{ opacity: 0 }}
+        transition={{ delay: 3.5 }}
+      >
+        <motion.div
+          style={leftStyle}
+          transition={spinTransition}
+          animate={"left"}
+          variants={variants}
+        />
+        <motion.div
+          style={topStyle}
+          animate={"top"}
+          transition={spinTransition}
+          variants={variants}
+        />
+        <motion.div
+          style={rightStyle}
+          animate={"right"}
+          transition={spinTransition}
+          variants={variants}
+        />
+        <motion.div
+          style={bottomStyle}
+          animate={"bottom"}
+          transition={spinTransition}
+          variants={variants}
+        />
+      </motion.div>
     </motion.div>
   );
 }

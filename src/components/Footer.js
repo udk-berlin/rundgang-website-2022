@@ -60,9 +60,10 @@ const FooterBelow = styled.div`
   position: relative;
   top: calc(100vh - 30px);
   justify-content: space-between;
+  flex-direction: column;
   z-index: 6000;
   width: 100%;
-  height: 200px;
+  height: 100px;
   background-color: ${({ theme }) => theme.colors.secondary};
   @media ${({ theme }) => theme.breakpoints.laptop} {
     display: none;
@@ -128,9 +129,9 @@ const Footer = () => {
             <LanguageSwitch />
           </LinkWrapper>
           <LinkWrapper>
-            <RestyledLink to="/kontakt">
+            <NormalLink href="https://www.udk-berlin.de/universitaet/stabsstelle-ueberfakultaere-veranstaltungen/rundgang-tage-der-offenen-tuer-der-udk-berlin/kernteam-rundgang/">
               <LocalizedText id="contact" />
-            </RestyledLink>
+            </NormalLink>
           </LinkWrapper>
         </FooterLine>
         <FooterLine>

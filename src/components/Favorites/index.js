@@ -22,24 +22,26 @@ const variants = {
     opacity: 0,
     margin: "2px 0px",
     borderWidth: 0,
-    padding: "0px",
   },
   closed: {
     height: SEARCHBAR_HEIGHT,
+    overflow: "hidden",
+    width: "80px",
     opacity: 1,
     margin: "2px 8px",
-    padding: "0px 8px",
   },
 };
 
 const FavouritesWrapper = styled(motion.div)`
   position: relative;
-  width: fit-content;
+  width: 80px;
   background: white;
-  min-height: ${SEARCHBAR_HEIGHT}px;
+  height: fit-content;
   border: ${({ theme }) => `2px inset ${theme.colors.primary}`};
   margin: ${({ theme }) => `2px ${theme.spacing.sm}`};
-  padding: ${({ theme }) => `2px ${theme.spacing.sm}`};
+  max-height: calc(100vh - 120px);
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 const FavouritesHeader = styled.div`
@@ -81,7 +83,7 @@ const Favourites = ({ onClick, onClose }) => {
           !uiStore.isOpen && (
             <FavouritesHeader onClick={onClick} isOpen={uiStore.isOpen}>
               <IconWrapper>
-                <FavouriteIcon saved={true} size={16} />
+                <FavouriteIcon saved={true} size={1.5} />
               </IconWrapper>
               <FavouritesSavedItems>
                 {uiStore.numberSavedItems}

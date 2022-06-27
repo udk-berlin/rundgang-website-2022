@@ -110,12 +110,6 @@ const Stretch = ({
   const [fontSize, setFontSize] = useState(null);
   const [factor, setFactor] = useState(1);
 
-  console.log(
-    parentRef?.current?.clientWidth,
-    stretchRef?.current?.clientWidth,
-    titleId,
-  );
-
   useEffect(() => {
     if (
       fontSize &&
@@ -123,11 +117,16 @@ const Stretch = ({
       parentRef?.current?.clientWidth
     ) {
       let arrWidth = arrowDir ? 1 : 0;
-      arrWidth = isMobile ? arrWidth : arrWidth * 5.7;
-      const padding = isMobile ? 0 : 50;
-      console.log(-padding - arrWidth * preferredSize);
+      arrWidth = isMobile ? 0 : arrWidth * 5.7 * preferredSize;
+      const padding = isMobile ? 50 : 50 + arrWidth;
+      /* console.log(
+        parentRef?.current?.clientWidth,
+        stretchRef?.current?.clientWidth,
+        titleId,
+        -padding - arrWidth * preferredSize,
+      ); */
       let f =
-        (parentRef?.current?.clientWidth - padding - arrWidth * preferredSize) /
+        (parentRef?.current?.clientWidth - padding) /
         stretchRef?.current?.clientWidth;
       setFactor(f);
     }

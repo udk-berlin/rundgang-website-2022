@@ -14,9 +14,11 @@ const TagWrapper = styled.span`
   cursor: pointer;
   width: fit-content;
   word-wrap: break-word;
+  word-break: break-all;
   line-height: 1;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   margin: ${({ theme }) => theme.spacing.xs};
+  padding: ${({ theme }) => `6px 8px 6px ${theme.spacing.sm} `};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
     margin: ${({ theme }) => theme.spacing.xs};
@@ -32,7 +34,6 @@ const TagWrapper = styled.span`
     }
     return {
       borderRadius: theme.spacing.lg,
-      padding: `6px 8px 6px ${theme.spacing.sm} `,
       color: color,
       backgroundColor: background,
       borderColor: color,

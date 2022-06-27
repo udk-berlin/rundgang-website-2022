@@ -17,17 +17,12 @@ const FillPath = styled.path`
   }
 `;
 
-const FavouriteIcon = ({
-  onClick,
-  saved = false,
-  size = 20,
-  color = "black",
-}) => {
+const FavouriteIcon = ({ onClick, size, saved = false, color = "black" }) => {
   return (
     <FavouriteIconWrapper
       onClick={onClick}
-      width={`${size * 0.12}em`}
-      height={`${size * 0.12}em`}
+      width={size ? `${size}em` : 0}
+      height={size ? `${size}em` : 0}
       color={color}
       viewBox="0 -5 49 67"
       xmlns="http://www.w3.org/2000/svg"

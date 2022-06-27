@@ -16,10 +16,11 @@ const FavouriteItemWrapper = styled.div`
 
 const Image = styled.img`
   width: 160px;
+  height: 100%;
   padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    height: 50px;
-    width: 50px;
+    width: 80px;
+    height: 100%;
   }
 `;
 const Title = styled.div`
@@ -39,57 +40,63 @@ const Authors = styled.div`
 const Tags = styled.div`
   display: flex;
   width: 100%;
+  flex-grow: 1 1 50%;
   padding-top: ${({ theme }) => theme.spacing.sm};
   flex-wrap: wrap;
 `;
 const Info = styled.div`
   width: 100%;
-`;
-const Time = styled.div`
-  min-width: 160px;
-  height: 160px;
-  padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    min-width: 50px;
-    height: 50px;
-  }
+  padding: ${({ theme }) => ` 0px ${theme.spacing.sm}`};
 `;
 
-const TimeRange = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.xs};
+const Time = styled.div`
+  padding: ${({ theme }) => `${theme.space(6)} 8px 6px ${theme.spacing.sm} `};
+  line-height: 1;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  margin: ${({ theme }) => theme.spacing.md} 0px;
+  border-radius: ${({ theme }) => theme.spacing.lg};
+  border: 2px solid ${({ theme }) => theme.colors.highlight};
+  background-color: ${({ theme }) => theme.colors.maingrey};
+  color: ${({ theme }) => theme.colors.highlight};
+  text-align: center;
+  word-wrap: break-word;
+  word-break: break-all;
+  width: fit-content;
+  margin: ${({ theme }) => theme.spacing.xs};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+    margin: ${({ theme }) => theme.spacing.xs};
+  }
 `;
 
 const FavouriteItem = ({ element }) => {
   return (
     <FavouriteItemWrapper>
-      <FavouriteIcon saved={true} size={20} />
-      {element.template == "studentproject" ? (
-        <Image
-          src={
-            element.thumbnail.length > 0
-              ? element.thumbnail
-              : "/assets/img/missing.svg"
-          }
-        />
-      ) : (
-        <Time>
-          {element?.allocation?.temporal?.map((t, i) => (
-            <TimeRange key={`time-range-${t.start}-${i}-${t.end}`}>
-              <FormattedDateTimeRange
-                from={t.start * 1000}
-                weekday="short"
-                hour="numeric"
-                minute="numeric"
-                to={t.end * 1000}
-              />
-            </TimeRange>
-          ))}
-        </Time>
-      )}
+      <FavouriteIcon saved={true} size={2} />
+      <Image
+        src={
+          element.thumbnail.length > 0
+            ? element.thumbnail
+            : "/assets/img/missing.svg"
+        }
+      />
       <Info>
         <Title>{element.name}</Title>
         <Authors>{element.origin.authors.map(a => a.name).join(",")}</Authors>
         <Tags>
+          {element.template == "event" &&
+            element?.allocation?.temporal?.map((t, i) => (
+              <Time>
+                <FormattedDateTimeRange
+                  key={`time-range-${t.start}-${i}-${t.end}`}
+                  from={t.start * 1000}
+                  weekday="short"
+                  hour="numeric"
+                  minute="numeric"
+                  to={t.end * 1000}
+                />
+              </Time>
+            ))}
           {element.tags
             .filter(t =>
               ["location-room", "location-building"].includes(t.template),
