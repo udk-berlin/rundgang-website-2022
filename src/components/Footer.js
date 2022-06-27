@@ -15,10 +15,15 @@ const FooterContainer = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
+  z-index: 0;
   height: ${FOOTER_HEIGHT}px;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
-  z-index: 100;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    background-color: ${({ theme }) => theme.colors.secondary};
+    z-index: 0;
+  }
 `;
 
 const LinkWrapper = styled.div`
@@ -32,6 +37,9 @@ const LinkWrapper = styled.div`
 const SpecialLinks = styled.div`
   display: flex;
   justify-content: space-between;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    display: none;
+  }
 `;
 
 const RestyledLink = styled(LocalizedLink)`
@@ -49,12 +57,13 @@ const NormalLink = styled.a`
 const FooterBelow = styled.div`
   display: flex;
   flex-wrap: wrap;
+  position: relative;
+  top: calc(100vh - 30px);
   justify-content: space-between;
-  z-index: 600;
+  z-index: 6000;
   width: 100%;
   height: 200px;
   background-color: ${({ theme }) => theme.colors.secondary};
-  font-size: ${({ theme }) => theme.fontSizes.md};
   @media ${({ theme }) => theme.breakpoints.laptop} {
     display: none;
   }
@@ -86,17 +95,17 @@ const Footer = () => {
           <LanguageSwitch />
         </LinkWrapper>
         <SpecialLinks>
-          <LinkWrapper hideMobile={true}>
+          <LinkWrapper>
             <RestyledLink to="/kontakt">
               <LocalizedText id="contact" />
             </RestyledLink>
           </LinkWrapper>
-          <LinkWrapper hideMobile={true}>
+          <LinkWrapper>
             <NormalLink href="https://www.udk-berlin.de/schnellzugriff/impressum/">
               <LocalizedText id="imprint" />
             </NormalLink>
           </LinkWrapper>
-          <LinkWrapper hideMobile={true}>
+          <LinkWrapper>
             <NormalLink href="https://www.udk-berlin.de/schnellzugriff/datenschutz/">
               <LocalizedText id="privacy" />
             </NormalLink>

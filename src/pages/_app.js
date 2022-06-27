@@ -17,12 +17,6 @@ import CursorLine from "@/components/CursorLine";
 import { useIsMobile } from "@/utils/useWindowSize";
 import JumpToTop from "@/components/JumpToTop";
 import IntroAnimation from "@/components/IntroAnimation";
-import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-`;
 
 const HeaderWrapper = styled.header`
   position: sticky;
@@ -96,6 +90,7 @@ export default function App({ Component, pageProps }) {
     ) {
       uiStore.filterStore.handleReset();
       dataStore.api.getIdFromLink(dataStore.api.root.id, true);
+      uiStore.setTitle(dataStore.api.root.id, "rundgang");
     }
   }, [router.query.pid, router.pathname, dataStore.isLoaded]);
 

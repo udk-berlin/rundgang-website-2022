@@ -46,10 +46,10 @@ const SliderBall = styled.span`
   border-radius: 50%;
 `;
 
-const LanguageSwitch = ({ grow }) => {
+const LanguageSwitch = () => {
   const router = useRouter();
   return (
-    <LanguageSwitchWrapper grow>
+    <LanguageSwitchWrapper>
       <LanguageItem
         onClick={() => {
           router.replace(router.asPath, router.asPath, { locale: "de" });

@@ -9,7 +9,6 @@ import ItemView from "@/components/ItemView";
 
 const KatalogViewWrapper = styled.div`
   width: 100%;
-  height: calc(100vh - 110px);
 `;
 
 const KatalogView = () => {

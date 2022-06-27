@@ -7,7 +7,7 @@ class UiStore {
     this.filterStore = new FilterStore();
     this.allStores = [this.filterStore];
     this.savedItemIds = [];
-    this.title = "rundgang";
+    this.title = null;
     this.floorLevel = null;
     this.selectedRoom = null;
 

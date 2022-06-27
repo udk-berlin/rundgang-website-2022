@@ -19,8 +19,9 @@ const ItemViewWrapper = styled.div`
 
 const ItemHeaderWrapper = styled.div`
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 59% 39%;
   width: 100%;
+  height: 100%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
   }
@@ -104,7 +105,6 @@ const TitleText = styled.div`
 
 const ContentWrapper = styled.div`
   padding-top: ${({ theme }) => theme.spacing.sm};
-  padding-bottom: ${({ theme }) => theme.spacing.lg};
   display: grid;
   grid-template-columns: 60% 40%;
   width: 100%;

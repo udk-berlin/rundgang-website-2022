@@ -31,7 +31,7 @@ const IndexPage = () => {
         <LinkWrapper to="/katalog">
           <Stretch
             arrowDir="top"
-            title={intl.formatMessage({ id: "katalog" })}
+            titleId={intl.formatMessage({ id: "katalog" })}
             preferredSize={isMobile ? 27 : 25.5}
             lineh={isMobile ? 0.76 : 0.88}
           >
@@ -40,7 +40,7 @@ const IndexPage = () => {
         </LinkWrapper>
         <LinkWrapper to="/orte">
           <Stretch
-            title={intl.formatMessage({ id: "orte" })}
+            titleId={intl.formatMessage({ id: "orte" })}
             preferredSize={isMobile ? 27 : 25.5}
             lineh={isMobile ? 0.76 : 0.88}
             arrowDir="right"
@@ -50,7 +50,7 @@ const IndexPage = () => {
         </LinkWrapper>
         <LinkWrapper to="/zeiten">
           <Stretch
-            title={intl.formatMessage({ id: "orte" })}
+            titleId={intl.formatMessage({ id: "zeiten" })}
             preferredSize={isMobile ? 27 : 25.5}
             lineh={isMobile ? 0.76 : 0.88}
             arrowDir="left"
@@ -60,7 +60,7 @@ const IndexPage = () => {
         </LinkWrapper>
         <LinkWrapper to="/katalog/beratungsangebote">
           <Stretch
-            title={intl.formatMessage({ id: "orte" })}
+            titleId={intl.formatMessage({ id: "beratungsangebote" })}
             preferredSize={11}
             lineh={isMobile ? 0.76 : 0.88}
             arrowDir="bottom"

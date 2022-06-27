@@ -11,6 +11,9 @@ const StretchWrapper = styled.div`
   line-height: ${({ lineh }) => lineh};
   letter-spacing: 0.1px;
   font-size: ${({ fontSize }) => fontSize}vh;
+  margin-right: 20px;
+  margin-left: 8px;
+  width: 100%;
 `;
 
 const StretchLayout = styled.div`
@@ -42,6 +45,56 @@ const ArrowStyled = styled.span`
   font-family: "Inter";
 `;
 
+const ChildrenWrapper = styled.span`
+  &:hover {
+    color: #333;
+  }
+`;
+
+const ArrowWrap = ({ dir, isMobile, children }) => (
+  <>
+    {dir && (dir == "left" || dir == "top") ? (
+      dir == "left" ? (
+        <ArrowStyled>&#8592;</ArrowStyled>
+      ) : (
+        <ArrowStyled>&#8593;</ArrowStyled>
+      )
+    ) : null}
+    <ChildrenWrapper>{children}</ChildrenWrapper>
+    {dir && (dir == "right" || dir == "bottom") ? (
+      dir == "right" ? (
+        <ArrowStyled right={!isMobile}>&#8594;</ArrowStyled>
+      ) : (
+        <ArrowStyled right={!isMobile}>&#8595;</ArrowStyled>
+      )
+    ) : null}
+  </>
+);
+
+const StretchWithArrowDesktop = ({ fs, lh, pr, sr, fa, dir, children }) => (
+  <StretchWrapper fontSize={fs} lineh={lh} ref={pr}>
+    <ArrowWrap dir={dir} isMobile={false}>
+      <Shadow ref={sr}>{children}</Shadow>
+      <StretchLayout factor={fa}>{children}</StretchLayout>
+    </ArrowWrap>
+  </StretchWrapper>
+);
+
+const StretchWithArrowMobile = ({ fs, lh, pr, sr, fa, dir, children }) => (
+  <StretchWrapper fontSize={fs} lineh={lh} ref={pr}>
+    <Shadow ref={sr}>
+      <ArrowWrap dir={dir} isMobile={true}>
+        {children}
+      </ArrowWrap>
+    </Shadow>
+    <StretchLayout ref={pr} factor={fa}>
+      <ArrowWrap dir={dir} isMobile={true}>
+        {children}
+      </ArrowWrap>
+    </StretchLayout>
+  </StretchWrapper>
+);
+
 const Stretch = ({
   children,
   titleId,
@@ -50,72 +103,40 @@ const Stretch = ({
   lineh = 0.9,
 }) => {
   const stretchRef = useRef();
+  const parentRef = useRef();
   const size = useWindowSize();
   const isMobile = useMemo(() => size.width < 786, [size]);
 
   const [fontSize, setFontSize] = useState(null);
   const [factor, setFactor] = useState(1);
 
-  const Arrow = () => {
-    switch (arrowDir) {
-      case "left":
-        return <ArrowStyled>&#8592;</ArrowStyled>;
-      case "right":
-        return <ArrowStyled right={!isMobile}>&#8594;</ArrowStyled>;
-      case "top":
-        return <ArrowStyled>&#8593;</ArrowStyled>;
-      case "bottom":
-        return <ArrowStyled right={!isMobile}>&#8595;</ArrowStyled>;
-      default:
-        return "";
-    }
-  };
-
-  const StretchWithArrowDesktop = () => (
-    <StretchWrapper fontSize={fontSize} lineh={lineh}>
-      {arrowDir && (arrowDir == "left" || arrowDir == "top") ? <Arrow /> : null}
-      <Shadow ref={stretchRef}>{children}</Shadow>
-      <StretchLayout factor={factor}>{children}</StretchLayout>
-      {arrowDir && (arrowDir == "right" || arrowDir == "bottom") ? (
-        <Arrow />
-      ) : null}
-    </StretchWrapper>
-  );
-
-  const StretchWithArrowMobile = () => (
-    <StretchWrapper fontSize={fontSize} lineh={lineh}>
-      <Shadow ref={stretchRef}>
-        {arrowDir && (arrowDir == "left" || arrowDir == "top") ? (
-          <Arrow />
-        ) : null}
-        {children}
-        {arrowDir && (arrowDir == "right" || arrowDir == "bottom") ? (
-          <Arrow />
-        ) : null}
-      </Shadow>
-      <StretchLayout factor={factor}>
-        {arrowDir && (arrowDir == "left" || arrowDir == "top") ? (
-          <Arrow />
-        ) : null}
-        {children}
-        {arrowDir && (arrowDir == "right" || arrowDir == "bottom") ? (
-          <Arrow />
-        ) : null}
-      </StretchLayout>
-    </StretchWrapper>
+  console.log(
+    parentRef?.current?.clientWidth,
+    stretchRef?.current?.clientWidth,
+    titleId,
   );
 
   useEffect(() => {
-    if (fontSize && stretchRef?.current?.clientWidth) {
+    if (
+      fontSize &&
+      stretchRef?.current?.clientWidth &&
+      parentRef?.current?.clientWidth
+    ) {
       let arrWidth = arrowDir ? 1 : 0;
       arrWidth = isMobile ? arrWidth : arrWidth * 5.7;
       const padding = isMobile ? 0 : 50;
+      console.log(-padding - arrWidth * preferredSize);
       let f =
-        (size.width - padding - arrWidth * preferredSize) /
+        (parentRef?.current?.clientWidth - padding - arrWidth * preferredSize) /
         stretchRef?.current?.clientWidth;
       setFactor(f);
     }
-  }, [titleId, size, isMobile]);
+  }, [
+    titleId,
+    parentRef?.current?.clientWidth,
+    isMobile,
+    stretchRef?.current?.clientWidth,
+  ]);
 
   useEffect(() => {
     if (preferredSize) {
@@ -123,9 +144,31 @@ const Stretch = ({
     } else {
       setFontSize(11);
     }
-  }, [titleId, size]);
+  }, [titleId, parentRef?.current?.clientWidth]);
 
-  return isMobile ? <StretchWithArrowMobile /> : <StretchWithArrowDesktop />;
+  return isMobile ? (
+    <StretchWithArrowMobile
+      fs={fontSize}
+      lh={lineh}
+      pr={parentRef}
+      sr={stretchRef}
+      fa={factor}
+      dir={arrowDir}
+    >
+      {children}
+    </StretchWithArrowMobile>
+  ) : (
+    <StretchWithArrowDesktop
+      fs={fontSize}
+      lh={lineh}
+      pr={parentRef}
+      sr={stretchRef}
+      fa={factor}
+      dir={arrowDir}
+    >
+      {children}
+    </StretchWithArrowDesktop>
+  );
 };
 
 export default Stretch;

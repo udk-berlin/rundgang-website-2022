@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useIntl } from "react-intl";
 import { useRouter } from "next/router";
-import { AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import Stretch from "@/components/simple/Stretch";
@@ -18,16 +17,12 @@ const PageTitleWrapper = styled.div`
   overflow: hidden;
 `;
 
-const BackRouting = styled.span`
+const BackRouting = styled.div`
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.colors.highlight};
-  }
-`;
-
-const StyledText = styled.span`
-  &:hover {
-    color: black;
   }
 `;
 
@@ -59,16 +54,17 @@ const PageTitle = () => {
   const size = useWindowSize();
   const isMobile = useMemo(() => size.width < 786, [size]);
 
-  const titleStrings = useMemo(
-    () =>
-      isMobile
+  const titleStrings = useMemo(() => {
+    if (uiStore.title) {
+      return isMobile
         ? splitLongTitles(
             intl.formatMessage({ id: uiStore.title }),
             uiStore.title,
           )
-        : intl.formatMessage({ id: uiStore.title }),
-    [isMobile, uiStore.title, router.locale],
-  );
+        : intl.formatMessage({ id: uiStore.title });
+    }
+    return [];
+  }, [isMobile, uiStore.title, router.locale]);
 
   const handleBack = () => {
     let link = router.pathname;
@@ -101,41 +97,37 @@ const PageTitle = () => {
 
   return (
     <PageTitleWrapper>
-      <AnimatePresence initial={true}>
-        {isMobile && titleStrings?.length > 1 ? (
-          titleStrings.map((line, i) => (
-            <BackRouting onClick={() => handleBack()}>
-              <StyledText>
-                <Stretch
-                  titleId={`${uiStore.title}-${i}-${router.locale}`}
-                  key={`${uiStore.title}-line-${i}`}
-                  lineh={1}
-                  preferredSize={4.9}
-                  arrowDir={
-                    uiStore.title !== "rundgang" && i == 0 ? "left" : null
-                  }
-                >
-                  {line}
-                </Stretch>
-              </StyledText>
-            </BackRouting>
-          ))
-        ) : (
-          <BackRouting onClick={() => handleBack()}>
-            <StyledText>
+      {uiStore.title && (
+        <BackRouting onClick={() => handleBack()}>
+          {isMobile && titleStrings?.length > 1 ? (
+            titleStrings.map((line, i) => (
               <Stretch
-                titleId={`${uiStore.title}-${router.locale}`}
-                key={`${uiStore.title}_title`}
-                lineh={0.9}
-                preferredSize={10}
-                arrowDir={uiStore.title !== "rundgang" ? "left" : null}
+                titleId={`${uiStore.title}-${i}-${router.locale}`}
+                key={`${uiStore.title}-line-${i}`}
+                lineh={1}
+                preferredSize={4.9}
+                isMobile={true}
+                arrowDir={
+                  uiStore.title !== "rundgang" && i == 0 ? "left" : null
+                }
               >
-                <LocalizedText id={uiStore.title} />
+                {line}
               </Stretch>
-            </StyledText>
-          </BackRouting>
-        )}
-      </AnimatePresence>
+            ))
+          ) : (
+            <Stretch
+              titleId={`${uiStore.title}-${router.locale}`}
+              key={`${uiStore.title}_title`}
+              lineh={0.9}
+              preferredSize={10}
+              isMobile={isMobile}
+              arrowDir={uiStore.title !== "rundgang" ? "left" : null}
+            >
+              <LocalizedText id={uiStore.title} />
+            </Stretch>
+          )}
+        </BackRouting>
+      )}
     </PageTitleWrapper>
   );
 };
