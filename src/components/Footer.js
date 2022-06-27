@@ -9,7 +9,7 @@ import { FOOTER_HEIGHT } from "@/utils/constants";
 const FooterContainer = styled.div`
   position: fixed;
   width: 100%;
-  bottom: 0;
+  bottom: 0px;
   left: 0;
   display: flex;
   justify-content: space-between;
@@ -57,8 +57,8 @@ const NormalLink = styled.a`
 const FooterBelow = styled.div`
   display: flex;
   flex-wrap: wrap;
-  position: relative;
-  top: calc(100vh - 30px);
+  position: sticky;
+  bottom: 0;
   justify-content: space-between;
   flex-direction: column;
   z-index: 6000;

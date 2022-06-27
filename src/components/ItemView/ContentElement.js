@@ -9,6 +9,8 @@ const Heading = styled.div`
 `;
 
 const Paragraph = styled.div`
+  word-wrap: break-word;
+  word-break: break-all;
   font-size: ${({ theme }) => theme.fontSizes.mm};
   padding-top: ${({ theme }) => theme.space(8)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -42,14 +44,14 @@ const Quote = styled.blockquote`
 
 const ListWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.mm};
-  padding-left: ${({ theme }) => theme.space(32)};
+  margin-left: ${({ theme }) => theme.space(32)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.md};
   }
 `;
 
 const OLWrapper = styled(ListWrapper)`
-  padding-left: ${({ theme }) => theme.space(48)};
+  margin-left: ${({ theme }) => theme.space(48)};
 `;
 
 const ContentElement = ({ item }) => {

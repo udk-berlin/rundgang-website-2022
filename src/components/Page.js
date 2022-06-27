@@ -21,6 +21,12 @@ const HeaderWrapper = styled.header`
   background: white;
 `;
 
+const PageWrapper = styled.div`
+  height: fit-content;
+  width: 100%;
+  overflow: hidden;
+`;
+
 const Page = ({ children }) => {
   const { dataStore, uiStore } = useStores();
   const router = useRouter();
@@ -65,11 +71,12 @@ const Page = ({ children }) => {
           <PageTitle key={`PageTitle-${router.pathname}`} />
           <SearchBar key={`SearchBar-${router.pathname}`} />
         </HeaderWrapper>
-        {children}
+        <PageWrapper>
+          {children}
+          {showLine ? <CursorLine /> : null}
+          <IntroAnimation key={"intro"} />
+        </PageWrapper>
         <Footer />
-        {showLine ? null : <JumpToTop />}
-        {showLine ? <CursorLine /> : null}
-        <IntroAnimation key={"intro"} />
       </>
     )
   );

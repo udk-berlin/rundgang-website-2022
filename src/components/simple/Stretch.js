@@ -118,7 +118,7 @@ const Stretch = ({
     ) {
       let arrWidth = arrowDir ? 1 : 0;
       arrWidth = isMobile ? 0 : arrWidth * 5.7 * preferredSize;
-      const padding = isMobile ? 50 : 50 + arrWidth;
+      const padding = isMobile ? 20 : 50 + arrWidth;
       /* console.log(
         parentRef?.current?.clientWidth,
         stretchRef?.current?.clientWidth,

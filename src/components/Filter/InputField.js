@@ -5,25 +5,23 @@ import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import { useIntl } from "react-intl";
 import AutoComplete from "./AutoComplete";
+import { SEARCHBAR_HEIGHT } from "@/utils/constants";
 
 const Field = styled.input`
   color: ${({ theme }) => theme.colors.primary};
   background: inherit;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   border: ${({ theme, isOpen }) =>
     isOpen ? `4px solid ${theme.colors.highlight}` : "none"};
-  height: ${({ isOpen }) => (isOpen ? "50px" : "100%")};
+  height: ${SEARCHBAR_HEIGHT}px;
+  width: 100%;
+  margin: ${({ theme, isOpen }) => (isOpen ? theme.space(8) : "auto")};
+  align-items: center;
   padding: 0;
   padding-left: 8px;
-  width: 100%;
-  align-items: center;
   font-size: ${({ theme, isOpen }) =>
     isOpen ? theme.fontSizes.md : theme.fontSizes.lg};
-  margin: ${({ theme, isOpen }) => (isOpen ? `${theme.space(8)}` : "0px")};
   :focus {
-    outline: none;
+    outline: 1px solid #333;
   }
   ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -41,8 +39,6 @@ const Field = styled.input`
     color: ${({ theme }) => theme.colors.primary};
   }
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    height: 34px;
-    padding-left: 4px;
     font-size: ${({ theme, isOpen }) =>
       isOpen ? theme.fontSizes.md : theme.fontSizes.lm};
   }
@@ -107,7 +103,11 @@ const InputField = ({ handleFocus, handleSubmit }) => {
       />
       {hasContent && <CloseButton onClick={handleReset}>&#57344;</CloseButton>}
       {hasContent && autocompleteOpen && (
-        <AutoComplete searchValue={value} handleSelect={handleSelect} />
+        <AutoComplete
+          searchValue={value}
+          handleSelect={handleSelect}
+          handleReset={handleReset}
+        />
       )}
     </InputFieldWrapper>
   );

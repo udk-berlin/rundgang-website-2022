@@ -8,7 +8,7 @@ import InputField from "./InputField";
 import TagMenu from "./TagMenu";
 import { useRouter } from "next/router";
 import { makeUrlFromId } from "@/utils/idUtils";
-import { SEARCHBAR_HEIGHT } from "@/utils/constants";
+import { SEARCHBAR_HEIGHT, MIN_PADDING } from "@/utils/constants";
 
 const variants = {
   favourites: {
@@ -36,7 +36,7 @@ const variants = {
 const FilterWrapper = styled(motion.div)`
   width: 100%;
   height: fit-content;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - ${MIN_PADDING}px);
   position: relative;
   background: white;
   margin: ${({ theme }) => ` 0 0 0 ${theme.space(16)}`};

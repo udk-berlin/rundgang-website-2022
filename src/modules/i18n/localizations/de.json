@@ -38,5 +38,6 @@
   "timetable": "Zeitplan",
   "rooms": "Räume",
   "selected-topic": "Raum: {name} ({topic})",
-  "allfloors": "Alle"
+  "allfloors": "Alle",
+  "noitems": "Keine Projekte oder Veranstaltungen"
 }

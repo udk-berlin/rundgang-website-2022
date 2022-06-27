@@ -11,6 +11,7 @@ import {
 
 const OrteWrapper = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -27,12 +28,11 @@ const OrteKatalog = styled.div`
 `;
 
 const MapContainer = styled.div`
-  width: 60%;
+  width: 100%;
   padding: 8px;
   height: 100%;
   position: relative;
   @media ${({ theme }) => theme.breakpoints.laptop} {
-    width: 100%;
     position: sticky;
     top: ${SEARCHBAR_HEIGHT + SEARCHBAR_PADDING + TITLE_HEIGHT}px;
   }
@@ -40,7 +40,7 @@ const MapContainer = styled.div`
 
 const OrtePage = () => {
   return (
-    <Layout direction="right">
+    <Layout>
       <OrteWrapper>
         <MapContainer>
           <Map />

@@ -15,6 +15,7 @@ const variants = {
     margin: "2px 8px",
     borderWidth: "4px",
     minHeight: SEARCHBAR_HEIGHT,
+    overflowY: "auto",
   },
   filter: {
     height: SEARCHBAR_HEIGHT,
@@ -36,11 +37,11 @@ const FavouritesWrapper = styled(motion.div)`
   position: relative;
   width: 80px;
   background: white;
-  height: fit-content;
+  height: ${SEARCHBAR_HEIGHT}px;
   border: ${({ theme }) => `2px inset ${theme.colors.primary}`};
   margin: ${({ theme }) => `2px ${theme.space(8)}`};
   max-height: calc(100vh - 120px);
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 `;
 

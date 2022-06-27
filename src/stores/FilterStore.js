@@ -222,7 +222,7 @@ class FilterStore {
       ).values(),
     ]
       .flat()
-      .concat(Object.values(this.dataStore.api.locations?.children));
+      .concat(Object.values(this.dataStore.api.locations));
   }
 
   get currentTags() {

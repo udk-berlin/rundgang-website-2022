@@ -15,10 +15,9 @@ import {
 const OrteViewWrapper = styled.div`
   width: 100%;
   display: flex;
+  height: 100%;
   justify-content: space-between;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    flex-wrap: wrap;
-  }
+  flex-wrap: wrap;
 `;
 
 const OrteKatalog = styled.div`
@@ -30,12 +29,12 @@ const OrteKatalog = styled.div`
 `;
 
 const FloorplanContainer = styled.div`
-  width: 60%;
+  width: 100%;
   padding: 8px;
   height: fit-content;
   position: relative;
   @media ${({ theme }) => theme.breakpoints.laptop} {
-    width: 100%;
+    width: 60%;
     position: sticky;
     top: ${SEARCHBAR_HEIGHT + SEARCHBAR_PADDING + TITLE_HEIGHT}px;
   }

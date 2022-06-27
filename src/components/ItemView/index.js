@@ -13,28 +13,28 @@ import ImageDetailView from "./ImageDetailView";
 const ItemViewWrapper = styled.div`
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => theme.space(8)};
 `;
 
 const ItemHeaderWrapper = styled.div`
   display: grid;
+  justify-content: space-evenly;
+  margin: auto;
   grid-template-columns: 59% 39%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
+    margin: ${({ theme }) => theme.space(8)};
   }
 `;
 const TitleImageWrapper = styled.div`
-  width: 100%;
+  display: block;
 `;
 
 const TitleImage = styled.img`
   cursor: pointer;
   width: 100%;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    height: auto;
-    width: 100%;
-  }
+  height: auto;
 `;
 
 const AuthorTag = styled.div`
@@ -53,14 +53,14 @@ const AuthorTag = styled.div`
 const Time = styled.div`
   padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
   font-size: ${({ theme }) => theme.fontSizes.lm};
-  margin: ${({ theme }) => theme.space(16)} 0px;
+  margin-top: ${({ theme }) => theme.space(16)};
   border-radius: ${({ theme }) => theme.space(48)};
   border: 2px solid ${({ theme }) => theme.colors.highlight};
   background-color: ${({ theme }) => theme.colors.maingrey};
   color: ${({ theme }) => theme.colors.highlight};
   text-align: center;
   word-wrap: break-word;
-    word-break: break-all;
+  word-break: break-all;
   width: fit-content;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.mm};
@@ -87,10 +87,10 @@ const SaveTag = styled.span`
 `;
 
 const DescriptionWrapper = styled.div`
-  width: 100%;
-  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
+  padding: ${({ theme }) => `0px ${theme.space(4)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding: ${({ theme }) => `${theme.space(4)} 0px`};
+    margin: ${({ theme }) => `${theme.space(4)} 0px`};
+    padding: 0px;
   }
 `;
 
@@ -105,20 +105,20 @@ const TitleText = styled.div`
 const ContentWrapper = styled.div`
   padding-top: ${({ theme }) => theme.space(8)};
   display: grid;
-  grid-template-columns: 60% 40%;
-  width: 100%;
+  justify-content: space-evenly;
   margin: auto;
-  word-wrap: break-word;
+  margin-bottom: ${({ theme }) => theme.space(20)};
+  grid-template-columns: 59% 39%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
+    margin: ${({ theme }) => theme.space(8)};
   }
 `;
 
 const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
-  padding: ${({ theme }) => `${theme.space(16)} 0px`};
+  padding: ${({ theme }) => theme.space(8)};
 `;
 
 const ItemView = () => {

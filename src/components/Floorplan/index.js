@@ -24,9 +24,9 @@ const BackgroundImg = styled.img`
 `;
 
 const Levels = styled.div`
+  position: relative;
   margin: auto;
-  position: absolute;
-  top: ${({ theme }) => theme.space(48)};
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -107,6 +107,15 @@ const Floorplan = () => {
 
   return (
     <FloorplanWrapper>
+      <ImageWrapper>
+        <BackgroundImg
+          src={`/assets/img/${uiStore.currentContext?.description.default}_building.svg`}
+        />
+        <FloorPlanSvg
+          url={uiStore.floorPlan ? uiStore.floorPlan.thumbnail_full_size : null}
+          handleSelectRoom={handleSelectRoom}
+        />
+      </ImageWrapper>
       <Levels>
         <LevelNumber
           key="alllevels"
@@ -116,7 +125,6 @@ const Floorplan = () => {
         >
           <LocalizedText id="allfloors" />
         </LevelNumber>
-        {uiStore.currentContext?.description.default}
         {uiStore.buildingLevels?.map(level => (
           <LevelNumber
             key={level.id}
@@ -130,15 +138,6 @@ const Floorplan = () => {
           </LevelNumber>
         ))}
       </Levels>
-      <ImageWrapper>
-        <BackgroundImg
-          src={`/assets/img/${uiStore.currentContext?.description.default}_building.svg`}
-        />
-        <FloorPlanSvg
-          url={uiStore.floorPlan ? uiStore.floorPlan.thumbnail_full_size : null}
-          handleSelectRoom={handleSelectRoom}
-        />
-      </ImageWrapper>
     </FloorplanWrapper>
   );
 };

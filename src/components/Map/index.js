@@ -25,7 +25,6 @@ const MapWrapper = styled.div`
   }
 
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    width: calc(100vw - 32px);
     margin: auto;
   }
 `;

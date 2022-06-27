@@ -1,6 +1,8 @@
 import React, { useMemo } from "react";
+import { observer } from "mobx-react";
 import styled from "styled-components";
 import { useStores } from "@/stores/index";
+import ClickAwayListener from "../simple/ClickAwayListener";
 
 const AutoCompleteWrapper = styled.div`
   position: absolute;
@@ -29,7 +31,7 @@ const AutoCompleteItem = styled.div`
   }
 `;
 
-const AutoComplete = ({ searchValue, handleSelect }) => {
+const AutoComplete = ({ searchValue, handleSelect, handleReset }) => {
   const { uiStore } = useStores();
   let listWithIds = useMemo(
     () =>
@@ -53,19 +55,21 @@ const AutoComplete = ({ searchValue, handleSelect }) => {
   };
 
   return (
-    <AutoCompleteWrapper>
-      {listWithIds && listWithIds.length > 0
-        ? listWithIds.map(item => (
-            <AutoCompleteItem
-              onClick={() => onItemClicked(item)}
-              key={`autocomplete-item-${item.id}`}
-            >
-              {item.name}
-            </AutoCompleteItem>
-          ))
-        : null}
-    </AutoCompleteWrapper>
+    <ClickAwayListener onClickAway={e => handleReset(e)}>
+      <AutoCompleteWrapper>
+        {listWithIds && listWithIds.length > 0
+          ? listWithIds.map(item => (
+              <AutoCompleteItem
+                onClick={() => onItemClicked(item)}
+                key={`autocomplete-item-${item.id}`}
+              >
+                {item.name}
+              </AutoCompleteItem>
+            ))
+          : null}
+      </AutoCompleteWrapper>
+    </ClickAwayListener>
   );
 };
 
-export default AutoComplete;
+export default observer(AutoComplete);

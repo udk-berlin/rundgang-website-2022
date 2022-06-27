@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import ListItem from "./ListItem";
+import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const ListViewWrapper = styled.div`
   width: 100%;
@@ -33,16 +34,30 @@ const ListViewWrapper = styled.div`
   user-select: none;
 `;
 
+const NoItems = styled.div`
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  line-height: 100px;
+  text-align: center;
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
+`;
+
 const ListView = ({ numCol }) => {
   const { uiStore } = useStores();
-  return (
+  return uiStore.items && uiStore.items.length > 1 ? (
     <ListViewWrapper numCol={numCol}>
-      {uiStore.items && uiStore.items.length > 1
-        ? uiStore.items.map(item => (
-            <ListItem numCol={numCol} key={item.id} element={item} />
-          ))
-        : null}
+      {uiStore.items.map(item => (
+        <ListItem numCol={numCol} key={item.id} element={item} />
+      ))}
     </ListViewWrapper>
+  ) : (
+    <NoItems>
+      <LocalizedText id="noitems" />
+    </NoItems>
   );
 };
 

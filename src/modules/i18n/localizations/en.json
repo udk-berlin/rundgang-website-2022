@@ -39,5 +39,6 @@
   "timetable": "Timetable",
   "rooms": "Rooms",
   "selected-topic": "Room: {name} ({topic})",
-  "allfloors": "all"
+  "allfloors": "all",
+  "noitems": "No projects or events"
 }

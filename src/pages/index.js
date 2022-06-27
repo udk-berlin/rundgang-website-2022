@@ -6,6 +6,7 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import Layout from "@/components/simple/Layout";
 import Stretch from "@/components/simple/Stretch";
+import { MIN_PADDING, FOOTER_HEIGHT } from "@/utils/constants";
 
 const LinkWrapper = styled(LocalizedLink)`
   width: 100%;
@@ -16,8 +17,8 @@ const LinkWrapper = styled(LocalizedLink)`
   }
 `;
 const IndexWrapper = styled.div`
-  height: calc(100vh - 160px);
-  width: 100%;
+  height: calc(100vh - 130px);
+  overflow-x: hidden;
   font-size: 20px;
 `;
 
@@ -26,7 +27,7 @@ const IndexPage = () => {
   const intl = useIntl();
   const isMobile = useMemo(() => size.width < 786, [size]);
   return (
-    <Layout direction="right">
+    <Layout showToTop={false}>
       <IndexWrapper>
         <LinkWrapper to="/katalog">
           <Stretch
