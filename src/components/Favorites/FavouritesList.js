@@ -23,10 +23,10 @@ const DownloadButton = styled.button`
   border: 2px solid black;
   margin: auto;
   margin-right: 8px;
-  border-radius: ${({ theme }) => theme.spacing.mm};
+  border-radius: ${({ theme }) => theme.space(32)};
   background: ${({ theme }) => theme.colors.highlight};
   font-size: ${({ theme }) => theme.fontSizes.lm};
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
+  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
   &:hover {
     background: ${({ theme }) => theme.colors.lightgrey};
   }
@@ -36,7 +36,7 @@ const Favourites = styled.div`
 `;
 const FavouritesTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lg};
-  padding: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.space(8)};
 `;
 
 const DownloadPng = styled.div`
@@ -56,7 +56,7 @@ const FavouritesSavedItems = styled.div`
   font-weight: bold;
   flex-grow: 1;
   margin: auto;
-  padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `0 ${theme.space(8)}`};
   font-size: ${({ theme }) => theme.fontSizes.lg};
 `;
 
@@ -67,7 +67,7 @@ const CloseButton = styled.div`
   font-family: "Diatype";
   border: none;
   width: fit-content;
-  padding: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.space(8)};
   font-size: ${({ theme }) => theme.fontSizes.xl};
   cursor: pointer;
   text-shadow: 8px 8px 10px white, -8px 8px 10px white, 3px -3px 10px white,

@@ -21,7 +21,7 @@ const Field = styled.input`
   align-items: center;
   font-size: ${({ theme, isOpen }) =>
     isOpen ? theme.fontSizes.md : theme.fontSizes.lg};
-  margin: ${({ theme, isOpen }) => (isOpen ? `${theme.spacing.sm}` : "0px")};
+  margin: ${({ theme, isOpen }) => (isOpen ? `${theme.space(8)}` : "0px")};
   :focus {
     outline: none;
   }
@@ -59,7 +59,7 @@ const CloseButton = styled.div`
   display: flex;
   align-items: center;
   flex-grow: 0;
-  padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `0 ${theme.space(8)}`};
   font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 

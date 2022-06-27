@@ -39,10 +39,10 @@ const FilterWrapper = styled(motion.div)`
   max-height: calc(100vh - 200px);
   position: relative;
   background: white;
-  margin: ${({ theme }) => ` 0 0 0 ${theme.spacing.md}`};
+  margin: ${({ theme }) => ` 0 0 0 ${theme.space(16)}`};
   border: ${({ theme }) => `4px solid ${theme.colors.highlight}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin: ${({ theme }) => ` 0 0 0 ${theme.spacing.xs}`};
+    margin: ${({ theme }) => ` 0 0 0 ${theme.space(4)}`};
   }
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

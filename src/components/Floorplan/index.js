@@ -8,9 +8,9 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 const FloorplanWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding-bottom: ${({ theme }) => theme.spacing.md};
+  padding-bottom: ${({ theme }) => theme.space(16)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding-bottom: ${({ theme }) => `0 ${theme.spacing.sm}`};
+    padding-bottom: ${({ theme }) => `0 ${theme.space(8)}`};
   }
 `;
 
@@ -26,7 +26,7 @@ const BackgroundImg = styled.img`
 const Levels = styled.div`
   margin: auto;
   position: absolute;
-  top: ${({ theme }) => theme.spacing.lg};
+  top: ${({ theme }) => theme.space(48)};
   left: 0;
   width: 100%;
   height: 100%;

@@ -24,7 +24,7 @@ const ListViewWrapper = styled.div`
   @media ${({ theme }) => theme.breakpoints.tablet} {
     grid-template-columns: 50% 50%;
   }
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
+  margin-bottom: ${({ theme }) => theme.space(48)};
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */

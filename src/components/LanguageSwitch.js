@@ -10,7 +10,7 @@ const LanguageSwitchWrapper = styled.div`
 
 const LanguageItem = styled.div`
   cursor: pointer;
-  padding: ${({ theme }) => ` 0 ${theme.spacing.xs}`};
+  padding: ${({ theme }) => ` 0 ${theme.space(4)}`};
 `;
 
 const Switch = styled.div`

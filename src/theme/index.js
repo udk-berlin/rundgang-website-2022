@@ -74,15 +74,6 @@ export const theme = {
       fontWeight: "bold",
     },
   },
-  spacing: {
-    xxs: "2px",
-    xs: "4px",
-    sm: "8px",
-    md: "16px",
-    mm: "32px",
-    lg: "48px",
-    xl: "64px",
-  },
   space: p => `${p}px`,
   breakpoints: {
     mobileS: `(max-width: ${size.mobileS})`,

@@ -11,7 +11,7 @@ const PopupWrapper = styled.div`
   min-height: ${({ size }) => `${size * 0.7}px`};
   font-size: ${({ theme }) => theme.fontSizes.md};
   z-index: 40;
-  padding: ${({ theme }) => theme.spacing.xs};
+  padding: ${({ theme }) => theme.space(4)};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -29,7 +29,7 @@ const TimeRange = styled.div`
 `;
 
 const RoomLink = styled(LocalizedLink)`
-  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+  padding: ${({ theme }) => `${theme.space(8)} ${theme.space(16)}`};
   flex-grow: 0;
   background: ${({ theme }) => theme.colors.highlight};
   border-radius: 60px;

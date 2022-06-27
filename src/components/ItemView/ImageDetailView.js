@@ -29,9 +29,9 @@ const DetailWrapper = styled.div`
 
 const CloseButton = styled.div`
   position: absolute;
-  right: ${({ theme }) => theme.spacing.md};
+  right: ${({ theme }) => theme.space(16)};
   line-height: 0.9;
-  top: ${({ theme }) => theme.spacing.md};
+  top: ${({ theme }) => theme.space(16)};
   font-family: "Diatype";
   border: none;
   width: fit-content;

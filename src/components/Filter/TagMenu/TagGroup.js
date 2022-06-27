@@ -15,15 +15,15 @@ const variants = {
 const TagGroupWrapper = styled.div`
   height: fit-content;
   padding: ${({ theme }) =>
-    `${theme.spacing.sm} ${theme.spacing.sm} ${theme.spacing.sm} ${theme.spacing.md}`};
+    `${theme.space(8)} ${theme.space(8)} ${theme.space(8)} ${theme.space(16)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     padding: ${({ theme }) =>
-      `${theme.spacing.sm} ${theme.spacing.sm} ${theme.spacing.sm} ${theme.spacing.sm}`};
+      `${theme.space(8)} ${theme.space(8)} ${theme.space(8)} ${theme.space(8)}`};
   }
 `;
 const NumberItems = styled.span`
   color: ${({ theme }) => theme.colors.lightgrey};
-  margin: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.sm}`};
+  margin: ${({ theme }) => `${theme.space(8)} ${theme.space(8)}`};
   font-size: ${({ theme }) => theme.fontSizes.mm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
@@ -32,7 +32,7 @@ const NumberItems = styled.span`
 const ToggleIcon = styled.span`
   font-family: "Inter";
   font-size: ${({ theme }) => theme.fontSizes.mm};
-  margin: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.xs}`};
+  margin: ${({ theme }) => `${theme.space(4)} ${theme.space(4)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }

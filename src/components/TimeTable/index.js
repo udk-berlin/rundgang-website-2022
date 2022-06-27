@@ -15,9 +15,9 @@ import {
 import { useIsScrolledX } from "@/utils/useIsScrolled";
 
 const TimeTableWrapper = styled.div`
-  padding: ${({ theme }) => `0 ${theme.spacing.md}`};
+  padding: ${({ theme }) => `0 ${theme.space(16)}`};
   height: fit-content;
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
+  margin-bottom: ${({ theme }) => theme.space(48)};
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */

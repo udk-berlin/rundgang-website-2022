@@ -38,7 +38,7 @@ const FavouritesWrapper = styled(motion.div)`
   background: white;
   height: fit-content;
   border: ${({ theme }) => `2px inset ${theme.colors.primary}`};
-  margin: ${({ theme }) => `2px ${theme.spacing.sm}`};
+  margin: ${({ theme }) => `2px ${theme.space(8)}`};
   max-height: calc(100vh - 120px);
   overflow-y: scroll;
   overflow-x: hidden;

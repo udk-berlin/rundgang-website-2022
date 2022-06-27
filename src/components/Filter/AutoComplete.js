@@ -18,14 +18,14 @@ const AutoCompleteWrapper = styled.div`
 
 const AutoCompleteItem = styled.div`
   cursor: pointer;
-  padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.md}`};
+  padding: ${({ theme }) => `${theme.space(8)} ${theme.space(16)}`};
   border-bottom: 1px solid #d9d9d9;
   font-size: ${({ theme }) => theme.fontSizes.md};
   &:hover {
     background: ${({ theme }) => theme.colors.highlight};
   }
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
+    padding: ${({ theme }) => `${theme.space(4)} ${theme.space(8)}`};
   }
 `;
 

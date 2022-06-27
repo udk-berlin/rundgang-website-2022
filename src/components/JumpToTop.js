@@ -10,7 +10,7 @@ const JumpToTopWrapper = styled.div`
   width: fit-content;
   margin: auto;
   z-index: 500;
-  font-size: ${({ theme }) => theme.spacing.xl};
+  font-size: ${({ theme }) => theme.space(64)};
   font-family: "Inter";
   font-weight: bold;
   cursor: pointer;

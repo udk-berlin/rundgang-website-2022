@@ -22,7 +22,7 @@ const TimeLine = styled.div`
 
 const TimeHour = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.mm};
-  padding: ${({ theme }) => `${theme.spacing.xs} 0`};
+  padding: ${({ theme }) => `${theme.space(4)} 0`};
   margin-left: -20px;
   z-index: 15;
   height: fit-content;

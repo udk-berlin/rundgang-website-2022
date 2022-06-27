@@ -15,10 +15,10 @@ const ListItemWrapper = styled.div`
   left: 0;
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.space(8)};
   padding-bottom: ${({ padding }) => padding}px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding-bottom: ${({ theme }) => theme.spacing.md};
+    padding-bottom: ${({ theme }) => theme.space(16)};
   }
 `;
 
@@ -67,9 +67,9 @@ const Authors = styled.div`
 `;
 
 const Time = styled.div`
-  padding: ${({ theme }) => `${theme.spacing.xxs} ${theme.spacing.sm}`};
-  margin: ${({ theme }) => `${theme.spacing.xs} 0px`};
-  border-radius: ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme }) => `${theme.space(2)} ${theme.space(8)}`};
+  margin: ${({ theme }) => `${theme.space(4)} 0px`};
+  border-radius: ${({ theme }) => theme.space(16)};
   border: 1px solid ${({ theme }) => theme.colors.highlight};
   background-color: ${({ theme }) => theme.colors.maingrey};
   color: ${({ theme }) => theme.colors.highlight};
@@ -79,8 +79,8 @@ const Time = styled.div`
 
 const TimeWrapper = styled.div`
   position: absolute;
-  bottom: ${({ theme }) => theme.spacing.sm};
-  left: ${({ theme }) => theme.spacing.sm};
+  bottom: ${({ theme }) => theme.space(8)};
+  left: ${({ theme }) => theme.space(8)};
 `;
 
 const ImageWrapper = styled.div`

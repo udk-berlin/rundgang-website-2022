@@ -14,7 +14,7 @@ const ItemViewWrapper = styled.div`
   height: 100%;
   width: 100%;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.space(8)};
 `;
 
 const ItemHeaderWrapper = styled.div`
@@ -38,23 +38,23 @@ const TitleImage = styled.img`
 `;
 
 const AuthorTag = styled.div`
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
+  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
   font-size: ${({ theme }) => theme.fontSizes.lm};
   border: 1px solid black;
-  border-radius: ${({ theme }) => theme.spacing.lg};
+  border-radius: ${({ theme }) => theme.space(48)};
   width: fit-content;
   word-wrap: break-word;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin-top: ${({ theme }) => theme.spacing.md};
+    margin-top: ${({ theme }) => theme.space(16)};
     font-size: ${({ theme }) => theme.fontSizes.mm};
   }
 `;
 
 const Time = styled.div`
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
+  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
   font-size: ${({ theme }) => theme.fontSizes.lm};
-  margin: ${({ theme }) => theme.spacing.md} 0px;
-  border-radius: ${({ theme }) => theme.spacing.lg};
+  margin: ${({ theme }) => theme.space(16)} 0px;
+  border-radius: ${({ theme }) => theme.space(48)};
   border: 2px solid ${({ theme }) => theme.colors.highlight};
   background-color: ${({ theme }) => theme.colors.maingrey};
   color: ${({ theme }) => theme.colors.highlight};
@@ -79,8 +79,8 @@ const SaveTag = styled.span`
   cursor: pointer;
   line-height: 1.3;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
-  margin: ${({ theme }) => theme.spacing.xs};
+  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(8)}`};
+  margin: ${({ theme }) => theme.space(4)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
   }
@@ -88,14 +88,14 @@ const SaveTag = styled.span`
 
 const DescriptionWrapper = styled.div`
   width: 100%;
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.md}`};
+  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding: ${({ theme }) => `${theme.spacing.xs} 0px`};
+    padding: ${({ theme }) => `${theme.space(4)} 0px`};
   }
 `;
 
 const TitleText = styled.div`
-  padding-top: ${({ theme }) => theme.spacing.md};
+  padding-top: ${({ theme }) => theme.space(16)};
   font-size: ${({ theme }) => theme.fontSizes.mm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.md};
@@ -103,7 +103,7 @@ const TitleText = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  padding-top: ${({ theme }) => theme.spacing.sm};
+  padding-top: ${({ theme }) => theme.space(8)};
   display: grid;
   grid-template-columns: 60% 40%;
   width: 100%;
@@ -118,7 +118,7 @@ const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  padding: ${({ theme }) => `${theme.spacing.md} 0px`};
+  padding: ${({ theme }) => `${theme.space(16)} 0px`};
 `;
 
 const ItemView = () => {

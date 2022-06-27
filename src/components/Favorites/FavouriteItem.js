@@ -8,16 +8,16 @@ const FavouriteItemWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   display: flex;
   width: 100%;
-  padding: ${({ theme }) => theme.spacing.md};
+  padding: ${({ theme }) => theme.space(16)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
+    padding: ${({ theme }) => `0 ${theme.space(8)}`};
   }
 `;
 
 const Image = styled.img`
   width: 160px;
   height: 100%;
-  padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `0 ${theme.space(8)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 80px;
     height: 100%;
@@ -41,20 +41,20 @@ const Tags = styled.div`
   display: flex;
   width: 100%;
   flex-grow: 1 1 50%;
-  padding-top: ${({ theme }) => theme.spacing.sm};
+  padding-top: ${({ theme }) => theme.space(8)};
   flex-wrap: wrap;
 `;
 const Info = styled.div`
   width: 100%;
-  padding: ${({ theme }) => ` 0px ${theme.spacing.sm}`};
+  padding: ${({ theme }) => ` 0px ${theme.space(8)}`};
 `;
 
 const Time = styled.div`
-  padding: ${({ theme }) => `${theme.space(6)} 8px 6px ${theme.spacing.sm} `};
+  padding: ${({ theme }) => `${theme.space(6)} 8px 6px ${theme.space(8)} `};
   line-height: 1;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  margin: ${({ theme }) => theme.spacing.md} 0px;
-  border-radius: ${({ theme }) => theme.spacing.lg};
+  margin: ${({ theme }) => theme.space(16)} 0px;
+  border-radius: ${({ theme }) => theme.space(48)};
   border: 2px solid ${({ theme }) => theme.colors.highlight};
   background-color: ${({ theme }) => theme.colors.maingrey};
   color: ${({ theme }) => theme.colors.highlight};
@@ -62,10 +62,10 @@ const Time = styled.div`
   word-wrap: break-word;
   word-break: break-all;
   width: fit-content;
-  margin: ${({ theme }) => theme.spacing.xs};
+  margin: ${({ theme }) => theme.space(4)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
-    margin: ${({ theme }) => theme.spacing.xs};
+    margin: ${({ theme }) => theme.space(4)};
   }
 `;
 

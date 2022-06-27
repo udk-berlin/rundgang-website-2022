@@ -10,7 +10,7 @@ const Heading = styled.div`
 
 const Paragraph = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.mm};
-  padding-top: ${({ theme }) => theme.spacing.sm};
+  padding-top: ${({ theme }) => theme.space(8)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.md};
   }
@@ -18,7 +18,7 @@ const Paragraph = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  margin: ${({ theme }) => theme.spacing.sm};
+  margin: ${({ theme }) => theme.space(8)};
 `;
 
 const Code = styled.pre`
@@ -29,8 +29,8 @@ const Code = styled.pre`
   background: black;
   color: ${({ theme }) => theme.colors.highlight};
   width: fit-content;
-  margin: ${({ theme }) => theme.spacing.sm};
-  padding: ${({ theme }) => theme.spacing.sm};
+  margin: ${({ theme }) => theme.space(8)};
+  padding: ${({ theme }) => theme.space(8)};
 `;
 
 const Quote = styled.blockquote`
@@ -42,14 +42,14 @@ const Quote = styled.blockquote`
 
 const ListWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.mm};
-  padding-left: ${({ theme }) => theme.spacing.mm};
+  padding-left: ${({ theme }) => theme.space(32)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.md};
   }
 `;
 
 const OLWrapper = styled(ListWrapper)`
-  padding-left: ${({ theme }) => theme.spacing.lg};
+  padding-left: ${({ theme }) => theme.space(48)};
 `;
 
 const ContentElement = ({ item }) => {

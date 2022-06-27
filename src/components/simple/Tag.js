@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 const TagIcon = styled.span`
   font-size: ${({ size }) => size};
-  padding-left: ${({ theme }) => theme.spacing.sm};
+  padding-left: ${({ theme }) => theme.space(8)};
   line-height: 0.6;
   margin: auto;
 `;
@@ -17,11 +17,11 @@ const TagWrapper = styled.span`
   word-break: break-all;
   line-height: 1;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  margin: ${({ theme }) => theme.spacing.xs};
-  padding: ${({ theme }) => `6px 8px 6px ${theme.spacing.sm} `};
+  margin: ${({ theme }) => theme.space(4)};
+  padding: ${({ theme }) => `6px 8px 6px ${theme.space(8)} `};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
-    margin: ${({ theme }) => theme.spacing.xs};
+    margin: ${({ theme }) => theme.space(4)};
   }
   ${({ theme, selected, levelSelected }) => {
     let color = theme.colors.black;
@@ -33,7 +33,7 @@ const TagWrapper = styled.span`
       color = theme.colors.lightgrey;
     }
     return {
-      borderRadius: theme.spacing.lg,
+      borderRadius: theme.space(48),
       color: color,
       backgroundColor: background,
       borderColor: color,

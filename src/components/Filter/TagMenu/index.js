@@ -28,9 +28,9 @@ const ResetButton = styled.button`
   cursor: pointer;
   border: 1px solid black;
   background: ${({ theme }) => theme.colors.lightgrey};
-  border-radius: ${({ theme }) => theme.spacing.lg};
+  border-radius: ${({ theme }) => theme.space(48)};
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
+  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(8)}`};
   height: fit-content;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     margin: auto;
