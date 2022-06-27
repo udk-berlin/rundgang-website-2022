@@ -72,9 +72,9 @@ const Time = styled.div`
   }
 `;
 
-const FavouriteItem = ({ element }) => {
+const FavouriteItem = ({ element, handleClick }) => {
   return (
-    <FavouriteItemWrapper>
+    <FavouriteItemWrapper onClick={() => handleClick(element.id)}>
       <FavouriteIcon saved={true} size={2} />
       <Image
         src={
@@ -89,9 +89,8 @@ const FavouriteItem = ({ element }) => {
         <Tags>
           {element.template == "event" &&
             element?.allocation?.temporal?.map((t, i) => (
-              <Time>
+              <Time key={`time-range-${t.start}-${i}-${t.end}`}>
                 <FormattedDateTimeRange
-                  key={`time-range-${t.start}-${i}-${t.end}`}
                   from={t.start * 1000}
                   weekday="short"
                   hour="numeric"
@@ -107,7 +106,7 @@ const FavouriteItem = ({ element }) => {
             .map(t => (
               <Tag
                 selected={false}
-                key={t.id}
+                key={`${t.id}-${t.template}`}
                 levelSelected={false}
                 showCross={false}
                 template={t.template}

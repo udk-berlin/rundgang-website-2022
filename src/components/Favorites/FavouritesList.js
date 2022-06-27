@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import { observer } from "mobx-react";
+import { useRouter } from "next/router";
+import { makeUrlFromId } from "@/utils/idUtils";
 import { useStores } from "@/stores/index";
 import FavouriteItem from "./FavouriteItem";
 import Download from "./Download";
@@ -55,6 +57,20 @@ const CloseButton = styled.div`
 
 const FavouritesList = ({ onClose }) => {
   const { uiStore } = useStores();
+  const router = useRouter();
+
+  const handleClick = id => {
+    let link = router.pathname;
+    let pid = makeUrlFromId(id);
+    if (router.pathname == "/") {
+      link = `katalog/${pid}`;
+    } else if (router.pathname.includes("[pid]")) {
+      link = link.replace("[pid]", pid);
+    } else {
+      link = `${router.pathname}/${pid}`;
+    }
+    router.replace(link);
+  };
   return (
     <FavouritesListWrapper>
       <FavouritesHeader>
@@ -73,7 +89,11 @@ const FavouritesList = ({ onClose }) => {
             {uiStore.savedItems
               .filter(item => item.template == "studentproject")
               .map(item => (
-                <FavouriteItem key={item.id} element={item} />
+                <FavouriteItem
+                  key={item.id}
+                  element={item}
+                  handleClick={handleClick}
+                />
               ))}
           </Favourites>
           <Favourites>
@@ -83,7 +103,11 @@ const FavouritesList = ({ onClose }) => {
             {uiStore.savedItems
               .filter(item => item.template == "event")
               .map(item => (
-                <FavouriteItem key={item.id} element={item} />
+                <FavouriteItem
+                  key={item.id}
+                  element={item}
+                  handleClick={handleClick}
+                />
               ))}
           </Favourites>
         </>
