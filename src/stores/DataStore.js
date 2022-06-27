@@ -40,7 +40,7 @@ class DataStore {
         } else {
           obj = { ...obj, [ev.building.name]: { [ev.room.name]: [ev] } };
         }
-      } 
+      }
       return obj;
     }, {});
     return res;

@@ -22,9 +22,8 @@ const HeaderWrapper = styled.header`
 `;
 
 const PageWrapper = styled.div`
-  height: fit-content;
+  height: 100%;
   width: 100%;
-  overflow: hidden;
 `;
 
 const Page = ({ children }) => {
@@ -75,8 +74,8 @@ const Page = ({ children }) => {
           {children}
           {showLine ? <CursorLine /> : null}
           <IntroAnimation key={"intro"} />
+          <Footer />
         </PageWrapper>
-        <Footer />
       </>
     )
   );

@@ -40,5 +40,6 @@
   "rooms": "Rooms",
   "selected-topic": "Room: {name} ({topic})",
   "allfloors": "all",
-  "noitems": "No projects or events"
+  "noitems": "No projects or events",
+  "nosaved": "Nothing saved yet"
 }

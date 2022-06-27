@@ -10,16 +10,18 @@ const FavouriteItemWrapper = styled.div`
   width: 100%;
   padding: ${({ theme }) => theme.space(16)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding: ${({ theme }) => `0 ${theme.space(8)}`};
+    padding: ${({ theme }) => theme.space(8)};
   }
 `;
 
 const Image = styled.img`
   width: 160px;
-  height: 100%;
+  height: auto;
+  min-height: 160px;
   padding: ${({ theme }) => `0 ${theme.space(8)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 80px;
+    min-height: 80px;
     height: 100%;
   }
 `;

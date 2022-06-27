@@ -37,7 +37,7 @@ const ListViewWrapper = styled.div`
 const NoItems = styled.div`
   margin: auto;
   width: fit-content;
-  height: fit-content;
+  height: calc(100vh - 130px);
   line-height: 100px;
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.md};

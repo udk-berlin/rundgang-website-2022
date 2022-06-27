@@ -54,7 +54,6 @@ const FavouritesHeader = styled.div`
 
 const FavouritesSavedItems = styled.div`
   color: ${({ theme }) => theme.colors.primary};
-  font-weight: bold;
   flex-grow: 1;
   margin: auto;
   padding: ${({ theme }) => `0 ${theme.space(8)}`};
@@ -135,7 +134,9 @@ const FavouritesList = ({ onClose }) => {
           </Favourites>
         </>
       ) : (
-        "no events or projects saved yet"
+        <FavouritesTitle>
+          <LocalizedText id="nosaved" />
+        </FavouritesTitle>
       )}
       <CloseButton onClick={onClose}>&#57344;</CloseButton>
     </FavouritesListWrapper>

@@ -9,7 +9,6 @@ import { makeUrlFromId } from "@/utils/idUtils";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const ListItemWrapper = styled.div`
-  cursor: pointer;
   position: relative;
   top: 0;
   left: 0;
@@ -23,6 +22,7 @@ const ListItemWrapper = styled.div`
 `;
 
 const Image = styled.img`
+  cursor: pointer;
   width: 100%;
   position: relative;
   opacity: 85%;

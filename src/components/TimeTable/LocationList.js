@@ -9,13 +9,16 @@ import { useStores } from "@/stores/index";
 import EventBar from "./EventBar";
 
 const LocationWrapper = styled.div`
+  width: ${({ width }) => width}px;
   height: fit-content;
   z-index: 100;
+  margin-top: 100px;
+  margin-bottom: 100px;
 `;
 
 const Room = styled.div`
-  width: ${TIME_WIDTH}px;
   height: 100%;
+  width: ${({ width }) => width}px;
   border-bottom: 1px solid black;
   position: relative;
   display: flex;
@@ -28,7 +31,6 @@ const Room = styled.div`
 const House = styled(Room)`
   min-height: 100px;
   align-items: center;
-  padding-bottom: 30px;
 `;
 
 const RoomTitle = styled.div`
@@ -48,6 +50,7 @@ const RoomTitleWrapper = styled.div`
   position: sticky;
   line-height: 1;
   left: 0;
+  top: 0;
   height: 100%;
 `;
 
@@ -59,8 +62,11 @@ const EventsWrapper = styled.div`
   display: flex;
   padding: 4px 0px;
 `;
+const OpeningTimes = styled(EventsWrapper)`
+  padding-top: 70px;
+`;
 
-const LocationList = ({ scaleX }) => {
+const LocationList = ({ scaleX, width }) => {
   const { dataStore } = useStores();
   const { pathname } = useRouter();
   const locWidth = scaleX(1658564000);
@@ -75,36 +81,35 @@ const LocationList = ({ scaleX }) => {
       ),
     [dataStore.api.locations],
   );
-
-  console.log(houseInfo);
   return (
-    <LocationWrapper>
+    <LocationWrapper width={width}>
       {dataStore?.eventLocations
         ? _.entries(dataStore.eventLocations).map(([house, rooms]) => (
             <RelativeWrapper key={`house-${house}`}>
-              <House>
+              <House width={width}>
                 <RoomTitleWrapper width={locWidth}>
                   <RoomTitle>{house}</RoomTitle>
                 </RoomTitleWrapper>
-                <EventsWrapper>
+                <OpeningTimes>
                   {houseInfo[house]
                     ? houseInfo[house]?.allocation?.temporal?.map(time =>
                         time.udk == "rundgang" ? (
                           <EventBar
-                            key={`opening-${house}`}
+                            key={`opening-${houseInfo[house]?.id}-${time.start}`}
                             top={0}
                             start={scaleX(time.start) - locWidth}
                             end={scaleX(time.end) - locWidth}
+                            link="/zeiten"
                           >
                             {house}
                           </EventBar>
                         ) : null,
                       )
                     : null}
-                </EventsWrapper>
+                </OpeningTimes>
               </House>
               {_.entries(rooms).map(([room, events]) => (
-                <Room key={`room-${room}-${house}`}>
+                <Room key={`room-${room}-${house}`} width={width}>
                   <RoomTitleWrapper width={locWidth}>
                     <RoomTitle>{room}</RoomTitle>
                   </RoomTitleWrapper>

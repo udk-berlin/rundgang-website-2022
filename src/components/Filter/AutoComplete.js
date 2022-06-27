@@ -6,16 +6,13 @@ import ClickAwayListener from "../simple/ClickAwayListener";
 
 const AutoCompleteWrapper = styled.div`
   position: absolute;
-  top: calc(5vh + 14px);
-  left: 8px;
-  max-width: calc(100% - 52px);
+  top: 55px;
+  left: 12px;
+  max-width: calc(100% - 54px);
   min-width: 50%;
   background: white;
   z-index: 100;
   box-shadow: 5px 5px 5px 0px #d9d9d9, -5px 5px 5px 0px #d9d9d9;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    top: 5vh;
-  }
 `;
 
 const AutoCompleteItem = styled.div`

@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import Layout from "@/components/simple/Layout";
-import Stretch from "@/components/simple/Stretch";
+import Stretch from "@/components/simple/Stretch/index";
 import { MIN_PADDING, FOOTER_HEIGHT } from "@/utils/constants";
 
 const LinkWrapper = styled(LocalizedLink)`

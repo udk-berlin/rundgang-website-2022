@@ -94,7 +94,9 @@ class ApiStore {
           res
             .map(async ev => {
               if (ev.type == "item") {
-                let locpath = await this.getPathToId(ev.id);
+                let res = await this.getId(ev.id);
+                let locpath = await this.getParentsFromId(res);
+                this.setCachedId(res, locpath);
                 return {
                   ...ev,
                   building: locpath.find(

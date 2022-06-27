@@ -39,5 +39,6 @@
   "rooms": "Räume",
   "selected-topic": "Raum: {name} ({topic})",
   "allfloors": "Alle",
-  "noitems": "Keine Projekte oder Veranstaltungen"
+  "noitems": "Keine Projekte oder Veranstaltungen",
+  "nosaved": "Noch nichts gemerkt"
 }

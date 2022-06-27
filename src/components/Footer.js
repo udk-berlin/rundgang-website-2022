@@ -27,7 +27,7 @@ const FooterContainer = styled.div`
 `;
 
 const LinkWrapper = styled.div`
-  padding: ${({ theme }) => ` 0 ${theme.space(8)}`};
+  padding: ${({ theme }) => `0 ${theme.space(8)}`};
   flex-grow: 0;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: ${({ hideMobile }) => (hideMobile ? "none" : "block")};
@@ -70,10 +70,14 @@ const FooterBelow = styled.div`
   }
 `;
 const FooterLine = styled.div`
+  padding-top: 4px;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   justify-content: space-between;
+`;
+const LanguageMiddle = styled(FooterLine)`
+  justify-content: space-evenly;
 `;
 
 const FooterWrapper = styled.div`
@@ -97,9 +101,9 @@ const Footer = () => {
         </LinkWrapper>
         <SpecialLinks>
           <LinkWrapper>
-            <RestyledLink to="/kontakt">
+            <NormalLink href="https://www.udk-berlin.de/universitaet/stabsstelle-ueberfakultaere-veranstaltungen/rundgang-tage-der-offenen-tuer-der-udk-berlin/kernteam-rundgang/">
               <LocalizedText id="contact" />
-            </RestyledLink>
+            </NormalLink>
           </LinkWrapper>
           <LinkWrapper>
             <NormalLink href="https://www.udk-berlin.de/schnellzugriff/impressum/">
@@ -124,17 +128,17 @@ const Footer = () => {
             <LocalizedText id="footer_date" />
           </LinkWrapper>
         </FooterLine>
-        <FooterLine>
+        <LanguageMiddle>
           <LinkWrapper>
             <LanguageSwitch />
           </LinkWrapper>
+        </LanguageMiddle>
+        <FooterLine>
           <LinkWrapper>
             <NormalLink href="https://www.udk-berlin.de/universitaet/stabsstelle-ueberfakultaere-veranstaltungen/rundgang-tage-der-offenen-tuer-der-udk-berlin/kernteam-rundgang/">
               <LocalizedText id="contact" />
             </NormalLink>
           </LinkWrapper>
-        </FooterLine>
-        <FooterLine>
           <LinkWrapper>
             <NormalLink href="https://www.udk-berlin.de/schnellzugriff/impressum/">
               <LocalizedText id="imprint" />

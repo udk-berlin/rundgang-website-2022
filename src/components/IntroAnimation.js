@@ -19,8 +19,10 @@ const baseStyle = {
   position: "absolute",
   margin: "auto",
   display: "block",
-  width: "100%",
-  height: "100%",
+  top: "10%",
+  left: "10%",
+  width: "80%",
+  height: "80%",
 };
 
 const leftStyle = {
@@ -89,10 +91,7 @@ const spinTransition = {
 
 export default function IntroAnimation() {
   return (
-    <motion.div
-      animate={{ display: "none" }}
-      transition={{ delay: 4 }}
-    >
+    <motion.div animate={{ display: "none" }} transition={{ delay: 4 }}>
       <motion.div
         style={containerStyle}
         animate={{ opacity: 0 }}

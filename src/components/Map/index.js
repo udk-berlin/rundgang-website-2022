@@ -63,6 +63,7 @@ const Map = () => {
   }, [exactLocations, dataStore.api.locations]);
 
   useEffect(() => {
+    let markers = {};
     if (addresses?.length) {
       map.current = new maplibregl.Map({
         container: mapContainer.current,
@@ -72,11 +73,11 @@ const Map = () => {
         maxZoom: 18,
         minZoom: 11,
       });
+
       var nav = new maplibregl.NavigationControl();
       map.current.addControl(nav, "bottom-right");
       map.current.on("load", () => {
         map.current.resize();
-        let markers = {};
 
         addresses.forEach((el, i) => {
           // create a DOM element for the marker
@@ -90,16 +91,17 @@ const Map = () => {
           const marker = new maplibregl.Marker(markerElement)
             .setLngLat([el.lng, el.lat])
             .addTo(map.current);
+          const popupElement = document.getElementById(`popup-${el.id}`);
+          const popup = new maplibregl.Popup()
+            .setLngLat([el.lng, el.lat])
+            .setDOMContent(popupElement);
 
-          markers[el.id] = { marker, mRoot, scale: 0 };
-
-          marker.getElement().addEventListener("click", () => {
-            const popupElement = document.getElementById(`popup-${el.id}`);
-            const popup = new maplibregl.Popup()
-              .setLngLat([el.lng, el.lat])
-              .setDOMContent(popupElement);
+          markers[el.id] = { marker, mRoot, scale: 0, popup };
+          const addPopup = () => {
             marker.setPopup(popup);
-          });
+          };
+
+          marker.getElement().addEventListener("click", addPopup);
         });
 
         map.current.on("zoom", e => {

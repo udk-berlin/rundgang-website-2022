@@ -2,6 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ClickAwayListener from "../simple/ClickAwayListener";
 
+const ImageWrapper = styled.div`
+  display: block;
+`;
+
+const Image = styled.img`
+  cursor: pointer;
+  width: 100%;
+  height: auto;
+`;
+
 const DetailView = styled.img`
   height: 90%;
   width: auto;
@@ -39,15 +49,21 @@ const CloseButton = styled.div`
   cursor: pointer;
 `;
 
-const ImageDetailView = ({ src, handleClose, open }) => {
-  return open ? (
-    <DetailWrapper>
-      <ClickAwayListener onClickAway={() => handleClose()}>
-        <DetailView src={src} />
-      </ClickAwayListener>
-      <CloseButton onClick={() => handleClose()}>&#57344;</CloseButton>
-    </DetailWrapper>
-  ) : null;
+const ImageDetailView = ({ src }) => {
+  const [imageDetailOpen, setImageDetailOpen] = useState(false);
+  return (
+    <ImageWrapper>
+      <Image src={src} onClick={() => setImageDetailOpen(true)} />
+      {imageDetailOpen ? (
+        <DetailWrapper>
+          <ClickAwayListener onClickAway={() => setImageDetailOpen(false)}>
+            <DetailView src={src} />
+          </ClickAwayListener>
+          <CloseButton onClick={() => handleClose()}>&#57344;</CloseButton>
+        </DetailWrapper>
+      ) : null}
+    </ImageWrapper>
+  );
 };
 
 export default ImageDetailView;

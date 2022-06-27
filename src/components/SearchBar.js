@@ -24,12 +24,7 @@ const SearchBar = () => {
 
   const handleOpen = useCallback(
     item => {
-      if (
-        (item == "favourites" && uiStore.numberSavedItems) ||
-        item !== "favourites"
-      ) {
-        uiStore.setIsOpen(item);
-      }
+      uiStore.setIsOpen(item);
     },
     [uiStore.isOpen],
   );

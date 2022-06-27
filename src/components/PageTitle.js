@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
-import Stretch from "@/components/simple/Stretch";
+import Stretch from "@/components/simple/Stretch/index";
 import useWindowSize from "@/utils/useWindowSize";
 import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
 
@@ -17,33 +17,27 @@ const PageTitleWrapper = styled.div`
   overflow: hidden;
 `;
 
-const BackRouting = styled.div`
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  &:hover {
-    color: ${({ theme }) => theme.colors.highlight};
+const splitLongTitles = (s, titleId) => {
+  if (!s.includes(" ") || s.length < 20) {
+    return [s];
   }
-`;
-
-const splitLongTitles = (title, titleId) => {
   if (titleId == "rundgang") {
-    return [title];
+    return [s];
   }
-  var words = title.split(/[\s]+/);
-  var newtext = [words[0]];
-  for (let i = 1; i < words.length; i++) {
-    if (newtext[newtext.length - 1].length <= 45) {
-      newtext[newtext.length - 1] += " " + words[i];
-    } else {
-      newtext.push(words[i]);
-    }
+  var middle = Math.floor(s.length / 2);
+  var before = s.lastIndexOf(" ", middle);
+  var after = s.indexOf(" ", middle + 1);
+
+  if (middle - before < after - middle) {
+    middle = before;
+  } else {
+    middle = after;
   }
-  if (newtext.length > 2) {
-    newtext[1] += "...";
-    newtext = newtext.slice(0, 2);
-  }
-  return newtext;
+
+  var s1 = s.substr(0, middle);
+  var s2 = s.substr(middle + 1);
+  console.log([s1, s2]);
+  return [s1, s2];
 };
 
 const PageTitle = () => {
@@ -67,6 +61,7 @@ const PageTitle = () => {
   }, [isMobile, uiStore.title, router.locale]);
 
   const handleBack = () => {
+    console.log("handlebacj");
     let link = router.pathname;
     if (router.pathname.includes("[pid]")) {
       if (
@@ -96,39 +91,35 @@ const PageTitle = () => {
   };
 
   return (
-    <PageTitleWrapper>
-      {uiStore.title && (
-        <BackRouting onClick={() => handleBack()}>
-          {isMobile && titleStrings?.length > 1 ? (
-            titleStrings.map((line, i) => (
-              <Stretch
-                titleId={`${uiStore.title}-${i}-${router.locale}`}
-                key={`${uiStore.title}-line-${i}`}
-                lineh={1}
-                preferredSize={4.9}
-                isMobile={true}
-                arrowDir={
-                  uiStore.title !== "rundgang" && i == 0 ? "left" : null
-                }
-              >
-                {line}
-              </Stretch>
-            ))
-          ) : (
+    uiStore.title && (
+      <PageTitleWrapper>
+        {isMobile && titleStrings?.length > 1 ? (
+          titleStrings.map((line, i) => (
             <Stretch
-              titleId={`${uiStore.title}-${router.locale}`}
-              key={`${uiStore.title}_title`}
-              lineh={0.9}
-              preferredSize={10}
-              isMobile={isMobile}
-              arrowDir={uiStore.title !== "rundgang" ? "left" : null}
+              handleClick={handleBack}
+              titleId={`${uiStore.title}-${i}-${router.locale}`}
+              key={`${uiStore.title}-line-${i}`}
+              lineh={1}
+              preferredSize={4.9}
+              arrowDir={uiStore.title !== "rundgang" && i == 0 ? "left" : null}
             >
-              <LocalizedText id={uiStore.title} />
+              {line}
             </Stretch>
-          )}
-        </BackRouting>
-      )}
-    </PageTitleWrapper>
+          ))
+        ) : (
+          <Stretch
+            handleClick={handleBack}
+            titleId={`${uiStore.title}-${router.locale}`}
+            key={`${uiStore.title}_title`}
+            lineh={0.9}
+            preferredSize={10}
+            arrowDir={uiStore.title !== "rundgang" ? "left" : null}
+          >
+            {titleStrings}
+          </Stretch>
+        )}
+      </PageTitleWrapper>
+    )
   );
 };
 

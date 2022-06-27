@@ -15,26 +15,9 @@ export const times = [
 const TimeLine = styled.div`
   height: 100%;
   border-left: 1px solid black;
-  top: 0;
+  bottom: 0px;
   left: ${({ x }) => x}px;
   position: absolute;
-`;
-
-const TimeHour = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes.mm};
-  padding: ${({ theme }) => `${theme.space(4)} 0`};
-  margin-left: -20px;
-  z-index: 15;
-  height: fit-content;
-  width: fit-content;
-  background: ${({ theme }) => theme.background.primary};
-  position: absolute;
-  left: ${({ x }) => x}px;
-  top: 0;
-  z-index: 400;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
-  }
 `;
 
 const TimeScaleWrapper = styled.div`
@@ -46,11 +29,6 @@ const TimeScale = ({ scaleX }) => {
     <TimeScaleWrapper>
       {times.map(t => (
         <TimeLine x={scaleX(t)} key={`timeline-${t}`} />
-      ))}
-      {times.map(t => (
-        <TimeHour x={scaleX(t)} key={`timehour-${t}`}>
-          <FormattedTime value={t * 1000} hour="numeric" minute="numeric" />
-        </TimeHour>
       ))}
     </TimeScaleWrapper>
   );

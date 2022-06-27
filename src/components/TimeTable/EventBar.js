@@ -20,10 +20,8 @@ const EventBarWrapper = styled.div`
 `;
 
 const RestyledLink = styled(LocalizedLink)`
-  height: 100%;
+  height: fit-content;
   width: 0;
-  padding: 2px 0px;
-  background-color: white;
   &:hover {
     color: black;
   }
@@ -35,6 +33,7 @@ const EventBar = ({ ev, start, end, link, top, children = null }) => {
     let previous =
       top > 0 ? document.getElementById(`${start}-${top - 1}`) : null;
     if (previous) {
+      console.log(previous.getBoundingClientRect());
       setTopMargin(previous.clientHeight + 4);
     }
   }, [top]);

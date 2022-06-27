@@ -5,7 +5,6 @@ import JumpToTop from "../JumpToTop";
 const MainLayout = styled.main`
   width: 100%;
   height: 100%;
-  overflow-y: auto;
 `;
 
 const Layout = ({ children, showToTop = true }) => {

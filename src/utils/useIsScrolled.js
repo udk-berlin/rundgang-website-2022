@@ -31,10 +31,9 @@ export const useIsScrolledX = (limit, id) => {
     };
   }, []);
 
-  const checkIfScrolled = () => {
+  const checkIfScrolled = (e) => {
     if (window !== undefined && id !== undefined) {
-      let target = document.getElementById(id);
-      let scrollpos = target.scrollLeft;
+      let scrollpos = e.target.scrollLeft;
       scrollpos > limit ? setScrolled(true) : setScrolled(false);
     }
   };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import _ from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
@@ -27,16 +27,6 @@ const ItemHeaderWrapper = styled.div`
     margin: ${({ theme }) => theme.space(8)};
   }
 `;
-const TitleImageWrapper = styled.div`
-  display: block;
-`;
-
-const TitleImage = styled.img`
-  cursor: pointer;
-  width: 100%;
-  height: auto;
-`;
-
 const AuthorTag = styled.div`
   padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
   font-size: ${({ theme }) => theme.fontSizes.lm};
@@ -129,7 +119,6 @@ const ItemView = () => {
   const loc = item.description[locale.toUpperCase()]?.length
     ? locale.toUpperCase()
     : "DE";
-  const [imageDetailOpen, setImageDetailOpen] = useState(false);
 
   return item && item?.id ? (
     <ItemViewWrapper>
@@ -155,17 +144,7 @@ const ItemView = () => {
         ))}
       </Tags>
       <ItemHeaderWrapper>
-        <TitleImageWrapper>
-          <TitleImage
-            src={item.thumbnail}
-            onClick={() => setImageDetailOpen(true)}
-          />
-          <ImageDetailView
-            src={item.thumbnail}
-            open={imageDetailOpen}
-            handleClose={() => setImageDetailOpen(false)}
-          />
-        </TitleImageWrapper>
+        <ImageDetailView src={item.thumbnail} />
         <DescriptionWrapper mobile>
           {item?.origin?.authors?.map(a => (
             <AuthorTag key={`author-${a.id}`}>{a.name ?? a.id}</AuthorTag>
