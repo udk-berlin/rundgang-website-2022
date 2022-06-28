@@ -34,6 +34,7 @@ const MapContainerDiv = styled.div`
   height: 100%;
 `;
 
+
 const Popups = styled.div`
   display: none;
 `;
@@ -57,10 +58,10 @@ const Map = () => {
       const adrr = exactLocations.map(a => ({
         ...a,
         ...dataStore.api.locations.find(
-          c => c.id == a.id[process.env.NODE_ENV],
+          c => c.id == a.id.development,
         ),
         isFound: dataStore.api.locations.find(
-          c => c.id == a.id[process.env.NODE_ENV],
+          c => c.id == a.id.development,
         )?.name,
       }));
       setAddresses(adrr);
