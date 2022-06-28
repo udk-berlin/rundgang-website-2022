@@ -14,7 +14,7 @@ const TagWrapper = styled.span`
   cursor: pointer;
   width: fit-content;
   word-wrap: break-word;
-  word-break: break-all;
+  word-break: normal;
   line-height: 1;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   margin: ${({ theme }) => theme.space(4)};

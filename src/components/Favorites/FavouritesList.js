@@ -41,18 +41,19 @@ const FavouritesSavedItems = styled.div`
 `;
 
 const CloseButton = styled.div`
-  position: sticky;
-  left: 100%;
-  bottom: 0px;
+  position: relative;
+  right: 0;
+  top: 0;
   font-family: "Diatype";
   border: none;
   width: fit-content;
   padding: ${({ theme }) => theme.space(8)};
-  font-size: ${({ theme }) => theme.fontSizes.xl};
   cursor: pointer;
-  font-weight: bold;
-  -webkit-text-stroke: 2px white;
-  -webkit-text-fill-color: black;
+  font-size: 70px;
+  text-align: right;
+  font-family: "Inter";
+  line-height: 1;
+  transform: scaleY(0.7);
 `;
 
 const FavouritesList = ({ onClose }) => {
@@ -79,6 +80,7 @@ const FavouritesList = ({ onClose }) => {
           <FavouriteIcon saved={true} size={0.8} />
         </FavouritesSavedItems>
         <Download />
+      <CloseButton onClick={onClose}>&#x2715;</CloseButton>
       </FavouritesHeader>
       {uiStore.savedItems.length > 0 ? (
         <>
@@ -120,7 +122,6 @@ const FavouritesList = ({ onClose }) => {
           <LocalizedText id="nosaved" />
         </FavouritesTitle>
       )}
-      <CloseButton onClick={onClose}>&#57344;</CloseButton>
     </FavouritesListWrapper>
   );
 };

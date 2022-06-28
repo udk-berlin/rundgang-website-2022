@@ -139,7 +139,15 @@ const ListItem = ({ element, numCol }) => {
           </TimeWrapper>
         </ImageWrapper>
         <Title>{element.name}</Title>
-        <Authors>{element.origin.authors.map(a => a.name).join(",")}</Authors>
+        <Authors>
+          {[
+            ...new Set(
+              element.origin?.authors.map(a =>
+                a.name ? a.name.split("@")[0]?.trim() : a.id,
+              ),
+            ),
+          ].join(", ")}
+        </Authors>
       </RestyledLink>
     </ListItemWrapper>
   );

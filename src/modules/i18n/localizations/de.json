@@ -28,7 +28,7 @@
   "institute": "Institute",
   "subject": "Studiengänge",
   "classes": "Klassen und Fachgebiete",
-  "seminars": "Kurse",
+  "seminars": "Kurse und Seminare",
   "location-building": " ",
   "location-level": "Etage: ",
   "location-room": "Raum: ",
@@ -40,5 +40,6 @@
   "selected-topic": "Raum: {name} ({topic})",
   "allfloors": "Alle",
   "noitems": "Keine Projekte oder Veranstaltungen",
-  "nosaved": "Noch nichts gemerkt"
+  "nosaved": "Noch nichts gemerkt",
+  "place": "Ort"
 }

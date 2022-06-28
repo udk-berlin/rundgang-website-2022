@@ -48,9 +48,12 @@ const Arrow = styled.span`
 const GrundrissPopup = ({ el, size }) => {
   return (
     <PopupWrapper id={`popup-${el.id}`} size={size}>
-      <PopupTitle>{el.name}</PopupTitle>
+      <PopupTitle>
+        {el.name}
+        {el.isFound}
+      </PopupTitle>
       <Times>
-        {el?.extra.allocation?.temporal?.map(time =>
+        {el?.extra?.allocation?.temporal?.map(time =>
           time.udk == "rundgang" ? (
             <TimeRange key={time.start}>
               <FormattedDateTimeRange
@@ -63,9 +66,15 @@ const GrundrissPopup = ({ el, size }) => {
           ) : null,
         )}
       </Times>
-      <RoomLink to={`/orte/${makeUrlFromId(el.id)}`}>
-        <LocalizedText id="rooms" /> <Arrow>&#8594;</Arrow>
-      </RoomLink>
+      {el.image !== "location-external" ? (
+        <RoomLink to={`/orte/${makeUrlFromId(el.id)}`}>
+          <LocalizedText id="rooms" /> <Arrow>&#8594;</Arrow>
+        </RoomLink>
+      ) : (
+        <RoomLink to={`/orte/${makeUrlFromId(el.id)}`}>
+          <LocalizedText id="place" /> <Arrow>&#8594;</Arrow>
+        </RoomLink>
+      )}
     </PopupWrapper>
   );
 };

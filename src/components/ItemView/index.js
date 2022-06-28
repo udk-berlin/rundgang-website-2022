@@ -34,8 +34,9 @@ const AuthorTag = styled.div`
   border-radius: ${({ theme }) => theme.space(48)};
   width: fit-content;
   word-wrap: break-word;
+  margin-bottom: ${({ theme }) => theme.space(8)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin-top: ${({ theme }) => theme.space(16)};
+    margin-bottom: ${({ theme }) => theme.space(4)};
     font-size: ${({ theme }) => theme.fontSizes.mm};
   }
 `;
@@ -79,7 +80,7 @@ const SaveTag = styled.span`
 const DescriptionWrapper = styled.div`
   padding: ${({ theme }) => `0px ${theme.space(4)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin: ${({ theme }) => `${theme.space(4)} 0px`};
+    margin: ${({ theme }) => `${theme.space(8)} 0px`};
     padding: 0px;
   }
 `;
@@ -145,9 +146,11 @@ const ItemView = () => {
       </Tags>
       <ItemHeaderWrapper>
         <ImageDetailView src={item.thumbnail} />
-        <DescriptionWrapper mobile>
+        <DescriptionWrapper>
           {item?.origin?.authors?.map(a => (
-            <AuthorTag key={`author-${a.id}`}>{a.name ?? a.id}</AuthorTag>
+            <AuthorTag key={`author-${a.id}`}>
+              {a.name ? a.name.split("@")[0]?.trim() : a.id}
+            </AuthorTag>
           ))}
           {item.template == "event" && item.allocation?.temporal?.length
             ? item.allocation?.temporal?.slice(0, 3).map((t, i) => (

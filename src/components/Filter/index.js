@@ -92,10 +92,11 @@ const Filter = ({ onClick, onClose }) => {
         router.replace(link);
       } else {
         if (router.pathname == "/") {
+          router.replace("/");
         } else if (router.pathname.includes("[pid]")) {
           router.replace(router.pathname.replace("[pid]", ""));
         } else {
-          router.replace(router.pathname);
+          router.replace(router.pathname.replace("[pid]", ""));
         }
       }
     },

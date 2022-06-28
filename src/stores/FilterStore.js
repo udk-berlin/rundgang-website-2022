@@ -47,6 +47,7 @@ class FilterStore {
 
   handleReset = () => {
     this.selected = INITIAL_SELECTION;
+    this.selectedId = null;
     this.setOpenTagGroup(0);
   };
 

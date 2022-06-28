@@ -29,13 +29,12 @@ const ResetButton = styled.button`
   border: 1px solid black;
   background: ${({ theme }) => theme.colors.lightgrey};
   border-radius: ${({ theme }) => theme.space(48)};
-  font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(8)}`};
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  padding: ${({ theme }) => `6px 8px 6px ${theme.space(8)} `};
   height: fit-content;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     margin: auto;
     margin-left: 0;
-    font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
 
@@ -67,16 +66,6 @@ const TagMenu = ({ handleSubmit }) => {
   const { uiStore } = useStores();
   return (
     <FilterMenu>
-      <FilterMenuWrapper>
-        {_.entries(uiStore.filterStore.currentTags).map(([name, group]) => (
-          <TagGroup
-            key={`${name}-taggroupwerapper`}
-            group={group}
-            name={name}
-            handleSubmit={handleSubmit}
-          />
-        ))}
-      </FilterMenuWrapper>
       <Buttons>
         <ResetButton
           onClick={() => {
@@ -97,6 +86,16 @@ const TagMenu = ({ handleSubmit }) => {
           )}
         </GoButton>
       </Buttons>
+      <FilterMenuWrapper>
+        {_.entries(uiStore.filterStore.currentTags).map(([name, group]) => (
+          <TagGroup
+            key={`${name}-taggroupwerapper`}
+            group={group}
+            name={name}
+            handleSubmit={handleSubmit}
+          />
+        ))}
+      </FilterMenuWrapper>
     </FilterMenu>
   );
 };

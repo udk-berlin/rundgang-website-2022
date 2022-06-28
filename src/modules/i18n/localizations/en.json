@@ -25,11 +25,11 @@
   "centres": "Centers",
   "initiatives": "Initiatives",
   "ebene0": "Fakulties, Centres und Consultation Offers",
-  "ebene1": "Subjects and Institutes",
+  "ebene1": "Courses of Studies and Institutes",
   "institutes": "Institutes",
   "subjects": "Programs",
   "classes": "Subjects and Classes",
-  "seminars": "Courses",
+  "seminars": "Courses and Seminars",
   "location-building": " ",
   "location-level": "Floor: ",
   "location-room": "Room: ",
@@ -41,5 +41,6 @@
   "selected-topic": "Room: {name} ({topic})",
   "allfloors": "all",
   "noitems": "No projects or events",
-  "nosaved": "Nothing saved yet"
+  "nosaved": "Nothing saved yet",
+  "place": "Place"
 }

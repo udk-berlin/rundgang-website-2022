@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useMemo } from "react";
 import _ from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
@@ -9,7 +9,28 @@ import useWindowSize from "@/utils/useWindowSize";
 import exactLocations from "./locationData.json";
 import GrundrissMarker from "./GrundrissMarker";
 import GrundrissPopup from "./GrundrissPopup";
-import UiStore from "@/stores/UiStore";
+
+const compareInputs = (inputKeys, oldInputs, newInputs) => {
+  inputKeys.forEach(key => {
+    const oldInput = oldInputs[key];
+    const newInput = newInputs[key];
+    if (oldInput !== newInput) {
+      console.log("change detected", key, "old:", oldInput, "new:", newInput);
+    }
+  });
+};
+const useDependenciesDebugger = inputs => {
+  const oldInputsRef = useRef(inputs);
+  const inputValuesArray = Object.values(inputs);
+  const inputKeysArray = Object.keys(inputs);
+  useMemo(() => {
+    const oldInputs = oldInputsRef.current;
+
+    compareInputs(inputKeysArray, oldInputs, inputs);
+
+    oldInputsRef.current = inputs;
+  }, inputValuesArray); // eslint-disable-line react-hooks/exhaustive-deps
+};
 
 const MapWrapper = styled.div`
   width: 100%;
@@ -47,24 +68,29 @@ const Map = () => {
   const { dataStore, uiStore } = useStores();
   const mapContainer = useRef(null);
   const map = useRef(null);
+
   const size = useWindowSize();
 
   const ZOOM = size?.width > 999 ? 12.5 : 11.3;
   const [addresses, setAddresses] = useState([]);
+  const refs = useRef(addresses.map(() => React.createRef()));
 
   useEffect(() => {
     if (exactLocations && dataStore.api.locations) {
       const adrr = exactLocations.map(a => ({
         ...a,
-        ...dataStore.api.locations.find(c => c.id == a.id),
-        isFound: dataStore.api.locations.find(c => c.id == a.id)?.name,
+        ...dataStore.api.locations.find(
+          c => c.id == a.id[process.env.NODE_ENV],
+        ),
+        isFound: dataStore.api.locations.find(
+          c => c.id == a.id[process.env.NODE_ENV],
+        )?.name,
       }));
       setAddresses(adrr);
     }
-  }, [exactLocations, dataStore.api.locations]);
+  }, [dataStore.api.locations]);
 
   useEffect(() => {
-    let markers = {};
     if (addresses?.length) {
       map.current = new maplibregl.Map({
         container: mapContainer.current,
@@ -79,6 +105,7 @@ const Map = () => {
       map.current.addControl(nav, "bottom-right");
       map.current.on("load", () => {
         map.current.resize();
+        let markers = {};
 
         addresses.forEach((el, i) => {
           // create a DOM element for the marker
@@ -86,23 +113,26 @@ const Map = () => {
           markerElement.pitchAlignment = "map";
           markerElement.rotationAlignment = "map";
           const mRoot = createRoot(markerElement);
-          mRoot.render(<GrundrissMarker el={el} size={60} />);
+          let size = el.image == "location-external" ? 20 : 60;
+          mRoot.render(<GrundrissMarker el={el} size={size} />);
 
           // add marker to map
           const marker = new maplibregl.Marker(markerElement)
             .setLngLat([el.lng, el.lat])
             .addTo(map.current);
-          const popupElement = document.getElementById(`popup-${el.id}`);
-          const popup = new maplibregl.Popup()
-            .setLngLat([el.lng, el.lat])
-            .setDOMContent(popupElement);
 
-          markers[el.id] = { marker, mRoot, scale: 0, popup };
           const addPopup = () => {
+            // add poopup
+            console.log(refs.current);
+            const popupElement = refs.current[i];
+            const popup = new maplibregl.Popup()
+              .setLngLat([el.lng, el.lat])
+              .setDOMContent(popupElement.current);
             marker.setPopup(popup);
           };
-
           marker.getElement().addEventListener("click", addPopup);
+
+          markers[el.id] = { marker, mRoot, scale: 0 };
         });
 
         map.current.on("zoom", e => {
@@ -115,30 +145,35 @@ const Map = () => {
           }
           filteredLocations.map(el => {
             const scale = map.current.getZoom() - el.maxZoom;
-            if (el.image == "haus9") {
-            }
-            if (scale !== markers[el.id].scale && scale > 0) {
-              markers[el.id].scale = scale;
-              markers[el.id].mRoot.render(
-                <GrundrissMarker el={el} size={60 * 2 ** scale} />,
-              );
-            } else if (markers[el.id].scale > 0 && scale <= 0) {
-              markers[el.id].scale = scale;
-              markers[el.id].mRoot.render(
-                <GrundrissMarker el={el} size={60} />,
-              );
+            if (el.image !== "location-external") {
+              if (scale !== markers[el.id].scale && scale > 0) {
+                markers[el.id].scale = scale;
+                markers[el.id].mRoot.render(
+                  <GrundrissMarker el={el} size={60 * 2 ** scale} />,
+                );
+              } else if (markers[el.id].scale > 0 && scale <= 0) {
+                markers[el.id].scale = scale;
+                markers[el.id].mRoot.render(
+                  <GrundrissMarker el={el} size={60} />,
+                );
+              }
             }
           });
         });
       });
     }
   }, [size, dataStore.api.locations, addresses]);
-
+  useDependenciesDebugger({ size, locs: dataStore.api.locations, addresses });
   return (
     <MapWrapper size={size}>
       <Popups>
-        {addresses.map(house => (
-          <GrundrissPopup key={`popup-${house.image}`} el={house} size={210} />
+        {addresses.map((house, i) => (
+          <GrundrissPopup
+            ref={refs.current[i]}
+            key={`popup-${house.id}`}
+            el={house}
+            size={210}
+          />
         ))}
       </Popups>
       <MapContainerDiv ref={mapContainer} />

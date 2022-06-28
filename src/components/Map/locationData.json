@@ -3,108 +3,151 @@
     "name": "Hardenbergstr. 33",
     "lat": "52.50967152502669",
     "lng": "13.327300406397331",
-    "times": [
-      { "start": 1658566800000, "end": 1658599200000 },
-      { "start": 1658653200000, "end": 1658685600000 }
-    ],
     "maxZoom": 13.7,
     "image": "4005",
-    "id": "!SLHPcitdKliABtGyyt:dev.medienhaus.udk-berlin.de"
+    "id": "!amwvMUTwucDiRylpJQ:content.udk-berlin.de"
   },
   {
     "name": "Str. des 17. Juni 118",
     "lat": "52.513815995810795",
     "lng": "13.329011660461106",
-    "times": [
-      { "start": 1658566800000, "end": 1658599200000 },
-      { "start": 1658653200000, "end": 1658685600000 }
-    ],
     "maxZoom": 15.45,
     "image": "4007",
-    "id": "!dLrgJvQtzVDImFhOUu:dev.medienhaus.udk-berlin.de"
+    "id": {
+      "development": "!dLrgJvQtzVDImFhOUu:dev.medienhaus.udk-berlin.de",
+      "production": "!FYglBKPJHZGUNIYcBt:content.udk-berlin.de"
+    }
   },
   {
     "name": "Medienhaus, Grunewaldstr. 2-5",
     "lat": "52.4908045",
     "lng": "13.3588243",
-    "times": [
-      { "start": 1658566800000, "end": 1658599200000 },
-      { "start": 1658653200000, "end": 1658685600000 }
-    ],
     "maxZoom": 14.66,
     "image": "4004",
-    "id": "!XgKNyhtSSvvLtRepkF:dev.medienhaus.udk-berlin.de"
+    "id": {
+      "development": "!XgKNyhtSSvvLtRepkF:dev.medienhaus.udk-berlin.de",
+      "production": "!LiVonEpyzckeIAyOIb:content.udk-berlin.de"
+    }
   },
   {
     "name": "Lietzenburger Str. 45",
     "lat": "52.49982823444154",
     "lng": "13.332849698118526",
-    "times": [
-      { "start": 1658566800000, "end": 1658599200000 },
-      { "start": 1658653200000, "end": 1658685600000 }
-    ],
     "maxZoom": 15.6,
     "image": "4008",
-    "id": "!FQcGktOAOcPMpBqJxd:dev.medienhaus.udk-berlin.de"
+    "id": {
+      "development": "!FQcGktOAOcPMpBqJxd:dev.medienhaus.udk-berlin.de",
+      "production": "!ozXLGbrpCVNrRScjQJ:content.udk-berlin.de"
+    }
   },
   {
     "name": "Mierendorffstr. 28-30",
     "lat": "52.52441",
     "lng": "13.30389",
-    "times": [
-      { "start": 1658566800000, "end": 1658599200000 },
-      { "start": 1658653200000, "end": 1658685600000 }
-    ],
     "maxZoom": 15.89,
     "image": "4009",
-    "id": "!bxVKmYoHQbrOuwQYAL:dev.medienhaus.udk-berlin.de"
+    "id": {
+      "development": "!bxVKmYoHQbrOuwQYAL:dev.medienhaus.udk-berlin.de",
+      "production": "!nOMmizEAkvzoapuqCK:content.udk-berlin.de"
+    }
   },
   {
     "name": "Fasanenstraße 1b",
     "lat": "52.509",
     "lng": "13.3282",
-    "times": [
-      { "start": 1658566800000, "end": 1658599200000 },
-      { "start": 1658653200000, "end": 1658685600000 }
-    ],
     "maxZoom": 15.3,
     "image": "4003",
-    "id": "!iaYmdanFCGqDxCGLyW:dev.medienhaus.udk-berlin.de"
+    "id": {
+      "development": "!iaYmdanFCGqDxCGLyW:dev.medienhaus.udk-berlin.de",
+      "production": "!cUpdRzxCGmLkwfrUeq:content.udk-berlin.de"
+    }
   },
   {
     "name": "Hardenbergstr. 41",
     "lat": "52.511295526569526",
     "lng": "13.323453006016974",
-    "times": [
-      { "start": 1658566800000, "end": 1658599200000 },
-      { "start": 1658653200000, "end": 1658685600000 }
-    ],
     "maxZoom": 16.8,
     "image": "4006",
-    "id": "!tbzskmejuZweqmVLuh:dev.medienhaus.udk-berlin.de"
+    "id": {
+      "development": "!tbzskmejuZweqmVLuh:dev.medienhaus.udk-berlin.de",
+      "production": "!fwsuOeorRCZtTqwukc:content.udk-berlin.de"
+    }
   },
   {
     "name": "Bundesallee 1-12",
     "lat": "52.4986354",
     "lng": "13.3299593",
-    "times": [
-      { "start": 1658566800000, "end": 1658599200000 },
-      { "start": 1658653200000, "end": 1658685600000 }
-    ],
     "maxZoom": 14,
     "image": "4001",
-    "id": "!dtjgwrdMPItWQIaoSt:dev.medienhaus.udk-berlin.de"
+    "id": {
+      "development": "!dtjgwrdMPItWQIaoSt:dev.medienhaus.udk-berlin.de",
+      "production": "!XaBVrlwEHUifKOmMPa:content.udk-berlin.de"
+    }
   },
   {
     "name": "Einsteinufer 43-53",
     "lat": "52.51702833511489",
     "lng": "13.322340551980432",
-    "times": [
-      { "start": 1658566800000, "end": 1658599200000 },
-      { "start": 1658653200000, "end": 1658685600000 }
-    ],
     "maxZoom": 14.4,
     "image": "4002",
-    "id": "!RoplWetVwBJXxKZPGr:dev.medienhaus.udk-berlin.de"
+    "id": {
+      "development": "!RoplWetVwBJXxKZPGr:dev.medienhaus.udk-berlin.de",
+      "production": "!aLyedVYnhynRwlhXUm:content.udk-berlin.de"
+    }
+  },
+  {
+    "name": "Kühlhaus Berlin",
+    "lat": "52.49975612059813",
+    "lng": "13.376558909891168",
+    "maxZoom": 14.4,
+    "image": "location-external",
+    "id": {
+      "development": "!dmoHMYUxUsSLerJZcF:dev.medienhaus.udk-berlin.de",
+      "production": "!dYAxemkkcQCGTMQgTS:content.udk-berlin.de"
+    }
+  },
+  {
+    "name": "Hochschulübergreifendes Zentrum Tanz Berlin (HZT)",
+    "lat": "52.551911059515135",
+    "lng": "13.374961883083154",
+    "maxZoom": 14.4,
+    "image": "location-external",
+    "id": {
+      "development": "!bwyfqxrdHCbwOYLLgp:dev.medienhaus.udk-berlin.de",
+      "production": "!FqPOhaHHAjYeliMfOU:content.udk-berlin.de"
+    }
+  },
+  {
+    "name": "Außenvitrine Einsteinufer",
+    "lat": "52.51741297926878",
+    "lng": "13.322555087168652",
+    "maxZoom": 14.4,
+    "image": "location-external",
+    "id": {
+      "development": "!quUjIOqsGbxZlsMGZk:dev.medienhaus.udk-berlin.de",
+      "production": "!bwyfqxrdHCbwOYLLgp:content.udk-berlin.de"
+    }
+  },
+  {
+    "name": "Bundesallee Parkdeck",
+    "lat": "52.49797669481042",
+    "lng": "13.329729205033358",
+    "maxZoom": 14.4,
+    "image": "location-external",
+    "id": {
+      "development": "!hQzMPzEcOUiJxoYoue:dev.medienhaus.udk-berlin.de",
+      "production": "!bwyfqxrdHCbwOYLLgp:content.udk-berlin.de"
+    }
+  },
+  {
+    "name": "BHROX bauhaus reuse",
+    "lat": "52.5129644934866",
+    "lng": "13.322278932541101",
+    "maxZoom": 18,
+    "image": "location-external",
+    "id": {
+      "development": "!PadwaEcxOidsaIKXIQ:dev.medienhaus.udk-berlin.de",
+      "production": "!PkpdUouHNyPWmVReTC:content.udk-berlin.de"
+    }
   }
 ]

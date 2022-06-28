@@ -10,7 +10,6 @@ import {
 import { makeIdFromUrl, ALIAS_IDS } from "@/utils/idUtils";
 import filterContext from "./filterContext";
 
-const BASE_URL = "https://api.dev.medienhaus.udk-berlin.de/api/v2/";
 const PATH_URL = "/pathlist";
 const TREE_URL = "/tree";
 const LIST_URL = "/list";
@@ -18,9 +17,6 @@ const FILTER_URL = "/list/filter";
 const TYPE_ITEM = "/type/item";
 const TYPE_CONTEXT = "/type/context";
 const RENDER_JSON = "/render/json";
-const ROOT = "!ZHxOBBJSDIRTvbpMRw:dev.medienhaus.udk-berlin.de";
-const STRUCTURE_ROOT = "!zIFTaCEWSjCgNiWvCA:dev.medienhaus.udk-berlin.de";
-const LOCATIONS_ROOT = "!mYrhgyDxLiGjDyLrzW:dev.medienhaus.udk-berlin.de";
 
 const GET_OPTIONS = {
   method: "GET",
@@ -47,7 +43,7 @@ class ApiStore {
   }
 
   get = async (urlParams = "") => {
-    const request = new Request(`${BASE_URL}${urlParams}`, GET_OPTIONS);
+    const request = new Request(`${process.env.NEXT_PUBLIC_BASE_API_URL}${urlParams}`, GET_OPTIONS);
     const response = await fetch(request).then(res => {
       if (!res.ok) {
         return null;
@@ -58,11 +54,11 @@ class ApiStore {
   };
 
   getRoot = async () => {
-    return this.get(ROOT).catch(() => console.log("no ROOT id"));
+    return this.get(process.env.NEXT_PUBLIC_API_ROOT_URL).catch(() => console.log("no ROOT id"));
   };
 
   getLocations = async () => {
-    return this.get(`${LOCATIONS_ROOT}/tree/filter${TYPE_CONTEXT}`)
+    return this.get(`${process.env.NEXT_PUBLIC_LOCATIONS_ROOT}/tree/filter${TYPE_CONTEXT}`)
       .then(res =>
         Promise.all(
           _.values(res.children).map(async building => {
@@ -78,19 +74,19 @@ class ApiStore {
   };
 
   getStructure = async () => {
-    return this.get(`${STRUCTURE_ROOT}/tree/filter${TYPE_CONTEXT}`).catch(() =>
+    return this.get(`${process.env.NEXT_PUBLIC_STRUCTURE_ROOT}/tree/filter${TYPE_CONTEXT}`).catch(() =>
       console.log("no STRUCTURE_ROOT id"),
     );
   };
 
   getContexts = async () => {
-    return this.getFilteredListFromId(ROOT, TYPE_CONTEXT).catch(() =>
+    return this.getFilteredListFromId(process.env.NEXT_PUBLIC_API_ROOT_URL, TYPE_CONTEXT).catch(() =>
       console.log("no list of contexts id"),
     );
   };
 
   getEventList = async () => {
-    return this.getFilteredListFromId(ROOT, "/allocation/temporal")
+    return this.getFilteredListFromId(process.env.NEXT_PUBLIC_API_ROOT_URL, "/allocation/temporal")
       .then(res =>
         Promise.all(
           res
@@ -162,7 +158,7 @@ class ApiStore {
       headers,
       body: JSON.stringify(model),
     };
-    const request = new Request(BASE_URL, options);
+    const request = new Request(process.env.NEXT_PUBLIC_BASE_API_URL, options);
     const response = await fetch(request);
     return response;
   };
@@ -255,7 +251,8 @@ class ApiStore {
           );
           data.levels = levels;
         }
-        data.name = title in ALIAS_IDS ? title : data.name;
+        data.name =
+          title in ALIAS_IDS[process.env.NODE_ENV] ? title : data.name;
 
         runInAction(() => {
           if (asroot) {

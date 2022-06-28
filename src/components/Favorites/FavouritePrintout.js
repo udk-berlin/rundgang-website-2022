@@ -84,9 +84,13 @@ const FavouritePrintout = ({
                         fill={"black"}
                         x={scaleX(START_TIME)}
                         y={scaleY(2 * i) + 40}
-                        text={item.origin?.authors
-                          .map(aut => aut.name)
-                          .join(", ")}
+                        text={[
+                          ...new Set(
+                            item.origin?.authors.map(a =>
+                              a.name ? a.name.split("@")[0]?.trim() : a.id,
+                            ),
+                          ),
+                        ].join(", ")}
                       />
                     )}
                     <Text
