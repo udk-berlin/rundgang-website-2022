@@ -47,6 +47,11 @@ export const ArrowStyled = styled.span`
   &:hover {
     color: ${({ theme }) => theme.colors.highlight};
   }
+  @media only screen and (min-width: 821px) and (orientation: landscape) {
+    font-size: 90%;
+    line-height: 0.9;
+    margin-bottom: auto;
+  }
 `;
 
 export const ChildrenWrapper = styled.span`

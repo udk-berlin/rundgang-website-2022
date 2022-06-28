@@ -79,8 +79,7 @@ const PageTitle = () => {
               handleClick={handleBack}
               titleId={`${uiStore.title}-${i}-${router.locale}`}
               key={`${uiStore.title}-line-${i}`}
-              lineh={1}
-              preferredSize={4.9}
+              preferredSize={"40px"}
               arrowDir={uiStore.title !== "rundgang" && i == 0 ? "left" : null}
             >
               {line}
@@ -91,8 +90,7 @@ const PageTitle = () => {
             handleClick={handleBack}
             titleId={`${uiStore.title}-${router.locale}`}
             key={`${uiStore.title}_title`}
-            lineh={0.9}
-            preferredSize={isMobile ? 12 : 10}
+            preferredSize={"80px"}
             arrowDir={uiStore.title !== "rundgang" ? "left" : null}
           >
             {titleStrings}

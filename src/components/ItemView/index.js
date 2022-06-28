@@ -12,6 +12,7 @@ import ImageDetailView from "./ImageDetailView";
 
 const ItemViewWrapper = styled.div`
   height: 100%;
+  min-height: calc(100vh - 110px);
   width: 100%;
   overflow-x: hidden;
   font-size: ${({ theme }) => theme.fontSizes.sm};
