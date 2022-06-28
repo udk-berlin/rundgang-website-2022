@@ -73,16 +73,22 @@ const TagMenu = ({ handleSubmit }) => {
             key={`${name}-taggroupwerapper`}
             group={group}
             name={name}
+            handleSubmit={handleSubmit}
           />
         ))}
       </FilterMenuWrapper>
       <Buttons>
-        <ResetButton onClick={() => uiStore.filterStore.handleReset()}>
+        <ResetButton
+          onClick={() => {
+            uiStore.filterStore.handleReset();
+            handleSubmit();
+          }}
+        >
           <LocalizedText id="reset" />
         </ResetButton>
         <GoButton
           active={uiStore.filterStore.isTagSelected}
-          onClick={() => handleSubmit()}
+          onClick={() => handleSubmit(true)}
         >
           {uiStore.filterStore.isTagSelected ? (
             <span>&#8594;</span>

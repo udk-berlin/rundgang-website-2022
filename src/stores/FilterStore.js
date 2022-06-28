@@ -59,9 +59,15 @@ class FilterStore {
       const selectAncestors = ancestors => {
         return _.keys(INITIAL_SELECTION).reduce((obj, cat) => {
           let selId = "none";
-          if (this.initialTags[cat].find(x => x.id == id)) {
+          if (
+            cat in this.initialTags &&
+            this.initialTags[cat].find(x => x.id == id)
+          ) {
             selId = id;
-          } else {
+          } else if (
+            cat in this.initialTags &&
+            this.initialTags[cat].find(x => ancestors.includes(x.id))
+          ) {
             selId = this.initialTags[cat].find(x =>
               ancestors.includes(x.id),
             )?.id;
@@ -123,6 +129,7 @@ class FilterStore {
 
   get currentTags() {
     let sel = Boolean(_.values(this.selected).find(v => v && v !== "none"));
+    console.log(_.entries(this.selected).find(([k,v]) => v && v !== "none"));
     if (sel) {
       let allTags = this.initialTags;
       const flEl = (group, sel) => {

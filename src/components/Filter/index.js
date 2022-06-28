@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useEffect } from "react";
 import { observer } from "mobx-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
@@ -24,6 +24,13 @@ const variants = {
     borderWidth: 0,
   },
   filter: {
+    height: "fit-content",
+    width: "100%",
+    opacity: 1,
+    margin: "0px 8px",
+    borderWidth: "4px",
+  },
+  filterMobile: {
     height: "fit-content",
     width: "100%",
     opacity: 1,
@@ -67,21 +74,33 @@ const Filter = ({ onClick, onClose }) => {
       ? `${uiStore.isOpen}${isMobile ? "Mobile" : ""}`
       : "closed";
 
-  const handleSubmit = useCallback(() => {
-    onClose();
-    if (uiStore.filterStore.isTagSelected) {
-      let link = router.pathname;
-      let pid = makeUrlFromId(uiStore.filterStore.selectedId);
-      if (router.pathname == "/") {
-        link = `katalog/${pid}`;
-      } else if (router.pathname.includes("[pid]")) {
-        link = link.replace("[pid]", pid);
-      } else {
-        link = `${router.pathname}/${pid}`;
+  const handleSubmit = useCallback(
+    (close = false) => {
+      if (close) {
+        onClose();
       }
-      router.replace(link);
-    }
-  }, [uiStore.filterStore.isTagSelected]);
+      if (uiStore.filterStore.selectedId) {
+        let link = router.pathname;
+        let pid = makeUrlFromId(uiStore.filterStore.selectedId);
+        if (router.pathname == "/") {
+          link = `katalog/${pid}`;
+        } else if (router.pathname.includes("[pid]")) {
+          link = link.replace("[pid]", pid);
+        } else {
+          link = `${router.pathname}/${pid}`;
+        }
+        router.replace(link);
+      } else {
+        if (router.pathname == "/") {
+        } else if (router.pathname.includes("[pid]")) {
+          router.replace(router.pathname.replace("[pid]", ""));
+        } else {
+          router.replace(router.pathname);
+        }
+      }
+    },
+    [uiStore.filterStore.selectedId],
+  );
 
   return (
     <FilterWrapper

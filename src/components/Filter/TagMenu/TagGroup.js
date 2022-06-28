@@ -70,7 +70,7 @@ const Tags = styled.div`
   flex-wrap: wrap;
 `;
 
-const TagGroup = ({ group, name }) => {
+const TagGroup = ({ group, name, handleSubmit }) => {
   const { uiStore } = useStores();
   const isOpen = uiStore.filterStore.openTagGroup == name;
   const groups = useMemo(
@@ -104,13 +104,14 @@ const TagGroup = ({ group, name }) => {
             <Tags>
               {v.map((child, i) => (
                 <Tag
-                  onClick={() =>
+                  onClick={() => {
                     uiStore.filterStore.setSelected(
                       name,
                       child.id,
                       child.ancestors,
-                    )
-                  }
+                    );
+                    handleSubmit();
+                  }}
                   selected={uiStore.filterStore.selected[name] == child.id}
                   levelSelected={uiStore.filterStore.selected[name] !== null}
                   key={`${i}-tag-${child.id}-${name}`}

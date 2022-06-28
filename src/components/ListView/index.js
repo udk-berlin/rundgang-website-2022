@@ -49,7 +49,7 @@ const NoItems = styled.div`
 
 const ListView = ({ numCol }) => {
   const { uiStore } = useStores();
-  return uiStore.items && uiStore.items.length > 1 ? (
+  return uiStore.items && uiStore.items.length > 0 ? (
     <ListViewWrapper numCol={numCol}>
       {uiStore.items.map(item => (
         <ListItem numCol={numCol} key={item.id} element={item} />

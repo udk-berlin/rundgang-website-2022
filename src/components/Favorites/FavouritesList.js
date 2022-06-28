@@ -87,7 +87,11 @@ const FavouritesList = ({ onClose }) => {
               <LocalizedText id="projects" />
             </FavouritesTitle>
             {uiStore.savedItems
-              .filter(item => item.template == "studentproject")
+              .filter(
+                item =>
+                  item.template == "studentproject" ||
+                  item.template == "project",
+              )
               .map(item => (
                 <FavouriteItem
                   key={item.id}
