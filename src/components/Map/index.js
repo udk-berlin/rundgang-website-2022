@@ -10,28 +10,6 @@ import exactLocations from "./locationData.json";
 import GrundrissMarker from "./GrundrissMarker";
 import GrundrissPopup from "./GrundrissPopup";
 
-const compareInputs = (inputKeys, oldInputs, newInputs) => {
-  inputKeys.forEach(key => {
-    const oldInput = oldInputs[key];
-    const newInput = newInputs[key];
-    if (oldInput !== newInput) {
-      console.log("change detected", key, "old:", oldInput, "new:", newInput);
-    }
-  });
-};
-const useDependenciesDebugger = inputs => {
-  const oldInputsRef = useRef(inputs);
-  const inputValuesArray = Object.values(inputs);
-  const inputKeysArray = Object.keys(inputs);
-  useMemo(() => {
-    const oldInputs = oldInputsRef.current;
-
-    compareInputs(inputKeysArray, oldInputs, inputs);
-
-    oldInputsRef.current = inputs;
-  }, inputValuesArray); // eslint-disable-line react-hooks/exhaustive-deps
-};
-
 const MapWrapper = styled.div`
   width: 100%;
   margin: auto;
@@ -73,7 +51,6 @@ const Map = () => {
 
   const ZOOM = size?.width > 999 ? 12.5 : 11.3;
   const [addresses, setAddresses] = useState([]);
-  const refs = useRef(addresses.map(() => React.createRef()));
 
   useEffect(() => {
     if (exactLocations && dataStore.api.locations) {
@@ -123,11 +100,10 @@ const Map = () => {
 
           const addPopup = () => {
             // add poopup
-            console.log(refs.current);
-            const popupElement = refs.current[i];
+            const popupElement = document.getElementById(`popup-${el.id}`);
             const popup = new maplibregl.Popup()
               .setLngLat([el.lng, el.lat])
-              .setDOMContent(popupElement.current);
+              .setDOMContent(popupElement);
             marker.setPopup(popup);
           };
           marker.getElement().addEventListener("click", addPopup);
@@ -163,17 +139,12 @@ const Map = () => {
       });
     }
   }, [size, dataStore.api.locations, addresses]);
-  useDependenciesDebugger({ size, locs: dataStore.api.locations, addresses });
+
   return (
     <MapWrapper size={size}>
       <Popups>
         {addresses.map((house, i) => (
-          <GrundrissPopup
-            ref={refs.current[i]}
-            key={`popup-${house.id}`}
-            el={house}
-            size={210}
-          />
+          <GrundrissPopup key={`popup-${house.id}`} el={house} size={210} />
         ))}
       </Popups>
       <MapContainerDiv ref={mapContainer} />

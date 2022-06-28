@@ -50,7 +50,6 @@ const GrundrissPopup = ({ el, size }) => {
     <PopupWrapper id={`popup-${el.id}`} size={size}>
       <PopupTitle>
         {el.name}
-        {el.isFound}
       </PopupTitle>
       <Times>
         {el?.extra?.allocation?.temporal?.map(time =>
