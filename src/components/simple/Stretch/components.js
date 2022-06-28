@@ -44,6 +44,7 @@ export const ArrowStyled = styled.span`
   width: fit-content;
   font-family: "Inter";
   font-weight: bold;
+  cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.colors.highlight};
   }

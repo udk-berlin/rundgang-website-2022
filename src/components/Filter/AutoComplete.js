@@ -41,13 +41,7 @@ const AutoComplete = ({ searchValue, handleSelect, handleReset }) => {
   );
 
   const onItemClicked = item => {
-    uiStore.filterStore.setSelected(
-      item.template,
-      item.id,
-      item.parent,
-      item.grandparent,
-      item.greatgrandparent,
-    );
+    uiStore.filterStore.setSelected(item.template, item.id, item.ancestors);
     handleSelect();
   };
 

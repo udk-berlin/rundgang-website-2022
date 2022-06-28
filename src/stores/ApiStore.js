@@ -8,6 +8,7 @@ import {
 } from "mobx";
 
 import { makeIdFromUrl, ALIAS_IDS } from "@/utils/idUtils";
+import filterContext from "./filterContext";
 
 const BASE_URL = "https://api.dev.medienhaus.udk-berlin.de/api/v2/";
 const PATH_URL = "/pathlist";
@@ -32,6 +33,7 @@ class ApiStore {
     this.structure = null;
     this.eventlist = null;
     this.cachedIds = {};
+    this.tags = {};
     this.currentRoot = null;
     this.currentItems = null;
     this.isLoaded = false;
@@ -274,11 +276,14 @@ class ApiStore {
     this.setStatus("pending");
     try {
       const data = await this.getRoot();
+      const tree = await this.getTreeFromId(data.id);
+      const tags = filterContext(tree);
       const structure = await this.getStructure();
       const locations = await this.getLocations();
       const eventlist = await this.getEventList();
       runInAction(() => {
         this.root = data;
+        this.tags = tags;
         this.locations = locations;
         this.structure = structure;
         this.eventlist = eventlist;

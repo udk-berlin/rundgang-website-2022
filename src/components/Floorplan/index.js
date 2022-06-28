@@ -83,7 +83,6 @@ const Floorplan = () => {
         if (!e.target?.dataset?.id) {
           uiStore.setSelectedRoom(null);
           uiStore.setFloorLevel(uiStore.floorLevel);
-          uiStore.setTitle(`Etage ${uiStore.floorLevel}`);
         } else {
           let data = e.target.dataset;
           let roomRect = document.querySelectorAll(`[data-id="${data.id}"]`)[0];
@@ -91,7 +90,6 @@ const Floorplan = () => {
             roomRect.style.fill = "#E2FF5D";
             uiStore.setSelectedRoom(data);
             uiStore.setFloorLevel(uiStore.floorLevel);
-            uiStore.setTitle(`Raum ${data.name}`);
           }
         }
       }
@@ -102,7 +100,6 @@ const Floorplan = () => {
   const handleSelectAll = () => {
     uiStore.setSelectedRoom(null);
     uiStore.setFloorLevel(null);
-    uiStore.setTitle(uiStore.currentContext?.name);
   };
 
   return (
@@ -130,7 +127,6 @@ const Floorplan = () => {
             key={level.id}
             selected={level.name == uiStore.floorLevel}
             onClick={() => {
-              uiStore.setTitle(`Etage ${level.name}`);
               uiStore.setFloorLevel(level.name);
             }}
           >

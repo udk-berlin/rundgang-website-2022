@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
-import useWindowSize from "@/utils/useWindowSize";
+import useMediaQuery from "@/utils/useMediaQuery";
 import { useIntl } from "react-intl";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
@@ -22,9 +22,8 @@ const IndexWrapper = styled.div`
 `;
 
 const IndexPage = () => {
-  const size = useWindowSize();
   const intl = useIntl();
-  const isMobile = useMemo(() => size.width < 786, [size]);
+  const isMobile = useMediaQuery("(max-width: 768px)");
   return (
     <Layout showToTop={false}>
       <IndexWrapper>

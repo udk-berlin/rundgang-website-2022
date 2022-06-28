@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import useWindowSize from "@/utils/useWindowSize";
+import useMediaQuery from "@/utils/useMediaQuery";
 import { StretchComponent } from "./components";
 import { observer } from "mobx-react";
 
@@ -13,14 +13,12 @@ const Stretch = ({
 }) => {
   const stretchRef = useRef();
   const parentRef = useRef();
-  const size = useWindowSize();
-  const isMobile = useMemo(() => size.width < 786, [size]);
-  const [factor, setFactor] = useState(1);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [factor, setFactor] = useState(0);
 
   useEffect(() => {
     if (
       titleId &&
-      size.width &&
       preferredSize &&
       stretchRef?.current?.clientWidth &&
       parentRef?.current?.clientWidth
@@ -35,7 +33,7 @@ const Stretch = ({
         setFactor(f);
       }, 200);
       return () => {
-        setFactor(1);
+        setFactor(0);
         clearTimeout(timer);
       };
     }
@@ -45,10 +43,9 @@ const Stretch = ({
     parentRef?.current?.clientWidth,
     isMobile,
     stretchRef?.current?.clientWidth,
-    size.width,
   ]);
 
-  return size.width ? (
+  return (
     <StretchComponent
       fs={preferredSize}
       lh={lineh}
@@ -61,7 +58,7 @@ const Stretch = ({
     >
       {children}
     </StretchComponent>
-  ) : null;
+  );
 };
 
 export default observer(Stretch);

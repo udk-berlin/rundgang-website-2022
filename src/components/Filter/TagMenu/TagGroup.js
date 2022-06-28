@@ -18,7 +18,9 @@ const TagGroupWrapper = styled.div`
     `${theme.space(8)} ${theme.space(8)} ${theme.space(8)} ${theme.space(16)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     padding: ${({ theme }) =>
-      `${theme.space(8)} ${theme.space(8)} ${theme.space(8)} ${theme.space(8)}`};
+      `${theme.space(8)} ${theme.space(8)} ${theme.space(8)} ${theme.space(
+        8,
+      )}`};
   }
 `;
 const NumberItems = styled.span`
@@ -106,9 +108,7 @@ const TagGroup = ({ group, name }) => {
                     uiStore.filterStore.setSelected(
                       name,
                       child.id,
-                      child.parent,
-                      child.grandparent,
-                      child.greatgrandparent,
+                      child.ancestors,
                     )
                   }
                   selected={uiStore.filterStore.selected[name] == child.id}

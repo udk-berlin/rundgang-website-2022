@@ -5,7 +5,7 @@ import { scaleLinear } from "d3-scale";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocationList from "./LocationList";
 import TimeScale, { times } from "./TimeScale";
-import { useIsMobile } from "@/utils/useWindowSize";
+import useMediaQuery from "@/utils/useMediaQuery";
 import {
   TIME_PADDING,
   TIME_PADDING_MOBILE,
@@ -93,7 +93,7 @@ const TimeNumbers = styled.div`
 `;
 
 const TimeTable = () => {
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [selectedDay, setSelectedDay] = useState(0);
   const [padding, setPadding] = useState(0);
   const [width, setWidth] = useState(0);

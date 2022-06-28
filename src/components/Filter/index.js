@@ -9,11 +9,16 @@ import TagMenu from "./TagMenu";
 import { useRouter } from "next/router";
 import { makeUrlFromId } from "@/utils/idUtils";
 import { SEARCHBAR_HEIGHT, MIN_PADDING } from "@/utils/constants";
+import useMediaQuery from "@/utils/useMediaQuery";
 
 const variants = {
   favourites: {
     height: SEARCHBAR_HEIGHT,
-    width: "0px",
+    width: "50%",
+  },
+  favouritesMobile: {
+    height: SEARCHBAR_HEIGHT,
+    width: "0%",
     opacity: 0,
     margin: "0px 0px",
     borderWidth: 0,
@@ -55,6 +60,12 @@ const FilterWrapper = styled(motion.div)`
 const Filter = ({ onClick, onClose }) => {
   const { uiStore } = useStores();
   const router = useRouter();
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  const variant =
+    uiStore.isOpen && uiStore.isOpen !== null
+      ? `${uiStore.isOpen}${isMobile ? "Mobile" : ""}`
+      : "closed";
 
   const handleSubmit = useCallback(() => {
     onClose();
@@ -74,9 +85,7 @@ const Filter = ({ onClick, onClose }) => {
 
   return (
     <FilterWrapper
-      animate={
-        uiStore.isOpen && uiStore.isOpen !== null ? uiStore.isOpen : "closed"
-      }
+      animate={variant}
       variants={variants}
       transition={{ type: "linear", duration: 0.5 }}
     >

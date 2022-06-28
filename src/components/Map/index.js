@@ -9,6 +9,7 @@ import useWindowSize from "@/utils/useWindowSize";
 import exactLocations from "./locationData.json";
 import GrundrissMarker from "./GrundrissMarker";
 import GrundrissPopup from "./GrundrissPopup";
+import UiStore from "@/stores/UiStore";
 
 const MapWrapper = styled.div`
   width: 100%;
@@ -43,7 +44,7 @@ const FIRSTLAT = 52.5093753;
 const FIRSTLNG = 13.3302138;
 
 const Map = () => {
-  const { dataStore } = useStores();
+  const { dataStore, uiStore } = useStores();
   const mapContainer = useRef(null);
   const map = useRef(null);
   const size = useWindowSize();
@@ -109,6 +110,9 @@ const Map = () => {
           let filteredLocations = addresses.filter(el =>
             bounds.contains([el.lng, el.lat]),
           );
+          if (filteredLocations?.length !== uiStore.zoomFiltered?.length) {
+            uiStore.setZoomFiltered(filteredLocations.map(loc => loc.id));
+          }
           filteredLocations.map(el => {
             const scale = map.current.getZoom() - el.maxZoom;
             if (el.image == "haus9") {

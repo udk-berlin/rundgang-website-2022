@@ -40,34 +40,38 @@ const Download = () => {
   }
 
   const downloadImage = () => {
-    //const dataURL = ref.current.toDataURL({ pixelRatio: 2 });
-    const pdf = new jsPDF("l", "px", [
-      ref.current.width(),
-      ref.current.height(),
-    ]);
-    pdf.addImage(
-      ref.current.toDataURL({ pixelRatio: 1 }),
-      0,
-      0,
-      ref.current.width(),
-      ref.current.height(),
-    );
+    if (uiStore.numberSavedItems > 0) {
+      //const dataURL = ref.current.toDataURL({ pixelRatio: 2 });
+      const pdf = new jsPDF("l", "px", [
+        ref.current.width(),
+        ref.current.height(),
+      ]);
+      pdf.addImage(
+        ref.current.toDataURL({ pixelRatio: 1 }),
+        0,
+        0,
+        ref.current.width(),
+        ref.current.height(),
+      );
 
-    pdf.save("rundgangudk2022.pdf");
+      pdf.save("rundgangudk2022.pdf");
+    }
   };
   return (
-    <DownloadButton onClick={() => downloadImage()}>
-      <LocalizedText id="download" />
-      <DownloadPng>
-        <FavouritePrintout
-          savedItems={uiStore.savedItems}
-          savedEvents={uiStore.savedEvents}
-          width={2480}
-          height={3508}
-          reference={ref}
-        />
-      </DownloadPng>
-    </DownloadButton>
+    uiStore.numberSavedItems > 0 && (
+      <DownloadButton onClick={() => downloadImage()}>
+        <LocalizedText id="download" />
+        <DownloadPng>
+          <FavouritePrintout
+            savedItems={uiStore.savedItems}
+            savedEvents={uiStore.savedEvents}
+            width={2480}
+            height={3508}
+            reference={ref}
+          />
+        </DownloadPng>
+      </DownloadButton>
+    )
   );
 };
 

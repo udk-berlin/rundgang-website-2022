@@ -94,10 +94,10 @@ const TitleText = styled.div`
 
 const ContentWrapper = styled.div`
   padding-top: ${({ theme }) => theme.space(8)};
+  padding-bottom: ${({ theme }) => theme.space(40)};
   display: grid;
   justify-content: space-evenly;
   margin: auto;
-  margin-bottom: ${({ theme }) => theme.space(20)};
   grid-template-columns: 59% 39%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;

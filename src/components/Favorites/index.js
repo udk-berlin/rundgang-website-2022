@@ -37,12 +37,16 @@ const FavouritesWrapper = styled(motion.div)`
   position: relative;
   width: 80px;
   background: white;
-  height: ${SEARCHBAR_HEIGHT}px;
-  border: ${({ theme }) => `2px inset ${theme.colors.primary}`};
+  height: ${SEARCHBAR_HEIGHT + 4}px;
+  border: ${({ theme }) => `2px solid ${theme.colors.primary}`};
   margin: ${({ theme }) => `2px ${theme.space(8)}`};
   max-height: calc(100vh - 180px);
   overflow-y: hidden;
   overflow-x: hidden;
+
+  @media ${({ theme }) => theme.breakpoints.laptop} {
+    max-width: 50%;
+  }
 `;
 
 const FavouritesHeader = styled.div`

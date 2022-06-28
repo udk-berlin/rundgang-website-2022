@@ -17,7 +17,7 @@ const FavouritesListWrapper = styled.div`
 `;
 const Favourites = styled.div`
   padding-bottom: ${({ theme }) => theme.space(8)};
-  border-top: 3px inset black;
+  border-top: 3px solid black;
 `;
 const FavouritesTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lg};

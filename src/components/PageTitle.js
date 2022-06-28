@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
 import Stretch from "@/components/simple/Stretch/index";
-import useWindowSize from "@/utils/useWindowSize";
+import useMediaQuery from "@/utils/useMediaQuery";
 import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
 
 const PageTitleWrapper = styled.div`
@@ -43,8 +43,7 @@ const PageTitle = () => {
   const intl = useIntl();
   const router = useRouter();
 
-  const size = useWindowSize();
-  const isMobile = useMemo(() => size.width < 786, [size]);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const titleStrings = useMemo(() => {
     if (uiStore.title) {
@@ -61,26 +60,10 @@ const PageTitle = () => {
   const handleBack = () => {
     let link = router.pathname;
     if (router.pathname.includes("[pid]")) {
-      if (
-        uiStore.selectedRoom &&
-        uiStore.currentContext.template == "location-building"
-      ) {
-        uiStore.setSelectedRoom(null);
-        uiStore.setTitle(`Etage ${uiStore.floorLevel}`);
-      } else if (
-        uiStore.floorLevel &&
-        uiStore.currentContext.template == "location-building"
-      ) {
-        uiStore.setSelectedRoom(null);
-        uiStore.setFloorLevel(null);
-        uiStore.setTitle(uiStore.currentContext?.name);
-        link = link.replace("[pid]", "");
-      } else {
-        uiStore.setSelectedRoom(null);
-        uiStore.setFloorLevel(null);
-        link = link.replace("[pid]", "");
-        router.replace(link);
-      }
+      uiStore.setSelectedRoom(null);
+      uiStore.setFloorLevel(null);
+      link = link.replace("[pid]", "");
+      router.replace(link);
     } else {
       router.replace("/");
       uiStore.setTitle(dataStore.api.root.name, dataStore.api.root.id);
@@ -109,7 +92,7 @@ const PageTitle = () => {
             titleId={`${uiStore.title}-${router.locale}`}
             key={`${uiStore.title}_title`}
             lineh={0.9}
-            preferredSize={isMobile ? 12: 10}
+            preferredSize={isMobile ? 12 : 10}
             arrowDir={uiStore.title !== "rundgang" ? "left" : null}
           >
             {titleStrings}

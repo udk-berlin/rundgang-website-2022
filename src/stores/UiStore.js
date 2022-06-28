@@ -10,6 +10,7 @@ class UiStore {
     this.title = null;
     this.floorLevel = null;
     this.selectedRoom = null;
+    this.zoomFiltered = null;
 
     makeAutoObservable(this, {
       setIsOpen: action,
@@ -93,6 +94,10 @@ class UiStore {
     this.selectedRoom = r;
   }
 
+  setZoomFiltered(arr) {
+    this.zoomFiltered = arr;
+  }
+
   get floorPlan() {
     if (this.dataStore.api.currentRoot?.template == "location-building") {
       return this.dataStore.api.currentRoot.levels.find(
@@ -124,6 +129,14 @@ class UiStore {
         let tag = this.selectedRoom ? this.selectedRoom.name : this.floorLevel;
         return this.dataStore.api.currentItems.filter(el =>
           el.tags.find(t => t.name == tag),
+        );
+      }
+      if (
+        this.dataStore.api.currentRoot?.template == "location-university" &&
+        this.zoomFiltered?.length
+      ) {
+        return this.dataStore.api.currentItems.filter(el =>
+          el.tags.find(t => this.zoomFiltered.includes(t.id)),
         );
       }
       return this.dataStore.api.currentItems;

@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import SearchBar from "@/components/SearchBar";
 import PageTitle from "@/components/PageTitle";
 import CursorLine from "@/components/CursorLine";
-import { useIsMobile } from "@/utils/useWindowSize";
+import useMediaQuery from "@/utils/useMediaQuery";
 import JumpToTop from "@/components/JumpToTop";
 import IntroAnimation from "@/components/IntroAnimation";
 
@@ -29,7 +29,7 @@ const PageWrapper = styled.div`
 const Page = ({ children }) => {
   const { dataStore, uiStore } = useStores();
   const router = useRouter();
-  const isMobile = useIsMobile();
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [showLine, setShowLine] = useState(false);
 
   useEffect(() => {
