@@ -43,7 +43,6 @@ export const ArrowStyled = styled.span`
   font-size: inherit;
   width: fit-content;
   font-family: "Inter";
-  font-weight: bold;
   cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.colors.highlight};

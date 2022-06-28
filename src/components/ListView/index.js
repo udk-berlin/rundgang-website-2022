@@ -12,6 +12,7 @@ const ListViewWrapper = styled.div`
   position: relative;
   display: grid;
   justify-content: space-evenly;
+  padding-bottom: ${({ theme }) => theme.space(40)};
   margin: auto;
   ${({ numCol }) => {
     if (numCol == 2) {

@@ -7,7 +7,7 @@ const Canvas = styled.canvas`
   position: absolute;
   top: 0;
   bottom: 0;
-  z-index: 1000;
+  z-index: 8000;
   pointer-events: none;
 `;
 
@@ -35,7 +35,7 @@ const CursorLine = () => {
       context.stroke();
       context.closePath();
     }
-  }, [arr]);
+  }, [arr, size.width]);
 
   useEffect(() => {
     setArr(arr => {
@@ -47,7 +47,7 @@ const CursorLine = () => {
   }, [mousePos]);
 
   return size.width && size.height ? (
-    <Canvas width="100vw" height="100vh" ref={canvasRef} />
+    <Canvas width={size.width} height={size.height} ref={canvasRef} />
   ) : null;
 };
 

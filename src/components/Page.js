@@ -53,6 +53,9 @@ const Page = ({ children }) => {
       ) {
         uiStore.filterStore.handleReset();
         dataStore.api.getIdFromLink(dataStore.api.root.id, true);
+        if (!isMobile) {
+          setShowLine(true);
+        }
       }
     }
   }, [router.query.pid, router.pathname, dataStore.api?.root?.id]);
@@ -72,9 +75,9 @@ const Page = ({ children }) => {
         </HeaderWrapper>
         <PageWrapper>
           {children}
-          {showLine ? <CursorLine /> : null}
           <IntroAnimation key={"intro"} />
           <Footer />
+          {showLine ? <CursorLine /> : null}
         </PageWrapper>
       </>
     )
