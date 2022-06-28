@@ -21,6 +21,9 @@ const GoButton = styled.button`
   font-family: "Inter";
   line-height: 1;
   transform: ${({ active }) => (active ? "scaleY(1)" : "scaleY(0.7)")};
+  @media ${({ theme }) => theme.breakpoints.mobileM} {
+    font-size: 60px;
+  }
 `;
 
 const ResetButton = styled.button`

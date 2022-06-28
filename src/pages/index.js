@@ -6,12 +6,13 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import Layout from "@/components/simple/Layout";
 import Stretch from "@/components/simple/Stretch/index";
-import { MIN_PADDING, FOOTER_HEIGHT } from "@/utils/constants";
 
 const LinkWrapper = styled(LocalizedLink)`
   width: 100%;
   height: fit-content;
   white-space: nowrap;
+  display: flex;
+  justify-content: flex-start;
   &:hover {
     color: #333;
   }
@@ -23,7 +24,9 @@ const IndexWrapper = styled.div`
 
 const IndexPage = () => {
   const intl = useIntl();
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery(
+    "only screen and (max-width:768px) and (orientation:portrait)",
+  );
   return (
     <Layout showToTop={false}>
       <IndexWrapper>
@@ -31,7 +34,7 @@ const IndexPage = () => {
           <Stretch
             arrowDir="top"
             titleId={intl.formatMessage({ id: "katalog" })}
-            preferredSize="32%"
+            preferredSize={isMobile ? 24 : 26.5}
           >
             <LocalizedText id="katalog" />
           </Stretch>
@@ -39,7 +42,7 @@ const IndexPage = () => {
         <LinkWrapper to="/orte">
           <Stretch
             titleId={intl.formatMessage({ id: "orte" })}
-            preferredSize="32%"
+            preferredSize={isMobile ? 24 : 26.5}
             arrowDir="right"
           >
             <LocalizedText id="orte" />
@@ -48,7 +51,7 @@ const IndexPage = () => {
         <LinkWrapper to="/zeiten">
           <Stretch
             titleId={intl.formatMessage({ id: "zeiten" })}
-            preferredSize="32%"
+            preferredSize={isMobile ? 24 : 26.5}
             arrowDir="left"
           >
             <LocalizedText id="zeiten" />
@@ -57,7 +60,7 @@ const IndexPage = () => {
         <LinkWrapper to="/katalog/beratungsangebote">
           <Stretch
             titleId={intl.formatMessage({ id: "beratungsangebote" })}
-            preferredSize="12%"
+            preferredSize={isMobile ? 9 : 10}
             arrowDir="bottom"
           >
             <LocalizedText id="beratungsangebote_index" />

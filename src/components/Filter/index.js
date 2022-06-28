@@ -67,7 +67,9 @@ const FilterWrapper = styled(motion.div)`
 const Filter = ({ onClick, onClose }) => {
   const { uiStore } = useStores();
   const router = useRouter();
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery(
+    "only screen and (max-width:768px) and (orientation:portrait)",
+  );
 
   const variant =
     uiStore.isOpen && uiStore.isOpen !== null

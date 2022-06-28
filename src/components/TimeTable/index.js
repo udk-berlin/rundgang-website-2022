@@ -19,9 +19,11 @@ import {
   MIN_PADDING,
 } from "@/utils/constants";
 import useTopScrollBar from "@/utils/useTopScrollBar";
+import { FormattedDate } from "react-intl";
 
 const TimeTableWrapper = styled.div`
   padding: ${({ theme }) => `0 ${theme.space(16)}`};
+  margin-bottom: 40px;
   height: fit-content;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -49,8 +51,9 @@ const DayMenu = styled.div`
 
 const DayName = styled.div`
   position: fixed;
-  left: ${({ left }) => (left ? 0 : "auto")};
-  right: ${({ left }) => (left ? "auto" : 0)};
+  padding-left: ${({ theme }) => theme.space(8)};
+  left: ${({ left }) => (left ? "8px" : "auto")};
+  right: ${({ left }) => (left ? "auto" : "8px")};
   font-size: ${({ theme, selected }) =>
     selected ? theme.fontSizes.xl : theme.fontSizes.lm};
   cursor: pointer;
@@ -67,6 +70,7 @@ const Arrow = styled.span`
 const TimeHeader = styled.div`
   position: fixed;
   background-color: white;
+  display: inline;
   width: 100%;
   height: 100px;
   overflow-x: auto;
@@ -92,8 +96,18 @@ const TimeNumbers = styled.div`
   width: ${({ wwidth }) => wwidth}px;
 `;
 
+const DateWrapper = styled.span`
+  margin: ${({ theme }) => theme.space(16)};
+  display: inline;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    display: none;
+  }
+`;
+
 const TimeTable = () => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery(
+    "only screen and (max-width:768px) and (orientation:portrait)",
+  );
   const [selectedDay, setSelectedDay] = useState(0);
   const [padding, setPadding] = useState(0);
   const [width, setWidth] = useState(0);
@@ -145,8 +159,14 @@ const TimeTable = () => {
           >
             {selectedDay !== 0 && <Arrow>&#8592;</Arrow>}
             <LocalizedText id="saturday" />
+            <DateWrapper>
+              <FormattedDate value={1658566800000} />
+            </DateWrapper>
           </DayName>
           <DayName selected={selectedDay == 1} onClick={() => switchDay(1)}>
+            <DateWrapper>
+              <FormattedDate value={1658664000000} />
+            </DateWrapper>
             <LocalizedText id="sunday" />
             {selectedDay !== 1 && <Arrow>&#8594;</Arrow>}
           </DayName>

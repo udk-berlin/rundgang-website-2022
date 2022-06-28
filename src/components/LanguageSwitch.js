@@ -11,11 +11,12 @@ const LanguageSwitchWrapper = styled.div`
 const LanguageItem = styled.div`
   cursor: pointer;
   padding: ${({ theme }) => ` 0 ${theme.space(4)}`};
+  margin: auto;
 `;
 
 const Switch = styled.div`
   position: relative;
-  display: inline-block;
+  display: block;
   width: 40px;
   height: 24px;
 `;

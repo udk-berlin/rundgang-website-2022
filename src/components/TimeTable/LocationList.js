@@ -7,6 +7,8 @@ import { makeUrlFromId } from "@/utils/idUtils";
 import { TIME_WIDTH } from "./constants";
 import { useStores } from "@/stores/index";
 import EventBar from "./EventBar";
+import LocalizedText from "modules/i18n/components/LocalizedText";
+import { FormattedDateTimeRange } from "react-intl";
 
 const LocationWrapper = styled.div`
   width: ${({ width }) => width}px;
@@ -30,7 +32,7 @@ const Room = styled.div`
 
 const House = styled(Room)`
   min-height: 100px;
-  align-items: center;
+  align-items: flex-end;
 `;
 
 const RoomTitle = styled.div`
@@ -62,10 +64,6 @@ const EventsWrapper = styled.div`
   display: flex;
   padding: 4px 0px;
 `;
-const OpeningTimes = styled(EventsWrapper)`
-  padding-top: 70px;
-`;
-
 const LocationList = ({ scaleX, width }) => {
   const { dataStore } = useStores();
   const { pathname } = useRouter();
@@ -90,24 +88,38 @@ const LocationList = ({ scaleX, width }) => {
                 <RoomTitleWrapper width={locWidth}>
                   <RoomTitle>{house}</RoomTitle>
                 </RoomTitleWrapper>
-                <OpeningTimes>
+              </House>
+              <Room key={`openingtimes-${house}`} width={width}>
+                <RoomTitleWrapper width={locWidth}>
+                  <RoomTitle></RoomTitle>
+                </RoomTitleWrapper>
+                <EventsWrapper>
                   {houseInfo[house]
                     ? houseInfo[house]?.allocation?.temporal?.map(time =>
                         time.udk == "rundgang" ? (
                           <EventBar
                             key={`opening-${houseInfo[house]?.id}-${time.start}`}
-                            top={0}
                             start={scaleX(time.start) - locWidth}
                             end={scaleX(time.end) - locWidth}
                             link="/zeiten"
+                            color="lightgrey"
                           >
-                            {house}
+                            <LocalizedText id="openingtimes" />
+                            <FormattedDateTimeRange
+                              from={time.start * 1000}
+                              to={time.end * 1000}
+                              weekday="long"
+                              month="numeric"
+                              day="numeric"
+                              hour="numeric"
+                              minute="numeric"
+                            />
                           </EventBar>
                         ) : null,
                       )
                     : null}
-                </OpeningTimes>
-              </House>
+                </EventsWrapper>
+              </Room>
               {_.entries(rooms).map(([room, events]) => (
                 <Room key={`room-${room}-${house}`} width={width}>
                   <RoomTitleWrapper width={locWidth}>

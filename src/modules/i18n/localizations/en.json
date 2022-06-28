@@ -9,7 +9,7 @@
   "imprint": "Imprint",
   "contact": "Contact",
   "privacy": "Privacy",
-  "search": "SEARCH...",
+  "search": "",
   "filter": "FILTER",
   "saturday": "Saturday",
   "sunday": "Sunday",
@@ -42,5 +42,6 @@
   "allfloors": "all",
   "noitems": "No projects or events",
   "nosaved": "Nothing saved yet",
-  "place": "Place"
+  "place": "Place",
+  "openingtimes": "Opening Hours: "
 }

@@ -3,10 +3,14 @@ import styled from "styled-components";
 import { useIntl } from "react-intl";
 
 const TagIcon = styled.span`
-  font-size: ${({ size }) => size};
+  font-size: ${({ size }) => size}px;
   padding-left: ${({ theme }) => theme.space(8)};
   line-height: 0.6;
   margin: auto;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    padding-left: ${({ theme }) => theme.space(2)};
+    font-size: ${({ size }) => size * 0.9}px;
+  }
 `;
 
 const TagWrapper = styled.span`
@@ -65,9 +69,9 @@ const Tag = ({
       {tagPrefix}
       {children}
       {selected && showCross ? (
-        <TagIcon size="12px">&#57344;</TagIcon>
+        <TagIcon size="12">&#57344;</TagIcon>
       ) : (
-        showCross && <TagIcon size="22px">+</TagIcon>
+        showCross && <TagIcon size="22">+</TagIcon>
       )}
     </TagWrapper>
   );

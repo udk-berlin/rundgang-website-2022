@@ -29,7 +29,9 @@ const PageWrapper = styled.div`
 const Page = ({ children }) => {
   const { dataStore, uiStore } = useStores();
   const router = useRouter();
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery(
+    "only screen and (max-width:768px) and (orientation:portrait)",
+  );
   const [showLine, setShowLine] = useState(false);
 
   useEffect(() => {

@@ -38,6 +38,10 @@ const FavouritesSavedItems = styled.div`
   margin: auto;
   padding: ${({ theme }) => `0 ${theme.space(8)}`};
   font-size: ${({ theme }) => theme.fontSizes.lg};
+
+  @media ${({ theme }) => theme.breakpoints.mobileM} {
+    font-size: ${({ theme }) => theme.fontSizes.lm};
+  }
 `;
 
 const CloseButton = styled.div`
@@ -54,6 +58,9 @@ const CloseButton = styled.div`
   font-family: "Inter";
   line-height: 1;
   transform: scaleY(0.7);
+  @media ${({ theme }) => theme.breakpoints.mobileM} {
+    font-size: 60px;
+  }
 `;
 
 const FavouritesList = ({ onClose }) => {
@@ -80,7 +87,7 @@ const FavouritesList = ({ onClose }) => {
           <FavouriteIcon saved={true} size={0.8} />
         </FavouritesSavedItems>
         <Download />
-      <CloseButton onClick={onClose}>&#x2715;</CloseButton>
+        <CloseButton onClick={onClose}>&#x2715;</CloseButton>
       </FavouritesHeader>
       {uiStore.savedItems.length > 0 ? (
         <>

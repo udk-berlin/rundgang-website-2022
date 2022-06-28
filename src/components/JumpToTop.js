@@ -13,7 +13,7 @@ const JumpToTopWrapper = styled.div`
   font-family: "Inter";
   font-weight: bold;
   cursor: pointer;
-  -webkit-text-stroke: 2px white;
+  -webkit-text-stroke: 1px white;
   -webkit-text-fill-color: black;
 `;
 

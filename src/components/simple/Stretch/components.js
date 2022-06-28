@@ -7,8 +7,8 @@ const StretchWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
   white-space: nowrap;
-  line-height: ${({ lineh }) => lineh};
-  letter-spacing: 0.1px;
+  line-height: 0.9;
+  letter-spacing: 0.01px;
   font-size: ${({ fontSize }) => fontSize}vh;
   width: 100%;
 `;
@@ -38,19 +38,10 @@ const Shadow = styled.div`
 `;
 
 export const ArrowStyled = styled.span`
-  position: ${({ right }) => (right ? "absolute" : "relative")};
-  right: ${({ right }) => (right ? "0px" : "auto")};
-  font-size: inherit;
   width: fit-content;
-  font-family: "Inter";
   cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.colors.highlight};
-  }
-  @media only screen and (min-width: 821px) and (orientation: landscape) {
-    font-size: 90%;
-    line-height: 0.9;
-    margin-bottom: auto;
   }
 `;
 
@@ -66,102 +57,29 @@ export const ArrowWrap = ({ dir, isMobile, children }) => (
   <>
     {dir && dir == "left" && <ArrowStyled>&#8592;</ArrowStyled>}
     {dir && dir == "top" && <ArrowStyled>&#8593;</ArrowStyled>}
-    <ChildrenWrapper>{children}</ChildrenWrapper>
-    {dir && dir == "right" && (
-      <ArrowStyled right={!isMobile}>&#8594;</ArrowStyled>
-    )}
-    {dir && dir == "bottom" && (
-      <ArrowStyled right={!isMobile}>&#8594;</ArrowStyled>
-    )}
+    {children}
+    {dir && dir == "right" && <ArrowStyled right={true}>&#8594;</ArrowStyled>}
+    {dir && dir == "bottom" && <ArrowStyled>&#8595;</ArrowStyled>}
   </>
-);
-
-export const StretchWithArrowDesktop = ({
-  fs,
-  lh,
-  pr,
-  sr,
-  fa,
-  dir,
-  children,
-  handleClick,
-}) => (
-  <StretchWrapper
-    fontSize={fs}
-    lineh={lh}
-    ref={pr}
-    onClick={() => handleClick()}
-  >
-    <ArrowWrap dir={dir} isMobile={false}>
-      <Shadow ref={sr}>{children}</Shadow>
-      <StretchLayout factor={fa}>{children}</StretchLayout>
-    </ArrowWrap>
-  </StretchWrapper>
-);
-
-export const StretchWithArrowMobile = ({
-  fs,
-  lh,
-  pr,
-  sr,
-  fa,
-  dir,
-  children,
-  handleClick,
-}) => (
-  <StretchWrapper
-    fontSize={fs}
-    lineh={lh}
-    ref={pr}
-    onClick={() => handleClick()}
-  >
-    <Shadow ref={sr}>
-      <ArrowWrap dir={dir} isMobile={true}>
-        {children}
-      </ArrowWrap>
-    </Shadow>
-    <StretchLayout ref={pr} factor={fa}>
-      <ArrowWrap dir={dir} isMobile={true}>
-        {children}
-      </ArrowWrap>
-    </StretchLayout>
-  </StretchWrapper>
 );
 
 export const StretchComponent = ({
   fs,
-  lh,
   pr,
   sr,
   fa,
   dir,
   children,
   handleClick,
-  isMobile,
 }) => {
-  return isMobile ? (
-    <StretchWithArrowMobile
-      fs={fs}
-      lh={lh}
-      pr={pr}
-      sr={sr}
-      fa={fa}
-      dir={dir}
-      handleClick={() => handleClick()}
-    >
-      {children}
-    </StretchWithArrowMobile>
-  ) : (
-    <StretchWithArrowDesktop
-      fs={fs}
-      lh={lh}
-      pr={pr}
-      sr={sr}
-      fa={fa}
-      dir={dir}
-      handleClick={() => handleClick()}
-    >
-      {children}
-    </StretchWithArrowDesktop>
+  return (
+    <StretchWrapper fontSize={fs} ref={pr} onClick={() => handleClick()}>
+      <Shadow ref={sr}>
+        <ArrowWrap dir={dir}>{children}</ArrowWrap>
+      </Shadow>
+      <StretchLayout ref={pr} factor={fa}>
+        <ArrowWrap dir={dir}>{children}</ArrowWrap>
+      </StretchLayout>
+    </StretchWrapper>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useIntl } from "react-intl";
@@ -10,6 +10,7 @@ import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
 
 const PageTitleWrapper = styled.div`
   width: 100%;
+  margin-top: 8px;
   height: ${TITLE_HEIGHT}px;
   font-family: "Diatype";
   background-color: ${({ theme }) => theme.colors.white};
@@ -43,7 +44,9 @@ const PageTitle = () => {
   const intl = useIntl();
   const router = useRouter();
 
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery(
+    "only screen and (max-width:768px) and (orientation:portrait)",
+  );
 
   const titleStrings = useMemo(() => {
     if (uiStore.title) {

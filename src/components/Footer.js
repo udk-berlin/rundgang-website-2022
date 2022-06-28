@@ -15,7 +15,7 @@ const FooterContainer = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  z-index: 0;
+  z-index: 1000;
   height: ${FOOTER_HEIGHT}px;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
