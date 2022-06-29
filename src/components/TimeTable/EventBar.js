@@ -11,6 +11,8 @@ const EventBarWrapper = styled.div`
   background: ${({ theme, color }) => theme.colors[color]};
   box-sizing: border-box;
   overflow: hidden;
+  white-space: nowrap;
+  max-height: 30px;
   text-overflow: ellipsis;
   padding: 0px 6px;
   top: ${({ top }) => top}px;
@@ -43,6 +45,7 @@ const EventBar = ({ ev, start, end, link, top, children = null }) => {
         start={start}
         end={end}
         top={topMargin}
+        title={ev?.name}
         color={children ? "lightgrey" : "highlight"}
       >
         {children ?? ev?.name}

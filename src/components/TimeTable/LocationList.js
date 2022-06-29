@@ -33,6 +33,7 @@ const Room = styled.div`
 
 const House = styled(Room)`
   min-height: 100px;
+  border-bottom: 4px solid black;
   align-items: flex-end;
 `;
 
@@ -102,7 +103,9 @@ const LocationList = ({ scaleX, width }) => {
                             key={`opening-${houseInfo[house]?.id}-${time.start}`}
                             start={scaleX(time.start) - locWidth}
                             end={scaleX(time.end) - locWidth}
-                            link="/zeiten"
+                            link={`/orte/${makeUrlFromId(
+                              houseInfo[house]?.id,
+                            )}`}
                             color="lightgrey"
                           >
                             <LocalizedText id="openingtimes" />

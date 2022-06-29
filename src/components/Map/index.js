@@ -34,7 +34,6 @@ const MapContainerDiv = styled.div`
   height: 100%;
 `;
 
-
 const Popups = styled.div`
   display: none;
 `;
@@ -57,12 +56,9 @@ const Map = () => {
     if (exactLocations && dataStore.api.locations) {
       const adrr = exactLocations.map(a => ({
         ...a,
-        ...dataStore.api.locations.find(
-          c => c.id == a.id.development,
-        ),
-        isFound: dataStore.api.locations.find(
-          c => c.id == a.id.development,
-        )?.name,
+        ...dataStore.api.locations.find(c => c.id == a.id.development),
+        isFound: dataStore.api.locations.find(c => c.id == a.id.development)
+          ?.name,
       }));
       setAddresses(adrr);
     }
@@ -70,6 +66,7 @@ const Map = () => {
 
   useEffect(() => {
     if (addresses?.length) {
+      maplibregl.maxParallelImageRequests = 10;
       map.current = new maplibregl.Map({
         container: mapContainer.current,
         style: MAP_STYLE,
@@ -77,6 +74,13 @@ const Map = () => {
         zoom: ZOOM,
         maxZoom: 18,
         minZoom: 11,
+        pitchWithRotate: false,
+        clickTolerance: 7,
+        logoPosition: "top-left",
+        dragRotate: false,
+        boxZoom: false,
+        pitchWithRotate: false,
+        touchPitch: false,
       });
 
       var nav = new maplibregl.NavigationControl();
@@ -102,14 +106,18 @@ const Map = () => {
           const addPopup = () => {
             // add poopup
             const popupElement = document.getElementById(`popup-${el.id}`);
-            const popup = new maplibregl.Popup()
-              .setLngLat([el.lng, el.lat])
-              .setDOMContent(popupElement);
-            marker.setPopup(popup);
+            if (marker && popupElement) {
+              const popup = new maplibregl.Popup()
+                .setLngLat([el.lng, el.lat])
+                .setDOMContent(popupElement);
+              marker.setPopup(popup);
+            }
           };
           marker.getElement().addEventListener("click", addPopup);
 
           markers[el.id] = { marker, mRoot, scale: 0 };
+          return () =>
+            marker.getElement().removeEventListener("click", addPopup);
         });
 
         map.current.on("zoom", e => {

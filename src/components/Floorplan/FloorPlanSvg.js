@@ -32,7 +32,21 @@ const FloorPlanSvg = ({ url, handleSelectRoom }) => {
 
   useEffect(() => {
     if (url && svgRoot) {
-      svgRoot.render(<ReactSVG src={url} />);
+      svgRoot.render(
+        <ReactSVG
+          afterInjection={(error, svg) => {
+            const rects = Array.prototype.slice.call(
+              svg.getElementsByTagName("rect"),
+            );
+            rects.forEach(el => {
+              if (el.dataset.topic == "Seminar") {
+                el.style.fill = "#0f0";
+              }
+            });
+          }}
+          src={url}
+        />,
+      );
     } else if (svgRoot) {
       svgRoot.render();
     }

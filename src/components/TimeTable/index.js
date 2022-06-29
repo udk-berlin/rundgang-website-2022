@@ -31,6 +31,17 @@ const TimeTableWrapper = styled.div`
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
+  *::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  *::-webkit-scrollbar-track {
+    outline: none;
+  }
+  *::-webkit-scrollbar-thumb {
+    outline: none;
+  }
 `;
 
 const TimeTableContainer = styled.div`
@@ -159,14 +170,8 @@ const TimeTable = () => {
           >
             {selectedDay !== 0 && <Arrow>&#8592;</Arrow>}
             <LocalizedText id="saturday" />
-            <DateWrapper>
-              <FormattedDate value={1658566800000} />
-            </DateWrapper>
           </DayName>
           <DayName selected={selectedDay == 1} onClick={() => switchDay(1)}>
-            <DateWrapper>
-              <FormattedDate value={1658664000000} />
-            </DateWrapper>
             <LocalizedText id="sunday" />
             {selectedDay !== 1 && <Arrow>&#8594;</Arrow>}
           </DayName>

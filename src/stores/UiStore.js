@@ -126,9 +126,10 @@ class UiStore {
         this.dataStore.api.currentRoot?.template == "location-building" &&
         this.floorLevel
       ) {
-        let tag = this.selectedRoom ? this.selectedRoom.name : this.floorLevel;
+        let env = process.env.NODE_ENV == "development" ? "dev" : "production";
+        let tag = this.selectedRoom ? this.selectedRoom[env] : this.floorLevel;
         return this.dataStore.api.currentItems.filter(el =>
-          el.tags.find(t => t.name == tag),
+          el.tags.find(t => t.id == tag || t.name == tag),
         );
       }
       if (
