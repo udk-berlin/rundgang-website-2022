@@ -13,6 +13,12 @@ const StretchWrapper = styled.div`
   letter-spacing: 0.01px;
   font-size: ${({ fontSize }) => fontSize}vh;
   width: 100%;
+  &:hover {
+    color: black;
+    -webkit-text-stroke: ${({ theme, fontSize }) =>
+      `${fontSize * 0.08}px ${theme.colors.highlight}`};
+    -webkit-text-fill-color: black;
+  }
 `;
 
 const StretchLayout = styled.div`
@@ -51,7 +57,8 @@ export const ChildrenWrapper = styled.span`
   width: fit-content;
   cursor: pointer;
   &:hover {
-    color: #333;
+    -webkit-text-stroke: ${({ theme }) => `13px ${theme.colors.highlight}`};
+    -webkit-text-fill-color: black;
   }
 `;
 

@@ -44,7 +44,6 @@ const Stretch = ({
         setFactor(f);
       }, 300);
       return () => {
-        setFactor(0);
         clearTimeout(timer);
       };
     }

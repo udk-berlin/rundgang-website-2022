@@ -26,12 +26,12 @@ const nextConfig = {
     /**
      * Provide the locales you want to support in your application
      */
-    locales: ["default", "de", "en"],
+    locales: ["de", "en"],
     /**
      * This is the default locale you want to be used when visiting
      * a non-locale prefixed path.
      */
-    defaultLocale: "default",
+    defaultLocale: "de",
     localeDetection: false,
   },
   trailingSlash: true,

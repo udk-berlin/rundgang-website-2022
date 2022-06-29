@@ -2,13 +2,14 @@ import React from "react";
 import _ from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
-import { toJS } from "mobx";
+import { makeUrlFromId } from "@/utils/idUtils";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
 import { FormattedDateTimeRange, useIntl } from "react-intl";
 import ContentElement from "./ContentElement";
 import Tag from "@/components/simple/Tag";
 import ImageDetailView from "./ImageDetailView";
+import LocalizedLink from "modules/i18n/components/LocalizedLink";
 
 const ItemViewWrapper = styled.div`
   height: 100%;
@@ -35,6 +36,17 @@ const AuthorTag = styled.div`
   border-radius: ${({ theme }) => theme.space(48)};
   width: fit-content;
   word-wrap: break-word;
+  margin-bottom: ${({ theme }) => theme.space(8)};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    margin-bottom: ${({ theme }) => theme.space(4)};
+    font-size: ${({ theme }) => theme.fontSizes.mm};
+  }
+`;
+
+const LocationTag = styled(Tag)`
+  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
+  font-size: ${({ theme }) => theme.fontSizes.lm} !important;
+  border-radius: ${({ theme }) => theme.space(48)};
   margin-bottom: ${({ theme }) => theme.space(8)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     margin-bottom: ${({ theme }) => theme.space(4)};
@@ -114,7 +126,8 @@ const Tags = styled.div`
 `;
 
 const ItemView = () => {
-  const { locale } = useRouter();
+  const router = useRouter();
+  const { locale } = router;
   const { uiStore } = useStores();
   const intl = useIntl();
   const item = uiStore.currentContext;
@@ -133,26 +146,46 @@ const ItemView = () => {
             id: uiStore.isSaved(item.id) ? "saved" : "save",
           })}
         </SaveTag>
-        {item.tags.map(t => (
-          <Tag
-            selected={false}
-            key={t.id}
-            levelSelected={false}
-            showCross={false}
-            template={t.template}
-          >
-            {t.name}
-          </Tag>
-        ))}
+        {item.tags
+          .filter(t => !t.template.includes("location-"))
+          .map(t => (
+            <LocalizedLink to={`/katalog/${makeUrlFromId(t.id)}`}>
+              <Tag
+                selected={false}
+                key={t.id}
+                levelSelected={false}
+                showCross={false}
+                template={t.template}
+              >
+                {t.name}
+              </Tag>
+            </LocalizedLink>
+          ))}
       </Tags>
       <ItemHeaderWrapper>
-        <ImageDetailView src={item.thumbnail} />
+        <ImageDetailView src={item.thumbnail_full_size} />
         <DescriptionWrapper>
           {item?.origin?.authors?.map(a => (
             <AuthorTag key={`author-${a.id}`}>
               {a.name ? a.name.split("@")[0]?.trim() : a.id}
             </AuthorTag>
           ))}
+          {item.tags
+            .filter(t => t.template.includes("location-"))
+            .map(t => (
+              <LocationTag
+                selected={false}
+                key={t.id}
+                onClick={() =>
+                  router.replace(`/katalog/${makeUrlFromId(t.id)}`)
+                }
+                levelSelected={false}
+                showCross={false}
+                template={t.template}
+              >
+                {t.name}
+              </LocationTag>
+            ))}
           {item.template == "event" && item.allocation?.temporal?.length
             ? item.allocation?.temporal?.slice(0, 3).map((t, i) => (
                 <Time key={`time-item-${t.start}-${i}-${t.end}`}>
@@ -168,27 +201,7 @@ const ItemView = () => {
                 </Time>
               ))
             : null}
-          <TitleText>
-            {item.description[loc]}
-            Until recently, the prevailing view assumed lorem ipsum was born as
-            a nonsense text. “It's not Latin, though it looks like it, and it
-            actually says nothing,” Before & After magazine answered a curious
-            reader, “Its ‘words’ loosely approximate the frequency with which
-            letters occur in English, which is why at a glance it looks pretty
-            real.” As Cicero would put it, “Um, not so fast.” The placeholder
-            text, beginning with the line “Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit”, looks like Latin because in its youth,
-            centuries ago, it was Latin. Richard McClintock, a Latin scholar
-            from Hampden-Sydney College, is credited with discovering the source
-            behind the ubiquitous filler text. In seeing a sample of lorem
-            ipsum, his interest was piqued by consectetur—a genuine, albeit
-            rare, Latin word. Consulting a Latin dictionary led McClintock to a
-            passage from De Finibus Bonorum et Malorum (“On the Extremes of Good
-            and Evil”), a first-century B.C. text from the Roman philosopher
-            Cicero. In particular, the garbled words of lorem ipsum bear an
-            unmistakable resemblance to sections 1.10.32–33 of Cicero's work,
-            with the most notable passage excerpted below:
-          </TitleText>
+          <TitleText>{item.description[loc]}</TitleText>
         </DescriptionWrapper>
       </ItemHeaderWrapper>
       <ContentWrapper>

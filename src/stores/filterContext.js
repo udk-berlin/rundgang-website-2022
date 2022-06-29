@@ -7,6 +7,8 @@ const filterContext = tree => {
     seminars: {},
   };
 
+  let rooms = {};
+
   let queue = [{ node: tree, id: tree.id, path: [tree] }];
   let explored = [];
   while (queue.length > 0) {
@@ -34,6 +36,8 @@ const filterContext = tree => {
           context.template == "course"
         ) {
           ebene = "seminars";
+        } else if (context.template == "location-room") {
+          rooms[context.id] = true;
         }
         if (ebene) {
           if (i > 1) {
@@ -74,7 +78,7 @@ const filterContext = tree => {
     return obj;
   }, {});
 
-  return result;
+  return { tags: result, rooms };
 };
 
 export default filterContext;

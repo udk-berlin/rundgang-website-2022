@@ -30,6 +30,7 @@ class ApiStore {
     this.eventlist = null;
     this.cachedIds = {};
     this.tags = {};
+    this.existingRooms = {};
     this.currentRoot = null;
     this.currentItems = null;
     this.isLoaded = false;
@@ -43,7 +44,10 @@ class ApiStore {
   }
 
   get = async (urlParams = "") => {
-    const request = new Request(`${process.env.NEXT_PUBLIC_BASE_API_URL}${urlParams}`, GET_OPTIONS);
+    const request = new Request(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}${urlParams}`,
+      GET_OPTIONS,
+    );
     const response = await fetch(request).then(res => {
       if (!res.ok) {
         return null;
@@ -54,11 +58,15 @@ class ApiStore {
   };
 
   getRoot = async () => {
-    return this.get(process.env.NEXT_PUBLIC_API_ROOT_URL).catch(() => console.log("no ROOT id"));
+    return this.get(process.env.NEXT_PUBLIC_API_ROOT_URL).catch(() =>
+      console.log("no ROOT id"),
+    );
   };
 
   getLocations = async () => {
-    return this.get(`${process.env.NEXT_PUBLIC_LOCATIONS_ROOT}/tree/filter${TYPE_CONTEXT}`)
+    return this.get(
+      `${process.env.NEXT_PUBLIC_LOCATIONS_ROOT}/tree/filter${TYPE_CONTEXT}`,
+    )
       .then(res =>
         Promise.all(
           _.values(res.children).map(async building => {
@@ -74,19 +82,23 @@ class ApiStore {
   };
 
   getStructure = async () => {
-    return this.get(`${process.env.NEXT_PUBLIC_STRUCTURE_ROOT}/tree/filter${TYPE_CONTEXT}`).catch(() =>
-      console.log("no STRUCTURE_ROOT id"),
-    );
+    return this.get(
+      `${process.env.NEXT_PUBLIC_STRUCTURE_ROOT}/tree/filter${TYPE_CONTEXT}`,
+    ).catch(() => console.log("no STRUCTURE_ROOT id"));
   };
 
   getContexts = async () => {
-    return this.getFilteredListFromId(process.env.NEXT_PUBLIC_API_ROOT_URL, TYPE_CONTEXT).catch(() =>
-      console.log("no list of contexts id"),
-    );
+    return this.getFilteredListFromId(
+      process.env.NEXT_PUBLIC_API_ROOT_URL,
+      TYPE_CONTEXT,
+    ).catch(() => console.log("no list of contexts id"));
   };
 
   getEventList = async () => {
-    return this.getFilteredListFromId(process.env.NEXT_PUBLIC_API_ROOT_URL, "/allocation/temporal")
+    return this.getFilteredListFromId(
+      process.env.NEXT_PUBLIC_API_ROOT_URL,
+      "/allocation/temporal",
+    )
       .then(res =>
         Promise.all(
           res
@@ -274,13 +286,14 @@ class ApiStore {
     try {
       const data = await this.getRoot();
       const tree = await this.getTreeFromId(data.id);
-      const tags = filterContext(tree);
       const structure = await this.getStructure();
       const locations = await this.getLocations();
       const eventlist = await this.getEventList();
+      const { tags, rooms } = filterContext(tree);
       runInAction(() => {
         this.root = data;
         this.tags = tags;
+        this.existingRooms = rooms;
         this.locations = locations;
         this.structure = structure;
         this.eventlist = eventlist;

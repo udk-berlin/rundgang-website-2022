@@ -67,7 +67,7 @@ const ImageWrapper = styled.div`
 `;
 
 const Floorplan = () => {
-  const { uiStore } = useStores();
+  const { uiStore, dataStore } = useStores();
 
   const handleSelectRoom = useCallback(
     e => {
@@ -85,11 +85,21 @@ const Floorplan = () => {
           uiStore.setFloorLevel(uiStore.floorLevel);
         } else {
           let data = e.target.dataset;
-          let roomRect = document.querySelectorAll(`[data-id="${data.id}"]`)[0];
-          if (roomRect) {
-            roomRect.style.fill = "#E2FF5D";
-            uiStore.setSelectedRoom(data);
-            uiStore.setFloorLevel(uiStore.floorLevel);
+          let dataid =
+            process.env.NODE_ENV == "development" ? "dev" : "production";
+          if (data[dataid] in dataStore.api.existingRooms) {
+            console.log(dataStore.eventLocations[uiStore.currentContext.name]);
+            let roomRect = document.querySelectorAll(
+              `[data-id="${data.id}"]`,
+            )[0];
+            if (roomRect) {
+              console.log(uiStore.floorPlan);
+              roomRect.style.fill = "#E2FF5D";
+              uiStore.setSelectedRoom(data);
+              uiStore.setFloorLevel(uiStore.floorLevel);
+            }
+          } else {
+            window.alert("this room does not exist");
           }
         }
       }
