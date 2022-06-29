@@ -28,6 +28,7 @@ jobs:
         with:
           command: |
             cd /opt/rundgang-frontend-22/
+            cp /opt/rundgang-frontend-22/src/.env.development /opt/rundgang-frontend-22/src/.env
             npm clean-install
             npm run build
             systemctl restart rundgang-frontend-22.service
