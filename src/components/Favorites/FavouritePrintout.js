@@ -1,37 +1,30 @@
 import React from "react";
 import { scaleLinear } from "d3-scale";
-import { Group, Text, Line, Stage, Layer, Rect } from "react-konva";
+import { Group, Text, Stage, Layer, Rect } from "react-konva";
 import { useIntl } from "react-intl";
-import { times } from "../TimeTable/TimeScale";
 
-const START_TIME = 1658553000;
-const END_TIME = 1658696400;
+const START = 0;
+const END = 100;
+const END_TITLE = 140;
+const ITEM_HEIGHT = 90;
 
 const FavouritePrintout = ({
   savedItems,
-  savedEvents,
   width,
   height,
   reference,
+  pageHeight,
+  numPages,
 }) => {
   const intl = useIntl();
-  const numItems = savedItems.length;
-  const roomsArray = Object.values(savedEvents)
-    .map(r => Object.entries(r))
-    .flat();
-
-  const numRooms = roomsArray?.length + Object.values(savedEvents).length;
-  const savedItemsEnumeration = savedItems.reduce(
-    (obj, it, i) => ({ ...obj, [it.id]: i + 1 }),
-    {},
-  );
+  const firstEventIndex =
+    savedItems.filter(
+      a => a.template == "studentproject" || a.template == "project",
+    )?.length - 1;
 
   const scaleX = scaleLinear()
-    .domain([START_TIME, END_TIME])
+    .domain([START, END])
     .range([40, width - 40]);
-  const scaleY = scaleLinear()
-    .domain([0, 2 * numItems + numRooms])
-    .range([40, height - 40]);
 
   const tagName = (n, t) =>
     t.startsWith("location") ? `${intl.formatMessage({ id: t })}${n}` : n;
@@ -46,172 +39,161 @@ const FavouritePrintout = ({
               <Group>
                 <Text
                   fill={"black"}
-                  x={scaleX(START_TIME)}
+                  align="center"
+                  x={0}
                   y={10}
-                  text={intl.formatMessage({ id: "projectsandevents" })}
-                  fontSize={30}
+                  width={width}
+                  text={intl.formatMessage({ id: "saved" })}
+                  fontSize={pageHeight / 7}
+                  scaleY={0.5}
                 />
-                {savedItems.map((item, i) => (
-                  <Group key={`${item.id}-${i}-print`}>
-                    <Text
-                      fill={"black"}
-                      x={scaleX(START_TIME)}
-                      y={scaleY(2 * i) + 20}
-                      fontSize={16}
-                      text={`${savedItemsEnumeration[item.id]}. ${item.name}`}
-                    />
-                    {item.allocation.temporal ? (
-                      <Text
-                        fill={"black"}
-                        x={scaleX(START_TIME)}
-                        y={scaleY(2 * i) + 40}
-                        text={item.allocation.temporal
-                          .map(time =>
-                            intl.formatDateTimeRange(
-                              time.start * 1000,
-                              time.end * 1000,
-                              {
-                                weekday: "short",
-                                hour: "numeric",
-                                minute: "numeric",
-                              },
-                            ),
-                          )
-                          .join(", ")}
-                      />
-                    ) : (
-                      <Text
-                        fill={"black"}
-                        x={scaleX(START_TIME)}
-                        y={scaleY(2 * i) + 40}
-                        text={[
-                          ...new Set(
-                            item.origin?.authors.map(a =>
-                              a.name ? a.name.split("@")[0]?.trim() : a.id,
-                            ),
-                          ),
-                        ].join(", ")}
-                      />
-                    )}
-                    <Text
-                      fill={"black"}
-                      x={scaleX(START_TIME)}
-                      y={scaleY(2 * i) + 60}
-                      text={item.tags
-                        .map(tag => tagName(tag.name, tag.template))
-                        .join(", ")}
-                    />
-                  </Group>
-                ))}
-              </Group>
-
-              {times.map(t => (
-                <Group key={`timelineCanvas-${t}-print`}>
-                  <Line
-                    strokeWidth={1}
-                    points={[
-                      scaleX(t),
-                      scaleY(2 * numItems + 1),
-                      scaleX(t),
-                      scaleY(2 * numItems + numRooms),
-                    ]}
-                    stroke="#d9d9d9"
-                  />
-                  <Text
-                    fill={"black"}
-                    x={scaleX(t)}
-                    y={scaleY(2 * numItems + 1)}
-                    text={intl.formatTime(t * 1000)}
-                  />
-                </Group>
-              ))}
-              <Group>
                 <Text
                   fill={"black"}
-                  x={scaleX(START_TIME)}
-                  y={scaleY(2 * numItems)}
-                  text={intl.formatMessage({ id: "timetable" })}
-                  fontSize={30}
+                  x={scaleX(START) - 20}
+                  y={END_TITLE - 40}
+                  text={intl.formatMessage({ id: "projects" })}
+                  fontSize={40}
+                  scaleY={0.5}
                 />
-                <Text
-                  fill="black"
-                  x={scaleX(START_TIME)}
-                  y={scaleY(2 * numItems + 1)}
-                  text={intl.formatMessage({ id: "saturday" })}
+                <Rect
+                  x={10}
+                  y={END_TITLE - 50}
+                  width={width - 20}
+                  height={height - 20}
+                  stroke="black"
                 />
-                <Text
-                  fill="black"
-                  x={scaleX(1658639000)}
-                  y={scaleY(2 * numItems + 1)}
-                  text={intl.formatMessage({ id: "sunday" })}
-                />
-                {roomsArray.map(([room, events], rIndex) => (
-                  <Group key={`room-${room}-print`}>
-                    {rIndex == 0 ? (
-                      <Group key={`house-${events[0]?.building.name}-print`}>
-                        <Text
-                          fill={"black"}
-                          x={scaleX(START_TIME)}
-                          y={scaleY(2 * numItems + 1 + rIndex) + 20}
-                          text={events[0]?.building.name}
-                          fontSize={20}
-                        />
-                        <Line
-                          points={[
-                            scaleX(START_TIME),
-                            scaleY(2 * numItems + 2 + rIndex) + 16,
-                            scaleX(END_TIME),
-                            scaleY(2 * numItems + 2 + rIndex) + 16,
-                          ]}
-                          stroke="#d9d9d9"
-                        />
-                      </Group>
-                    ) : null}
-                    <Text
-                      fill="black"
-                      x={scaleX(START_TIME)}
-                      y={scaleY(2 * numItems + 2 + rIndex)}
-                      text={room}
-                    />
-                    <Line
-                      points={[
-                        scaleX(START_TIME),
-                        scaleY(2 * numItems + 2 + rIndex) + 16,
-                        scaleX(END_TIME),
-                        scaleY(2 * numItems + 2 + rIndex) + 16,
-                      ]}
-                      stroke="#d9d9d9"
-                    />
-                    <Group>
-                      {events.map((ev, i) => (
-                        <Group key={`room-${room}-${ev.id}-${i}-print`}>
-                          <Line
-                            strokeWidth={scaleY(1) - scaleY(0.2)}
-                            offsetY={scaleY(1) - scaleY(0.9)}
-                            points={[
-                              scaleX(ev.time.start),
-                              scaleY(2 * numItems + 2 + rIndex),
-                              scaleX(ev.time.end),
-                              scaleY(2 * numItems + 2 + rIndex),
-                            ]}
-                            stroke="#E2FF5D"
-                          />
+                {savedItems
+                  .sort((a, b) =>
+                    a.template == "studentproject" || a.template == "project"
+                      ? -1
+                      : 1,
+                  )
+                  .map((item, i) => {
+                    return (
+                      <Group key={`${item.id}-${i}-print`}>
+                        {i == firstEventIndex ? (
                           <Text
-                            fill="black"
-                            align="center"
-                            verticalAlign="middle"
-                            width={scaleX(ev.time.end) - scaleX(ev.time.start)}
-                            height={scaleY(1) - scaleY(0.2)}
-                            offsetY={scaleY(1) - scaleY(0.6)}
-                            x={scaleX(ev.time.start)}
-                            y={scaleY(2 * numItems + 2 + rIndex)}
-                            text={savedItemsEnumeration[ev.id]}
+                            fill={"black"}
+                            x={scaleX(START) - 20}
+                            y={i * ITEM_HEIGHT + END_TITLE}
+                            text={intl.formatMessage({ id: "events" })}
+                            fontSize={40}
+                            scaleY={0.5}
+                          />
+                        ) : null}
+                        <Group
+                          x={scaleX(START)}
+                          y={
+                            i * ITEM_HEIGHT +
+                            END_TITLE +
+                            (firstEventIndex <= i ? 40 : 0) +
+                            ([...Array(numPages).keys()].find(
+                              p => p * 7 > i - 7,
+                            ) ?? 0) *
+                              100
+                          }
+                        >
+                          <Text
+                            fill={"black"}
+                            fontSize={16}
+                            text={item.name}
+                            width={width - 60}
+                            fontStyle="bold"
+                          />
+                          {item.allocation.temporal
+                            ? item.allocation.temporal
+                                .slice(0, 3)
+                                .map((time, t) => (
+                                  <Group
+                                    key={`timesprintouttag-${time.start}`}
+                                    width={155}
+                                    height={21}
+                                    x={(t % 3) * 165 + 3}
+                                    y={
+                                      20 * (item.name?.length > 40 ? 2 : 1) +
+                                      Math.floor(t / 3) * 25
+                                    }
+                                  >
+                                    <Rect
+                                      stroke="black"
+                                      width={155}
+                                      height={21}
+                                      cornerRadius={10}
+                                    />
+                                    <Text
+                                      fill={"black"}
+                                      width={155}
+                                      height={21}
+                                      y="5"
+                                      align="center"
+                                      text={intl.formatDateTimeRange(
+                                        time.start * 1000,
+                                        time.end * 1000,
+                                        {
+                                          weekday: "short",
+                                          hour: "numeric",
+                                          minute: "numeric",
+                                        },
+                                      )}
+                                    />
+                                  </Group>
+                                ))
+                            : [
+                                ...new Set(
+                                  item.origin?.authors
+                                    .slice(0, 3)
+                                    .map(a =>
+                                      a.name
+                                        ? a.name.split("@")[0]?.trim()
+                                        : a.id,
+                                    ),
+                                ),
+                              ].map((author, t) => (
+                                <Group
+                                  key={`authorsprintouttag-${author}`}
+                                  width={8 * author.length + 5}
+                                  height={21}
+                                  x={(t % 3) * 145 + 3}
+                                  y={
+                                    20 * (item.name?.length > 40 ? 2 : 1) +
+                                    Math.floor(t / 3) * 25
+                                  }
+                                >
+                                  <Rect
+                                    stroke="black"
+                                    width={8 * author.length + 5}
+                                    height={21}
+                                    cornerRadius={10}
+                                  />
+                                  <Text
+                                    fill={"black"}
+                                    width={8 * author.length + 5}
+                                    y="5"
+                                    align="center"
+                                    text={author}
+                                  />
+                                </Group>
+                              ))}
+                          <Text
+                            fill={"black"}
+                            width={width - 60}
+                            x={0}
+                            y={
+                              40 +
+                              (item.allocation.temporal?.length ||
+                              item.origin?.authors.length
+                                ? 1
+                                : 0) *
+                                15
+                            }
+                            text={item.tags
+                              .map(tag => tagName(tag.name, tag.template))
+                              .join(", ")}
                           />
                         </Group>
-                      ))}
-                    </Group>
-                  </Group>
-                ))}
+                      </Group>
+                    );
+                  })}
               </Group>
             </Group>
           ) : (
