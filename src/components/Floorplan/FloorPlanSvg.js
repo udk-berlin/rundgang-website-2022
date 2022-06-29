@@ -9,18 +9,14 @@ const Floorplan = styled.div`
   left: 0;
   z-index: 10;
   width: 100%;
-  fill: ${({ theme }) => theme.colors.lightgrey};
   rect {
     cursor: pointer;
-    &:hover {
-      fill: ${({ theme }) => theme.colors.highlight};
-    }
     stroke: ${({ theme }) => theme.colors.black};
     stroke-width: 10px;
   }
 `;
 
-const FloorPlanSvg = ({ url, handleSelectRoom }) => {
+const FloorPlanSvg = ({ url, handleSelectRoom, visibleRooms }) => {
   const [svgRoot, setSvgRoot] = useState();
   const svgRef = useRef();
 
@@ -32,21 +28,7 @@ const FloorPlanSvg = ({ url, handleSelectRoom }) => {
 
   useEffect(() => {
     if (url && svgRoot) {
-      svgRoot.render(
-        <ReactSVG
-          afterInjection={(error, svg) => {
-            const rects = Array.prototype.slice.call(
-              svg.getElementsByTagName("rect"),
-            );
-            rects.forEach(el => {
-              if (el.dataset.topic == "Seminar") {
-                el.style.fill = "#0f0";
-              }
-            });
-          }}
-          src={url}
-        />,
-      );
+      svgRoot.render(<ReactSVG src={url} />);
     } else if (svgRoot) {
       svgRoot.render();
     }

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
@@ -10,7 +10,7 @@ const FloorplanWrapper = styled.div`
   height: 100%;
   padding-bottom: ${({ theme }) => theme.space(16)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding-bottom: ${({ theme }) => `0 ${theme.space(8)}`};
+    padding-bottom: ${({ theme }) => theme.space(8)};
   }
 `;
 
@@ -26,19 +26,27 @@ const BackgroundImg = styled.img`
 const Levels = styled.div`
   position: relative;
   margin: auto;
-  top: 0;
+  top: -32px;
   left: 0;
   width: 100%;
   height: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  font-size: ${({ theme }) => theme.fontSizes.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
     justify-content: space-evenly;
   }
 `;
 
+const SelectedRoomTitle = styled.div`
+  width: 100%;
+  text-align: center;
+  min-height: 20px;
+`;
+
 const LevelNumber = styled.button`
-  font-size: ${({ theme }) => theme.fontSizes.md};
   border: none;
   border-radius: ${({ isAll }) => (isAll ? "20px" : "50%")};
   width: ${({ isAll }) => (isAll ? "fit-content" : "40px")};
@@ -51,7 +59,6 @@ const LevelNumber = styled.button`
     background: ${({ theme }) => theme.colors.lightgrey};
   }
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
     width: ${({ isAll }) => (isAll ? "fit-content" : "30px")};
     height: 30px;
   }
@@ -64,15 +71,31 @@ const ImageWrapper = styled.div`
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 90%;
   }
+  ${({ visibleRooms, theme }) =>
+    visibleRooms.map(
+      r => `[data-name="${r}"] { fill: ${theme.colors.lightgrey};}`,
+    )}
 `;
 
 const Floorplan = () => {
   const { uiStore, dataStore } = useStores();
+  const [visibleRooms, setVisibleRooms] = useState([]);
+  console.log(visibleRooms);
+
+  useEffect(() => {
+    if (dataStore.api.existingRooms && uiStore.floorPlan) {
+      setVisibleRooms(
+        uiStore.floorPlan.context
+          .filter(r => r.id in dataStore.api.existingRooms)
+          .map(r => r.name),
+      );
+    }
+  }, [uiStore.floorPlan, dataStore.api.existingRooms]);
 
   const handleSelectRoom = useCallback(
     e => {
       if (uiStore.floorPlan) {
-        if (uiStore.selectedRoom) {
+        if (uiStore.selectedRoom?.id) {
           let oldRoomRect = document.querySelectorAll(
             `[data-id="${uiStore.selectedRoom.id}"]`,
           )[0];
@@ -92,13 +115,12 @@ const Floorplan = () => {
               `[data-id="${data.id}"]`,
             )[0];
             if (roomRect) {
-              console.log(uiStore.floorPlan);
               roomRect.style.fill = "#E2FF5D";
               uiStore.setSelectedRoom(data);
               uiStore.setFloorLevel(uiStore.floorLevel);
             }
           } else {
-            window.alert("this room does not exist");
+            uiStore.setSelectedRoom(null);
           }
         }
       }
@@ -113,7 +135,7 @@ const Floorplan = () => {
 
   return (
     <FloorplanWrapper>
-      <ImageWrapper>
+      <ImageWrapper visibleRooms={visibleRooms}>
         <BackgroundImg
           src={`/assets/img/${uiStore.currentContext?.description.default}_building.svg`}
         />
@@ -123,6 +145,10 @@ const Floorplan = () => {
         />
       </ImageWrapper>
       <Levels>
+        <SelectedRoomTitle>
+          {uiStore.selectedRoom?.topic ?? <LocalizedText id="allfloors" />}{" "}
+          {uiStore.selectedRoom?.name}
+        </SelectedRoomTitle>
         <LevelNumber
           key="alllevels"
           isAll
@@ -131,17 +157,20 @@ const Floorplan = () => {
         >
           <LocalizedText id="allfloors" />
         </LevelNumber>
-        {uiStore.buildingLevels?.map(level => (
-          <LevelNumber
-            key={level.id}
-            selected={level.name == uiStore.floorLevel}
-            onClick={() => {
-              uiStore.setFloorLevel(level.name);
-            }}
-          >
-            {level.name}
-          </LevelNumber>
-        ))}
+        {uiStore.buildingLevels?.map(
+          level =>
+            level.id in dataStore.api.existingRooms && (
+              <LevelNumber
+                key={level.id}
+                selected={level.name == uiStore.floorLevel}
+                onClick={() => {
+                  uiStore.setFloorLevel(level.name);
+                }}
+              >
+                {level.name}
+              </LevelNumber>
+            ),
+        )}
       </Levels>
     </FloorplanWrapper>
   );

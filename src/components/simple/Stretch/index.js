@@ -22,7 +22,7 @@ const Stretch = ({
     if (isNaN(preferredSize) && preferredSize.includes("px") && size.height) {
       let pval = parseFloat(preferredSize.replace("px", ""));
       setFontSize((pval / size.height) * 100);
-      setLineHeight(1)
+      setLineHeight(1);
     } else if (
       isNaN(preferredSize) &&
       preferredSize.includes("%") &&
@@ -40,7 +40,7 @@ const Stretch = ({
   useEffect(() => {
     if (titleId && fontSize && size.width && stretchRef?.current?.clientWidth) {
       const timer = setTimeout(() => {
-        let f = size.width / stretchRef?.current?.clientWidth;
+        let f = (size.width - 32) / stretchRef?.current?.clientWidth;
         setFactor(f);
       }, 300);
       return () => {

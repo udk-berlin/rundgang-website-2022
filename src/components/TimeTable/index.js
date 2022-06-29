@@ -22,7 +22,6 @@ import useTopScrollBar from "@/utils/useTopScrollBar";
 import { FormattedDate } from "react-intl";
 
 const TimeTableWrapper = styled.div`
-  padding: ${({ theme }) => `0 ${theme.space(16)}`};
   margin-bottom: 40px;
   height: fit-content;
   min-height: calc(100vh - 160px);

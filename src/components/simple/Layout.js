@@ -3,7 +3,8 @@ import styled from "styled-components";
 import JumpToTop from "../JumpToTop";
 
 const MainLayout = styled.main`
-  width: 100%;
+  width: calc(100% - 32px);
+  margin: auto;
   height: 100%;
 `;
 

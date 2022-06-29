@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import _ from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
@@ -22,11 +22,10 @@ const ItemViewWrapper = styled.div`
 const ItemHeaderWrapper = styled.div`
   display: grid;
   justify-content: space-evenly;
-  margin: auto;
-  grid-template-columns: 59% 39%;
+  grid-template-columns: 60% 40%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
-    margin: ${({ theme }) => theme.space(8)};
+    margin-top: ${({ theme }) => theme.space(16)};
   }
 `;
 const AuthorTag = styled.div`
@@ -36,17 +35,6 @@ const AuthorTag = styled.div`
   border-radius: ${({ theme }) => theme.space(48)};
   width: fit-content;
   word-wrap: break-word;
-  margin-bottom: ${({ theme }) => theme.space(8)};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin-bottom: ${({ theme }) => theme.space(4)};
-    font-size: ${({ theme }) => theme.fontSizes.mm};
-  }
-`;
-
-const LocationTag = styled(Tag)`
-  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
-  font-size: ${({ theme }) => theme.fontSizes.lm} !important;
-  border-radius: ${({ theme }) => theme.space(48)};
   margin-bottom: ${({ theme }) => theme.space(8)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     margin-bottom: ${({ theme }) => theme.space(4)};
@@ -112,17 +100,17 @@ const ContentWrapper = styled.div`
   display: grid;
   justify-content: space-evenly;
   margin: auto;
-  grid-template-columns: 59% 39%;
+  grid-template-columns: 60% 40%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
-    margin: ${({ theme }) => theme.space(8)};
+    margin-top: ${({ theme }) => theme.space(16)};
   }
 `;
 
 const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: ${({ theme }) => theme.space(8)};
+  padding: ${({ theme }) => theme.space(8)} 0px;
 `;
 
 const ItemView = () => {
@@ -130,6 +118,11 @@ const ItemView = () => {
   const { locale } = router;
   const { uiStore } = useStores();
   const intl = useIntl();
+  const tagPrefix = useCallback(
+    t => (t.startsWith("location") ? intl.formatMessage({ id: t }) : ""),
+    [locale],
+  );
+
   const item = uiStore.currentContext;
   const loc = item.description[locale.toUpperCase()]?.length
     ? locale.toUpperCase()
@@ -149,42 +142,39 @@ const ItemView = () => {
         {item.tags
           .filter(t => !t.template.includes("location-"))
           .map(t => (
-            <LocalizedLink to={`/katalog/${makeUrlFromId(t.id)}`}>
-              <Tag
-                selected={false}
-                key={t.id}
-                levelSelected={false}
-                showCross={false}
-                template={t.template}
-              >
+            <Tag
+              selected={false}
+              key={t.id}
+              levelSelected={false}
+              showCross={false}
+              template={t.template}
+            >
+              <LocalizedLink to={`/katalog/${makeUrlFromId(t.id)}`}>
                 {t.name}
-              </Tag>
-            </LocalizedLink>
+              </LocalizedLink>
+            </Tag>
           ))}
       </Tags>
       <ItemHeaderWrapper>
         <ImageDetailView src={item.thumbnail_full_size} />
         <DescriptionWrapper>
           {item?.origin?.authors?.map(a => (
-            <AuthorTag key={`author-${a.id}`}>
+            <AuthorTag key={`author-${a.name}-${a.id}`}>
               {a.name ? a.name.split("@")[0]?.trim() : a.id}
             </AuthorTag>
           ))}
           {item.tags
             .filter(t => t.template.includes("location-"))
             .map(t => (
-              <LocationTag
-                selected={false}
-                key={t.id}
+              <AuthorTag
+                key={t.name}
                 onClick={() =>
                   router.replace(`/katalog/${makeUrlFromId(t.id)}`)
                 }
-                levelSelected={false}
-                showCross={false}
-                template={t.template}
               >
+                {tagPrefix(t.template)}
                 {t.name}
-              </LocationTag>
+              </AuthorTag>
             ))}
           {item.template == "event" && item.allocation?.temporal?.length
             ? item.allocation?.temporal?.slice(0, 3).map((t, i) => (

@@ -8,7 +8,6 @@ import SearchBar from "@/components/SearchBar";
 import PageTitle from "@/components/PageTitle";
 import CursorLine from "@/components/CursorLine";
 import useMediaQuery from "@/utils/useMediaQuery";
-import JumpToTop from "@/components/JumpToTop";
 import IntroAnimation from "@/components/IntroAnimation";
 
 const HeaderWrapper = styled.header`
@@ -17,8 +16,9 @@ const HeaderWrapper = styled.header`
   left: 0;
   height: fit-content;
   z-index: 400;
-  width: 100%;
   background: white;
+  width: calc(100% - 32px);
+  margin: auto;
 `;
 
 const PageWrapper = styled.div`

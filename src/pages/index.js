@@ -34,7 +34,7 @@ const IndexPage = () => {
           <Stretch
             arrowDir="top"
             titleId={intl.formatMessage({ id: "katalog" })}
-            preferredSize={isMobile ? 24 : 26.5}
+            preferredSize={isMobile ? 24.5 : 26.5}
           >
             <LocalizedText id="katalog" />
           </Stretch>
@@ -42,7 +42,7 @@ const IndexPage = () => {
         <LinkWrapper to="/orte">
           <Stretch
             titleId={intl.formatMessage({ id: "orte" })}
-            preferredSize={isMobile ? 24 : 26.5}
+            preferredSize={isMobile ? 24.5 : 26.5}
             arrowDir="right"
           >
             <LocalizedText id="orte" />
@@ -51,7 +51,7 @@ const IndexPage = () => {
         <LinkWrapper to="/zeiten">
           <Stretch
             titleId={intl.formatMessage({ id: "zeiten" })}
-            preferredSize={isMobile ? 24 : 26.5}
+            preferredSize={isMobile ? 24.5 : 26.5}
             arrowDir="left"
           >
             <LocalizedText id="zeiten" />
@@ -60,7 +60,7 @@ const IndexPage = () => {
         <LinkWrapper to="/katalog/beratungsangebote">
           <Stretch
             titleId={intl.formatMessage({ id: "beratungsangebote" })}
-            preferredSize={isMobile ? 9 : 10}
+            preferredSize={isMobile ? 11 : 10}
             arrowDir="bottom"
           >
             <LocalizedText id="beratungsangebote_index" />

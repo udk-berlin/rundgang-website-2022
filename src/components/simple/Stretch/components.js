@@ -22,8 +22,7 @@ const StretchWrapper = styled.div`
 `;
 
 const StretchLayout = styled.div`
-  transform-origin: 0% 0%;
-  text-align: left;
+  transform-origin: top left;
   z-index: 1;
   width: fit-content;
   height: fit-content;
@@ -35,7 +34,7 @@ const StretchLayout = styled.div`
 const Shadow = styled.div`
   opacity: 0;
   z-index: 0;
-  transform-origin: 0% 0%;
+  transform-origin: top left;
   width: fit-content;
   height: fit-content;
   pointer-events: none;

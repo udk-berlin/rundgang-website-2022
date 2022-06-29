@@ -23,20 +23,6 @@ class UiStore {
     this.allStores.forEach(store => store?.connect?.(this, dataStore));
   };
 
-  initialize = () => {
-    this.allStores.forEach(store => store?.initialize?.(this));
-  };
-
-  get isLoaded() {
-    return (
-      this.allStores.filter(store => store.isInitialized === false).length === 0
-    );
-  }
-
-  setIsLoaded(loaded) {
-    this.isLoaded = loaded;
-  }
-
   setIsOpen(open) {
     this.isOpen = open;
   }

@@ -8,7 +8,7 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const PopupWrapper = styled.div`
   width: ${({ size }) => `${size}px`};
-  min-height: ${({ size }) => `${size * 0.7}px`};
+  min-height: ${({ size, short }) => `${size * 0.7 * short}px`};
   font-size: ${({ theme }) => theme.fontSizes.md};
   z-index: 40;
   padding: ${({ theme }) => theme.space(4)};
@@ -18,7 +18,7 @@ const PopupWrapper = styled.div`
   flex-wrap: wrap;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: ${({ size }) => `${size}px`};
-    min-height: ${({ size }) => `${size * 0.8}px`};
+    min-height: ${({ size, short }) => `${size * 0.8 * short}px`};
   }
 `;
 
@@ -47,10 +47,12 @@ const Arrow = styled.span`
 
 const GrundrissPopup = ({ el, size }) => {
   return (
-    <PopupWrapper id={`popup-${el.id}`} size={size}>
-      <PopupTitle>
-        {el.name}
-      </PopupTitle>
+    <PopupWrapper
+      id={`popup-${el.id}`}
+      size={size}
+      short={el.template == "location-external" ? 0.6 : 1}
+    >
+      <PopupTitle>{el.name}</PopupTitle>
       <Times>
         {el?.extra?.allocation?.temporal?.map(time =>
           time.udk == "rundgang" ? (
@@ -65,15 +67,9 @@ const GrundrissPopup = ({ el, size }) => {
           ) : null,
         )}
       </Times>
-      {el.image !== "location-external" ? (
-        <RoomLink to={`/orte/${makeUrlFromId(el.id)}`}>
-          <LocalizedText id="rooms" /> <Arrow>&#8594;</Arrow>
-        </RoomLink>
-      ) : (
-        <RoomLink to={`/orte/${makeUrlFromId(el.id)}`}>
-          <LocalizedText id="place" /> <Arrow>&#8594;</Arrow>
-        </RoomLink>
-      )}
+      <RoomLink to={`/orte/${makeUrlFromId(el.id)}`}>
+        <LocalizedText id="program" /> <Arrow>&#8594;</Arrow>
+      </RoomLink>
     </PopupWrapper>
   );
 };

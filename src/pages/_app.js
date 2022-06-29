@@ -30,14 +30,9 @@ export default function App({ Component, pageProps }) {
   }, [router.locale]);
 
   useEffect(() => {
+    console.log("initialize datastore");
     dataStore.initialize();
   }, []);
-
-  useEffect(() => {
-    if (dataStore.isLoaded) {
-      uiStore.initialize();
-    }
-  }, [dataStore.isLoaded]);
 
   return (
     <>

@@ -27,7 +27,7 @@ const FooterContainer = styled.div`
 `;
 
 const LinkWrapper = styled.div`
-  padding: ${({ theme }) => `0 ${theme.space(8)}`};
+  padding: ${({ theme }) => `0 ${theme.space(16)}`};
   flex-grow: 0;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: ${({ hideMobile }) => (hideMobile ? "none" : "block")};

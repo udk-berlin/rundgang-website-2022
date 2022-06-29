@@ -14,11 +14,7 @@ const ListItemWrapper = styled.div`
   left: 0;
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  padding: ${({ theme }) => theme.space(8)};
-  padding-bottom: ${({ padding }) => padding}px;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding-bottom: ${({ theme }) => theme.space(16)};
-  }
+  padding-top: 16px;
 `;
 
 const Image = styled.img`

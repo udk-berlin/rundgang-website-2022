@@ -14,18 +14,19 @@ const ListViewWrapper = styled.div`
   justify-content: space-evenly;
   padding-bottom: ${({ theme }) => theme.space(40)};
   margin: auto;
+  gap: 16px 16px;
   ${({ numCol }) => {
     if (numCol == 2) {
       return {
-        gridTemplateColumns: "50% 50%",
+        gridTemplateColumns: "1fr 1fr",
       };
     }
     return {
-      gridTemplateColumns: "20% 20% 20% 20% 20%",
+      gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
     };
   }}
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 1fr 1fr;
   }
   margin-bottom: ${({ theme }) => theme.space(48)};
   -webkit-touch-callout: none; /* iOS Safari */

@@ -11,7 +11,6 @@ class FilterStore {
   constructor() {
     this.selected = INITIAL_SELECTION;
     this.openTagGroup = 0;
-    this.isInitialized = true;
     this.selectedId = null;
     this.isTagSelected = false;
 
@@ -130,7 +129,6 @@ class FilterStore {
 
   get currentTags() {
     let sel = Boolean(_.values(this.selected).find(v => v && v !== "none"));
-    console.log(_.entries(this.selected).find(([k,v]) => v && v !== "none"));
     if (sel) {
       let allTags = this.initialTags;
       const flEl = (group, sel) => {

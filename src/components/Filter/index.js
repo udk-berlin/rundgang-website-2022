@@ -20,28 +20,24 @@ const variants = {
     height: SEARCHBAR_HEIGHT,
     width: "0%",
     opacity: 0,
-    margin: "0px 0px",
     borderWidth: 0,
   },
   filter: {
     height: "fit-content",
     width: "100%",
     opacity: 1,
-    margin: "0px 8px",
     borderWidth: "4px",
   },
   filterMobile: {
     height: "fit-content",
     width: "100%",
     opacity: 1,
-    margin: "0px 8px",
     borderWidth: "4px",
   },
   closed: {
     height: SEARCHBAR_HEIGHT,
     width: "100%",
     opacity: 1,
-    margin: "0px 0px 0px 8px",
   },
 };
 
@@ -51,11 +47,7 @@ const FilterWrapper = styled(motion.div)`
   max-height: calc(100vh - ${MIN_PADDING}px);
   position: relative;
   background: white;
-  margin: ${({ theme }) => ` 0 0 0 ${theme.space(16)}`};
   border: ${({ theme }) => `4px solid ${theme.colors.highlight}`};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin: ${({ theme }) => ` 0 0 0 ${theme.space(4)}`};
-  }
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */

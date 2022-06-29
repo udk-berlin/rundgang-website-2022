@@ -14,6 +14,7 @@ const PageTitleWrapper = styled.div`
   font-family: "Diatype";
   background-color: ${({ theme }) => theme.colors.white};
   overflow: hidden;
+  margin-top: 4px;
 `;
 
 const splitLongTitles = (s, titleId) => {

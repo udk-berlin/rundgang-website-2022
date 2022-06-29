@@ -8,13 +8,6 @@ class DataStore {
 
     this.allStores = [this.api];
 
-    reaction(
-      () => this.api.isLoaded,
-      () => {
-        this.initialize();
-      },
-    );
-
     makeAutoObservable(this, {
       api: false,
     });

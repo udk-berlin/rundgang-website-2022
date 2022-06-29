@@ -36,7 +36,10 @@ const filterContext = tree => {
           context.template == "course"
         ) {
           ebene = "seminars";
-        } else if (context.template == "location-room") {
+        } else if (
+          context.template == "location-room" ||
+          context.template == "location-level"
+        ) {
           rooms[context.id] = true;
         }
         if (ebene) {

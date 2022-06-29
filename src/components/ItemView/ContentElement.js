@@ -20,7 +20,6 @@ const Paragraph = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  margin: ${({ theme }) => theme.space(8)};
 `;
 
 const Code = styled.pre`

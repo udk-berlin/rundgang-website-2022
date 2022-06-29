@@ -31,21 +31,11 @@ const OrteKatalog = styled.div`
 
 const FloorplanContainer = styled.div`
   width: 100%;
-  padding: 8px;
+  padding: ${({ theme }) => theme.space(16)} 0px;
   height: 100%;
   position: relative;
   @media ${({ theme }) => theme.breakpoints.laptop} {
     width: 60%;
-    position: sticky;
-    top: ${SEARCHBAR_HEIGHT + SEARCHBAR_PADDING + TITLE_HEIGHT}px;
-  }
-`;
-const MapContainer = styled.div`
-  width: 100%;
-  padding: 8px;
-  height: 100%;
-  position: relative;
-  @media ${({ theme }) => theme.breakpoints.laptop} {
     position: sticky;
     top: ${SEARCHBAR_HEIGHT + SEARCHBAR_PADDING + TITLE_HEIGHT}px;
   }
