@@ -88,7 +88,6 @@ const Floorplan = () => {
           let dataid =
             process.env.NODE_ENV == "development" ? "dev" : "production";
           if (data[dataid] in dataStore.api.existingRooms) {
-            console.log(dataStore.eventLocations[uiStore.currentContext.name]);
             let roomRect = document.querySelectorAll(
               `[data-id="${data.id}"]`,
             )[0];

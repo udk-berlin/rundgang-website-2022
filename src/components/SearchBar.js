@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import Filter from "@/components/Filter";
 import Favorites from "@/components/Favorites";
 import ClickAwayListener from "@/components/simple/ClickAwayListener";
+import CloseButton from "@/components/simple/CloseButton";
 import { useStores } from "@/stores/index";
 import { SEARCHBAR_HEIGHT, SEARCHBAR_PADDING } from "@/utils/constants";
 
@@ -52,6 +53,9 @@ const SearchBar = () => {
           />
         </FlexContainer>
       </ClickAwayListener>
+        {uiStore.isOpen && (
+          <CloseButton onClose={() => handleClose(uiStore.isOpen)} />
+        )}
     </SearchBarWrapper>
   ) : null;
 };

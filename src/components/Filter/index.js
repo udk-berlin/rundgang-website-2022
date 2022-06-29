@@ -62,6 +62,9 @@ const FilterWrapper = styled(motion.div)`
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    max-height: 80vh;
+  }
 `;
 
 const Filter = ({ onClick, onClose }) => {

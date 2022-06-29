@@ -49,13 +49,6 @@ class UiStore {
     return this.savedItemIds.map(id => this.dataStore.api.cachedIds[id]);
   }
 
-  get savedEvents() {
-    let savedEvents = this.dataStore.api.eventlist.filter(ev =>
-      this.savedItemIds.find(sav => sav == ev.id),
-    );
-    return this.dataStore.createEventStructure(savedEvents);
-  }
-
   isSaved(id) {
     return this.savedItemIds.find(x => x == id);
   }
@@ -118,6 +111,13 @@ class UiStore {
       return this.dataStore.api.currentRoot;
     }
     return null;
+  }
+
+  get filteredEvents() {
+    let savedEvents = this.dataStore.api.eventlist.filter(ev =>
+      this.items.find(item => item.id == ev.id),
+    );
+    return this.dataStore.createEventStructure(savedEvents);
   }
 
   get items() {

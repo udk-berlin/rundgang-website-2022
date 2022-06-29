@@ -67,7 +67,7 @@ const EventsWrapper = styled.div`
   padding: 4px 0px;
 `;
 const LocationList = ({ scaleX, width }) => {
-  const { dataStore } = useStores();
+  const { dataStore, uiStore } = useStores();
   const { pathname } = useRouter();
   const locWidth = scaleX(1658564000);
   const houseInfo = useMemo(
@@ -83,8 +83,8 @@ const LocationList = ({ scaleX, width }) => {
   );
   return (
     <LocationWrapper width={width}>
-      {dataStore?.eventLocations
-        ? _.entries(dataStore.eventLocations).map(([house, rooms]) => (
+      {uiStore?.filteredEvents
+        ? _.entries(uiStore.filteredEvents).map(([house, rooms]) => (
             <RelativeWrapper key={`house-${house}`}>
               <House width={width}>
                 <RoomTitleWrapper width={locWidth}>

@@ -10,21 +10,6 @@ const FilterMenuWrapper = styled.div`
   width: 100%;
   height: 100%;
 `;
-const GoButton = styled.button`
-  border: none;
-  background: none;
-  cursor: pointer;
-  flex-grow: 0;
-  font-size: 70px;
-  padding: 0px;
-  text-align: right;
-  font-family: "Inter";
-  line-height: 1;
-  transform: ${({ active }) => (active ? "scaleY(1)" : "scaleY(0.7)")};
-  @media ${({ theme }) => theme.breakpoints.mobileM} {
-    font-size: 60px;
-  }
-`;
 
 const ResetButton = styled.button`
   font-family: "Diatype";
@@ -78,16 +63,6 @@ const TagMenu = ({ handleSubmit }) => {
         >
           <LocalizedText id="reset" />
         </ResetButton>
-        <GoButton
-          active={uiStore.filterStore.isTagSelected}
-          onClick={() => handleSubmit(true)}
-        >
-          {uiStore.filterStore.isTagSelected ? (
-            <span>&#8594;</span>
-          ) : (
-            <span>&#x2715;</span>
-          )}
-        </GoButton>
       </Buttons>
       <FilterMenuWrapper>
         {_.entries(uiStore.filterStore.currentTags).map(([name, group]) => (

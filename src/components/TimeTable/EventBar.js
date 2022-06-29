@@ -12,7 +12,7 @@ const EventBarWrapper = styled.div`
   box-sizing: border-box;
   overflow: hidden;
   white-space: nowrap;
-  max-height: 30px;
+  height: 20px;
   text-overflow: ellipsis;
   padding: 0px 6px;
   top: ${({ top }) => top}px;

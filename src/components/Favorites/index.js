@@ -40,9 +40,12 @@ const FavouritesWrapper = styled(motion.div)`
   height: ${SEARCHBAR_HEIGHT + 4}px;
   border: ${({ theme }) => `2px solid ${theme.colors.primary}`};
   margin: ${({ theme }) => `2px ${theme.space(8)}`};
-  max-height: calc(100vh - 180px);
+  max-height: 70vh;
   overflow-y: hidden;
   overflow-x: hidden;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    max-height: 60vh;
+  }
 
   @media ${({ theme }) => theme.breakpoints.laptop} {
     max-width: 50%;
@@ -83,7 +86,9 @@ const Favourites = ({ onClick, onClose }) => {
     >
       <AnimatePresence>
         {uiStore.isOpen == "favourites" ? (
-          <FavouritesList onClose={onClose} />
+          <>
+            <FavouritesList onClose={onClose} />
+          </>
         ) : (
           !uiStore.isOpen && (
             <FavouritesHeader onClick={onClick} isOpen={uiStore.isOpen}>

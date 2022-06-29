@@ -25,6 +25,7 @@ const TimeTableWrapper = styled.div`
   padding: ${({ theme }) => `0 ${theme.space(16)}`};
   margin-bottom: 40px;
   height: fit-content;
+  min-height: calc(100vh - 160px);
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
