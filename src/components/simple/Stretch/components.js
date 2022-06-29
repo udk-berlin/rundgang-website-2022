@@ -5,9 +5,11 @@ const StretchWrapper = styled.div`
   position: relative;
   overflow: hidden;
   display: flex;
+  display: inline-block;
   flex-wrap: nowrap;
   white-space: nowrap;
-  line-height: 0.9;
+  vertical-align: top;
+  line-height: ${({ lh }) => lh};
   letter-spacing: 0.01px;
   font-size: ${({ fontSize }) => fontSize}vh;
   width: 100%;
@@ -71,9 +73,15 @@ export const StretchComponent = ({
   dir,
   children,
   handleClick,
+  lh,
 }) => {
   return (
-    <StretchWrapper fontSize={fs} ref={pr} onClick={() => handleClick()}>
+    <StretchWrapper
+      fontSize={fs}
+      ref={pr}
+      onClick={() => handleClick()}
+      lh={lh}
+    >
       <Shadow ref={sr}>
         <ArrowWrap dir={dir}>{children}</ArrowWrap>
       </Shadow>

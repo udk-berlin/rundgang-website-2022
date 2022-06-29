@@ -21,7 +21,7 @@ const MapWrapper = styled.div`
     height: 500px;
   }
   @media only screen and (max-width: 479px) {
-    height: 400px;
+    height: 300px;
   }
 
   @media ${({ theme }) => theme.breakpoints.tablet} {

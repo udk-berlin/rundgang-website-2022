@@ -16,11 +16,13 @@ const Stretch = ({
   const size = useWindowSize();
   const [factor, setFactor] = useState(0);
   const [fontSize, setFontSize] = useState(0);
+  const [lineHeight, setLineHeight] = useState(0.9);
 
   useEffect(() => {
     if (isNaN(preferredSize) && preferredSize.includes("px") && size.height) {
       let pval = parseFloat(preferredSize.replace("px", ""));
       setFontSize((pval / size.height) * 100);
+      setLineHeight(1)
     } else if (
       isNaN(preferredSize) &&
       preferredSize.includes("%") &&
@@ -53,6 +55,7 @@ const Stretch = ({
       fs={fontSize}
       pr={parentRef}
       sr={stretchRef}
+      lh={lineHeight}
       fa={factor}
       dir={arrowDir}
       handleClick={() => handleClick()}

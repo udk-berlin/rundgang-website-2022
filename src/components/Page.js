@@ -77,8 +77,8 @@ const Page = ({ children }) => {
         </HeaderWrapper>
         <PageWrapper>
           {children}
-          <IntroAnimation key={"intro"} />
           <Footer />
+          <IntroAnimation key={"intro"} />
           {showLine ? <CursorLine /> : null}
         </PageWrapper>
       </>

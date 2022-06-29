@@ -13,7 +13,8 @@ import { FormattedDateTimeRange } from "react-intl";
 const LocationWrapper = styled.div`
   width: ${({ width }) => width}px;
   height: fit-content;
-  z-index: 100;
+  position: relative;
+  z-index: 0;
   margin-top: 100px;
   margin-bottom: 100px;
 `;
@@ -48,8 +49,8 @@ const RoomTitle = styled.div`
 
 const RoomTitleWrapper = styled.div`
   width: ${({ width }) => width}px;
-  z-index: 50;
   position: sticky;
+  z-index: 50;
   line-height: 1;
   left: 0;
   top: 0;

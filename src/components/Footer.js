@@ -15,7 +15,7 @@ const FooterContainer = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  z-index: 1000;
+  z-index: 600;
   height: ${FOOTER_HEIGHT}px;
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.md};
@@ -61,7 +61,7 @@ const FooterBelow = styled.div`
   bottom: 0;
   justify-content: space-between;
   flex-direction: column;
-  z-index: 6000;
+  z-index: 700;
   width: 100%;
   height: 100px;
   background-color: ${({ theme }) => theme.colors.secondary};
@@ -70,6 +70,7 @@ const FooterBelow = styled.div`
   }
 `;
 const FooterLine = styled.div`
+  position: relative;
   padding-top: 4px;
   display: flex;
   flex-wrap: wrap;

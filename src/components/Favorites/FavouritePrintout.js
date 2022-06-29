@@ -32,7 +32,7 @@ const FavouritePrintout = ({
   return (
     <Stage width={width} height={height} ref={reference}>
       <Layer>
-        <Rect width={width} height={height} fill="white" />
+        <Rect width={width - 2} height={height - 2} fill="white" />
         <Group>
           {savedItems?.length > 0 ? (
             <Group>
@@ -59,7 +59,7 @@ const FavouritePrintout = ({
                   x={10}
                   y={END_TITLE - 50}
                   width={width - 20}
-                  height={height - 20}
+                  height={height - END_TITLE - 40}
                   stroke="black"
                 />
                 {savedItems
