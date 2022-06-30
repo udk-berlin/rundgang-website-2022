@@ -16,7 +16,7 @@ const Floorplan = styled.div`
   }
 `;
 
-const FloorPlanSvg = ({ url, handleSelectRoom, visibleRooms }) => {
+const FloorPlanSvg = ({ url, handleSelectRoom }) => {
   const [svgRoot, setSvgRoot] = useState();
   const svgRef = useRef();
 

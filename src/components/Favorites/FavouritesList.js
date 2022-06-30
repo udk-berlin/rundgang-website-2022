@@ -45,7 +45,7 @@ const FavouritesSavedItems = styled.div`
 `;
 
 
-const FavouritesList = ({ onClose }) => {
+const FavouritesList = () => {
   const { uiStore } = useStores();
   const router = useRouter();
 

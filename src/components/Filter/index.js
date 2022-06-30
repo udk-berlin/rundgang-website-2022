@@ -59,7 +59,7 @@ const FilterWrapper = styled(motion.div)`
   }
 `;
 
-const Filter = ({ onClick, onClose }) => {
+const Filter = ({ onClick }) => {
   const { uiStore } = useStores();
   const router = useRouter();
   const isMobile = useMediaQuery(
@@ -71,34 +71,28 @@ const Filter = ({ onClick, onClose }) => {
       ? `${uiStore.isOpen}${isMobile ? "Mobile" : ""}`
       : "closed";
 
-  const handleSubmit = useCallback(
-    (close = false) => {
-      if (close) {
-        onClose();
-      }
-      if (uiStore.filterStore.selectedId) {
-        let link = router.pathname;
-        let pid = makeUrlFromId(uiStore.filterStore.selectedId);
-        if (router.pathname == "/") {
-          link = `katalog/${pid}`;
-        } else if (router.pathname.includes("[pid]")) {
-          link = link.replace("[pid]", pid);
-        } else {
-          link = `${router.pathname}/${pid}`;
-        }
-        router.replace(link);
+  const handleSubmit = useCallback(() => {
+    if (uiStore.filterStore.selectedId) {
+      let link = router.pathname;
+      let pid = makeUrlFromId(uiStore.filterStore.selectedId);
+      if (router.pathname == "/") {
+        link = `katalog/${pid}`;
+      } else if (router.pathname.includes("[pid]")) {
+        link = link.replace("[pid]", pid);
       } else {
-        if (router.pathname == "/") {
-          router.replace("/");
-        } else if (router.pathname.includes("[pid]")) {
-          router.replace(router.pathname.replace("[pid]", ""));
-        } else {
-          router.replace(router.pathname.replace("[pid]", ""));
-        }
+        link = `${router.pathname}/${pid}`;
       }
-    },
-    [uiStore.filterStore.selectedId],
-  );
+      router.replace(link);
+    } else {
+      if (router.pathname == "/") {
+        router.replace("/");
+      } else if (router.pathname.includes("[pid]")) {
+        router.replace(router.pathname.replace("[pid]", ""));
+      } else {
+        router.replace(router.pathname.replace("[pid]", ""));
+      }
+    }
+  }, [uiStore.filterStore.selectedId]);
 
   return (
     <FilterWrapper

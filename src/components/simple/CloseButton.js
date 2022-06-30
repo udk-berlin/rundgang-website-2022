@@ -3,22 +3,24 @@ import React from "react";
 
 const CloseButtonWrapper = styled.div`
   cursor: pointer;
-  width: 100%;
   position: relative;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  padding-top: 8px;
+  margin-left: auto;
+  right: 0px;
+  top: -40px;
+  @media ${({ theme }) => theme.breakpoints.laptop} {
+    width: ${({ stretching }) => stretching}%;
+  }
 `;
 
 const CloseIcon = styled.div`
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.highlight};
   border-radius: 50%;
-  opacity: 0.8;
-  width: 80px;
-  height: 80px;
-  font-size: 60px;
+  opacity: 1;
+  width: 60px;
+  height: 60px;
+  font-size: 44px;
   font-family: "Inter";
   line-height: 1.35;
   margin: auto;
@@ -28,13 +30,13 @@ const CloseIcon = styled.div`
     font-size: 50px;
   }
   &:hover {
-    opacity: 1;
+    opacity: 0.8;
   }
 `;
 
-const CloseButton = ({ onClose }) => {
+const CloseButton = ({ onClose, stretching }) => {
   return (
-    <CloseButtonWrapper onClick={() => onClose()}>
+    <CloseButtonWrapper stretching={stretching} onClick={() => onClose()}>
       <CloseIcon>&#x2715;</CloseIcon>
     </CloseButtonWrapper>
   );

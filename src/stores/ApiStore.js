@@ -186,7 +186,6 @@ class ApiStore {
   };
 
   getIdFromLink = async (searchId, asroot = false) => {
-    this.setStatus("pending");
     try {
       let data = searchId in this.cachedIds ? this.cachedIds[searchId] : null;
       if (data) {
@@ -197,9 +196,9 @@ class ApiStore {
             );
             this.currentRoot = data;
           }
-          this.setStatus("success");
         });
       } else {
+        this.setStatus("pending");
         let title = searchId;
         if (!searchId.includes(":dev.medienhaus.udk-berlin.de")) {
           searchId = makeIdFromUrl(searchId);

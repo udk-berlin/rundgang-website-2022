@@ -12,16 +12,19 @@ import {
 const OrteWrapper = styled.div`
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  position: relative;
+  margin: auto;
+  gap: 16px 16px;
+  grid-template-columns: 6fr 4fr;
+  align-items: start;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    flex-wrap: wrap;
+    grid-template-columns: 1fr;
   }
 `;
 
 const OrteKatalog = styled.div`
   flex-grow: 0;
-  width: 40%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 100%;
   }
@@ -30,10 +33,10 @@ const OrteKatalog = styled.div`
 const MapContainer = styled.div`
   width: 100%;
   padding: ${({ theme }) => theme.space(16)} 0px;
-  height: 100%;
   position: relative;
   @media ${({ theme }) => theme.breakpoints.laptop} {
     position: sticky;
+    align-self: start;
     top: ${SEARCHBAR_HEIGHT + SEARCHBAR_PADDING + TITLE_HEIGHT}px;
   }
 `;

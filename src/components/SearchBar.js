@@ -30,7 +30,7 @@ const SearchBar = () => {
     [uiStore.isOpen],
   );
   const handleClose = useCallback(
-    item => {
+    ( item) => {
       if (!item || item === uiStore.isOpen) {
         uiStore.setIsOpen(null);
       }
@@ -45,17 +45,20 @@ const SearchBar = () => {
         <FlexContainer>
           <Filter
             onClick={() => handleOpen("filter")}
-            onClose={() => handleClose("filter")}
+            onClose={() => handleClose( "filter")}
           />
           <Favorites
             onClick={() => handleOpen("favourites")}
-            onClose={() => handleClose("favourites")}
+            onClose={() => handleClose( "favourites")}
           />
         </FlexContainer>
       </ClickAwayListener>
-        {uiStore.isOpen && (
-          <CloseButton onClose={() => handleClose(uiStore.isOpen)} />
-        )}
+      {uiStore.isOpen && (
+        <CloseButton
+          stretching={uiStore.isOpen == "favourites" ? 50 : 100}
+          onClose={() => handleClose( uiStore.isOpen)}
+        />
+      )}
     </SearchBarWrapper>
   ) : null;
 };

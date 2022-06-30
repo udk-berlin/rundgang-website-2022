@@ -76,7 +76,7 @@ const IconWrapper = styled.span`
   margin: auto;
 `;
 
-const Favourites = ({ onClick, onClose }) => {
+const Favourites = ({ onClick }) => {
   const { uiStore } = useStores();
   return (
     <FavouritesWrapper
@@ -87,7 +87,7 @@ const Favourites = ({ onClick, onClose }) => {
       <AnimatePresence>
         {uiStore.isOpen == "favourites" ? (
           <>
-            <FavouritesList onClose={onClose} />
+            <FavouritesList />
           </>
         ) : (
           !uiStore.isOpen && (

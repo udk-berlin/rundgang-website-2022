@@ -15,8 +15,7 @@ const FloorplanWrapper = styled.div`
 `;
 
 const BackgroundImg = styled.img`
-  fill: ${({ selected, theme }) =>
-    selected ? theme.colors.highlight : theme.colors.lightgrey};
+  opacity: ${({ grey, theme }) => (grey ? 0.8 : 1)};
   position: relative;
   top: 0px;
   left: 0;
@@ -26,30 +25,36 @@ const BackgroundImg = styled.img`
 const Levels = styled.div`
   position: relative;
   margin: auto;
-  top: -32px;
+  top: -64px;
   left: 0;
   width: 100%;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   font-size: ${({ theme }) => theme.fontSizes.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
     justify-content: space-evenly;
+    top: 0px;
   }
 `;
 
 const SelectedRoomTitle = styled.div`
+  position: absolute;
   width: 100%;
   text-align: center;
-  min-height: 20px;
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
 `;
 
 const LevelNumber = styled.button`
   border: none;
-  border-radius: ${({ isAll }) => (isAll ? "20px" : "50%")};
-  width: ${({ isAll }) => (isAll ? "fit-content" : "40px")};
+  font-size: ${({ theme }) => theme.fontSizes.md};
+  border-radius: 20px;
+  min-width: ${({ isAll }) => (isAll ? "fit-content" : "40px")};
   height: 40px;
   cursor: pointer;
   z-index: 100;
@@ -136,7 +141,15 @@ const Floorplan = () => {
   return (
     <FloorplanWrapper>
       <ImageWrapper visibleRooms={visibleRooms}>
+        <SelectedRoomTitle>
+          {uiStore.selectedRoom ? (
+            `${uiStore.selectedRoom?.topic} ${uiStore.selectedRoom?.name}`
+          ) : (
+            <LocalizedText id={`level${uiStore.floorLevel}`} />
+          )}
+        </SelectedRoomTitle>
         <BackgroundImg
+          grey={uiStore.floorLevel == null}
           src={`/assets/img/${uiStore.currentContext?.description.default}_building.svg`}
         />
         <FloorPlanSvg
@@ -145,10 +158,6 @@ const Floorplan = () => {
         />
       </ImageWrapper>
       <Levels>
-        <SelectedRoomTitle>
-          {uiStore.selectedRoom?.topic ?? <LocalizedText id="allfloors" />}{" "}
-          {uiStore.selectedRoom?.name}
-        </SelectedRoomTitle>
         <LevelNumber
           key="alllevels"
           isAll
@@ -167,7 +176,7 @@ const Floorplan = () => {
                   uiStore.setFloorLevel(level.name);
                 }}
               >
-                {level.name}
+                <LocalizedText id={`level${level.name}`} />
               </LevelNumber>
             ),
         )}

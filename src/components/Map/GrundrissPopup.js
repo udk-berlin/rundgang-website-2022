@@ -10,7 +10,7 @@ const PopupWrapper = styled.div`
   width: ${({ size }) => `${size}px`};
   min-height: ${({ size, short }) => `${size * 0.7 * short}px`};
   font-size: ${({ theme }) => theme.fontSizes.md};
-  z-index: 40;
+  z-index: 400;
   padding: ${({ theme }) => theme.space(4)};
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@ const PopupWrapper = styled.div`
   flex-wrap: wrap;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: ${({ size }) => `${size}px`};
-    min-height: ${({ size, short }) => `${size * 0.8 * short}px`};
+    min-height: ${({ size, short }) => `${size * 0.6 * short}px`};
   }
 `;
 

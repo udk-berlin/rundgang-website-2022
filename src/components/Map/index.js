@@ -13,7 +13,7 @@ import GrundrissPopup from "./GrundrissPopup";
 const MapWrapper = styled.div`
   width: 100%;
   margin: auto;
-  height: 700px;
+  height: 670px;
   @media only screen and (max-width: 999px) {
     height: 640px;
   }
@@ -120,7 +120,7 @@ const Map = () => {
             marker.getElement().removeEventListener("click", addPopup);
         });
 
-        map.current.on("zoom", e => {
+        const filterLocations = () => {
           let bounds = map.current.getBounds();
           let filteredLocations = addresses.filter(el =>
             bounds.contains([el.lng, el.lat]),
@@ -128,6 +128,10 @@ const Map = () => {
           if (filteredLocations?.length !== uiStore.zoomFiltered?.length) {
             uiStore.setZoomFiltered(filteredLocations.map(loc => loc.id));
           }
+          return filteredLocations;
+        };
+
+        const redrawMarkers = filteredLocations => {
           filteredLocations.map(el => {
             const scale = map.current.getZoom() - el.maxZoom;
             if (el.image !== "location-external") {
@@ -137,13 +141,26 @@ const Map = () => {
                   <GrundrissMarker el={el} size={60 * 2 ** scale} />,
                 );
               } else if (markers[el.id].scale > 0 && scale <= 0) {
-                markers[el.id].scale = scale;
+                markers[el.id].scale = scale;ss
                 markers[el.id].mRoot.render(
                   <GrundrissMarker el={el} size={60} />,
                 );
               }
             }
           });
+        };
+
+        map.current.on("zoom", e => {
+          const filteredLocations = filterLocations();
+          redrawMarkers(filteredLocations);
+        });
+
+        map.current.on("mousedown", e => {
+          filterLocations();
+        });
+
+        map.current.on("touchstart", e => {
+          filterLocations();
         });
       });
     }

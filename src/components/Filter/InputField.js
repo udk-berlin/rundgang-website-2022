@@ -71,7 +71,6 @@ const InputField = ({ handleFocus, handleSubmit }) => {
   };
 
   const _handleFocus = () => {
-    handleFocus();
     setAutocompleteOpen(true);
   };
 
@@ -96,6 +95,8 @@ const InputField = ({ handleFocus, handleSubmit }) => {
         value={value}
         onChange={handleChange}
         onFocus={_handleFocus}
+        onMouseDown={handleFocus}
+        onTouchStart={handleFocus}
         isOpen={uiStore.isOpen == "filter"}
         placeholder={
           uiStore.isOpen == "filter" ? messages.search : messages.filter
