@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Link from "next/link";
 
 const StyledLink = ({ as, children, className, href }) => (
-  <Link href={href} as={as} passHref>
+  <Link href={href} as={as} passHref shallow={true}>
     <a className={className}>{children}</a>
   </Link>
 );

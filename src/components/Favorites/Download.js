@@ -4,10 +4,7 @@ import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import { jsPDF } from "jspdf";
-import dynamic from "next/dynamic";
-const FavouritePrintout = dynamic(() => import("./FavouritePrintout"), {
-  ssr: false,
-});
+import FavouritePrintout from "./FavouritePrintout";
 
 const DownloadPng = styled.div`
   display: none;
@@ -37,6 +34,19 @@ const Download = () => {
   );
 
   const downloadImage = () => {
+    var doc = new jsPDF();
+    var source = window.document.getElementById("favouriteprintout");
+    let width = source.innerWidth;
+    doc.html(source, {
+      callback: function (doc) {
+        doc.save("rundgangudk2022.pdf");
+      },
+      x: 10,
+      y: 10,
+      width: 100,
+      windowWidth: 600,
+    });
+    return null;
     if (uiStore.numberSavedItems > 0) {
       //const dataURL = ref.current.toDataURL({ pixelRatio: 2 });
       if (numPages == 1) {

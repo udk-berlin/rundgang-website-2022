@@ -45,7 +45,7 @@ export default class MyDocument extends Document {
             crossOrigin=""
           />
           <link
-            href="https://fonts.googleapis.com/css2?family=Inter&display=swap&text=↑→↓←"
+            href="https://fonts.googleapis.com/css2?family=Inter&text=↑→↓←"
             rel="stylesheet"
           />
           <link href="/assets/css/maplibre-gl.css" rel="stylesheet" />

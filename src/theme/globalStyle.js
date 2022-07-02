@@ -4,6 +4,8 @@ const GlobalStyle = createGlobalStyle`
 html {
   height: 100%; 
   width: 100%;
+  scrollbar-width: thin;       
+  scrollbar-color: black #d9d9d9;
   *::selection {
     background: black;
     color: #E2FF5D;

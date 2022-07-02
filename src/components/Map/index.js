@@ -56,9 +56,13 @@ const Map = () => {
     if (exactLocations && dataStore.api.locations) {
       const adrr = exactLocations.map(a => ({
         ...a,
-        ...dataStore.api.locations.find(c => c.id == a.id.development),
-        isFound: dataStore.api.locations.find(c => c.id == a.id.development)
-          ?.name,
+        ...dataStore.api.locations.find(
+          c => c.id == a.id[process.env.NODE_ENV],
+        ),
+        isFound: dataStore.api.locations.find(
+          c => c.id == a.id[process.env.NODE_ENV],
+        )?.name,
+        id: a.id[process.env.NODE_ENV],
       }));
       setAddresses(adrr);
     }
@@ -141,7 +145,7 @@ const Map = () => {
                   <GrundrissMarker el={el} size={60 * 2 ** scale} />,
                 );
               } else if (markers[el.id].scale > 0 && scale <= 0) {
-                markers[el.id].scale = scale;ss
+                markers[el.id].scale = scale;
                 markers[el.id].mRoot.render(
                   <GrundrissMarker el={el} size={60} />,
                 );
@@ -150,16 +154,16 @@ const Map = () => {
           });
         };
 
-        map.current.on("zoom", e => {
+        map.current.on("zoom", () => {
           const filteredLocations = filterLocations();
           redrawMarkers(filteredLocations);
         });
 
-        map.current.on("mousedown", e => {
+        map.current.on("mousedown", () => {
           filterLocations();
         });
 
-        map.current.on("touchstart", e => {
+        map.current.on("touchstart", () => {
           filterLocations();
         });
       });

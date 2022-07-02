@@ -35,16 +35,23 @@ const Page = ({ children }) => {
   const [showLine, setShowLine] = useState(false);
 
   useEffect(() => {
+    console.log("initialize datastore");
+    dataStore.initialize();
+  }, []);
+
+  useEffect(() => {
     let pid = router.query.pid;
     setShowLine(false);
     if (dataStore.api?.root?.id) {
       if (pid) {
+        console.log("getting pid link");
         dataStore.api.getIdFromLink(pid, true);
       } else if (
         dataStore.isLoaded &&
         router.pathname !== "/" &&
         !router.pathname.includes("[pid]")
       ) {
+        console.log("getting page link");
         let id = router.pathname.replaceAll("/", "").replaceAll("[pid]", "");
         uiStore.filterStore.handleReset();
         dataStore.api.getIdFromLink(id, true);
@@ -53,6 +60,7 @@ const Page = ({ children }) => {
         dataStore.api.root &&
         !router.pathname.includes("[pid]")
       ) {
+        console.log("getting start link");
         uiStore.filterStore.handleReset();
         dataStore.api.getIdFromLink(dataStore.api.root.id, true);
         if (!isMobile) {

@@ -1,4 +1,6 @@
-const filterContext = tree => {
+import _ from "lodash";
+
+const filterContext = (tree, events) => {
   let tags = {
     ebene0: {},
     initiatives: {},
@@ -7,13 +9,42 @@ const filterContext = tree => {
     seminars: {},
   };
 
+  let pathlist = {};
+
+  let eventlist = {};
+
   let rooms = {};
 
   let queue = [{ node: tree, id: tree.id, path: [tree] }];
   let explored = [];
+
   while (queue.length > 0) {
     let curr = queue.shift();
     if (curr.node.type == "item") {
+      let currpaths = curr.path.filter(
+        x =>
+          !["structure-root", "Universität", "location-university"].includes(
+            x.template,
+          ) && x.id !== curr.id,
+      );
+      if (curr.id in pathlist) {
+        pathlist[curr.id].concat(currpaths);
+      } else {
+        pathlist[curr.id] = currpaths;
+      }
+      if (
+        curr.node.template == "event" &&
+        (!(curr.id in eventlist) || !eventlist[curr.id]?.room)
+      ) {
+        let eventobject = {
+          ...curr.node,
+          building: curr.path.find(loc => loc.template == "location-building"),
+          room: curr.path.find(loc => loc.template == "location-room"),
+          allocation: events.find(e => e.id == curr.id)?.allocation,
+        };
+
+        eventlist[curr.id] = eventobject;
+      }
       curr.path.map((context, i) => {
         let ebene = null;
         if (
@@ -81,7 +112,7 @@ const filterContext = tree => {
     return obj;
   }, {});
 
-  return { tags: result, rooms };
+  return { tags: result, rooms, eventlist: _.values(eventlist), pathlist };
 };
 
 export default filterContext;

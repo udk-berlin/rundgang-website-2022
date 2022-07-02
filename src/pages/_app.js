@@ -29,11 +29,6 @@ export default function App({ Component, pageProps }) {
     }
   }, [router.locale]);
 
-  useEffect(() => {
-    console.log("initialize datastore");
-    dataStore.initialize();
-  }, []);
-
   return (
     <>
       <GlobalFonts />

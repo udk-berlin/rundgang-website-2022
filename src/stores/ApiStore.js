@@ -26,11 +26,11 @@ class ApiStore {
   constructor() {
     this.root = null;
     this.locations = null;
-    this.structure = null;
     this.eventlist = null;
     this.cachedIds = {};
     this.tags = {};
     this.existingRooms = {};
+    this.pathlist = {};
     this.currentRoot = null;
     this.currentItems = null;
     this.isLoaded = false;
@@ -64,13 +64,12 @@ class ApiStore {
   };
 
   getLocations = async () => {
-    return this.get(
-      `${process.env.NEXT_PUBLIC_LOCATIONS_ROOT}/tree/filter${TYPE_CONTEXT}`,
-    )
+    return this.get(`${process.env.NEXT_PUBLIC_LOCATIONS_ROOT}`)
       .then(res =>
         Promise.all(
           _.values(res.children).map(async building => {
             let data = await this.getId(building.id);
+            this.setCachedId(data, []);
             return {
               ...building,
               extra: data,
@@ -81,52 +80,17 @@ class ApiStore {
       .catch(() => console.log("no list of locations ids"));
   };
 
-  getStructure = async () => {
-    return this.get(
-      `${process.env.NEXT_PUBLIC_STRUCTURE_ROOT}/tree/filter${TYPE_CONTEXT}`,
-    ).catch(() => console.log("no STRUCTURE_ROOT id"));
-  };
-
-  getContexts = async () => {
-    return this.getFilteredListFromId(
-      process.env.NEXT_PUBLIC_API_ROOT_URL,
-      TYPE_CONTEXT,
-    ).catch(() => console.log("no list of contexts id"));
-  };
-
-  getEventList = async () => {
-    return this.getFilteredListFromId(
-      process.env.NEXT_PUBLIC_API_ROOT_URL,
-      "/allocation/temporal",
-    )
-      .then(res =>
-        Promise.all(
-          res
-            .map(async ev => {
-              if (ev.type == "item") {
-                let res = await this.getId(ev.id);
-                let locpath = await this.getParentsFromId(res);
-                this.setCachedId(res, locpath);
-                return {
-                  ...ev,
-                  building: locpath.find(
-                    loc => loc.template == "location-building",
-                  ),
-                  room: locpath.find(loc => loc.template == "location-room"),
-                };
-              } else return null;
-            })
-            .filter(a => a),
-        ),
-      )
-      .catch(() => console.log("no eventlist"));
-  };
-
   getId = async id => {
+    if (id in this.cachedIds) {
+      return this.cachedIds[id];
+    }
     return this.get(id);
   };
 
   getPathToId = async id => {
+    if (id in this.pathlist) {
+      return this.pathlist[id];
+    }
     return this.get(`${id}${PATH_URL}`);
   };
 
@@ -152,10 +116,6 @@ class ApiStore {
 
   getRenderedItem = async id => {
     return this.get(`${id}${RENDER_JSON}`);
-  };
-
-  getListFromId = async id => {
-    return this.get(`${id}${LIST_URL}`);
   };
 
   getFilteredListFromId = async (id, filterParams) => {
@@ -189,6 +149,7 @@ class ApiStore {
     try {
       let data = searchId in this.cachedIds ? this.cachedIds[searchId] : null;
       if (data) {
+        console.log("data already here");
         runInAction(() => {
           if (asroot) {
             this.currentItems = data.allItemsBelow.map(
@@ -227,7 +188,12 @@ class ApiStore {
               } else {
                 let res = await this.getId(item.id);
                 if (res) {
-                  let itemTags = await this.getParentsFromId(res);
+                  let itemTags = [];
+                  if (item.id in this.pathlist) {
+                    itemTags = this.pathlist[item.id];
+                  } else {
+                    itemTags = await this.getParentsFromId(res);
+                  }
                   this.setCachedId(res, itemTags);
                   return { ...res, tags: itemTags };
                 } else return null;
@@ -283,18 +249,28 @@ class ApiStore {
   initializeRoot = async () => {
     this.setStatus("pending");
     try {
-      const data = await this.getRoot();
-      const tree = await this.getTreeFromId(data.id);
-      const structure = await this.getStructure();
+      console.time("loading getTreeFromId");
+      const tree = await this.getTreeFromId(
+        process.env.NEXT_PUBLIC_API_ROOT_URL,
+      );
+      console.timeEnd("loading getTreeFromId");
+      console.time("loading getLocations");
       const locations = await this.getLocations();
-      const eventlist = await this.getEventList();
-      const { tags, rooms } = filterContext(tree);
+      console.timeEnd("loading getLocations");
+      console.time("loading filterContext");
+      const events = await this.getFilteredListFromId(
+        process.env.NEXT_PUBLIC_API_ROOT_URL,
+        "/allocation/temporal",
+      );
+      const { tags, rooms, eventlist, pathlist } = filterContext(tree, events);
+      console.timeEnd("loading filterContext");
       runInAction(() => {
-        this.root = data;
+        delete tree.children
+        this.root = tree;
         this.tags = tags;
+        this.pathlist = pathlist;
         this.existingRooms = rooms;
         this.locations = locations;
-        this.structure = structure;
         this.eventlist = eventlist;
         this.setStatus("success");
         this.isLoaded = true;
@@ -310,7 +286,7 @@ class ApiStore {
     console.log(snapshot);
   };
 
-  initialize = () => {
+  initialize = async () => {
     this.initializeRoot();
   };
 

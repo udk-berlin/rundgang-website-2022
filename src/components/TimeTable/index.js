@@ -31,16 +31,25 @@ const TimeTableWrapper = styled.div`
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
-  *::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-  }
+  overflow-y: auto;
 
+  scrollbar-width: thin;       
+  scrollbar-color: black #d9d9d9;
+  *::selection {
+    background: black;
+    color: #E2FF5D;
+  } 
+  *::-webkit-scrollbar {
+    width:8px;
+    height: 8px;
+  }
   *::-webkit-scrollbar-track {
-    outline: none;
+    background-color: #d9d9d9;
+    outline: 1px solid #d9d9d9;
   }
   *::-webkit-scrollbar-thumb {
-    outline: none;
+    background-color: black;
+    outline: 1px solid black;
   }
 `;
 

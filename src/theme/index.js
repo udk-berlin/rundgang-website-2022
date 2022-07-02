@@ -17,9 +17,6 @@ const size = {
   desktop: "2560px",
 };
 const diatypeRegular = ["Diatype", "sans-serif"].join(",");
-const diatypeBold = ["DiatypeBold", "sans-serif"].join(",");
-const diatypeBlack = ["DiatypeBlack", "sans-serif"].join(",");
-const diatypeItalic = ["DiatypeItalic", "sans-serif"].join(",");
 
 export const theme = {
   colors: {
@@ -47,32 +44,6 @@ export const theme = {
   typography: {
     fontFamily: diatypeRegular,
     color: COLORS.jetblack,
-
-    h1: {
-      fontSize: "9vw",
-      fontFamily: diatypeBlack,
-      fontWeight: "black",
-    },
-    h2: {
-      fontFamily: diatypeBold,
-      fontWeight: "bold",
-    },
-    h3: {
-      fontFamily: diatypeItalic,
-      fontStyle: "italic",
-    },
-    h4: {
-      fontFamily: diatypeItalic,
-      fontStyle: "italic",
-    },
-    h5: {
-      fontFamily: diatypeRegular,
-      paddingBottom: ".3em",
-    },
-    b: {
-      fontFamily: diatypeBold,
-      fontWeight: "bold",
-    },
   },
   space: p => `${p}px`,
   breakpoints: {
