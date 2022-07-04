@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
 import Stretch from "@/components/simple/Stretch/index";
 import useMediaQuery from "@/utils/useMediaQuery";
-import { SEARCHBAR_HEIGHT, TITLE_HEIGHT } from "@/utils/constants";
+import { TITLE_HEIGHT } from "@/utils/constants";
 
 const PageTitleWrapper = styled.div`
   width: 100%;
@@ -62,7 +62,10 @@ const PageTitle = () => {
 
   const handleBack = () => {
     let link = router.pathname;
-    if (router.pathname.includes("[pid]")) {
+    if (
+      router.pathname.includes("[pid]") &&
+      router.query.pid !== "beratungsangebote"
+    ) {
       uiStore.setSelectedRoom(null);
       uiStore.setFloorLevel(null);
       link = link.replace("[pid]", "");

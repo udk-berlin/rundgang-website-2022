@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
 
 const useTopScrollBar = (bottom, top) => {
-  const [scrollPos, setScrollPos] = useState(0);
+  let scrollPos = 0;
   useEffect(() => {
     const bottomScroll = document.getElementById(bottom);
     const topScroll = document.getElementById(top);
     const setFromBottom = e => {
-      setScrollPos(e.target.scrollLeft);
-      topScroll.scrollLeft = e.target.scrollLeft;
+      let newpos = e.target.scrollLeft;
+      if (newpos === scrollPos) return false;
+      scrollPos = newpos;
+      topScroll.scrollLeft = newpos;
     };
     const setFromTop = e => {
-      setScrollPos(e.target.scrollLeft);
-      bottomScroll.scrollLeft = e.target.scrollLeft;
+      let newpos = e.target.scrollLeft;
+      if (newpos === scrollPos) return false;
+      scrollPos = newpos;
+      bottomScroll.scrollLeft = newpos;
     };
 
-    bottomScroll.addEventListener("scroll", setFromBottom);
-    topScroll.addEventListener("scroll", setFromTop);
+    bottomScroll.addEventListener("scroll", setFromBottom, { passive: true });
+    topScroll.addEventListener("scroll", setFromTop, { passive: true });
 
     return () => {
-      bottomScroll.removeEventListener("scroll", setFromBottom);
-      topScroll.removeEventListener("scroll", setFromTop);
+      bottomScroll.removeEventListener("scroll", setFromBottom, {
+        passive: true,
+      });
+      topScroll.removeEventListener("scroll", setFromTop, { passive: true });
     };
   }, []);
 

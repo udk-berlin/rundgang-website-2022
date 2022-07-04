@@ -36,7 +36,6 @@ const Download = () => {
   const downloadImage = () => {
     var doc = new jsPDF();
     var source = window.document.getElementById("favouriteprintout");
-    let width = source.innerWidth;
     doc.html(source, {
       callback: function (doc) {
         doc.save("rundgangudk2022.pdf");
@@ -44,77 +43,22 @@ const Download = () => {
       x: 10,
       y: 10,
       width: 100,
-      windowWidth: 600,
+      windowWidth: 1000,
     });
-    return null;
-    if (uiStore.numberSavedItems > 0) {
-      //const dataURL = ref.current.toDataURL({ pixelRatio: 2 });
-      if (numPages == 1) {
-        const pdf = new jsPDF("p", "px", [
-          ref.current.width(),
-          ref.current.height(),
-        ]);
-        pdf.addImage(
-          ref.current.toDataURL({ pixelRatio: 2 }),
-          "png",
-          0,
-          0,
-          ref.current.width(),
-          ref.current.height(),
-        );
-
-        pdf.save("rundgangudk2022.pdf");
-      } else {
-        const doc = new jsPDF("p", "mm", [2480 / 4, 3508 / 4]);
-        const imgData = ref.current.toDataURL({ pixelRatio: 3 });
-
-        var imgWidth = 2480 / 4;
-        var pageHeight = 3508 / 4;
-        var imgHeight = numPages * (3508 / 4);
-        var heightLeft = imgHeight;
-
-        var position = 0;
-
-        doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-
-        while (heightLeft >= 10) {
-          position = heightLeft - imgHeight;
-          doc.addPage();
-          doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-
-        doc.save("rundgangudk2022.pdf");
-      }
-    }
   };
 
   return (
     uiStore.numberSavedItems > 0 && (
       <DownloadButton onClick={() => downloadImage()}>
         <LocalizedText id="download" />
-        {numPages > 1 ? (
-          <DownloadPng>
-            <FavouritePrintout
-              savedItems={uiStore.savedItems}
-              width={2480 / 4}
-              pageHeight={3508 / 4}
-              height={(numPages ?? 1) * (3508 / 4)}
-              numPages={numPages}
-              reference={ref}
-            />
-          </DownloadPng>
-        ) : (
-          <DownloadPng>
-            <FavouritePrintout
-              savedItems={uiStore.savedItems}
-              width={2480 / 4}
-              height={3508 / 4}
-              reference={ref}
-            />
-          </DownloadPng>
-        )}
+        <DownloadPng>
+          <FavouritePrintout
+            savedItems={uiStore.savedItems}
+            width={2480 / 4}
+            height={3508 / 4}
+            reference={ref}
+          />
+        </DownloadPng>
       </DownloadButton>
     )
   );

@@ -6,7 +6,7 @@ const GlobalFonts = createGlobalStyle`
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/fonts/ABCDiatype-Regular-Trial.woff2") format('woff2')
+  src: url("/fonts/EduDiatype-Regular.woff2") format('woff2')
 }
 
 @font-face {
@@ -14,15 +14,7 @@ const GlobalFonts = createGlobalStyle`
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("/fonts/ABCDiatype-Bold-Trial.woff2") format('woff2');
-}
-
-@font-face {
-  font-family: 'DiatypeBlack';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url("/fonts/ABCDiatype-Black-Trial.woff2") format('woff2');
+  src: url("/fonts/EduDiatype-Bold.woff2") format('woff2');
 }
 
 `;

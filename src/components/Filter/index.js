@@ -5,11 +5,16 @@ import { observer } from "mobx-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import InputField from "./InputField";
-import TagMenu from "./TagMenu";
 import { useRouter } from "next/router";
 import { makeUrlFromId } from "@/utils/idUtils";
 import { SEARCHBAR_HEIGHT, MIN_PADDING } from "@/utils/constants";
 import useMediaQuery from "@/utils/useMediaQuery";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
+const TagMenu = dynamic(() => import("./TagMenu"), {
+  suspense: true,
+});
 
 const variants = {
   favourites: {
@@ -59,7 +64,7 @@ const FilterWrapper = styled(motion.div)`
   }
 `;
 
-const Filter = ({ onClick }) => {
+const Filter = React.forwardRef(({ onOpen }, ref) => {
   const { uiStore } = useStores();
   const router = useRouter();
   const isMobile = useMediaQuery(
@@ -98,16 +103,20 @@ const Filter = ({ onClick }) => {
     <FilterWrapper
       animate={variant}
       variants={variants}
+      ref={ref}
+      onClick={onOpen}
       transition={{ type: "linear", duration: 0.5 }}
     >
-      <InputField handleFocus={onClick} handleSubmit={handleSubmit} />
+      <InputField onOpen={onOpen} handleSubmit={handleSubmit} />
       <AnimatePresence>
-        {uiStore.isOpen && uiStore.isOpen == "filter" && (
-          <TagMenu handleSubmit={handleSubmit} />
-        )}
+        <Suspense fallback={`Loading...`}>
+          {uiStore.isOpen && uiStore.isOpen == "filter" && (
+            <TagMenu handleSubmit={handleSubmit} />
+          )}
+        </Suspense>
       </AnimatePresence>
     </FilterWrapper>
   );
-};
+});
 
 export default observer(Filter);

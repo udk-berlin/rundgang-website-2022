@@ -43,8 +43,9 @@ const AuthorTag = styled.div`
   }
 `;
 
-const LocationTags = styled(AuthorTag)`
+const LocationTag = styled(AuthorTag)`
   background: black;
+  cursor: pointer;
   color: ${({ theme }) => theme.colors.highlight};
   border-color: ${({ theme }) => theme.colors.highlight};
 `;
@@ -174,7 +175,7 @@ const ItemView = () => {
           {item.tags
             .filter(t => t.template.includes("location-"))
             .map(t => (
-              <LocationTags
+              <LocationTag
                 key={t.name}
                 onClick={() =>
                   router.replace(`/katalog/${makeUrlFromId(t.id)}`)
@@ -182,7 +183,7 @@ const ItemView = () => {
               >
                 {tagPrefix(t.template)}
                 {t.name}
-              </LocationTags>
+              </LocationTag>
             ))}
           {item.template == "event" && item.allocation?.temporal?.length
             ? item.allocation?.temporal?.slice(0, 3).map((t, i) => (

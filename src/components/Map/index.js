@@ -35,7 +35,19 @@ const MapContainerDiv = styled.div`
 `;
 
 const Popups = styled.div`
-  display: none;
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  margin-top: calc(50% - 100px);
+
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    margin-top: calc(50% - 120px);
+  }
 `;
 const MAP_STYLE =
   "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY";
@@ -80,7 +92,6 @@ const Map = () => {
         minZoom: 11,
         pitchWithRotate: false,
         clickTolerance: 7,
-        logoPosition: "top-left",
         dragRotate: false,
         boxZoom: false,
         pitchWithRotate: false,
@@ -98,7 +109,14 @@ const Map = () => {
           const markerElement = document.createElement("div");
           markerElement.pitchAlignment = "map";
           markerElement.rotationAlignment = "map";
-          const mRoot = createRoot(markerElement);
+          let mRoot = null;
+          if (el.id in markers) {
+            console.log("already in markers");
+            mRoot = markers[el.id].mRoot;
+          } else {
+            mRoot = createRoot(markerElement);
+          }
+
           let size = el.image == "location-external" ? 20 : 60;
           mRoot.render(<GrundrissMarker el={el} size={size} />);
 
@@ -107,21 +125,7 @@ const Map = () => {
             .setLngLat([el.lng, el.lat])
             .addTo(map.current);
 
-          const addPopup = () => {
-            // add poopup
-            const popupElement = document.getElementById(`popup-${el.id}`);
-            if (marker && popupElement) {
-              const popup = new maplibregl.Popup()
-                .setLngLat([el.lng, el.lat])
-                .setDOMContent(popupElement);
-              marker.setPopup(popup);
-            }
-          };
-          marker.getElement().addEventListener("click", addPopup);
-
           markers[el.id] = { marker, mRoot, scale: 0 };
-          return () =>
-            marker.getElement().removeEventListener("click", addPopup);
         });
 
         const filterLocations = () => {
@@ -159,6 +163,19 @@ const Map = () => {
           redrawMarkers(filteredLocations);
         });
 
+        map.current.on("click", e => {
+          addresses.map(otherEl => {
+            const otherElement = document.getElementById(`popup-${otherEl.id}`);
+            otherElement.style.display = "none";
+          });
+          if (e.originalEvent.target.id) {
+            let popId = e.originalEvent.target.id.replace("-marker", "");
+            uiStore.setZoomFiltered([popId]);
+            const popupElement = document.getElementById(`popup-${popId}`);
+            popupElement.style.display = "block";
+          }
+        });
+
         map.current.on("mousedown", () => {
           filterLocations();
         });
@@ -172,12 +189,12 @@ const Map = () => {
 
   return (
     <MapWrapper size={size}>
+      <MapContainerDiv ref={mapContainer} />
       <Popups>
         {addresses.map((house, i) => (
-          <GrundrissPopup key={`popup-${house.id}`} el={house} size={210} />
+          <GrundrissPopup key={`popup-${house.id}`} el={house} size={230} />
         ))}
       </Popups>
-      <MapContainerDiv ref={mapContainer} />
     </MapWrapper>
   );
 };

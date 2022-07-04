@@ -8,6 +8,7 @@ import AutoComplete from "./AutoComplete";
 import { SEARCHBAR_HEIGHT } from "@/utils/constants";
 
 const Field = styled.input`
+  cursor: pointer !important;
   color: ${({ theme }) => theme.colors.primary};
   background: inherit;
   border: ${({ theme, isOpen }) =>
@@ -47,6 +48,7 @@ const Field = styled.input`
 const InputFieldWrapper = styled.div`
   display: flex;
   width: 100%;
+  cursor: pointer;
 `;
 
 const CloseButton = styled.div`
@@ -59,7 +61,7 @@ const CloseButton = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 
-const InputField = ({ handleFocus, handleSubmit }) => {
+const InputField = ({ handleSubmit }) => {
   const { uiStore } = useStores();
   const { messages } = useIntl();
   const [value, setValue] = useState("");
@@ -95,8 +97,7 @@ const InputField = ({ handleFocus, handleSubmit }) => {
         value={value}
         onChange={handleChange}
         onFocus={_handleFocus}
-        onMouseDown={handleFocus}
-        onTouchStart={handleFocus}
+        disabled={uiStore.isOpen !== "filter"}
         isOpen={uiStore.isOpen == "filter"}
         placeholder={
           uiStore.isOpen == "filter" ? messages.search : messages.filter

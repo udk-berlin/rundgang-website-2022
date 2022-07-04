@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { observer } from "mobx-react";
 import styled from "styled-components";
 import { useStores } from "@/stores/index";
-import ClickAwayListener from "../simple/ClickAwayListener";
+import ClickAwayListener from "react-click-away-listener";
 
 const AutoCompleteWrapper = styled.div`
   position: absolute;

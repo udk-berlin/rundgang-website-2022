@@ -33,7 +33,7 @@ export default class MyDocument extends Document {
         <Head>
           <link
             rel="preload"
-            href="/fonts/ABCDiatype-Regular-Trial.woff2"
+            href="/fonts/EduDiatype-Regular.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""

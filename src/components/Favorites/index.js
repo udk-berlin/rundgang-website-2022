@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import FavouriteIcon from "@/components/simple/FavouriteIcon";
-import FavouritesList from "./FavouritesList";
+import FavouritesWindow from "./FavouritesWindow";
 import { SEARCHBAR_HEIGHT } from "@/utils/constants";
 
 const variants = {
@@ -76,7 +76,7 @@ const IconWrapper = styled.span`
   margin: auto;
 `;
 
-const Favourites = ({ onClick }) => {
+const Favourites = React.forwardRef(({ onOpen }, ref) => {
   const { uiStore } = useStores();
   return (
     <FavouritesWrapper
@@ -84,15 +84,14 @@ const Favourites = ({ onClick }) => {
       variants={variants}
       transition={{ type: "linear", duration: 0.5 }}
       id="favouriteprintout"
+      ref={ref}
     >
       <AnimatePresence>
         {uiStore.isOpen == "favourites" ? (
-          <>
-            <FavouritesList />
-          </>
+          <FavouritesWindow />
         ) : (
           !uiStore.isOpen && (
-            <FavouritesHeader onClick={onClick} isOpen={uiStore.isOpen}>
+            <FavouritesHeader onClick={onOpen} isOpen={uiStore.isOpen}>
               <IconWrapper>
                 <FavouriteIcon saved={true} size={1.5} />
               </IconWrapper>
@@ -105,6 +104,6 @@ const Favourites = ({ onClick }) => {
       </AnimatePresence>
     </FavouritesWrapper>
   );
-};
+});
 
 export default observer(Favourites);

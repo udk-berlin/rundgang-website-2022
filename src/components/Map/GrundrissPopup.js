@@ -5,30 +5,36 @@ import { makeUrlFromId } from "@/utils/idUtils";
 import { FormattedDateTimeRange } from "react-intl";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import LocalizedText from "modules/i18n/components/LocalizedText";
+import CloseButton from "../simple/CloseButton";
 
 const PopupWrapper = styled.div`
+  display: none;
+  position: relative;
   width: ${({ size }) => `${size}px`};
-  min-height: ${({ size, short }) => `${size * 0.7 * short}px`};
+  height: fit-content;
   font-size: ${({ theme }) => theme.fontSizes.md};
-  z-index: 400;
-  padding: ${({ theme }) => theme.space(4)};
-  display: flex;
+  z-index: 4000;
+  padding: ${({ theme }) => theme.space(16)};
+  background: white;
   flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    width: ${({ size }) => `${size}px`};
-    min-height: ${({ size, short }) => `${size * 0.6 * short}px`};
-  }
+  margin: auto;
+  pointer-events: auto;
 `;
 
-const PopupTitle = styled.div``;
-const Times = styled.div``;
+const PopupTitle = styled.div`
+  margin-top: 8px;
+`;
+const Times = styled.div`
+  margin-top: 16px;
+`;
 const TimeRange = styled.div`
   width: 100%;
 `;
 
-const RoomLink = styled(LocalizedLink)`
+const RoomLink = styled.div`
+  margin-top: 16px;
   padding: ${({ theme }) => `${theme.space(8)} ${theme.space(16)}`};
   flex-grow: 0;
   background: ${({ theme }) => theme.colors.highlight};
@@ -37,12 +43,31 @@ const RoomLink = styled(LocalizedLink)`
   height: fit-content;
   width: fit-content;
   &:hover {
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.highlight};
     background: ${({ theme }) => theme.colors.black};
+    border: 1px solid black;
   }
 `;
 const Arrow = styled.span`
   font-family: "Inter";
+`;
+
+const ClosingButton = styled.div`
+  background: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.highlight};
+  border-radius: 50%;
+  opacity: 1;
+  width: 36px;
+  height: 36px;
+  font-size: 24px;
+  font-family: "Inter";
+  line-height: 1.6;
+  margin-left: auto;
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const GrundrissPopup = ({ el, size }) => {
@@ -52,6 +77,14 @@ const GrundrissPopup = ({ el, size }) => {
       size={size}
       short={el.template == "location-external" ? 0.6 : 1}
     >
+      <ClosingButton
+        onClick={() => {
+          const elem = document.getElementById(`popup-${el.id}`);
+          elem.style.display = "none";
+        }}
+      >
+        &#x2715;
+      </ClosingButton>
       <PopupTitle>{el.name}</PopupTitle>
       <Times>
         {el?.extra?.allocation?.temporal?.map(time =>
@@ -67,9 +100,12 @@ const GrundrissPopup = ({ el, size }) => {
           ) : null,
         )}
       </Times>
-      <RoomLink to={`/orte/${makeUrlFromId(el.id)}`}>
-        <LocalizedText id="program" /> <Arrow>&#8594;</Arrow>
-      </RoomLink>
+
+      <LocalizedLink to={`/orte/${makeUrlFromId(el.id)}`}>
+        <RoomLink>
+          <LocalizedText id="program" /> <Arrow>&#8594;</Arrow>
+        </RoomLink>
+      </LocalizedLink>
     </PopupWrapper>
   );
 };

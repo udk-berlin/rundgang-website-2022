@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import Filter from "@/components/Filter";
 import Favorites from "@/components/Favorites";
-import ClickAwayListener from "@/components/simple/ClickAwayListener";
+import ClickAwayListener from "react-click-away-listener";
 import CloseButton from "@/components/simple/CloseButton";
 import { useStores } from "@/stores/index";
 import { SEARCHBAR_HEIGHT, SEARCHBAR_PADDING } from "@/utils/constants";
@@ -23,15 +23,13 @@ const FlexContainer = styled.div`
 const SearchBar = () => {
   const { uiStore } = useStores();
 
-  const handleOpen = useCallback(
-    item => {
-      uiStore.setIsOpen(item);
-    },
-    [uiStore.isOpen],
-  );
+  const handleOpen = item => {
+    console.log(item);
+    uiStore.setIsOpen(item);
+  };
   const handleClose = useCallback(
-    ( item) => {
-      if (!item || item === uiStore.isOpen) {
+    item => {
+      if (uiStore.isOpen == item) {
         uiStore.setIsOpen(null);
       }
     },
@@ -41,23 +39,16 @@ const SearchBar = () => {
   return !uiStore.currentContext?.type ||
     uiStore.currentContext?.type !== "item" ? (
     <SearchBarWrapper>
-      <ClickAwayListener onClickAway={() => handleClose()}>
-        <FlexContainer>
-          <Filter
-            onClick={() => handleOpen("filter")}
-            onClose={() => handleClose( "filter")}
-          />
-          <Favorites
-            onClick={() => handleOpen("favourites")}
-            onClose={() => handleClose( "favourites")}
-          />
-        </FlexContainer>
-      </ClickAwayListener>
+      <FlexContainer id="flex-container-searchbar">
+        <ClickAwayListener onClickAway={() => handleClose("filter")}>
+          <Filter onOpen={() => handleOpen("filter")} />
+        </ClickAwayListener>
+        <ClickAwayListener onClickAway={() => handleClose("favourites")}>
+          <Favorites onOpen={() => handleOpen("favourites")} />
+        </ClickAwayListener>
+      </FlexContainer>
       {uiStore.isOpen && (
-        <CloseButton
-          stretching={uiStore.isOpen == "favourites" ? 50 : 100}
-          onClose={() => handleClose( uiStore.isOpen)}
-        />
+        <CloseButton stretching={uiStore.isOpen == "favourites" ? 50 : 100} />
       )}
     </SearchBarWrapper>
   ) : null;

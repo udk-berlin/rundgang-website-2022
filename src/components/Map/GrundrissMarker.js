@@ -13,7 +13,7 @@ const Grundriss = styled.img`
 const GrundrissMarker = ({ el, size }) => {
   return (
     <Grundriss
-      id={el.id}
+      id={`${el.id}-marker`}
       pitchAlignment="map"
       rotationAlignment="map"
       size={size}

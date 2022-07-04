@@ -27,6 +27,7 @@ const StretchLayout = styled.div`
   width: fit-content;
   height: fit-content;
   text-align: left;
+  cursor: pointer;
   transform: ${({ factor }) => `scaleX(${factor})`};
   transition: transform, 500ms;
 `;
@@ -54,7 +55,6 @@ export const ArrowStyled = styled.span`
 
 export const ChildrenWrapper = styled.span`
   width: fit-content;
-  cursor: pointer;
   &:hover {
     -webkit-text-stroke: ${({ theme }) => `13px ${theme.colors.highlight}`};
     -webkit-text-fill-color: black;

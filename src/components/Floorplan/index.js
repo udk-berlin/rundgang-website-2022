@@ -24,19 +24,22 @@ const BackgroundImg = styled.img`
 
 const Levels = styled.div`
   position: relative;
-  margin: auto;
-  top: -64px;
+  top: 16px;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: fit-content;
+  max-width: inherit;
+  height: fit-content;
+  padding: 8px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  border: 1px solid black;
+  border-radius: ${({ theme }) => theme.space(32)};
   font-size: ${({ theme }) => theme.fontSizes.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
     justify-content: space-evenly;
-    top: 0px;
+    top: 16px;
   }
 `;
 
@@ -50,26 +53,26 @@ const SelectedRoomTitle = styled.div`
   }
 `;
 
-const LevelNumber = styled.button`
+const LevelNumber = styled.div`
   border: none;
   font-size: ${({ theme }) => theme.fontSizes.md};
   border-radius: 20px;
-  min-width: ${({ isAll }) => (isAll ? "fit-content" : "40px")};
-  height: 40px;
+  width: fit-content;
+  height: fit-content;
   cursor: pointer;
   z-index: 100;
+  padding: 8px;
   background: ${({ selected, theme }) =>
     selected ? theme.colors.lightgrey : theme.colors.white};
   &:hover {
     background: ${({ theme }) => theme.colors.lightgrey};
   }
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    width: ${({ isAll }) => (isAll ? "fit-content" : "30px")};
-    height: 30px;
+    font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
 const ImageWrapper = styled.div`
-  width: 80%;
+  width: 90%;
   height: auto;
   margin: auto;
   position: relative;
@@ -85,7 +88,6 @@ const ImageWrapper = styled.div`
 const Floorplan = () => {
   const { uiStore, dataStore } = useStores();
   const [visibleRooms, setVisibleRooms] = useState([]);
-  console.log(visibleRooms);
 
   useEffect(() => {
     if (dataStore.api.existingRooms && uiStore.floorPlan) {
@@ -96,6 +98,16 @@ const Floorplan = () => {
       );
     }
   }, [uiStore.floorPlan, dataStore.api.existingRooms]);
+
+  useEffect(() => {
+    if (
+      uiStore.currentContext?.context?.find(
+        level => level.name == "0" && level.context?.length,
+      )
+    ) {
+      uiStore.setFloorLevel(0);
+    }
+  }, [uiStore.currentContext?.context]);
 
   const handleSelectRoom = useCallback(
     e => {
@@ -130,7 +142,7 @@ const Floorplan = () => {
         }
       }
     },
-    [uiStore.floorPlan, uiStore.selectedRoom],
+    [uiStore.floorPlan, uiStore.selectedRoom, uiStore.floorLevel],
   );
 
   const handleSelectAll = () => {
@@ -140,23 +152,6 @@ const Floorplan = () => {
 
   return (
     <FloorplanWrapper>
-      <ImageWrapper visibleRooms={visibleRooms}>
-        <SelectedRoomTitle>
-          {uiStore.selectedRoom ? (
-            `${uiStore.selectedRoom?.topic} ${uiStore.selectedRoom?.name}`
-          ) : (
-            <LocalizedText id={`level${uiStore.floorLevel}`} />
-          )}
-        </SelectedRoomTitle>
-        <BackgroundImg
-          grey={uiStore.floorLevel == null}
-          src={`/assets/img/${uiStore.currentContext?.description.default}_building.svg`}
-        />
-        <FloorPlanSvg
-          url={uiStore.floorPlan ? uiStore.floorPlan.thumbnail_full_size : null}
-          handleSelectRoom={handleSelectRoom}
-        />
-      </ImageWrapper>
       <Levels>
         <LevelNumber
           key="alllevels"
@@ -181,6 +176,21 @@ const Floorplan = () => {
             ),
         )}
       </Levels>
+      <ImageWrapper visibleRooms={visibleRooms}>
+        <BackgroundImg
+          grey={uiStore.floorLevel == null}
+          src={`/assets/img/${uiStore.currentContext?.description.default}_building.svg`}
+        />
+        <FloorPlanSvg
+          url={uiStore.floorPlan ? uiStore.floorPlan.thumbnail_full_size : null}
+          handleSelectRoom={handleSelectRoom}
+        />
+      </ImageWrapper>
+      <SelectedRoomTitle>
+        {uiStore.selectedRoom
+          ? `${uiStore.selectedRoom?.topic} ${uiStore.selectedRoom?.name}`
+          : null}
+      </SelectedRoomTitle>
     </FloorplanWrapper>
   );
 };

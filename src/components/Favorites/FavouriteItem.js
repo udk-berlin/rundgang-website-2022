@@ -18,6 +18,7 @@ const Image = styled.img`
   width: 160px;
   height: auto;
   min-height: 160px;
+  cursor: pointer;
   padding: ${({ theme }) => `0 ${theme.space(8)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 80px;
@@ -47,6 +48,7 @@ const Tags = styled.div`
   flex-wrap: wrap;
 `;
 const Info = styled.div`
+  cursor: pointer;
   width: 100%;
   padding: ${({ theme }) => ` 0px ${theme.space(8)}`};
 `;
@@ -72,18 +74,23 @@ const Time = styled.div`
   }
 `;
 
-const FavouriteItem = ({ element, handleClick }) => {
+const FavouriteItem = ({ element, handleClick, handleUnsave }) => {
   return (
-    <FavouriteItemWrapper onClick={() => handleClick(element.id)}>
-      <FavouriteIcon saved={true} size={2} />
+    <FavouriteItemWrapper>
+      <FavouriteIcon
+        saved={true}
+        size={2.35}
+        onClick={e => handleUnsave(e, element.id)}
+      />
       <Image
+        onClick={() => handleClick(element.id)}
         src={
           element.thumbnail.length > 0
             ? element.thumbnail
             : "/assets/img/missing.svg"
         }
       />
-      <Info>
+      <Info onClick={() => handleClick(element.id)}>
         <Title>{element.name}</Title>
         <Authors>
           {[

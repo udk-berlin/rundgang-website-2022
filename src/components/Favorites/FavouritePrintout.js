@@ -1,15 +1,14 @@
 import React from "react";
-import { useIntl } from "react-intl";
+import dynamic from "next/dynamic";
 
+const FavouritesList = dynamic(() => import("./FavouritesList"), {
+  loading: () => <header />,
+});
 
-const FavouritePrintout = ({ savedItems }) => {
-  const intl = useIntl();
-
+const FavouritePrintout = () => {
   return (
-    <div>
-      {savedItems.map(item => (
-        <div>{item.name}</div>
-      ))}
+    <div style={{ width: "1000px" }}>
+      <FavouritesList />
     </div>
   );
 };
