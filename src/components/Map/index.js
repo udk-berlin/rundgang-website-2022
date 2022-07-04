@@ -38,15 +38,14 @@ const Popups = styled.div`
   position: absolute;
   width: inherit;
   height: inherit;
-  top: 0;
+  top: calc(50% - 100px);
   left: 0;
   bottom: 0;
   right: 0;
   pointer-events: none;
-  margin-top: calc(50% - 100px);
 
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin-top: calc(50% - 120px);
+    top: calc(50% - 120px);
   }
 `;
 const MAP_STYLE =
