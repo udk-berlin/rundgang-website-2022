@@ -6,7 +6,7 @@ const ImageWrapper = styled.div`
   display: block;
 `;
 
-const Image = styled.img`
+const Image = styled.picture`
   cursor: pointer;
   width: 100%;
   height: auto;
@@ -53,13 +53,29 @@ const ImageDetailView = ({ src }) => {
   const [imageDetailOpen, setImageDetailOpen] = useState(false);
   return (
     <ImageWrapper>
-      <Image src={src} onClick={() => setImageDetailOpen(true)} />
+      <Image onClick={() => setImageDetailOpen(true)}>
+        <source srcSet={src} />
+        <source srcSet="/assets/img/missing.svg" />
+        <img
+          src="/assets/img/missing.svg"
+          alt="missing image"
+          style={{ width: "100%" }}
+        />
+      </Image>
       {imageDetailOpen ? (
         <DetailWrapper>
           <ClickAwayListener onClickAway={() => setImageDetailOpen(false)}>
             <DetailView src={src} />
           </ClickAwayListener>
-          <CloseButton onClick={() => handleClose()}>&#57344;</CloseButton>
+          <CloseButton
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              setImageDetailOpen(false);
+            }}
+          >
+            &#57344;
+          </CloseButton>
         </DetailWrapper>
       ) : null}
     </ImageWrapper>

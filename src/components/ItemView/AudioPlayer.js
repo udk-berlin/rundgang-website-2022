@@ -142,7 +142,7 @@ const AudioPlayer = ({ item }) => {
   const [duration, setDuration] = useState(0);
 
   const handleClickPay = useCallback(() => {
-    if (audioRef?.current) {
+    if (audioRef?.current && duration == 0) {
       setDuration(audioRef.current.duration);
     }
     if (isPlaying && !audioRef.current.paused) {
@@ -152,12 +152,12 @@ const AudioPlayer = ({ item }) => {
       audioRef?.current?.play();
       setIsPlaying(true);
     }
-  }, [isPlaying]);
+  }, [isPlaying, audioRef?.current?.paused]);
 
   const handleTimeUpdate = useCallback(
     e => {
       setCurrentTime(e.target.currentTime);
-      if (duration - e.target.currentTime < 0.05) {
+      if (duration > 0 && duration - e.target.currentTime < 0.05) {
         setIsPlaying(false);
       }
     },

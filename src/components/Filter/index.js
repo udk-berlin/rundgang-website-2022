@@ -107,7 +107,7 @@ const Filter = React.forwardRef(({ onOpen }, ref) => {
       onClick={onOpen}
       transition={{ type: "linear", duration: 0.5 }}
     >
-      <InputField onOpen={onOpen} handleSubmit={handleSubmit} />
+      <InputField handleSubmit={handleSubmit} />
       <AnimatePresence>
         <Suspense fallback={`Loading...`}>
           {uiStore.isOpen && uiStore.isOpen == "filter" && (

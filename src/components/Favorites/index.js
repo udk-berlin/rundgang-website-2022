@@ -83,7 +83,6 @@ const Favourites = React.forwardRef(({ onOpen }, ref) => {
       animate={uiStore.isOpen ?? "closed"}
       variants={variants}
       transition={{ type: "linear", duration: 0.5 }}
-      id="favouriteprintout"
       ref={ref}
     >
       <AnimatePresence>

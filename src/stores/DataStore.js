@@ -11,6 +11,7 @@ class DataStore {
     makeAutoObservable(this, {
       api: false,
     });
+    this.initialize();
   }
 
   createEventStructure(eventlist) {
@@ -68,7 +69,7 @@ class DataStore {
     ];
   };
 
-  initialize = () => {
+  initialize = async () => {
     this.allStores.forEach(store => store?.initialize?.(this));
   };
 

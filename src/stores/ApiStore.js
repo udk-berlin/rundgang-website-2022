@@ -251,6 +251,7 @@ class ApiStore {
   initializeRoot = async () => {
     this.setStatus("pending");
     try {
+      console.time("load api");
       const tree = await this.getTreeFromId(
         process.env.NEXT_PUBLIC_API_ROOT_URL,
       );
@@ -273,6 +274,7 @@ class ApiStore {
         this.eventlist = eventlist;
         this.setStatus("success");
         this.isLoaded = true;
+        console.timeEnd("load api");
       });
     } catch (error) {
       runInAction(() => {

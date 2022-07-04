@@ -17,7 +17,7 @@ const ListItemWrapper = styled.div`
   padding-top: 16px;
 `;
 
-const Image = styled.img`
+const Image = styled.picture`
   cursor: pointer;
   width: 100%;
   position: relative;
@@ -104,13 +104,15 @@ const ListItem = ({ element, numCol }) => {
     <ListItemWrapper padding={numCol > 2 ? 48 : 20}>
       <RestyledLink to={linklocation}>
         <ImageWrapper>
-          <Image
-            src={
-              element.thumbnail.length > 0
-                ? element.thumbnail
-                : "/assets/img/missing.svg"
-            }
-          />
+          <Image>
+            <source srcSet={element.thumbnail} />
+            <source srcSet="/assets/img/missing.svg" />
+            <img
+              src="/assets/img/missing.svg"
+              alt="missing image"
+              style={{ width: "100%" }}
+            />
+          </Image>
           <SaveIcon
             saved={uiStore.isSaved(element.id)}
             onClick={e => handleAddSaved(e, element.id)}

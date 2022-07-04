@@ -10,7 +10,12 @@ import { theme } from "theme/index";
 import GlobalStyle from "theme/globalStyle";
 import GlobalFonts from "public/fonts/globalFonts";
 import { useStoreInstances } from "../stores/index";
-import Page from "@/components/Page";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
+const Page = dynamic(() => import("../components/Page"), {
+  suspense: true,
+});
 
 export default function App({ Component, pageProps }) {
   const { data } = pageProps;
@@ -41,9 +46,11 @@ export default function App({ Component, pageProps }) {
             onError={() => null}
           >
             <MotionConfig reducedMotion="user">
-              <Page>
-                <Component key={router.pathname} {...pageProps} />
-              </Page>
+              <Suspense fallback="Hello">
+                <Page>
+                  <Component key={router.pathname} {...pageProps} />
+                </Page>
+              </Suspense>
             </MotionConfig>
           </IntlProvider>
         </Provider>

@@ -133,9 +133,9 @@ const ItemView = () => {
   );
 
   const item = uiStore.currentContext;
-  const loc = item.description[locale.toUpperCase()]?.length
-    ? locale.toUpperCase()
-    : "DE";
+  const locDesc = (locale == "en" && item.description.EN?.length) ? "EN" : "DE";
+  const loc =
+    locale == "en" && item.rendered.languages.EN?.content?.length ? "EN" : "DE";
 
   return item && item?.id ? (
     <ItemViewWrapper>
@@ -200,7 +200,7 @@ const ItemView = () => {
                 </Time>
               ))
             : null}
-          <TitleText>{item.description[loc]}</TitleText>
+          <TitleText>{item.description[locDesc]}</TitleText>
         </DescriptionWrapper>
       </ItemHeaderWrapper>
       <ContentWrapper>

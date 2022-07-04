@@ -102,17 +102,26 @@ const Footer = () => {
         </LinkWrapper>
         <SpecialLinks>
           <LinkWrapper>
-            <NormalLink href="https://www.udk-berlin.de/universitaet/stabsstelle-ueberfakultaere-veranstaltungen/rundgang-tage-der-offenen-tuer-der-udk-berlin/kernteam-rundgang/">
+            <NormalLink
+              href="https://www.udk-berlin.de/universitaet/stabsstelle-ueberfakultaere-veranstaltungen/rundgang-tage-der-offenen-tuer-der-udk-berlin/kernteam-rundgang/"
+              prefetch={false}
+            >
               <LocalizedText id="contact" />
             </NormalLink>
           </LinkWrapper>
           <LinkWrapper>
-            <NormalLink href="https://www.udk-berlin.de/schnellzugriff/impressum/">
+            <NormalLink
+              href="https://www.udk-berlin.de/schnellzugriff/impressum/"
+              prefetch={false}
+            >
               <LocalizedText id="imprint" />
             </NormalLink>
           </LinkWrapper>
           <LinkWrapper>
-            <NormalLink href="https://www.udk-berlin.de/schnellzugriff/datenschutz/">
+            <NormalLink
+              href="https://www.udk-berlin.de/schnellzugriff/datenschutz/"
+              prefetch={false}
+            >
               <LocalizedText id="privacy" />
             </NormalLink>
           </LinkWrapper>
@@ -136,17 +145,26 @@ const Footer = () => {
         </LanguageMiddle>
         <FooterLine>
           <LinkWrapper>
-            <NormalLink href="https://www.udk-berlin.de/universitaet/stabsstelle-ueberfakultaere-veranstaltungen/rundgang-tage-der-offenen-tuer-der-udk-berlin/kernteam-rundgang/">
+            <NormalLink
+              href="https://www.udk-berlin.de/universitaet/stabsstelle-ueberfakultaere-veranstaltungen/rundgang-tage-der-offenen-tuer-der-udk-berlin/kernteam-rundgang/"
+              prefetch={false}
+            >
               <LocalizedText id="contact" />
             </NormalLink>
           </LinkWrapper>
           <LinkWrapper>
-            <NormalLink href="https://www.udk-berlin.de/schnellzugriff/impressum/">
+            <NormalLink
+              href="https://www.udk-berlin.de/schnellzugriff/impressum/"
+              prefetch={false}
+            >
               <LocalizedText id="imprint" />
             </NormalLink>
           </LinkWrapper>
           <LinkWrapper>
-            <NormalLink href="https://www.udk-berlin.de/schnellzugriff/datenschutz/">
+            <NormalLink
+              href="https://www.udk-berlin.de/schnellzugriff/datenschutz/"
+              prefetch={false}
+            >
               <LocalizedText id="privacy" />
             </NormalLink>
           </LinkWrapper>

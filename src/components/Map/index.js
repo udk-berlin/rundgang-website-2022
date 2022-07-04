@@ -188,6 +188,7 @@ const Map = () => {
 
   return (
     <MapWrapper size={size}>
+      <link href="/assets/css/maplibre-gl.css" rel="stylesheet" />
       <MapContainerDiv ref={mapContainer} />
       <Popups>
         {addresses.map((house, i) => (

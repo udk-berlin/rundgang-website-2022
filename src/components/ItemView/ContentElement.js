@@ -3,6 +3,7 @@ import _ from "lodash";
 import styled from "styled-components";
 import AudioPlayer from "./AudioPlayer";
 import LocalizedText from "modules/i18n/components/LocalizedText";
+import ImageDetailView from "./ImageDetailView";
 
 const Heading = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lm};
@@ -63,7 +64,7 @@ const ContentElement = ({ item }) => {
       </Paragraph>
     );
   } else if (item.type == "image") {
-    return <Image src={item.content} />;
+    return <ImageDetailView src={item.content} />;
   } else if (item.type == "audio") {
     return <AudioPlayer item={item} />;
   } else if (item.type == "ul") {

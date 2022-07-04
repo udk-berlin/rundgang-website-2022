@@ -127,28 +127,13 @@ const TimeNumbers = styled.div`
   width: ${({ wwidth }) => wwidth}px;
 `;
 
-const DateWrapper = styled.span`
-  margin: ${({ theme }) => theme.space(16)};
-  display: inline;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    display: none;
-  }
-`;
-
 const TimeTable = () => {
-  const [selectedDay, setSelectedDay] = useState(0);
   const [padding, setPadding] = useState(0);
   const [width, setWidth] = useState(0);
 
   const isMobile = useMediaQuery(
     "only screen and (max-width:768px) and (orientation:portrait)",
   );
-
-  const scrollPos = useTopScrollBar(
-    "time-table-container",
-    "top-table-scroller",
-  );
-
   useEffect(() => {
     setPadding(isMobile ? TIME_PADDING_MOBILE : TIME_PADDING);
     setWidth(isMobile ? TIME_WIDTH_MOBILE : TIME_WIDTH);
@@ -158,57 +143,37 @@ const TimeTable = () => {
     .domain([1658564000, 1658696400])
     .range([padding, width]);
 
-  const isSunday = scaleX(1658613600) < scrollPos;
-
-  const switchDay = useCallback(
-    day => {
-      if (day == 1) {
-        console.log("day1", scrollPos);
-        setSelectedDay(1);
-        document.getElementById("top-table-scroller").scrollLeft =
-          scaleX(1658648600);
-      } else {
-        console.log("day0");
-        setSelectedDay(0, scrollPos);
-        document.getElementById("top-table-scroller").scrollLeft = 0;
-      }
-    },
-    [selectedDay, scrollPos],
+  const { switchDay, selectedDay, bottomScroll, topScroll } = useTopScrollBar(
+    scaleX(1658613600),
+    scaleX(1658649600),
   );
 
-  useEffect(() => {
-    if (isSunday) {
-      setSelectedDay(1);
-    } else {
-      setSelectedDay(0);
-    }
-  }, [isSunday]);
   return (
     <TimeTableWrapper>
-      <TimeHeader id="top-table-scroller">
+      <TimeHeader id="top-table-scroller" ref={topScroll}>
         <DayMenu>
           <DayName
             selected={selectedDay == 0}
             left
             onClick={() => switchDay(0)}
           >
-            {selectedDay !== 0 && <Arrow>&#8592;</Arrow>}
+            {selectedDay == 1 && <Arrow>&#8592;</Arrow>}
             <LocalizedText id="saturday" />
           </DayName>
           <DayName selected={selectedDay == 1} onClick={() => switchDay(1)}>
             <LocalizedText id="sunday" />
-            {selectedDay !== 1 && <Arrow>&#8594;</Arrow>}
+            {selectedDay == 0 && <Arrow>&#8594;</Arrow>}
           </DayName>
         </DayMenu>
         <TimeNumbers wwidth={width}>
           {times.map(t => (
-            <TimeHour x={scaleX(t)} key={`timehour-${t}`}>
+            <TimeHour x={scaleX(t)} key={`timehour-${t}`} id={`timehour-${t}`}>
               {new Date(t * 1000).getHours()}
             </TimeHour>
           ))}
         </TimeNumbers>
       </TimeHeader>
-      <TimeTableContainer id={"time-table-container"}>
+      <TimeTableContainer id={"time-table-container"} ref={bottomScroll}>
         <TimeScale scaleX={scaleX} />
         <LocationList scaleX={scaleX} wwidth={width} />
       </TimeTableContainer>

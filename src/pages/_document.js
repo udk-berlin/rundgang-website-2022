@@ -48,7 +48,6 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Inter&text=↑→↓←"
             rel="stylesheet"
           />
-          <link href="/assets/css/maplibre-gl.css" rel="stylesheet" />
         </Head>
         <body>
           <Main />

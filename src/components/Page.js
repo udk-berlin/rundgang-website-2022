@@ -35,11 +35,6 @@ const Page = ({ children }) => {
   const [showLine, setShowLine] = useState(false);
 
   useEffect(() => {
-    console.log("initialize datastore");
-    dataStore.initialize();
-  }, []);
-
-  useEffect(() => {
     let pid = router.query.pid;
     setShowLine(false);
     if (dataStore.api?.root?.id) {
