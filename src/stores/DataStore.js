@@ -15,7 +15,8 @@ class DataStore {
 
   createEventStructure(eventlist) {
     let sorted = eventlist
-      .map(ev => ev.allocation.temporal.map(t => ({ ...ev, time: t })))
+      .map(ev => ev.allocation?.temporal.map(t => ({ ...ev, time: t })))
+      .filter(a => a)
       .flat()
       .slice()
       .sort((a, b) => a.time.start - b.time.start);
