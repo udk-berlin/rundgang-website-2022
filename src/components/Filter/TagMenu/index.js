@@ -32,8 +32,7 @@ const Buttons = styled.div`
   position: sticky;
   align-items: center;
   bottom: 0px;
-  padding-left: 16px;
-  padding-right: 8px;
+  padding: 16px 8px 8px 16px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     padding-left: 8px;
   }

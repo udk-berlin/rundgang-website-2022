@@ -17,7 +17,8 @@ const EventBarWrapper = styled.div`
   padding: 0px 6px;
   top: ${({ top }) => top}px;
   &:hover {
-    background: ${({ theme }) => theme.colors.lightgrey};
+    background: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.highlight};
   }
 `;
 

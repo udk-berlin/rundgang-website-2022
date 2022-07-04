@@ -14,16 +14,17 @@ import {
 
 const OrteViewWrapper = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  gap: 16px 16px;
+  grid-template-columns: ${({ fullwidth }) => (fullwidth ? "1fr" : " 6fr 4fr")};
+  align-items: start;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    flex-wrap: wrap;
+    grid-template-columns: 1fr;
   }
 `;
 
 const OrteKatalog = styled.div`
   flex-grow: 0;
-  width: 40%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 100%;
   }
@@ -32,11 +33,10 @@ const OrteKatalog = styled.div`
 const FloorplanContainer = styled.div`
   width: 100%;
   padding: ${({ theme }) => theme.space(16)} 0px;
-  height: 100%;
   position: relative;
   @media ${({ theme }) => theme.breakpoints.laptop} {
-    width: 60%;
     position: sticky;
+    align-self: start;
     top: ${SEARCHBAR_HEIGHT + SEARCHBAR_PADDING + TITLE_HEIGHT}px;
   }
 `;
@@ -46,7 +46,7 @@ const OrteView = () => {
 
   return uiStore.currentContext ? (
     <Layout>
-      <OrteViewWrapper>
+      <OrteViewWrapper fullwidth={uiStore.currentContext.type == "item"}>
         {uiStore.currentContext.type == "item" ? (
           <ItemView />
         ) : (

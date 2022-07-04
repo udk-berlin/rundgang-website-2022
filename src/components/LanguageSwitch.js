@@ -39,7 +39,7 @@ const SliderBall = styled.span`
   content: "";
   height: 24px;
   width: 24px;
-  left: ${({ isOn }) => (isOn ? "15px" : "0px")};
+  left: ${({ isOn }) => (isOn ? "16px" : "0px")};
   bottom: 0;
   background-color: black;
   -webkit-transition: 0.4s;

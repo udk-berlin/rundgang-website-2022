@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import useMediaQuery from "@/utils/useMediaQuery";
+import React, { useEffect, useRef, useState } from "react";
 import { StretchComponent } from "./components";
 import { observer } from "mobx-react";
 import useWindowSize from "@/utils/useWindowSize";
@@ -40,7 +39,7 @@ const Stretch = ({
   useEffect(() => {
     if (titleId && fontSize && size.width && stretchRef?.current?.clientWidth) {
       const timer = setTimeout(() => {
-        let f = (size.width - 32) / stretchRef?.current?.clientWidth;
+        let f = (size.width - 38) / stretchRef?.current?.clientWidth;
         setFactor(f);
       }, 300);
       return () => {

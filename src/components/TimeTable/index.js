@@ -22,6 +22,9 @@ import useTopScrollBar from "@/utils/useTopScrollBar";
 import { FormattedDate } from "react-intl";
 
 const TimeTableWrapper = styled.div`
+  display: grid;
+  gap: 16px 16px;
+  grid-template-columns: 1fr;
   margin-bottom: 40px;
   height: fit-content;
   min-height: calc(100vh - 160px);
@@ -32,22 +35,21 @@ const TimeTableWrapper = styled.div`
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
   overflow-y: auto;
-
-  scrollbar-width: thin;       
+  scrollbar-width: thin;
   scrollbar-color: black #d9d9d9;
-  *::selection {
+  &::selection {
     background: black;
-    color: #E2FF5D;
-  } 
-  *::-webkit-scrollbar {
-    width:8px;
+    color: #e2ff5d;
+  }
+  &::-webkit-scrollbar {
+    width: 8px;
     height: 8px;
   }
-  *::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     background-color: #d9d9d9;
     outline: 1px solid #d9d9d9;
   }
-  *::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     background-color: black;
     outline: 1px solid black;
   }
@@ -65,21 +67,30 @@ const TimeTableContainer = styled.div`
 
 const DayMenu = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
+  margin-top: 16px;
+  position: fixed;
+  left: 16px;
 `;
 
 const DayName = styled.div`
-  position: fixed;
-  padding-left: ${({ theme }) => theme.space(8)};
-  left: ${({ left }) => (left ? "8px" : "auto")};
-  right: ${({ left }) => (left ? "auto" : "8px")};
-  font-size: ${({ theme, selected }) =>
-    selected ? theme.fontSizes.xl : theme.fontSizes.lm};
   cursor: pointer;
+  border: 1px solid black;
+  margin-right: ${({ theme }) => theme.space(8)};
+  background: ${({ theme, selected }) =>
+    selected ? theme.colors.maingrey : theme.colors.white};
+  color: ${({ theme, selected }) =>
+    selected ? theme.colors.highlight : theme.colors.black};
+  border-color: ${({ theme, selected }) =>
+    selected ? theme.colors.highlight : theme.colors.black};
+  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
+  font-size: ${({ theme }) => theme.fontSizes.lm};
+  border-radius: ${({ theme }) => theme.space(48)};
+  width: fit-content;
+  word-wrap: break-word;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme, selected }) =>
-      selected ? theme.fontSizes.lg : theme.fontSizes.md};
+    font-size: ${({ theme }) => theme.fontSizes.mm};
   }
 `;
 
@@ -92,7 +103,7 @@ const TimeHeader = styled.div`
   background-color: white;
   display: inline;
   width: 100%;
-  height: 100px;
+  height: 120px;
   overflow-x: auto;
   overflow-y: visible;
   z-index: 300;
@@ -106,7 +117,7 @@ const TimeHour = styled.div`
   background: ${({ theme }) => theme.background.primary};
   position: absolute;
   left: ${({ x }) => x - 8}px;
-  top: 60px;
+  top: 80px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }
@@ -125,12 +136,14 @@ const DateWrapper = styled.span`
 `;
 
 const TimeTable = () => {
-  const isMobile = useMediaQuery(
-    "only screen and (max-width:768px) and (orientation:portrait)",
-  );
   const [selectedDay, setSelectedDay] = useState(0);
   const [padding, setPadding] = useState(0);
   const [width, setWidth] = useState(0);
+
+  const isMobile = useMediaQuery(
+    "only screen and (max-width:768px) and (orientation:portrait)",
+  );
+
   const scrollPos = useTopScrollBar(
     "time-table-container",
     "top-table-scroller",
@@ -150,15 +163,17 @@ const TimeTable = () => {
   const switchDay = useCallback(
     day => {
       if (day == 1) {
+        console.log("day1", scrollPos);
         setSelectedDay(1);
-        document.getElementById("time-table-container").scrollLeft =
-          scaleX(1658633600);
+        document.getElementById("top-table-scroller").scrollLeft =
+          scaleX(1658648600);
       } else {
-        setSelectedDay(0);
-        document.getElementById("time-table-container").scrollLeft = 0;
+        console.log("day0");
+        setSelectedDay(0, scrollPos);
+        document.getElementById("top-table-scroller").scrollLeft = 0;
       }
     },
-    [selectedDay],
+    [selectedDay, scrollPos],
   );
 
   useEffect(() => {
@@ -195,7 +210,7 @@ const TimeTable = () => {
       </TimeHeader>
       <TimeTableContainer id={"time-table-container"}>
         <TimeScale scaleX={scaleX} />
-        <LocationList scaleX={scaleX} width={width} />
+        <LocationList scaleX={scaleX} wwidth={width} />
       </TimeTableContainer>
     </TimeTableWrapper>
   );

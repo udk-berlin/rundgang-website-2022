@@ -44,7 +44,16 @@ const RoomTitle = styled.div`
   padding-top: 4px;
   font-size: ${({ theme }) => theme.fontSizes.mm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+    font-size: ${({ theme }) => theme.fontSizes.md};
+  }
+`;
+
+const HouseTitle = styled(RoomTitle)`
+  transform: scaleX(0.7);
+  transform-origin: top left;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.mm};
   }
 `;
 
@@ -66,7 +75,8 @@ const EventsWrapper = styled.div`
   display: flex;
   padding: 4px 0px;
 `;
-const LocationList = ({ scaleX, width }) => {
+
+const LocationList = ({ scaleX, wwidth }) => {
   const { dataStore, uiStore } = useStores();
   const { pathname } = useRouter();
   const locWidth = scaleX(1658564000);
@@ -82,16 +92,16 @@ const LocationList = ({ scaleX, width }) => {
     [dataStore.api.locations],
   );
   return (
-    <LocationWrapper width={width}>
+    <LocationWrapper width={wwidth}>
       {uiStore?.filteredEvents
         ? _.entries(uiStore.filteredEvents).map(([house, rooms]) => (
             <RelativeWrapper key={`house-${house}`}>
-              <House width={width}>
+              <House width={wwidth}>
                 <RoomTitleWrapper width={locWidth}>
-                  <RoomTitle>{house}</RoomTitle>
+                  <HouseTitle>{house}</HouseTitle>
                 </RoomTitleWrapper>
               </House>
-              <Room key={`openingtimes-${house}`} width={width}>
+              <Room key={`openingtimes-${house}`} width={wwidth}>
                 <RoomTitleWrapper width={locWidth}>
                   <RoomTitle></RoomTitle>
                 </RoomTitleWrapper>
@@ -125,7 +135,7 @@ const LocationList = ({ scaleX, width }) => {
                 </EventsWrapper>
               </Room>
               {_.entries(rooms).map(([room, events]) => (
-                <Room key={`room-${room}-${house}`} width={width}>
+                <Room key={`room-${room}-${house}`} width={wwidth}>
                   <RoomTitleWrapper width={locWidth}>
                     <RoomTitle>{room}</RoomTitle>
                   </RoomTitleWrapper>

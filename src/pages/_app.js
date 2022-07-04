@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo } from "react";
 import { IntlProvider } from "react-intl";
 import { useRouter } from "next/router";
 import deFile from "modules/i18n/localizations/de.json";

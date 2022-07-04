@@ -64,7 +64,9 @@ class ApiStore {
   };
 
   getLocations = async () => {
-    return this.get(`${process.env.NEXT_PUBLIC_LOCATIONS_ROOT}`)
+    return this.get(
+      `${process.env.NEXT_PUBLIC_LOCATIONS_ROOT}/tree/filter/type/context`,
+    )
       .then(res =>
         Promise.all(
           _.values(res.children).map(async building => {
@@ -249,23 +251,20 @@ class ApiStore {
   initializeRoot = async () => {
     this.setStatus("pending");
     try {
-      console.time("loading getTreeFromId");
       const tree = await this.getTreeFromId(
         process.env.NEXT_PUBLIC_API_ROOT_URL,
       );
-      console.timeEnd("loading getTreeFromId");
-      console.time("loading getLocations");
       const locations = await this.getLocations();
-      console.timeEnd("loading getLocations");
-      console.time("loading filterContext");
       const events = await this.getFilteredListFromId(
         process.env.NEXT_PUBLIC_API_ROOT_URL,
         "/allocation/temporal",
       );
-      const { tags, rooms, eventlist, pathlist } = filterContext(tree, events);
-      console.timeEnd("loading filterContext");
+      const { tags, rooms, eventlist, pathlist } = await filterContext(
+        tree,
+        events,
+      );
       runInAction(() => {
-        delete tree.children
+        delete tree.children;
         this.root = tree;
         this.tags = tags;
         this.pathlist = pathlist;

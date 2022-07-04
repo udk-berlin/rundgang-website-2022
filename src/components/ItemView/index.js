@@ -22,7 +22,8 @@ const ItemViewWrapper = styled.div`
 const ItemHeaderWrapper = styled.div`
   display: grid;
   justify-content: space-evenly;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 6fr 4fr;
+  gap: 16px 16px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
     margin-top: ${({ theme }) => theme.space(16)};
@@ -40,6 +41,12 @@ const AuthorTag = styled.div`
     margin-bottom: ${({ theme }) => theme.space(4)};
     font-size: ${({ theme }) => theme.fontSizes.mm};
   }
+`;
+
+const LocationTags = styled(AuthorTag)`
+  background: black;
+  color: ${({ theme }) => theme.colors.highlight};
+  border-color: ${({ theme }) => theme.colors.highlight};
 `;
 
 const Time = styled.div`
@@ -61,9 +68,9 @@ const Time = styled.div`
 
 const SaveTag = styled.span`
   background: ${({ theme, saved }) =>
-    saved ? theme.colors.black : theme.colors.white};
+    saved ? theme.colors.black : theme.colors.highlight};
   color: ${({ theme, saved }) =>
-    saved ? theme.colors.white : theme.colors.black};
+    saved ? theme.colors.highlight : theme.colors.black};
   border: 1px solid
     ${({ theme, saved }) => (saved ? theme.colors.white : theme.colors.black)};
   align-items: center;
@@ -72,7 +79,7 @@ const SaveTag = styled.span`
   line-height: 1.3;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   padding: ${({ theme }) => `${theme.space(4)} ${theme.space(8)}`};
-  margin: ${({ theme }) => theme.space(4)};
+  margin: 4px 4px 4px 0px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.xs};
   }
@@ -100,7 +107,8 @@ const ContentWrapper = styled.div`
   display: grid;
   justify-content: space-evenly;
   margin: auto;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 6fr 4fr;
+  gap: 16px 16px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     display: block;
     margin-top: ${({ theme }) => theme.space(16)};
@@ -166,7 +174,7 @@ const ItemView = () => {
           {item.tags
             .filter(t => t.template.includes("location-"))
             .map(t => (
-              <AuthorTag
+              <LocationTags
                 key={t.name}
                 onClick={() =>
                   router.replace(`/katalog/${makeUrlFromId(t.id)}`)
@@ -174,7 +182,7 @@ const ItemView = () => {
               >
                 {tagPrefix(t.template)}
                 {t.name}
-              </AuthorTag>
+              </LocationTags>
             ))}
           {item.template == "event" && item.allocation?.temporal?.length
             ? item.allocation?.temporal?.slice(0, 3).map((t, i) => (
