@@ -47,8 +47,8 @@ const useTopScrollBar = (switchPos, sundayPos) => {
     topScroll.current.addEventListener("scroll", setFromTop);
 
     return () => {
-      bottomScroll.current.removeEventListener("scroll", setFromBottom);
-      topScroll.current.removeEventListener("scroll", setFromTop);
+      bottomScroll?.current?.removeEventListener("scroll", setFromBottom);
+      topScroll?.current?.removeEventListener("scroll", setFromTop);
     };
   }, []);
 

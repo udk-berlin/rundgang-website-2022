@@ -14,18 +14,20 @@ const MapWrapper = styled.div`
   width: 100%;
   margin: auto;
   height: 670px;
-  @media only screen and (max-width: 999px) {
+  @media (max-width: 999px) {
     height: 640px;
   }
-  @media only screen and (max-width: 690px) {
+  @media (max-width: 690px) {
     height: 500px;
   }
-  @media only screen and (max-width: 479px) {
+  @media (max-width: 479px) {
     height: 300px;
   }
-
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin: auto;
+  @media (max-height: 800px) {
+    height: 500px;
+  }
+  @media (max-height: 600px) {
+    height: 400px;
   }
 `;
 

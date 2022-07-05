@@ -6,7 +6,11 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 import { jsPDF } from "jspdf";
 import FavouritePrintout from "./FavouritePrintout";
 
-const DownloadPng = styled.div``;
+const DownloadPdf = styled.div`
+  z-index: -1;
+  position: absolute;
+  display: none;
+`;
 
 const DownloadButton = styled.button`
   cursor: pointer;
@@ -43,12 +47,14 @@ const Download = () => {
 
   return (
     uiStore.numberSavedItems > 0 && (
-      <DownloadButton onClick={() => downloadImage()}>
-        <LocalizedText id="download" />
-        <DownloadPng>
+      <>
+        <DownloadPdf>
           <FavouritePrintout savedItems={uiStore.savedItems} />
-        </DownloadPng>
-      </DownloadButton>
+        </DownloadPdf>
+        <DownloadButton onClick={() => downloadImage()}>
+          <LocalizedText id="download" />
+        </DownloadButton>
+      </>
     )
   );
 };
