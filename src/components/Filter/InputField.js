@@ -97,7 +97,6 @@ const InputField = ({ handleSubmit }) => {
         value={value}
         onChange={handleChange}
         onFocus={_handleFocus}
-        disabled={uiStore.isOpen !== "filter"}
         isOpen={uiStore.isOpen == "filter"}
         placeholder={
           uiStore.isOpen == "filter" ? messages.search : messages.filter
