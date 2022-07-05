@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ClickAwayListener from "react-click-away-listener";
+import { CloseIcon } from "../simple/CloseButton";
 
 const ImageWrapper = styled.div`
   display: block;
@@ -37,16 +38,10 @@ const DetailWrapper = styled.div`
   background: ${({ theme }) => theme.colors.highlight};
 `;
 
-const CloseButton = styled.div`
+const CloseButton = styled(CloseIcon)`
   position: absolute;
-  right: ${({ theme }) => theme.space(16)};
-  line-height: 0.9;
-  top: ${({ theme }) => theme.space(16)};
-  font-family: "Diatype";
-  border: none;
-  width: fit-content;
-  font-size: ${({ theme }) => theme.fontSizes.xl};
-  cursor: pointer;
+  right: 16px;
+  top: 16px;
 `;
 
 const ImageDetailView = ({ src }) => {
@@ -68,13 +63,13 @@ const ImageDetailView = ({ src }) => {
             <DetailView src={src} />
           </ClickAwayListener>
           <CloseButton
-            onClick={e => {
+            onClose={e => {
               e.preventDefault();
               e.stopPropagation();
               setImageDetailOpen(false);
             }}
           >
-            &#57344;
+            &#x2715;
           </CloseButton>
         </DetailWrapper>
       ) : null}

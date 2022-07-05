@@ -81,7 +81,9 @@ const ImageWrapper = styled.div`
   }
   ${({ visibleRooms, theme }) =>
     visibleRooms.map(
-      r => `[data-name="${r}"] { fill: ${theme.colors.lightgrey};}`,
+      r => `[data-name="${r}"] { fill: ${theme.colors.lightgrey}; &:hover {
+        fill: ${theme.colors.highlight};
+      }}`,
     )}
 `;
 

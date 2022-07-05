@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-const filterContext = (tree, events) => {
+const wrangleData = (tree, events) => {
   let tags = {
     ebene0: {},
     initiatives: {},
@@ -115,4 +115,4 @@ const filterContext = (tree, events) => {
   return { tags: result, rooms, eventlist: _.values(eventlist), pathlist };
 };
 
-export default filterContext;
+export default wrangleData;

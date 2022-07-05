@@ -5,7 +5,6 @@ import { makeUrlFromId } from "@/utils/idUtils";
 import { FormattedDateTimeRange } from "react-intl";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import LocalizedText from "modules/i18n/components/LocalizedText";
-import CloseButton from "../simple/CloseButton";
 
 const PopupWrapper = styled.div`
   display: none;
@@ -14,7 +13,7 @@ const PopupWrapper = styled.div`
   height: fit-content;
   font-size: ${({ theme }) => theme.fontSizes.md};
   z-index: 4000;
-  padding: ${({ theme }) => theme.space(16)};
+  padding: 16px;
   background: white;
   flex-direction: column;
   justify-content: space-between;
@@ -57,12 +56,13 @@ const ClosingButton = styled.div`
   color: ${({ theme }) => theme.colors.highlight};
   border-radius: 50%;
   opacity: 1;
+  position: absolute;
+  right: 16px;
   width: 36px;
   height: 36px;
   font-size: 24px;
   font-family: "Inter";
   line-height: 1.6;
-  margin-left: auto;
   text-align: center;
   cursor: pointer;
   &:hover {

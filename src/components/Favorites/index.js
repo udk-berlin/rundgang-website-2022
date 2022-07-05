@@ -9,10 +9,9 @@ import { SEARCHBAR_HEIGHT } from "@/utils/constants";
 
 const variants = {
   favourites: {
-    height: "fit-content",
+    height: "60vh",
     width: "100%",
     opacity: 1,
-    margin: "0px",
     borderWidth: "4px",
     overflowY: "auto",
   },
@@ -20,7 +19,6 @@ const variants = {
     height: SEARCHBAR_HEIGHT + 2,
     width: "0%",
     opacity: 0,
-    margin: "2px 0px",
     borderWidth: 0,
     overflowY: "auto",
   },
@@ -29,7 +27,6 @@ const variants = {
     overflow: "hidden",
     width: "80px",
     opacity: 1,
-    margin: "0px 0px 0px 16px",
   },
 };
 
@@ -45,6 +42,7 @@ const FavouritesWrapper = styled(motion.div)`
   overflow-x: hidden;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     max-height: 60vh;
+    margin: 0px;
   }
 
   @media ${({ theme }) => theme.breakpoints.laptop} {

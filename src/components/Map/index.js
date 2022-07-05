@@ -23,10 +23,10 @@ const MapWrapper = styled.div`
   @media (max-width: 479px) {
     height: 300px;
   }
-  @media (max-height: 800px) {
+  @media (max-height: 800px) and (orientation: landscape) {
     height: 500px;
   }
-  @media (max-height: 600px) {
+  @media (max-height: 600px) and (orientation: landscape) {
     height: 400px;
   }
 `;
@@ -52,8 +52,13 @@ const Popups = styled.div`
 `;
 const MAP_STYLE =
   "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY";
-const FIRSTLAT = 52.5093753;
-const FIRSTLNG = 13.3302138;
+const FIRSTLAT = 52.5215633;
+const FIRSTLNG = 13.3491838;
+
+const BOUNDS = [
+  [13.2397254,52.442394], // Southwest coordinates
+  [13.4871903, 52.586099] // Northeast coordinates
+  ];
 
 const Map = () => {
   const { dataStore, uiStore } = useStores();
@@ -62,7 +67,6 @@ const Map = () => {
 
   const size = useWindowSize();
 
-  const ZOOM = size?.width > 999 ? 12.5 : 11.3;
   const [addresses, setAddresses] = useState([]);
 
   useEffect(() => {
@@ -83,14 +87,16 @@ const Map = () => {
 
   useEffect(() => {
     if (addresses?.length) {
-      maplibregl.maxParallelImageRequests = 10;
+      const ZOOM = size && size.width > 999 ? 12 : 10.5;
+      //maplibregl.maxParallelImageRequests = 10;
       map.current = new maplibregl.Map({
         container: mapContainer.current,
         style: MAP_STYLE,
         center: [FIRSTLNG, FIRSTLAT],
         zoom: ZOOM,
+        maxBounds:BOUNDS,
         maxZoom: 18,
-        minZoom: 11,
+        minZoom: 10,
         pitchWithRotate: false,
         clickTolerance: 7,
         dragRotate: false,
@@ -118,8 +124,8 @@ const Map = () => {
             mRoot = createRoot(markerElement);
           }
 
-          let size = el.image == "location-external" ? 20 : 60;
-          mRoot.render(<GrundrissMarker el={el} size={size} />);
+          let markersize = el.image == "location-external" ? 20 : 60;
+          mRoot.render(<GrundrissMarker el={el} size={markersize} />);
 
           // add marker to map
           const marker = new maplibregl.Marker(markerElement)
@@ -194,7 +200,7 @@ const Map = () => {
       <MapContainerDiv ref={mapContainer} />
       <Popups>
         {addresses.map((house, i) => (
-          <GrundrissPopup key={`popup-${house.id}`} el={house} size={230} />
+          <GrundrissPopup key={`popup-${house.id}`} el={house} size={260} />
         ))}
       </Popups>
     </MapWrapper>

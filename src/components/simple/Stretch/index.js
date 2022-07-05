@@ -39,7 +39,7 @@ const Stretch = ({
   useEffect(() => {
     if (titleId && fontSize && size.width && stretchRef?.current?.clientWidth) {
       const timer = setTimeout(() => {
-        let f = (size.width - 38) / stretchRef?.current?.clientWidth;
+        let f = (size.width - 33) / stretchRef?.current?.clientWidth;
         setFactor(f);
       }, 300);
       return () => {

@@ -8,7 +8,7 @@ import {
 } from "mobx";
 
 import { makeIdFromUrl, ALIAS_IDS } from "@/utils/idUtils";
-import filterContext from "./filterContext";
+import wrangleData from "./wrangleData";
 
 const PATH_URL = "/pathlist";
 const TREE_URL = "/tree";
@@ -260,7 +260,7 @@ class ApiStore {
         process.env.NEXT_PUBLIC_API_ROOT_URL,
         "/allocation/temporal",
       );
-      const { tags, rooms, eventlist, pathlist } = await filterContext(
+      const { tags, rooms, eventlist, pathlist } = await wrangleData(
         tree,
         events,
       );

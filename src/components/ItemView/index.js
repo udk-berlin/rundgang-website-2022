@@ -29,16 +29,17 @@ const ItemHeaderWrapper = styled.div`
     margin-top: ${({ theme }) => theme.space(16)};
   }
 `;
-const AuthorTag = styled.div`
+const AuthorTag = styled.span`
   padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
   font-size: ${({ theme }) => theme.fontSizes.lm};
   border: 1px solid black;
   border-radius: ${({ theme }) => theme.space(48)};
   width: fit-content;
   word-wrap: break-word;
-  margin-bottom: ${({ theme }) => theme.space(8)};
+  height: fit-content;
+  margin: 0px 8px 8px 0px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    margin-bottom: ${({ theme }) => theme.space(4)};
+  margin: 0px 4px 4px 0px;
     font-size: ${({ theme }) => theme.fontSizes.mm};
   }
 `;
@@ -50,21 +51,10 @@ const LocationTag = styled(AuthorTag)`
   border-color: ${({ theme }) => theme.colors.highlight};
 `;
 
-const Time = styled.div`
-  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
-  font-size: ${({ theme }) => theme.fontSizes.lm};
-  margin-top: ${({ theme }) => theme.space(16)};
-  border-radius: ${({ theme }) => theme.space(48)};
+const Time = styled(AuthorTag)`
   border: 2px solid ${({ theme }) => theme.colors.highlight};
   background-color: ${({ theme }) => theme.colors.maingrey};
   color: ${({ theme }) => theme.colors.highlight};
-  text-align: center;
-  word-wrap: break-word;
-  word-break: break-all;
-  width: fit-content;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.mm};
-  }
 `;
 
 const SaveTag = styled.span`
@@ -92,6 +82,12 @@ const DescriptionWrapper = styled.div`
     margin: ${({ theme }) => `${theme.space(8)} 0px`};
     padding: 0px;
   }
+`;
+
+const LargeTags = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 `;
 
 const TitleText = styled.div`
@@ -133,7 +129,7 @@ const ItemView = () => {
   );
 
   const item = uiStore.currentContext;
-  const locDesc = (locale == "en" && item.description.EN?.length) ? "EN" : "DE";
+  const locDesc = locale == "en" && item.description.EN?.length ? "EN" : "DE";
   const loc =
     locale == "en" && item.rendered.languages.EN?.content?.length ? "EN" : "DE";
 
@@ -167,39 +163,41 @@ const ItemView = () => {
       <ItemHeaderWrapper>
         <ImageDetailView src={item.thumbnail_full_size} />
         <DescriptionWrapper>
-          {item?.origin?.authors?.map(a => (
-            <AuthorTag key={`author-${a.name}-${a.id}`}>
-              {a.name ? a.name.split("@")[0]?.trim() : a.id}
-            </AuthorTag>
-          ))}
-          {item.tags
-            .filter(t => t.template.includes("location-"))
-            .map(t => (
-              <LocationTag
-                key={t.name}
-                onClick={() =>
-                  router.replace(`/katalog/${makeUrlFromId(t.id)}`)
-                }
-              >
-                {tagPrefix(t.template)}
-                {t.name}
-              </LocationTag>
+          <LargeTags>
+            {item.tags
+              .filter(t => t.template.includes("location-"))
+              .map(t => (
+                <LocationTag
+                  key={t.name}
+                  onClick={() =>
+                    router.replace(`/katalog/${makeUrlFromId(t.id)}`)
+                  }
+                >
+                  {tagPrefix(t.template)}
+                  {t.name}
+                </LocationTag>
+              ))}
+            {item.template == "event" && item.allocation?.temporal?.length
+              ? item.allocation?.temporal?.slice(0, 3).map((t, i) => (
+                  <Time key={`time-item-${t.start}-${i}-${t.end}`}>
+                    <FormattedDateTimeRange
+                      from={t.start * 1000}
+                      to={t.end * 1000}
+                      weekday="short"
+                      month="numeric"
+                      day="numeric"
+                      hour="numeric"
+                      minute="numeric"
+                    />
+                  </Time>
+                ))
+              : null}
+            {item?.origin?.authors?.map(a => (
+              <AuthorTag key={`author-${a.name}-${a.id}`}>
+                {a.name ? a.name.split("@")[0]?.trim() : a.id}
+              </AuthorTag>
             ))}
-          {item.template == "event" && item.allocation?.temporal?.length
-            ? item.allocation?.temporal?.slice(0, 3).map((t, i) => (
-                <Time key={`time-item-${t.start}-${i}-${t.end}`}>
-                  <FormattedDateTimeRange
-                    from={t.start * 1000}
-                    to={t.end * 1000}
-                    weekday="short"
-                    month="numeric"
-                    day="numeric"
-                    hour="numeric"
-                    minute="numeric"
-                  />
-                </Time>
-              ))
-            : null}
+          </LargeTags>
           <TitleText>{item.description[locDesc]}</TitleText>
         </DescriptionWrapper>
       </ItemHeaderWrapper>

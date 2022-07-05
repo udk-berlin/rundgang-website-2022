@@ -33,6 +33,7 @@
   "location-building": " ",
   "location-level": "Floor: ",
   "location-room": "Room: ",
+  "location-external": "",
   "save": "NOTE",
   "saved": "NOTED",
   "projectsandevents": "My saved Projects and Events",

@@ -32,6 +32,7 @@
   "location-building": " ",
   "location-level": "Etage: ",
   "location-room": "Raum: ",
+  "location-external": "",
   "save": "MERKEN",
   "saved": "GEMERKT",
   "projectsandevents": "Meine gespeicherten Projekte und Events",

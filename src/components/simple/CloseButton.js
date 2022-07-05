@@ -2,9 +2,8 @@ import styled from "styled-components";
 import React from "react";
 
 const CloseButtonWrapper = styled.div`
-  cursor: pointer;
+  pointer-events: none;
   position: relative;
-  text-align: center;
   margin-left: auto;
   right: 0px;
   top: 0px;
@@ -14,7 +13,10 @@ const CloseButtonWrapper = styled.div`
   }
 `;
 
-const CloseIcon = styled.div`
+export const CloseIcon = styled.div`
+  cursor: pointer;
+  pointer-events: all;
+  text-align: center;
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.highlight};
   border-radius: 50%;
