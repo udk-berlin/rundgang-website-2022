@@ -20,12 +20,13 @@ const variants = {
   favourites: {
     height: SEARCHBAR_HEIGHT,
     width: "50%",
+    marginRight: "16px"
   },
   favouritesMobile: {
     height: SEARCHBAR_HEIGHT,
     width: "0%",
     opacity: 0,
-    borderWidth: 0,
+    borderWidth: 0
   },
   filter: {
     height: "fit-content",

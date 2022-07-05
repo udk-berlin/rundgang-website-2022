@@ -11,6 +11,7 @@ const variants = {
   favourites: {
     height: "60vh",
     width: "100%",
+    margin: "0px",
     opacity: 1,
     borderWidth: "4px",
     overflowY: "auto",
@@ -18,12 +19,14 @@ const variants = {
   filter: {
     height: SEARCHBAR_HEIGHT + 2,
     width: "0%",
+    margin: "0px",
     opacity: 0,
     borderWidth: 0,
     overflowY: "auto",
   },
   closed: {
     height: SEARCHBAR_HEIGHT + 2,
+    margin: "2px 0px 0px 16px",
     overflow: "hidden",
     width: "80px",
     opacity: 1,
@@ -42,7 +45,6 @@ const FavouritesWrapper = styled(motion.div)`
   overflow-x: hidden;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     max-height: 60vh;
-    margin: 0px;
   }
 
   @media ${({ theme }) => theme.breakpoints.laptop} {
