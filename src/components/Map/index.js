@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState, useMemo } from "react";
-import _ from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { createRoot } from "react-dom/client";

@@ -1,11 +1,4 @@
-import _ from "lodash";
-import {
-  makeAutoObservable,
-  runInAction,
-  observable,
-  action,
-  toJS,
-} from "mobx";
+import { makeAutoObservable, runInAction, observable, action } from "mobx";
 
 import { makeIdFromUrl, ALIAS_IDS } from "@/utils/idUtils";
 import wrangleData from "./wrangleData";
@@ -69,7 +62,7 @@ class ApiStore {
     )
       .then(res =>
         Promise.all(
-          _.values(res.children).map(async building => {
+          Object.values(res.children).map(async building => {
             let data = await this.getId(building.id);
             this.setCachedId(data, []);
             return {

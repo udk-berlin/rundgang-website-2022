@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import _ from "lodash";
+import { entries, values, groupBy } from "lodash";
 import { observer } from "mobx-react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
@@ -94,7 +94,7 @@ const LocationList = ({ scaleX, wwidth }) => {
   return (
     <LocationWrapper width={wwidth}>
       {uiStore?.filteredEvents
-        ? _.entries(uiStore.filteredEvents).map(([house, rooms]) => (
+        ? entries(uiStore.filteredEvents).map(([house, rooms]) => (
             <RelativeWrapper key={`house-${house}`}>
               <House width={wwidth}>
                 <RoomTitleWrapper width={locWidth}>
@@ -134,13 +134,13 @@ const LocationList = ({ scaleX, wwidth }) => {
                     : null}
                 </EventsWrapper>
               </Room>
-              {_.entries(rooms).map(([room, events]) => (
+              {entries(rooms).map(([room, events]) => (
                 <Room key={`room-${room}-${house}`} width={wwidth}>
                   <RoomTitleWrapper width={locWidth}>
                     <RoomTitle>{room}</RoomTitle>
                   </RoomTitleWrapper>
                   <EventsWrapper>
-                    {_.values(_.groupBy(events, "time.start")).map(starttime =>
+                    {values(groupBy(events, "time.start")).map(starttime =>
                       starttime.map((ev, i) => (
                         <EventBar
                           key={`ev-${room}-${ev.id}-${i}`}

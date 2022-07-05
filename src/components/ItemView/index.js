@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import _ from "lodash";
+import { entries } from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { makeUrlFromId } from "@/utils/idUtils";
@@ -39,7 +39,7 @@ const AuthorTag = styled.span`
   height: fit-content;
   margin: 0px 8px 8px 0px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-  margin: 0px 4px 4px 0px;
+    margin: 0px 4px 4px 0px;
     font-size: ${({ theme }) => theme.fontSizes.mm};
   }
 `;
@@ -204,7 +204,7 @@ const ItemView = () => {
       <ContentWrapper>
         <div>
           {item.rendered.languages[loc] &&
-            _.entries(item.rendered.languages[loc].content).map(([k, c]) => (
+            entries(item.rendered.languages[loc].content).map(([k, c]) => (
               <ContentElement key={k} item={c} />
             ))}
         </div>

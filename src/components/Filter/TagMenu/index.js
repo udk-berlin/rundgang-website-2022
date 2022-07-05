@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import _ from "lodash";
+import React from "react";
+import { entries } from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import TagGroup from "./TagGroup";
@@ -64,7 +64,7 @@ const TagMenu = ({ handleSubmit }) => {
         </ResetButton>
       </Buttons>
       <FilterMenuWrapper>
-        {_.entries(uiStore.filterStore.currentTags).map(([name, group]) => (
+        {entries(uiStore.filterStore.currentTags).map(([name, group]) => (
           <TagGroup
             key={`${name}-taggroupwerapper`}
             group={group}

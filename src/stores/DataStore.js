@@ -1,5 +1,4 @@
 import { toJS, makeAutoObservable, reaction } from "mobx";
-import _ from "lodash";
 import ApiStore from "./ApiStore";
 
 class DataStore {

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import _ from "lodash";
+import { groupBy, entries } from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { motion } from "framer-motion";
@@ -74,7 +74,7 @@ const TagGroup = ({ group, name, handleSubmit }) => {
   const { uiStore } = useStores();
   const isOpen = uiStore.filterStore.openTagGroup == name;
   const groups = useMemo(
-    () => _.entries(_.groupBy(group, "template")),
+    () => entries(groupBy(group, "template")),
     [uiStore.filterStore.selected],
   );
   return (

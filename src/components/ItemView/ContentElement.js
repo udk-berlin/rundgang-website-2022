@@ -1,5 +1,4 @@
 import React from "react";
-import _ from "lodash";
 import styled from "styled-components";
 import AudioPlayer from "./AudioPlayer";
 import LocalizedText from "modules/i18n/components/LocalizedText";
@@ -17,10 +16,6 @@ const Paragraph = styled.div`
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.md};
   }
-`;
-
-const Image = styled.img`
-  width: 100%;
 `;
 
 const Code = styled.pre`

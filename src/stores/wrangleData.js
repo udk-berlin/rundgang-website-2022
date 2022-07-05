@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 const wrangleData = (tree, events) => {
   let tags = {
     ebene0: {},
@@ -112,7 +110,7 @@ const wrangleData = (tree, events) => {
     return obj;
   }, {});
 
-  return { tags: result, rooms, eventlist: _.values(eventlist), pathlist };
+  return { tags: result, rooms, eventlist: Object.values(eventlist), pathlist };
 };
 
 export default wrangleData;

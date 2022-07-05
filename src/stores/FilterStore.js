@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { keys, values } from "lodash";
 import { action, makeAutoObservable, observable, toJS } from "mobx";
 const INITIAL_SELECTION = {
   ebene0: null,
@@ -57,7 +57,7 @@ class FilterStore {
     } else {
       this.selectedId = id;
       const selectAncestors = ancestors => {
-        return _.keys(INITIAL_SELECTION).reduce((obj, cat) => {
+        return keys(INITIAL_SELECTION).reduce((obj, cat) => {
           let selId = "none";
           if (
             cat in this.initialTags &&
@@ -118,7 +118,7 @@ class FilterStore {
   get contextList() {
     return [
       ...new Map(
-        _.values(this.initialTags)
+        values(this.initialTags)
           .flat()
           .map(item => [item.name, item]),
       ).values(),
@@ -128,7 +128,7 @@ class FilterStore {
   }
 
   get currentTags() {
-    let sel = Boolean(_.values(this.selected).find(v => v && v !== "none"));
+    let sel = Boolean(values(this.selected).find(v => v && v !== "none"));
     if (sel) {
       let allTags = this.initialTags;
       const flEl = (group, sel) => {
