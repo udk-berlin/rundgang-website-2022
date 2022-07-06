@@ -14,7 +14,7 @@ const FavouriteItemWrapper = styled.div`
   }
 `;
 
-const Image = styled.img`
+const Image = styled.picture`
   width: 160px;
   height: auto;
   cursor: pointer;
@@ -80,14 +80,14 @@ const FavouriteItem = ({ element, handleClick, handleUnsave }) => {
         size={2.35}
         onClick={e => handleUnsave(e, element.id)}
       />
-      <Image
-        onClick={() => handleClick(element.id)}
-        src={
-          element.thumbnail.length > 0
-            ? element.thumbnail
-            : "/assets/img/missing.svg"
-        }
-      />
+      <Image onClick={() => handleClick(element.id)}>
+        <source srcSet={element.thumbnail} />
+        <img
+          src="/assets/img/missing.png"
+          alt="missing image"
+          style={{ width: "100%", height: "auto" }}
+        />
+      </Image>
       <Info onClick={() => handleClick(element.id)}>
         <Title>{element.name}</Title>
         <Authors>

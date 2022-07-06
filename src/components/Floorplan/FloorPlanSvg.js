@@ -12,7 +12,7 @@ const Floorplan = styled.div`
   rect {
     cursor: pointer;
     stroke: ${({ theme }) => theme.colors.black};
-    stroke-width: 10px;
+    stroke-width: 2px;
   }
 `;
 

@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { entries } from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
+import { toJS } from "mobx";
 import { makeUrlFromId } from "@/utils/idUtils";
 import { useRouter } from "next/router";
 import { useStores } from "@/stores/index";
@@ -131,8 +132,9 @@ const ItemView = () => {
   const item = uiStore.currentContext;
   const locDesc = locale == "en" && item.description.EN?.length ? "EN" : "DE";
   const loc =
-    locale == "en" && item.rendered.languages.EN?.content?.length ? "EN" : "DE";
+    locale == "en" && item.rendered.languages.EN?.formattedContent?.length ? "EN" : "DE";
 
+  console.log(toJS(item), {loc});
   return item && item?.id ? (
     <ItemViewWrapper>
       <Tags>

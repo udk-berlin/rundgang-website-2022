@@ -108,7 +108,7 @@ const ListItem = ({ element, numCol }) => {
           <Image>
             <source srcSet={element.thumbnail} />
             <img
-              src="/assets/img/missing.svg"
+              src="/assets/img/missing.png"
               alt="missing image"
               style={{ width: "100%", height: "auto" }}
             />

@@ -4,6 +4,7 @@ export const formatValues = {
   strong: chunks => <b>{chunks}</b>,
   em: chunks => <i>{chunks}</i>,
   s: chunks => <s>{chunks}</s>,
+  del: chunks => <del>{chunks}</del>,
   br: <br />,
   p: chunks => (
     <span>

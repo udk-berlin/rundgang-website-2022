@@ -46,11 +46,9 @@ export default function App({ Component, pageProps }) {
             onError={() => null}
           >
             <MotionConfig reducedMotion="user">
-              <Suspense fallback="Hello">
-                <Page>
-                  <Component key={router.pathname} {...pageProps} />
-                </Page>
-              </Suspense>
+              <Page>
+                <Component key={router.pathname} {...pageProps} />
+              </Page>
             </MotionConfig>
           </IntlProvider>
         </Provider>

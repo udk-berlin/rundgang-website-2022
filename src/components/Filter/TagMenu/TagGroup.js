@@ -74,7 +74,10 @@ const TagGroup = ({ group, name, handleSubmit }) => {
   const { uiStore } = useStores();
   const isOpen = uiStore.filterStore.openTagGroup == name;
   const groups = useMemo(
-    () => entries(groupBy(group, "template")),
+    () =>
+      entries(groupBy(group, "template")).sort((a, b) =>
+        a[0] == "subjects" ? 1 : -1,
+      ),
     [uiStore.filterStore.selected],
   );
   return (

@@ -50,9 +50,9 @@ const ImageDetailView = ({ src }) => {
     <ImageWrapper>
       <Image onClick={() => setImageDetailOpen(true)}>
         <source srcSet={src} />
-        <source srcSet="/assets/img/missing.svg" />
+        <source srcSet="/assets/img/missing.png" />
         <img
-          src="/assets/img/missing.svg"
+          src="/assets/img/missing.png"
           alt="missing image"
           style={{ width: "100%" }}
         />
