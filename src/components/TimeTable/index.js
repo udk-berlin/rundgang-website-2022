@@ -3,13 +3,14 @@ import { observer } from "mobx-react";
 import styled from "styled-components";
 import { scaleLinear } from "d3-scale";
 import LocalizedText from "modules/i18n/components/LocalizedText";
-import TimeScale, { times } from "./TimeScale";
+import TimeScale from "./TimeScale";
 import useMediaQuery from "@/utils/useMediaQuery";
 import {
   TIME_PADDING,
   TIME_PADDING_MOBILE,
   TIME_WIDTH,
   TIME_WIDTH_MOBILE,
+  times,
 } from "./constants";
 import {
   SEARCHBAR_HEIGHT,
@@ -178,7 +179,7 @@ const TimeTable = () => {
         </TimeNumbers>
       </TimeHeader>
       <TimeTableContainer id={"time-table-container"} ref={bottomScroll}>
-        <TimeScale scaleX={scaleX} />
+        <TimeScale scaleX={scaleX} times={times} />
         <Suspense fallback="loading...">
           <LocationList
             scaleX={scaleX}

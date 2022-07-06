@@ -13,7 +13,7 @@ const LocationWrapper = styled.div`
   height: fit-content;
   position: relative;
   z-index: 0;
-  margin-top: 100px;
+  margin-top: ${({ forSaved }) => (forSaved ? "10px" : "100px")};
   margin-bottom: 100px;
 `;
 
@@ -74,75 +74,86 @@ const EventsWrapper = styled.div`
   padding: 4px 0px;
 `;
 
-const LocationList = ({ scaleX, wwidth, houseInfo, timeTableEvents }) => {
+const LocationList = ({
+  scaleX,
+  wwidth,
+  houseInfo,
+  timeTableEvents,
+  forSaved = false,
+}) => {
   const { pathname } = useRouter();
   const locWidth = scaleX(1658564000);
   return (
-    <LocationWrapper width={wwidth}>
+    <LocationWrapper width={wwidth} forSaved={forSaved}>
       {timeTableEvents
-        ? entries(timeTableEvents).map(([house, rooms]) => (
-            <RelativeWrapper key={`house-${house}`}>
-              <House width={wwidth}>
-                <RoomTitleWrapper width={locWidth}>
-                  <HouseTitle>{house}</HouseTitle>
-                </RoomTitleWrapper>
-              </House>
-              <Room key={`openingtimes-${house}`} width={wwidth}>
-                <RoomTitleWrapper width={locWidth}>
-                  <RoomTitle></RoomTitle>
-                </RoomTitleWrapper>
-                <EventsWrapper>
-                  {houseInfo[house]
-                    ? houseInfo[house]?.allocation?.temporal?.map(time =>
-                        time.udk == "rundgang" ? (
-                          <EventBar
-                            key={`opening-${houseInfo[house]?.id}-${time.start}`}
-                            start={scaleX(time.start) - locWidth}
-                            end={scaleX(time.end) - locWidth}
-                            link={`/orte/${makeUrlFromId(
-                              houseInfo[house]?.id,
-                            )}`}
-                            color="lightgrey"
-                          >
-                            <LocalizedText id="openingtimes" />
-                            <FormattedDateTimeRange
-                              from={time.start * 1000}
-                              to={time.end * 1000}
-                              weekday="long"
-                              month="numeric"
-                              day="numeric"
-                              hour="numeric"
-                              minute="numeric"
-                            />
-                          </EventBar>
-                        ) : null,
-                      )
-                    : null}
-                </EventsWrapper>
-              </Room>
-              {entries(rooms).map(([room, events]) => (
-                <Room key={`room-${room}-${house}`} width={wwidth}>
+        ? entries(timeTableEvents).map(([house, rooms]) =>
+            entries(rooms).length ? (
+              <RelativeWrapper key={`house-${house}`}>
+                <House width={wwidth}>
                   <RoomTitleWrapper width={locWidth}>
-                    <RoomTitle>{room}</RoomTitle>
+                    <HouseTitle>{house}</HouseTitle>
                   </RoomTitleWrapper>
-                  <EventsWrapper>
-                    {values(groupBy(events, "time.start")).map(starttime =>
-                      starttime.map((ev, i) => (
-                        <EventBar
-                          key={`ev-${room}-${ev.id}-${i}`}
-                          ev={ev}
-                          top={i}
-                          start={scaleX(ev.time.start) - locWidth}
-                          end={scaleX(ev.time.end) - locWidth}
-                          link={`${pathname}/${makeUrlFromId(ev.id)}`}
-                        />
-                      )),
-                    )}
-                  </EventsWrapper>
-                </Room>
-              ))}
-            </RelativeWrapper>
-          ))
+                </House>
+                {!forSaved ? (
+                  <Room key={`openingtimes-${house}`} width={wwidth}>
+                    <RoomTitleWrapper width={locWidth}>
+                      <RoomTitle></RoomTitle>
+                    </RoomTitleWrapper>
+                    <EventsWrapper>
+                      {houseInfo[house]
+                        ? houseInfo[house]?.allocation?.temporal?.map(time =>
+                            time.udk == "rundgang" ? (
+                              <EventBar
+                                key={`opening-${houseInfo[house]?.id}-${time.start}`}
+                                start={scaleX(time.start) - locWidth}
+                                end={scaleX(time.end) - locWidth}
+                                link={`/orte/${makeUrlFromId(
+                                  houseInfo[house]?.id,
+                                )}`}
+                                color="lightgrey"
+                              >
+                                <LocalizedText id="openingtimes" />
+                                <FormattedDateTimeRange
+                                  from={time.start * 1000}
+                                  to={time.end * 1000}
+                                  weekday="long"
+                                  month="numeric"
+                                  day="numeric"
+                                  hour="numeric"
+                                  minute="numeric"
+                                />
+                              </EventBar>
+                            ) : null,
+                          )
+                        : null}
+                    </EventsWrapper>
+                  </Room>
+                ) : null}
+                {entries(rooms).map(([room, events]) => (
+                  <Room key={`room-${room}-${house}`} width={wwidth}>
+                    <RoomTitleWrapper width={locWidth}>
+                      <RoomTitle>{room}</RoomTitle>
+                    </RoomTitleWrapper>
+                    <EventsWrapper>
+                      {values(groupBy(events, "time.start")).map(starttime =>
+                        starttime.map((ev, i) => (
+                          <EventBar
+                            key={`ev-${room}-${ev.id}-${i}`}
+                            ev={ev}
+                            top={i}
+                            forSaved={forSaved}
+                            start={scaleX(ev.time.start) - locWidth}
+                            end={scaleX(ev.time.end) - locWidth}
+                            link={`${pathname}/${makeUrlFromId(ev.id)}`}
+                          />
+                        )),
+                      )}
+                    </EventsWrapper>
+                  </Room>
+                ))}
+              </RelativeWrapper>
+            ) : null,
+          )
         : null}
     </LocationWrapper>
   );

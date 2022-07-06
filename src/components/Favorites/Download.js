@@ -4,11 +4,14 @@ import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import { jsPDF } from "jspdf";
-import FavouritePrintout from "./FavouritePrintout";
+import dynamic from "next/dynamic";
+const FavouritePrintout = dynamic(() => import("./FavouritePrintout"), {
+  loading: () => <header />,
+});
 
 const DownloadPdf = styled.div`
   z-index: -1;
-  position: absolute;
+  position: fixed;
   display: none;
 `;
 

@@ -134,7 +134,7 @@ const ItemView = () => {
   const loc =
     locale == "en" && item.rendered.languages.EN?.formattedContent?.length ? "EN" : "DE";
 
-  console.log(toJS(item), {loc});
+  //console.log(toJS(item), {loc});
   return item && item?.id ? (
     <ItemViewWrapper>
       <Tags>

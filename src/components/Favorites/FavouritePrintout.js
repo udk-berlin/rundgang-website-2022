@@ -1,46 +1,46 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { FormattedDateTimeRange } from "react-intl";
 import { scaleLinear } from "d3-scale";
 import Tag from "@/components/simple/Tag";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocationList from "../TimeTable/LocationList";
+import _ from "lodash";
+import { times } from "../TimeTable/constants";
 
 const FavouriteItemWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   display: flex;
-  width: 100%;
-  padding: ${({ theme }) => theme.space(16)};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    padding: ${({ theme }) => theme.space(8)};
-  }
+  justify-content: flex-start;
+  width: 900px;
+  padding: ${({ theme }) => `${theme.space(8)} ${theme.space(16)}`};
+  border-bottom: 1px solid black;
 `;
 
 const Title = styled.div`
   font-weight: bold;
   font-size: ${({ theme }) => theme.fontSizes.md};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
-  }
 `;
 const Authors = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.md};
   flex-grow: 0;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
-  }
 `;
 const Tags = styled.div`
   display: flex;
-  width: 100%;
+  width: 300px;
   flex-grow: 1 1 50%;
-  padding-top: ${({ theme }) => theme.space(8)};
   flex-wrap: wrap;
 `;
 const Info = styled.div`
   cursor: pointer;
   width: 100%;
-  padding: ${({ theme }) => ` 0px ${theme.space(8)}`};
+`;
+const SortNumber = styled.span`
+  border: 1px solid black;
+  padding: 0px 8px;
+  background-color: ${({ theme }) => theme.colors.lightgrey};
+  margin: ${({ theme }) => theme.space(8)};
+  line-height: 0.5;
 `;
 
 const Time = styled.div`
@@ -58,21 +58,61 @@ const Time = styled.div`
   word-break: break-all;
   width: fit-content;
   margin: ${({ theme }) => theme.space(4)};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
-    margin: ${({ theme }) => theme.space(4)};
-  }
 `;
 
 const FavouritesTitle = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lg};
+  border-bottom: 1px solid black;
+  padding: ${({ theme }) => theme.space(8)};
+`;
+
+const LocationTimes = styled.div`
+  width: 0px;
+  height: fit-content;
+  justify-content: space-between;
+  display: flex;
+  position: relative;
 `;
 
 const FavouriteItem = ({ element }) => {
   return (
     <FavouriteItemWrapper>
+      <Tags>
+        {element.template == "event" &&
+          element?.allocation?.temporal?.map((t, i) => (
+            <Time key={`time-range-${t.start}-${i}-${t.end}`}>
+              <FormattedDateTimeRange
+                from={t.start * 1000}
+                weekday="short"
+                hour="numeric"
+                minute="numeric"
+                to={t.end * 1000}
+              />
+            </Time>
+          ))}
+        {element.tags
+          .filter(t =>
+            ["location-room", "location-building"].includes(t.template),
+          )
+          .map(t => (
+            <Tag
+              selected={false}
+              key={`${t.id}-${t.template}`}
+              levelSelected={false}
+              showCross={false}
+              template={t.template}
+            >
+              {t.name}
+            </Tag>
+          ))}
+      </Tags>
       <Info onClick={() => handleClick(element.id)}>
-        <Title>{element.name}</Title>
+        <Title>
+          {element?.sortIndex?.map(sor => (
+            <SortNumber key={`sortnumber-${sor}`}>{sor}</SortNumber>
+          ))}
+          {element.name}
+        </Title>
         <Authors>
           {[
             ...new Set(
@@ -82,82 +122,194 @@ const FavouriteItem = ({ element }) => {
             .filter(a => a)
             .join(", ")}
         </Authors>
-        <Tags>
-          {element.template == "event" &&
-            element?.allocation?.temporal?.map((t, i) => (
-              <Time key={`time-range-${t.start}-${i}-${t.end}`}>
-                <FormattedDateTimeRange
-                  from={t.start * 1000}
-                  weekday="short"
-                  hour="numeric"
-                  minute="numeric"
-                  to={t.end * 1000}
-                />
-              </Time>
-            ))}
-          {element.tags
-            .filter(t =>
-              ["location-room", "location-building"].includes(t.template),
-            )
-            .map(t => (
-              <Tag
-                selected={false}
-                key={`${t.id}-${t.template}`}
-                levelSelected={false}
-                showCross={false}
-                template={t.template}
-              >
-                {t.name}
-              </Tag>
-            ))}
-        </Tags>
       </Info>
     </FavouriteItemWrapper>
   );
 };
 
-const FavouritePrintout = ({ savedItems, houseInfo, filteredEvents }) => {
-  const scaleX = scaleLinear()
-    .domain([1658564000, 1658696400])
-    .range([20, 980]);
+const TimeLine = styled.div`
+  height: inherit;
+  border-left: 1px solid black;
+  left: ${({ x }) => x}px;
+  top: 0px;
+  position: absolute;
+`;
+
+const TimeScaleWrapper = styled.div`
+  display: flex;
+  position: absolute;
+  height: 100%;
+`;
+const TimeScaleSaved = ({ scaleX, filtertimes }) => {
+  return (
+    <TimeScaleWrapper>
+      {filtertimes.map(t => (
+        <TimeLine x={scaleX(t)} key={`timeline-${t}`}>
+          {new Date(t * 1000).getHours()}
+        </TimeLine>
+      ))}
+    </TimeScaleWrapper>
+  );
+};
+
+const FavouriteLocations = ({ filteredEvents }) => {
+  const scaleXSat = scaleLinear()
+    .domain([1658563200, 1658631600])
+    .range([20, 980])
+    .clamp(true);
+  const scaleXSun = scaleLinear()
+    .domain([1658631600, 1658700000])
+    .range([20, 980])
+    .clamp(true);
+
+  const groupedEvents = [
+    [1658563200, 1658631600],
+    [1658631600, 1658700000],
+  ].map(day =>
+    _.entries(filteredEvents).reduce(
+      (obj, [house, rooms]) => ({
+        ...obj,
+        [house]: _.entries(rooms)
+          .map(([room, evs]) => [
+            room,
+            evs.filter(ev => ev.time.end >= day[0] && ev.time.end < day[1]),
+          ])
+          .filter(x => x[1]?.length)
+          .reduce(
+            (robj, [room, evs]) => ({
+              ...robj,
+              [room]: evs,
+            }),
+            {},
+          ),
+      }),
+      {},
+    ),
+  );
+  return (
+    <div style={{ position: "relative", marginTop: "200px" }}>
+      <div
+        style={{
+          width: "100px",
+          fontSize: "60px",
+          height: "fit-content",
+          textAlign: "center",
+          letterSpacing: "30px",
+        }}
+      >
+        <LocalizedText id="saturday" />
+      </div>
+
+      <LocationTimes>
+        <TimeScaleSaved
+          scaleX={scaleXSat}
+          filtertimes={times.filter(t => t <= 1658631600)}
+        />
+        <LocationList
+          scaleX={scaleXSat}
+          wwidth={960}
+          timeTableEvents={groupedEvents[0]}
+          forSaved={true}
+        />
+      </LocationTimes>
+      <div
+        style={{
+          width: "100px",
+          fontSize: "60px",
+          height: "fit-content",
+          textAlign: "center",
+          letterSpacing: "30px",
+        }}
+      >
+        <LocalizedText id="sunday" />
+      </div>
+      <LocationTimes>
+        <TimeScaleSaved
+          scaleX={scaleXSun}
+          filtertimes={times.filter(t => t > 1658631600)}
+        />
+        <LocationList
+          scaleX={scaleXSun}
+          wwidth={960}
+          timeTableEvents={groupedEvents[1]}
+          forSaved={true}
+        />
+      </LocationTimes>
+    </div>
+  );
+};
+
+const FavouritePrintout = ({ savedItems, filteredEvents }) => {
+  const sortedItems = useMemo(
+    () =>
+      savedItems
+        .filter(it => it.template !== "event")
+        .concat(
+          savedItems
+            .filter(item => item.template == "event")
+            .map(ev => {
+              if (ev.tags.find(t => t.template == "location-building")) {
+                let building = ev.tags.find(
+                  t => t.template == "location-building",
+                ).name;
+                let room = ev.tags.find(
+                  t => t.template == "location-room",
+                ).name;
+                return {
+                  ...ev,
+                  sortIndex: filteredEvents[building][room]
+                    .filter(d => d.id == ev.id)
+                    .map(d => d.sortIndex + 1),
+                  building: building,
+                  room: room,
+                };
+              }
+            })
+            .sort(
+              (a, b) => Math.min(...a.sortIndex) - Math.min(...b.sortIndex),
+            ),
+        ),
+    [filteredEvents],
+  );
 
   return (
     <div
       id="favouriteprintout"
-      style={{ width: "500px", height: "fit-content" }}
+      style={{ width: "1000px", height: "fit-content", letterSpacing: "1.5px" }}
     >
-      <FavouritesTitle>
-        <LocalizedText id="projects" />
-      </FavouritesTitle>
-      {savedItems
-        .filter(
-          item =>
-            item.template == "studentproject" || item.template == "project",
-        )
-        .map(element => (
-          <FavouriteItem
-            key={`favouriteprintout-element-${element.id}`}
-            element={element}
-          />
-        ))}
-      <FavouritesTitle>
-        <LocalizedText id="events" />
-      </FavouritesTitle>
-      {savedItems
-        .filter(item => item.template == "event")
-        .map(element => (
-          <FavouriteItem
-            key={`favouriteprintout-element-${element.id}`}
-            element={element}
-          />
-        ))}
-
-      <LocationList
-        scaleX={scaleX}
-        wwidth={960}
-        houseInfo={houseInfo}
-        timeTableEvents={filteredEvents}
-      />
+      <div
+        style={{
+          width: "100px",
+          fontSize: "80px",
+          height: "fit-content",
+          textAlign: "center",
+          letterSpacing: "40px",
+        }}
+      >
+        <LocalizedText id="saved" />
+      </div>
+      {_.entries(
+        _.groupBy(
+          sortedItems,
+          d =>
+            d.tags.find(
+              t =>
+                t.template == "location-building" ||
+                t.template == "location-external",
+            )?.name,
+        ),
+      ).map(([loc, items]) => (
+        <>
+          <FavouritesTitle>{loc}</FavouritesTitle>
+          {items.map(element => (
+            <FavouriteItem
+              key={`favouriteprintout-element-${element.id}`}
+              element={element}
+            />
+          ))}
+        </>
+      ))}
+      <FavouriteLocations filteredEvents={filteredEvents} />
     </div>
   );
 };

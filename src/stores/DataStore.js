@@ -19,7 +19,8 @@ class DataStore {
       .filter(a => a)
       .flat()
       .slice()
-      .sort((a, b) => a.time.start - b.time.start);
+      .sort((a, b) => a.time.start - b.time.start)
+      .map((ev, i) => ({ ...ev, sortIndex: i }));
     let res = sorted.reduce((obj, ev) => {
       if (ev?.building) {
         if (obj && ev.building.name in obj) {
