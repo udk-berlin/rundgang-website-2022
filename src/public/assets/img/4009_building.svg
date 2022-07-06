@@ -1,8 +1,5 @@
 <svg width="2160" height="1530" viewBox="0 0 2160 1530" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="259" y="681.996" width="677" height="245" fill="black" />
-    <rect x="1691.23" y="289.141" width="658" height="245" transform="rotate(130.203 1691.23 289.141)" fill="black" />
-    <rect x="305" y="729.996" width="824" height="569" fill="black" />
-    <rect x="1935.3" y="561.832" width="848.655" height="542.303" transform="rotate(130.203 1935.3 561.832)" fill="black" />
-    <rect x="932.359" y="728.461" width="273.152" height="603.65" transform="rotate(-19.0379 932.359 728.461)" fill="black" />
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M1417.14 223.861L1593.09 353.457L1570.01 384.792L1810.96 562.265L1400.02 1120.18L1256.41 1014.41L1291.93 1083.61L1174.08 1146.71L1144 1088.11V1274H438V947.001H397V739.001H984.131L1072.6 691.632L1417.14 223.861Z" fill="black" />
+    <path d="M1144 1274L1400 1120V1109.5L1331 1031.5L1262 994L1173.5 1065L1118.5 1073L1105 1164.5L1144 1274Z" fill="black" />
 </svg>
     

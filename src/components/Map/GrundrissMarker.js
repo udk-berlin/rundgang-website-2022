@@ -6,6 +6,7 @@ const Grundriss = styled.img`
   height: ${({ size }) => `${size}px`};
   z-index: 40;
   cursor: pointer;
+  border: 1px solid black;
 
   -webkit-filter: drop-shadow(0px 0px 8px rgb(226, 255, 93));
   filter: drop-shadow(0px 0px 8px rgb(226, 255, 93));

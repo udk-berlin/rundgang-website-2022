@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import styled from "styled-components";
 import { scaleLinear } from "d3-scale";
 import LocalizedText from "modules/i18n/components/LocalizedText";
-import LocationList from "./LocationList";
 import TimeScale, { times } from "./TimeScale";
 import useMediaQuery from "@/utils/useMediaQuery";
 import {
@@ -16,18 +15,22 @@ import {
   SEARCHBAR_HEIGHT,
   TITLE_HEIGHT,
   SEARCHBAR_PADDING,
-  MIN_PADDING,
 } from "@/utils/constants";
 import useTopScrollBar from "@/utils/useTopScrollBar";
-import { FormattedDate } from "react-intl";
+import { useStores } from "@/stores/index";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+const LocationList = dynamic(() => import("./LocationList"), {
+  suspense: true,
+});
 
 const TimeTableWrapper = styled.div`
   display: grid;
   gap: 16px 16px;
   grid-template-columns: 1fr;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   height: fit-content;
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 200px);
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -140,6 +143,7 @@ const TimeNumbers = styled.div`
 `;
 
 const TimeTable = () => {
+  const { uiStore } = useStores();
   const [padding, setPadding] = useState(0);
   const [width, setWidth] = useState(0);
 
@@ -187,7 +191,14 @@ const TimeTable = () => {
       </TimeHeader>
       <TimeTableContainer id={"time-table-container"} ref={bottomScroll}>
         <TimeScale scaleX={scaleX} />
-        <LocationList scaleX={scaleX} wwidth={width} />
+        <Suspense fallback="loading...">
+          <LocationList
+            scaleX={scaleX}
+            wwidth={width}
+            houseInfo={uiStore.houseInfo}
+            timeTableEvents={uiStore.filteredEvents}
+          />
+        </Suspense>
       </TimeTableContainer>
     </TimeTableWrapper>
   );

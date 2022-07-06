@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { FormattedDateTimeRange } from "react-intl";
+import { scaleLinear } from "d3-scale";
 import Tag from "@/components/simple/Tag";
 import LocalizedText from "modules/i18n/components/LocalizedText";
+import LocationList from "../TimeTable/LocationList";
 
 const FavouriteItemWrapper = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.sm};
@@ -114,7 +116,11 @@ const FavouriteItem = ({ element }) => {
   );
 };
 
-const FavouritePrintout = ({ savedItems }) => {
+const FavouritePrintout = ({ savedItems, houseInfo, filteredEvents }) => {
+  const scaleX = scaleLinear()
+    .domain([1658564000, 1658696400])
+    .range([20, 980]);
+
   return (
     <div
       id="favouriteprintout"
@@ -129,7 +135,10 @@ const FavouritePrintout = ({ savedItems }) => {
             item.template == "studentproject" || item.template == "project",
         )
         .map(element => (
-          <FavouriteItem element={element} />
+          <FavouriteItem
+            key={`favouriteprintout-element-${element.id}`}
+            element={element}
+          />
         ))}
       <FavouritesTitle>
         <LocalizedText id="events" />
@@ -137,8 +146,18 @@ const FavouritePrintout = ({ savedItems }) => {
       {savedItems
         .filter(item => item.template == "event")
         .map(element => (
-          <FavouriteItem element={element} />
+          <FavouriteItem
+            key={`favouriteprintout-element-${element.id}`}
+            element={element}
+          />
         ))}
+
+      <LocationList
+        scaleX={scaleX}
+        wwidth={960}
+        houseInfo={houseInfo}
+        timeTableEvents={filteredEvents}
+      />
     </div>
   );
 };

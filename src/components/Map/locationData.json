@@ -86,9 +86,9 @@
   },
   {
     "name": "Einsteinufer 43-53",
-    "lat": "52.51702833511489",
-    "lng": "13.322340551980432",
-    "maxZoom": 14.4,
+    "lat": "52.51705",
+    "lng": "13.32215",
+    "maxZoom": 14.7,
     "image": "4002",
     "id": {
       "development": "!RoplWetVwBJXxKZPGr:dev.medienhaus.udk-berlin.de",
@@ -111,7 +111,7 @@
     "lat": "52.551911059515135",
     "lng": "13.374961883083154",
     "maxZoom": 14.4,
-    "image": "location-external",
+    "image": "hzt",
     "id": {
       "development": "!bwyfqxrdHCbwOYLLgp:dev.medienhaus.udk-berlin.de",
       "production": "!FqPOhaHHAjYeliMfOU:content.udk-berlin.de"
@@ -154,8 +154,8 @@
     "name": "UNI.T - Theater der UdK Berlin",
     "lat": "52.50967878838072",
     "lng": "13.329100213983617",
-    "maxZoom": 14.4,
-    "image": "location-external",
+    "maxZoom": 17,
+    "image": "unit",
     "id": {
       "development": "!pvskkxkddkLUqsuUzK:dev.medienhaus.udk-berlin.de",
       "production": "!uAswzmPHWtAVmjhIYx:content.udk-berlin.de"
@@ -165,8 +165,8 @@
     "name": "Konzertsaal der UdK Berlin",
     "lat": "52.50872668345839",
     "lng": "13.328029102334746",
-    "maxZoom": 14.4,
-    "image": "location-external",
+    "maxZoom": 17,
+    "image": "konzertsaal",
     "id": {
       "development": "!QxQzOsKXzcYiHEMMpg:dev.medienhaus.udk-berlin.de",
       "production": "!jocCvZKGntdCmvmmUG:content.udk-berlin.de"
@@ -174,10 +174,10 @@
   },
   {
     "name": "Jazz-Institut Berlin, Einsteinufer 43-53, 10587 Berlin",
-    "lat": "52.517416512341185",
-    "lng": "13.324437006400322",
-    "maxZoom": 14.4,
-    "image": "location-external",
+    "lat": "52.5169",
+    "lng": "13.32299",
+    "maxZoom": 15.8,
+    "image": "jib",
     "id": {
       "development": "!NDEmKoPNTYAwCsgmgG:dev.medienhaus.udk-berlin.de",
       "production": "!hjTkjNaIDkzxNWQZTR:content.udk-berlin.de"

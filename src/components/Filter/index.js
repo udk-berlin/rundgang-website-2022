@@ -1,6 +1,5 @@
-import PropTypes from "prop-types";
 import styled from "styled-components";
-import React, { useMemo, useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { observer } from "mobx-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
@@ -20,13 +19,13 @@ const variants = {
   favourites: {
     height: SEARCHBAR_HEIGHT,
     width: "50%",
-    marginRight: "16px"
+    marginRight: "16px",
   },
   favouritesMobile: {
     height: SEARCHBAR_HEIGHT,
     width: "0%",
     opacity: 0,
-    borderWidth: 0
+    borderWidth: 0,
   },
   filter: {
     height: "fit-content",
