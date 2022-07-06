@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { throttle } from "lodash";
 
 const useTopScrollBar = (switchPos, sundayPos) => {
   const [scrollPos, setScrollPos] = useState(0);
@@ -43,12 +44,21 @@ const useTopScrollBar = (switchPos, sundayPos) => {
       }
     };
 
-    bottomScroll.current.addEventListener("scroll", setFromBottom);
-    topScroll.current.addEventListener("scroll", setFromTop);
+    bottomScroll.current.addEventListener(
+      "scroll",
+      throttle(setFromBottom, 100),
+    );
+    topScroll.current.addEventListener("scroll", throttle(setFromTop, 100));
 
     return () => {
-      bottomScroll?.current?.removeEventListener("scroll", setFromBottom);
-      topScroll?.current?.removeEventListener("scroll", setFromTop);
+      bottomScroll?.current?.removeEventListener(
+        "scroll",
+        throttle(setFromBottom, 100),
+      );
+      topScroll?.current?.removeEventListener(
+        "scroll",
+        throttle(setFromTop, 100),
+      );
     };
   }, []);
 
