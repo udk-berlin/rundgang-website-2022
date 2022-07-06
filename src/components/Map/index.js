@@ -120,7 +120,6 @@ const Map = () => {
           markerElement.rotationAlignment = "map";
           let mRoot = null;
           if (el.id in markers) {
-            console.log("already in markers");
             mRoot = markers[el.id].mRoot;
           } else {
             mRoot = createRoot(markerElement);

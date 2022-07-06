@@ -257,8 +257,6 @@ class ApiStore {
         events,
       );
       runInAction(() => {
-        delete tree.children;
-        this.root = tree;
         this.tags = tags;
         this.pathlist = pathlist;
         this.existingRooms = rooms;
@@ -280,6 +278,10 @@ class ApiStore {
   };
 
   initialize = async () => {
+    const root = await this.getId(process.env.NEXT_PUBLIC_API_ROOT_URL);
+    runInAction(() => {
+      this.root = root;
+    });
     this.initializeRoot();
   };
 

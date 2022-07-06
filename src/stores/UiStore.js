@@ -14,6 +14,8 @@ class UiStore {
 
     makeAutoObservable(this, {
       setIsOpen: action,
+      setTitle: action,
+      title: observable,
       isOpen: observable,
     });
   }
@@ -57,7 +59,9 @@ class UiStore {
       this.title = "zeiten";
     } else if (
       id == this.dataStore?.api?.root?.id &&
-      (title == "rundgang22-root" || "rundgang22" || "Rundgang22")
+      (title == "rundgang22-root" ||
+        title == "rundgang22" ||
+        title == "Rundgang22")
     ) {
       this.title = "rundgang";
     } else {
@@ -110,7 +114,6 @@ class UiStore {
     let events = this.dataStore.api.eventlist.filter(ev =>
       this.savedItemIds.find(id => id == ev.id),
     );
-    console.log(events, this.savedItems);
     return this.dataStore.createEventStructure(events);
   }
 

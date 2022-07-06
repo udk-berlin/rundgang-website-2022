@@ -35,7 +35,6 @@ const Download = () => {
   const downloadImage = () => {
     var doc = new jsPDF();
     var source = window.document.getElementById("favouriteprintout");
-    console.log(source);
     doc.html(source, {
       callback: function (doc) {
         doc.save("rundgangudk2022.pdf");

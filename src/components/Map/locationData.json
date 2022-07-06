@@ -52,17 +52,6 @@
     }
   },
   {
-    "name": "Fasanenstraße 1b",
-    "lat": "52.509",
-    "lng": "13.3282",
-    "maxZoom": 15.3,
-    "image": "4003",
-    "id": {
-      "development": "!iaYmdanFCGqDxCGLyW:dev.medienhaus.udk-berlin.de",
-      "production": "!cUpdRzxCGmLkwfrUeq:content.udk-berlin.de"
-    }
-  },
-  {
     "name": "Hardenbergstr. 41",
     "lat": "52.511295526569526",
     "lng": "13.323453006016974",
@@ -75,9 +64,9 @@
   },
   {
     "name": "Bundesallee 1-12",
-    "lat": "52.4986354",
-    "lng": "13.3299593",
-    "maxZoom": 14,
+    "lat": "52.498635",
+    "lng": "13.3299",
+    "maxZoom": 14.1,
     "image": "4001",
     "id": {
       "development": "!dtjgwrdMPItWQIaoSt:dev.medienhaus.udk-berlin.de",
@@ -108,9 +97,9 @@
   },
   {
     "name": "Hochschulübergreifendes Zentrum Tanz Berlin (HZT)",
-    "lat": "52.551911059515135",
-    "lng": "13.374961883083154",
-    "maxZoom": 14.4,
+    "lat": "52.5517",
+    "lng": "13.3748",
+    "maxZoom": 16,
     "image": "hzt",
     "id": {
       "development": "!bwyfqxrdHCbwOYLLgp:dev.medienhaus.udk-berlin.de",
@@ -152,9 +141,9 @@
   },
   {
     "name": "UNI.T - Theater der UdK Berlin",
-    "lat": "52.50967878838072",
-    "lng": "13.329100213983617",
-    "maxZoom": 17,
+    "lat": "52.5098",
+    "lng": "13.3290",
+    "maxZoom": 15.4,
     "image": "unit",
     "id": {
       "development": "!pvskkxkddkLUqsuUzK:dev.medienhaus.udk-berlin.de",
@@ -163,9 +152,9 @@
   },
   {
     "name": "Konzertsaal der UdK Berlin",
-    "lat": "52.50872668345839",
-    "lng": "13.328029102334746",
-    "maxZoom": 17,
+    "lat": "52.50895",
+    "lng": "13.3281",
+    "maxZoom": 15.2,
     "image": "konzertsaal",
     "id": {
       "development": "!QxQzOsKXzcYiHEMMpg:dev.medienhaus.udk-berlin.de",
@@ -181,6 +170,17 @@
     "id": {
       "development": "!NDEmKoPNTYAwCsgmgG:dev.medienhaus.udk-berlin.de",
       "production": "!hjTkjNaIDkzxNWQZTR:content.udk-berlin.de"
+    }
+  },
+  {
+    "name": "Fasanenstraße 1b",
+    "lat": "52.50939",
+    "lng": "13.32859",
+    "maxZoom": 15.2,
+    "image": "4003",
+    "id": {
+      "development": "!iaYmdanFCGqDxCGLyW:dev.medienhaus.udk-berlin.de",
+      "production": "!cUpdRzxCGmLkwfrUeq:content.udk-berlin.de"
     }
   }
 ]

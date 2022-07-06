@@ -91,7 +91,10 @@ const wrangleData = (tree, events) => {
           context.template == "location-room" ||
           context.template == "location-level"
         ) {
-          rooms[context.id] = true;
+          if (context.id in rooms) {
+            rooms[context.id].push(curr.node.id);
+          }
+          rooms[context.id] = [curr.node.id];
         }
         if (ebene) {
           if (i > 1) {
@@ -110,8 +113,6 @@ const wrangleData = (tree, events) => {
           } else {
             tags[ebene][context.id] = { ...context, ancestors: [] };
           }
-        } else {
-          console.log(context.name, context.template);
         }
       });
     }
@@ -133,7 +134,6 @@ const wrangleData = (tree, events) => {
     }
     return obj;
   }, {});
-
   return { tags: result, rooms, eventlist: Object.values(eventlist), pathlist };
 };
 

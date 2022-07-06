@@ -72,8 +72,8 @@ const Page = ({ children }) => {
     dataStore.api?.root?.id && (
       <>
         <HeaderWrapper>
-          <PageTitle key={`PageTitle-${router.pathname}`} />
-          <SearchBar key={`SearchBar-${router.pathname}`} />
+          <PageTitle />
+          <SearchBar />
         </HeaderWrapper>
         <PageWrapper>
           {children}

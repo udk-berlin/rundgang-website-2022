@@ -29,7 +29,6 @@ const Stretch = ({
     ) {
       let pval = parseFloat(preferredSize.replace("%", ""));
       let val = (pval * (size.height - 180)) / size.height;
-      console.log(pval, val);
       setFontSize(val);
     } else {
       setFontSize(preferredSize);
