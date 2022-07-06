@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
-import { makeUrlFromId } from "@/utils/idUtils";
 import { FormattedDateTimeRange } from "react-intl";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
 import LocalizedText from "modules/i18n/components/LocalizedText";
@@ -100,8 +99,7 @@ const GrundrissPopup = ({ el, size }) => {
           ) : null,
         )}
       </Times>
-
-      <LocalizedLink to={`/orte/${makeUrlFromId(el.id)}`}>
+      <LocalizedLink to={`/orte/${el.id}`}>
         <RoomLink>
           <LocalizedText id="program" /> <Arrow>&#8594;</Arrow>
         </RoomLink>

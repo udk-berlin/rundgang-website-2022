@@ -49,7 +49,11 @@ const Download = () => {
     uiStore.numberSavedItems > 0 && (
       <>
         <DownloadPdf>
-          <FavouritePrintout savedItems={uiStore.savedItems} />
+          <FavouritePrintout
+            savedItems={uiStore.savedItems}
+            filteredEvents={uiStore.savedEvents}
+            houseInfo={uiStore.houseInfo}
+          />
         </DownloadPdf>
         <DownloadButton onClick={() => downloadImage()}>
           <LocalizedText id="download" />

@@ -1,11 +1,9 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { entries, values, groupBy } from "lodash";
 import { observer } from "mobx-react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { makeUrlFromId } from "@/utils/idUtils";
-import { TIME_WIDTH } from "./constants";
-import { useStores } from "@/stores/index";
 import EventBar from "./EventBar";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import { FormattedDateTimeRange } from "react-intl";
@@ -76,25 +74,13 @@ const EventsWrapper = styled.div`
   padding: 4px 0px;
 `;
 
-const LocationList = ({ scaleX, wwidth }) => {
-  const { dataStore, uiStore } = useStores();
+const LocationList = ({ scaleX, wwidth, houseInfo, timeTableEvents }) => {
   const { pathname } = useRouter();
   const locWidth = scaleX(1658564000);
-  const houseInfo = useMemo(
-    () =>
-      dataStore.api.locations.reduce(
-        (obj, item) => ({
-          ...obj,
-          [item.name]: item.extra,
-        }),
-        {},
-      ),
-    [dataStore.api.locations],
-  );
   return (
     <LocationWrapper width={wwidth}>
-      {uiStore?.filteredEvents
-        ? entries(uiStore.filteredEvents).map(([house, rooms]) => (
+      {timeTableEvents
+        ? entries(timeTableEvents).map(([house, rooms]) => (
             <RelativeWrapper key={`house-${house}`}>
               <House width={wwidth}>
                 <RoomTitleWrapper width={locWidth}>

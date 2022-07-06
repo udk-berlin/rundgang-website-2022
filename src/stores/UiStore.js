@@ -100,10 +100,28 @@ class UiStore {
   }
 
   get filteredEvents() {
-    let savedEvents = this.dataStore.api.eventlist.filter(ev =>
+    let events = this.dataStore.api.eventlist.filter(ev =>
       this.items.find(item => item.id == ev.id),
     );
-    return this.dataStore.createEventStructure(savedEvents);
+    return this.dataStore.createEventStructure(events);
+  }
+
+  get savedEvents() {
+    let events = this.dataStore.api.eventlist.filter(ev =>
+      this.savedItemIds.find(id => id == ev.id),
+    );
+    console.log(events, this.savedItems);
+    return this.dataStore.createEventStructure(events);
+  }
+
+  get houseInfo() {
+    return this.dataStore.api.locations.reduce(
+      (obj, item) => ({
+        ...obj,
+        [item.name]: item.extra,
+      }),
+      {},
+    );
   }
 
   get items() {
