@@ -109,7 +109,7 @@ const FavouriteItem = ({ element }) => {
       <Info onClick={() => handleClick(element.id)}>
         <Title>
           {element?.sortIndex?.map(sor => (
-            <SortNumber key={`sortnumber-${sor}`}>{sor}</SortNumber>
+            <SortNumber key={`sortnumber-${sor}-${element.id}`}>{sor}</SortNumber>
           ))}
           {element.name}
         </Title>
@@ -140,11 +140,11 @@ const TimeScaleWrapper = styled.div`
   position: absolute;
   height: 100%;
 `;
-const TimeScaleSaved = ({ scaleX, filtertimes }) => {
+const TimeScaleSaved = ({ scaleX, filtertimes, day }) => {
   return (
     <TimeScaleWrapper>
       {filtertimes.map(t => (
-        <TimeLine x={scaleX(t)} key={`timeline-${t}`}>
+        <TimeLine x={scaleX(t)} key={`timeline-${t}-${day}`}>
           {new Date(t * 1000).getHours()}
         </TimeLine>
       ))}
@@ -199,11 +199,11 @@ const FavouriteLocations = ({ filteredEvents }) => {
       >
         <LocalizedText id="saturday" />
       </div>
-
       <LocationTimes>
         <TimeScaleSaved
           scaleX={scaleXSat}
           filtertimes={times.filter(t => t <= 1658631600)}
+          day="sat"
         />
         <LocationList
           scaleX={scaleXSat}
@@ -227,6 +227,7 @@ const FavouriteLocations = ({ filteredEvents }) => {
         <TimeScaleSaved
           scaleX={scaleXSun}
           filtertimes={times.filter(t => t > 1658631600)}
+          day="sun"
         />
         <LocationList
           scaleX={scaleXSun}
@@ -292,14 +293,14 @@ const FavouritePrintout = ({ savedItems, filteredEvents }) => {
         _.groupBy(
           sortedItems,
           d =>
-            d.tags.find(
+            d.tags?.find(
               t =>
                 t.template == "location-building" ||
                 t.template == "location-external",
             )?.name,
         ),
       ).map(([loc, items]) => (
-        <>
+        <div key={loc}>
           <FavouritesTitle>{loc}</FavouritesTitle>
           {items.map(element => (
             <FavouriteItem
@@ -307,7 +308,7 @@ const FavouritePrintout = ({ savedItems, filteredEvents }) => {
               element={element}
             />
           ))}
-        </>
+        </div>
       ))}
       <FavouriteLocations filteredEvents={filteredEvents} />
     </div>

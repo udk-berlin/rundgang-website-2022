@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
@@ -34,6 +34,7 @@ const DownloadButton = styled.button`
 
 const Download = () => {
   const { uiStore } = useStores();
+  const [processDownload, setProcessDownload] = useState(false);
 
   const downloadImage = () => {
     var doc = new jsPDF();
@@ -41,6 +42,7 @@ const Download = () => {
     doc.html(source, {
       callback: function (doc) {
         doc.save("rundgangudk2022.pdf");
+        setProcessDownload(false);
       },
       x: 10,
       y: 10,
@@ -49,18 +51,32 @@ const Download = () => {
     });
   };
 
+  const handleDownload = () => {
+    setProcessDownload(true);
+    const timer = setTimeout(() => {
+      downloadImage();
+    }, 1000);
+    return timer;
+  };
+
   return (
     uiStore.numberSavedItems > 0 && (
       <>
-        <DownloadPdf>
-          <FavouritePrintout
-            savedItems={uiStore.savedItems}
-            filteredEvents={uiStore.savedEvents}
-            houseInfo={uiStore.houseInfo}
-          />
-        </DownloadPdf>
-        <DownloadButton onClick={() => downloadImage()}>
-          <LocalizedText id="download" />
+        {processDownload ? (
+          <DownloadPdf>
+            <FavouritePrintout
+              savedItems={uiStore.savedItems}
+              filteredEvents={uiStore.savedEvents}
+              houseInfo={uiStore.houseInfo}
+            />
+          </DownloadPdf>
+        ) : null}
+        <DownloadButton onClick={() => handleDownload()}>
+          {processDownload ? (
+            <LocalizedText id="downloading" />
+          ) : (
+            <LocalizedText id="download" />
+          )}
         </DownloadButton>
       </>
     )
