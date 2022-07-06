@@ -1,4 +1,4 @@
-name: Deploy to 2022-dev.rundgang.udk-berlin.de
+name: Deploy to rundgang.udk-berlin.de
 
 on:
   #push:
