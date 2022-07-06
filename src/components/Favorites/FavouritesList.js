@@ -65,6 +65,7 @@ const FavouritesList = () => {
             <FavouriteItem
               key={item.id}
               element={item}
+              handleUnsave={handleUnsave}
               handleClick={handleClick}
             />
           ))}

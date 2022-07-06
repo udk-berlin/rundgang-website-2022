@@ -1,45 +1,43 @@
 export const ALIASES = {
   development: {
-    ZHxOBBJSDIRTvbpMRw: "index",
-    mYrhgyDxLiGjDyLrzW: "orte",
-    ZHxOBBJSDIRTvbpMRw: "katalog",
-    ZHxOBBJSDIRTvbpMRw: "zeiten",
-    ZHxOBBJSDIRTvbpMRw: "beratungsangebote",
+    "!ZHxOBBJSDIRTvbpMRw:dev.medienhaus.udk-berlin.de": "index",
+    "!mYrhgyDxLiGjDyLrzW:dev.medienhaus.udk-berlin.de": "orte",
+    "!ZHxOBBJSDIRTvbpMRw:dev.medienhaus.udk-berlin.de": "katalog",
+    "!ZHxOBBJSDIRTvbpMRw:dev.medienhaus.udk-berlin.de": "zeiten",
+    "!ZHxOBBJSDIRTvbpMRw:dev.medienhaus.udk-berlin.de": "beratungsangebote",
   },
   production: {
-    ZHxOBBJSDIRTvbpMRw: "index",
-    mYrhgyDxLiGjDyLrzW: "orte",
-    ZHxOBBJSDIRTvbpMRw: "katalog",
-    ZHxOBBJSDIRTvbpMRw: "zeiten",
-    ZHxOBBJSDIRTvbpMRw: "beratungsangebote",
+    "!CszUweVEGwuKVEiJBg:content.udk-berlin.de": "index",
+    "!QEMZncAAlhtFVagfSI:content.udk-berlin.de": "orte",
+    "!CszUweVEGwuKVEiJBg:content.udk-berlin.de": "katalog",
+    "!CszUweVEGwuKVEiJBg:content.udk-berlin.de": "zeiten",
+    "!CszUweVEGwuKVEiJBg:content.udk-berlin.de": "beratungsangebote",
   },
 };
 
 export const ALIAS_IDS = {
   development: {
-    index: "ZHxOBBJSDIRTvbpMRw",
-    orte: "mYrhgyDxLiGjDyLrzW",
-    katalog: "ZHxOBBJSDIRTvbpMRw",
-    zeiten: "ZHxOBBJSDIRTvbpMRw",
-    beratungsangebote: "ZHxOBBJSDIRTvbpMRw",
+    index: "!ZHxOBBJSDIRTvbpMRw:dev.medienhaus.udk-berlin.de",
+    orte: "!mYrhgyDxLiGjDyLrzW:dev.medienhaus.udk-berlin.de",
+    katalog: "!ZHxOBBJSDIRTvbpMRw:dev.medienhaus.udk-berlin.de",
+    zeiten: "!ZHxOBBJSDIRTvbpMRw:dev.medienhaus.udk-berlin.de",
+    beratungsangebote: "!ZHxOBBJSDIRTvbpMRw:dev.medienhaus.udk-berlin.de",
   },
   production: {
-    index: "ZHxOBBJSDIRTvbpMRw",
-    orte: "mYrhgyDxLiGjDyLrzW",
-    katalog: "ZHxOBBJSDIRTvbpMRw",
-    zeiten: "ZHxOBBJSDIRTvbpMRw",
-    beratungsangebote: "ZHxOBBJSDIRTvbpMRw",
+    index: "!CszUweVEGwuKVEiJBg:content.udk-berlin.de",
+    orte: "!QEMZncAAlhtFVagfSI:content.udk-berlin.de",
+    katalog: "!CszUweVEGwuKVEiJBg:content.udk-berlin.de",
+    zeiten: "!CszUweVEGwuKVEiJBg:content.udk-berlin.de",
+    beratungsangebote: "!CszUweVEGwuKVEiJBg:content.udk-berlin.de",
   },
 };
 
 export const makeUrlFromId = idString => {
   if (!idString) return "";
-  let [id] = idString.split(":");
-  let code = encodeURI(id.replace("!", ""));
-  if (code in ALIASES[process.env.NODE_ENV]) {
-    return ALIASES[process.env.NODE_ENV][code];
+  if (idString in ALIASES[process.env.NODE_ENV]) {
+    return ALIASES[process.env.NODE_ENV][idString];
   }
-  return code;
+  return idString;
 };
 
 export const idsfromAliases = () => {
@@ -56,7 +54,9 @@ export const idsfromAliases = () => {
 export const makeIdFromUrl = url => {
   //idsfromAliases();
   if (!url) return null;
-  url = url in ALIAS_IDS[[process.env.NODE_ENV]] ? ALIAS_IDS[process.env.NODE_ENV][url] : url;
-  if (url.length !== 18) return null;
-  return `!${url}:dev.medienhaus.udk-berlin.de`;
+  url =
+    url in ALIAS_IDS[process.env.NODE_ENV]
+      ? ALIAS_IDS[process.env.NODE_ENV][url]
+      : url;
+  return url;
 };

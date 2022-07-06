@@ -64,7 +64,6 @@ class ApiStore {
         Promise.all(
           Object.values(res.children).map(async building => {
             let data = await this.getId(building.id);
-            this.setCachedId(data, []);
             return {
               ...building,
               extra: data,
@@ -143,8 +142,7 @@ class ApiStore {
   getIdFromLink = async (searchId, asroot = false) => {
     try {
       let data = searchId in this.cachedIds ? this.cachedIds[searchId] : null;
-      if (data) {
-        console.log("data already here");
+      if (data && (data.currentItems || data.renderedItem)) {
         runInAction(() => {
           if (asroot) {
             this.currentItems = data.allItemsBelow.map(
@@ -156,7 +154,7 @@ class ApiStore {
       } else {
         this.setStatus("pending");
         let title = searchId;
-        if (!searchId.includes(":dev.medienhaus.udk-berlin.de")) {
+        if (!searchId.includes(process.env.NEXT_PUBLIC_ID_ENDING)) {
           searchId = makeIdFromUrl(searchId);
         }
         let tags = data?.tags ? data.tags : [];
@@ -172,7 +170,7 @@ class ApiStore {
         let currentItems = data?.allItemsBelow?.length
           ? data.allItemsBelow.map(item => this.cachedIds[item.id])
           : null;
-        if (data?.type == "context" && !currentItems) {
+        if (data?.type == "context") {
           let items = await this.getFilteredListFromId(searchId, TYPE_ITEM);
 
           data = { ...data, allItemsBelow: items.map(i => i.id) };
