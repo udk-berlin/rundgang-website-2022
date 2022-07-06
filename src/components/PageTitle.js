@@ -85,7 +85,7 @@ const PageTitle = () => {
               handleClick={handleBack}
               titleId={`${uiStore.title}-${i}-${router.locale}`}
               key={`${uiStore.title}-line-${i}`}
-              preferredSize={"40px"}
+              preferredSize={"37px"}
               arrowDir={uiStore.title !== "rundgang" && i == 0 ? "left" : null}
             >
               {line}

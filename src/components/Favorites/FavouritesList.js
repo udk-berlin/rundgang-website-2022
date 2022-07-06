@@ -35,18 +35,19 @@ const FavouritesList = () => {
 
   const handleUnsave = (e, id) => uiStore.addToSaved(e, id);
 
+  const projects = uiStore.savedItems.filter(
+    item => item.template == "studentproject" || item.template == "project",
+  );
+  const events = uiStore.savedItems.filter(item => item.template == "event");
+
   return uiStore.savedItems.length > 0 ? (
     <>
-      <Favourites>
-        <FavouritesTitle>
-          <LocalizedText id="projects" />
-        </FavouritesTitle>
-        {uiStore.savedItems
-          .filter(
-            item =>
-              item.template == "studentproject" || item.template == "project",
-          )
-          .map(item => (
+      {projects?.length > 0 ? (
+        <Favourites>
+          <FavouritesTitle>
+            <LocalizedText id="projects" />
+          </FavouritesTitle>
+          {projects.map(item => (
             <FavouriteItem
               key={item.id}
               element={item}
@@ -54,14 +55,14 @@ const FavouritesList = () => {
               handleClick={handleClick}
             />
           ))}
-      </Favourites>
-      <Favourites>
-        <FavouritesTitle>
-          <LocalizedText id="events" />
-        </FavouritesTitle>
-        {uiStore.savedItems
-          .filter(item => item.template == "event")
-          .map(item => (
+        </Favourites>
+      ) : null}
+      {events?.length > 0 ? (
+        <Favourites>
+          <FavouritesTitle>
+            <LocalizedText id="events" />
+          </FavouritesTitle>
+          {events.map(item => (
             <FavouriteItem
               key={item.id}
               element={item}
@@ -69,7 +70,8 @@ const FavouritesList = () => {
               handleClick={handleClick}
             />
           ))}
-      </Favourites>
+        </Favourites>
+      ) : null}
     </>
   ) : (
     <FavouritesTitle>

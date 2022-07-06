@@ -58,7 +58,7 @@ class FilterStore {
       this.selectedId = id;
       const selectAncestors = ancestors => {
         return keys(INITIAL_SELECTION).reduce((obj, cat) => {
-          let selId = "none";
+          let selId = null;
           if (
             cat in this.initialTags &&
             this.initialTags[cat].find(x => x.id == id)
@@ -93,7 +93,7 @@ class FilterStore {
           ebene1: id,
           ...selectAncestors(ancestors),
         };
-      } else if (["classes", "class"].includes(name)) {
+      } else if (["classes", "class", "Fachgebiet"].includes(name)) {
         this.selected = {
           ...INITIAL_SELECTION,
           classes: id,

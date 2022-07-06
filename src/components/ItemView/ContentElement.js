@@ -55,7 +55,7 @@ const ContentElement = ({ item }) => {
   } else if (item.type == "text") {
     return (
       <Paragraph>
-        <LocalizedText id="none" defaultMessage={item.content} />
+        <LocalizedText id="none" defaultMessage={item.formatted_content} />
       </Paragraph>
     );
   } else if (item.type == "image") {

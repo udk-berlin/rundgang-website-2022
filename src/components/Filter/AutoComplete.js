@@ -40,9 +40,12 @@ const AutoComplete = ({ searchValue, handleSelect, handleReset }) => {
     [searchValue],
   );
 
-  const onItemClicked = item => {
+  const onItemClicked = (e,item) => {
+    e.preventDefault()
+    e.stopPropagation()
     uiStore.filterStore.setSelected(item.template, item.id, item.ancestors);
     handleSelect();
+    uiStore.setIsOpen(null);
   };
 
   return (
@@ -51,7 +54,7 @@ const AutoComplete = ({ searchValue, handleSelect, handleReset }) => {
         {listWithIds && listWithIds.length > 0
           ? listWithIds.map(item => (
               <AutoCompleteItem
-                onClick={() => onItemClicked(item)}
+                onClick={(e) => onItemClicked(e,item)}
                 key={`autocomplete-item-${item.id}`}
               >
                 {item.name}

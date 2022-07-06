@@ -13,12 +13,11 @@ const ListViewWrapper = styled.div`
   display: grid;
   justify-content: space-evenly;
   padding-bottom: ${({ theme }) => theme.space(40)};
-  margin: auto;
   gap: 16px 16px;
   ${({ numCol }) => {
     if (numCol == 2) {
       return {
-        gridTemplateColumns: "1fr 1fr",
+        gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
       };
     }
     return {
@@ -26,7 +25,8 @@ const ListViewWrapper = styled.div`
     };
   }}
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    row-gap: 16px;
   }
   margin-bottom: ${({ theme }) => theme.space(48)};
   -webkit-touch-callout: none; /* iOS Safari */
@@ -39,7 +39,7 @@ const ListViewWrapper = styled.div`
 
 const NoItems = styled.div`
   margin: auto;
-  width: fit-content;
+  width: inherit;
   height: calc(100vh - 130px);
   line-height: 100px;
   text-align: center;

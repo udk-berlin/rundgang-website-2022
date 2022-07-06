@@ -13,6 +13,9 @@ const MapWrapper = styled.div`
   width: 100%;
   margin: auto;
   height: 670px;
+  @media (min-height: 1200px) {
+    height: 900px;
+  }
   @media (max-width: 999px) {
     height: 640px;
   }

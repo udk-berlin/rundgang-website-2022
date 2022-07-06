@@ -17,13 +17,11 @@ const FavouriteItemWrapper = styled.div`
 const Image = styled.img`
   width: 160px;
   height: auto;
-  min-height: 160px;
   cursor: pointer;
   padding: ${({ theme }) => `0 ${theme.space(8)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 80px;
-    min-height: 80px;
-    height: 100%;
+    height: auto;
   }
 `;
 const Title = styled.div`
@@ -95,11 +93,11 @@ const FavouriteItem = ({ element, handleClick, handleUnsave }) => {
         <Authors>
           {[
             ...new Set(
-              element.origin?.authors.map(a =>
-                a.name ? a.name.split("@")[0]?.trim() : a.id,
-              ),
+              element.origin?.authors.map(a => (a.name ? a.name.trim() : a.id)),
             ),
-          ].join(", ")}
+          ]
+            .filter(a => a)
+            .join(", ")}
         </Authors>
         <Tags>
           {element.template == "event" &&

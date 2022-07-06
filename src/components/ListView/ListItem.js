@@ -20,6 +20,7 @@ const ListItemWrapper = styled.div`
 const Image = styled.picture`
   cursor: pointer;
   width: 100%;
+  height: auto;
   position: relative;
   opacity: 85%;
   &:hover {
@@ -106,11 +107,10 @@ const ListItem = ({ element, numCol }) => {
         <ImageWrapper>
           <Image>
             <source srcSet={element.thumbnail} />
-            <source srcSet="/assets/img/missing.svg" />
             <img
               src="/assets/img/missing.svg"
               alt="missing image"
-              style={{ width: "100%" }}
+              style={{ width: "100%", height: "auto" }}
             />
           </Image>
           <SaveIcon
@@ -140,11 +140,11 @@ const ListItem = ({ element, numCol }) => {
         <Authors>
           {[
             ...new Set(
-              element.origin?.authors.map(a =>
-                a.name ? a.name.split("@")[0]?.trim() : a.id,
-              ),
+              element.origin?.authors.map(a => (a.name ? a.name.trim() : a.id)),
             ),
-          ].join(", ")}
+          ]
+            .filter(a => a)
+            .join(", ")}
         </Authors>
       </RestyledLink>
     </ListItemWrapper>

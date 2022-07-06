@@ -15,6 +15,7 @@ const ResetButton = styled.button`
   font-family: "Diatype";
   cursor: pointer;
   border: 1px solid black;
+  color: black;
   background: ${({ theme }) => theme.colors.lightgrey};
   border-radius: ${({ theme }) => theme.space(48)};
   font-size: ${({ theme }) => theme.fontSizes.md};
@@ -43,9 +44,10 @@ const FilterMenu = styled.div`
   height: 100%;
   position: relative;
   max-height: calc(80vh - 66px);
+  padding-bottom: 16px;
   overflow-y: hidden;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    max-height: calc(80vh - 50px);
+    max-height: calc(80vh - 140px);
   }
 `;
 

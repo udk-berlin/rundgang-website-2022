@@ -9,7 +9,7 @@ const KatalogView = () => {
   const { uiStore } = useStores();
 
   return uiStore.currentContext ? (
-    <Layout direction="left">
+    <Layout>
       {uiStore.currentContext.type == "item" ? <ItemView /> : <ListView />}
     </Layout>
   ) : null;

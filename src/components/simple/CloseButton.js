@@ -9,7 +9,7 @@ const CloseButtonWrapper = styled.div`
   top: 0px;
   @media ${({ theme }) => theme.breakpoints.laptop} {
     width: ${({ stretching }) => stretching}%;
-    top: -40px;
+    top: -30px;
   }
 `;
 

@@ -115,7 +115,7 @@ const ContentWrapper = styled.div`
 const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: ${({ theme }) => theme.space(8)} 0px;
+  padding-bottom: ${({ theme }) => theme.space(10)};
 `;
 
 const ItemView = () => {
@@ -184,19 +184,19 @@ const ItemView = () => {
                       from={t.start * 1000}
                       to={t.end * 1000}
                       weekday="short"
-                      month="numeric"
-                      day="numeric"
                       hour="numeric"
                       minute="numeric"
                     />
                   </Time>
                 ))
               : null}
-            {item?.origin?.authors?.map(a => (
-              <AuthorTag key={`author-${a.name}-${a.id}`}>
-                {a.name ? a.name.split("@")[0]?.trim() : a.id}
-              </AuthorTag>
-            ))}
+            {item?.origin?.authors
+              ?.filter(a => a.name || a.id)
+              .map(a => (
+                <AuthorTag key={`author-${a.name}-${a.id}`}>
+                  {a.name ? a.name : a.id}
+                </AuthorTag>
+              ))}
           </LargeTags>
           <TitleText>{item.description[locDesc]}</TitleText>
         </DescriptionWrapper>

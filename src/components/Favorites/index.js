@@ -61,6 +61,7 @@ const FavouritesHeader = styled.div`
   display: flex;
   margin: auto;
 `;
+
 const FavouritesSavedItems = styled.span`
   width: 100%;
   color: ${({ theme }) => theme.colors.primary};
@@ -90,7 +91,7 @@ const Favourites = React.forwardRef(({ onOpen }, ref) => {
           <FavouritesWindow />
         ) : (
           !uiStore.isOpen && (
-            <FavouritesHeader onClick={onOpen} isOpen={uiStore.isOpen}>
+            <FavouritesHeader onClick={onOpen}>
               <IconWrapper>
                 <FavouriteIcon saved={true} size={1.5} />
               </IconWrapper>

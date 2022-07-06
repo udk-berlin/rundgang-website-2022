@@ -76,11 +76,11 @@ const FavouriteItem = ({ element }) => {
         <Authors>
           {[
             ...new Set(
-              element.origin?.authors.map(a =>
-                a.name ? a.name.split("@")[0]?.trim() : a.id,
-              ),
+              element.origin?.authors.map(a => (a.name ? a.name.trim() : a.id)),
             ),
-          ].join(", ")}
+          ]
+            .filter(a => a)
+            .join(", ")}
         </Authors>
         <Tags>
           {element.template == "event" &&

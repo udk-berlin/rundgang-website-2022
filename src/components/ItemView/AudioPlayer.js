@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 
 const AudioPlayerWrapper = styled.div`
@@ -12,6 +12,7 @@ const AudioPlayerWrapper = styled.div`
 const PlayButton = styled.button`
   cursor: pointer;
   border: none;
+  color: black;
   background: inherit;
   font-size: 30px;
   margin: 18px 0 16px 16px;

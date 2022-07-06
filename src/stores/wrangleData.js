@@ -32,16 +32,35 @@ const wrangleData = (tree, events) => {
       }
       if (
         curr.node.template == "event" &&
-        (!(curr.id in eventlist) || !eventlist[curr.id]?.room)
+        (!(curr.id in eventlist) || eventlist[curr.id]?.room.id == "digital")
       ) {
-        let eventobject = {
-          ...curr.node,
-          building: curr.path.find(loc => loc.template == "location-building"),
-          room: curr.path.find(loc => loc.template == "location-room"),
-          allocation: events.find(e => e.id == curr.id)?.allocation,
-        };
-
-        eventlist[curr.id] = eventobject;
+        let eventData = events.find(e => e.id == curr.id);
+        if (
+          eventData &&
+          eventData?.allocation?.temporal?.filter(t => t.start < 1658563200)
+            ?.length < 1
+        ) {
+          let building = curr.path.find(
+            loc =>
+              loc.template == "location-building" ||
+              loc.template == "location-external",
+          );
+          let room = curr.path.find(loc => loc.template == "location-room");
+          if (building?.template == "location-external") {
+            room = building;
+          }
+          if (!building) {
+            building = { id: "digital", name: "digital" };
+            room = building;
+          }
+          let eventobject = {
+            ...curr.node,
+            building: building,
+            room: room,
+            allocation: eventData?.allocation,
+          };
+          eventlist[curr.id] = eventobject;
+        }
       }
       curr.path.map((context, i) => {
         let ebene = null;
@@ -58,7 +77,10 @@ const wrangleData = (tree, events) => {
           context.template == "subject"
         ) {
           ebene = "ebene1";
-        } else if (context.template == "class") {
+        } else if (
+          context.template == "class" ||
+          context.template == "Fachgebiet"
+        ) {
           ebene = "classes";
         } else if (
           context.template == "seminar" ||
@@ -88,6 +110,8 @@ const wrangleData = (tree, events) => {
           } else {
             tags[ebene][context.id] = { ...context, ancestors: [] };
           }
+        } else {
+          console.log(context.name, context.template);
         }
       });
     }

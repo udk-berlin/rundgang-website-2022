@@ -24,7 +24,6 @@ const SearchBar = () => {
   const { uiStore } = useStores();
 
   const handleOpen = item => {
-    console.log(item);
     uiStore.setIsOpen(item);
   };
   const handleClose = useCallback(

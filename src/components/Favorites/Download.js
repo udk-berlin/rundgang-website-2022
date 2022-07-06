@@ -14,8 +14,10 @@ const DownloadPdf = styled.div`
 
 const DownloadButton = styled.button`
   cursor: pointer;
+  color: black;
   height: fit-content;
   border: 2px solid black;
+  font-family: "Diatype", sans-serif;
   margin: auto;
   margin-right: 8px;
   border-radius: ${({ theme }) => theme.space(32)};

@@ -1,5 +1,11 @@
-import { makeAutoObservable, runInAction, observable, action } from "mobx";
-
+import {
+  makeAutoObservable,
+  runInAction,
+  observable,
+  action,
+  toJS,
+} from "mobx";
+import { shuffle } from "lodash";
 import { makeIdFromUrl, ALIAS_IDS } from "@/utils/idUtils";
 import wrangleData from "./wrangleData";
 
@@ -100,6 +106,7 @@ class ApiStore {
               x.template,
             ),
         );
+
       return [...new Map(res.map(v => [v.id, v])).values()];
     });
   };
@@ -160,11 +167,10 @@ class ApiStore {
         let tags = data?.tags ? data.tags : [];
         if (!data) {
           data = await this.getId(searchId);
-          if (!tags?.length && data.localDepth > 2) {
+          if (tags.length < 1) {
             tags = await this.getParentsFromId(data);
             data = { ...data, tags: tags };
           }
-
           this.setCachedId(data, tags);
         }
         let currentItems = data?.allItemsBelow?.length
@@ -176,24 +182,19 @@ class ApiStore {
           data = { ...data, allItemsBelow: items.map(i => i.id) };
           currentItems = await Promise.all(
             items.map(async item => {
-              if (item.id in this.cachedIds) {
+              if (item.id in this.cachedIds && item.id in this.pathlist) {
                 return this.cachedIds[item.id];
               } else {
                 let res = await this.getId(item.id);
                 if (res) {
-                  let itemTags = [];
-                  if (item.id in this.pathlist) {
-                    itemTags = this.pathlist[item.id];
-                  } else {
-                    itemTags = await this.getParentsFromId(res);
-                  }
+                  let itemTags = await this.getParentsFromId(res);
                   this.setCachedId(res, itemTags);
                   return { ...res, tags: itemTags };
                 } else return null;
               }
             }),
           );
-          currentItems = currentItems.filter(a => a);
+          currentItems = shuffle(currentItems.filter(a => a));
         } else if (data?.type == "item" && asroot) {
           let renderedItem = await this.getRenderedItem(searchId);
           data = { ...data, rendered: renderedItem };
