@@ -65,7 +65,7 @@ const getDescription = (d, loc) => {
     if (loc.toUpperCase() in d) {
       desc = d[loc.toUpperCase()];
     }
-    if (!desc.startsWith("400") && desc !== "udk-berlin") {
+    if (desc && !desc.startsWith("400") && desc !== "udk-berlin") {
       return desc;
     }
   }

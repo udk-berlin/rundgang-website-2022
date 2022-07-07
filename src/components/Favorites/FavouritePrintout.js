@@ -147,7 +147,8 @@ const FavouritePrintout = ({ savedItems, filteredEvents }) => {
             .sort(
               (a, b) => Math.min(...a.sortIndex) - Math.min(...b.sortIndex),
             ),
-        ),
+        )
+        .filter(a => a && a.tags),
     [filteredEvents],
   );
 

@@ -35,14 +35,12 @@ const Page = ({ children }) => {
     "only screen and (max-width:768px) and (orientation:portrait)",
   );
   const [showLine, setShowLine] = useState(false);
-  const [currentId, setCurrentId] = useState();
 
   useEffect(() => {
     let pid = router.query.pid;
     setShowLine(false);
     if (dataStore.api?.root?.id) {
       if (pid) {
-        setCurrentId(pid);
         dataStore.api.getIdFromLink(pid, true);
       } else if (
         dataStore.isLoaded &&
@@ -51,7 +49,6 @@ const Page = ({ children }) => {
       ) {
         let id = router.pathname.replaceAll("/", "").replaceAll("[pid]", "");
         let pid = makeIdFromUrl(id);
-        setCurrentId(pid);
         uiStore.filterStore.handleReset();
         dataStore.api.getIdFromLink(id, true);
       } else if (
@@ -59,7 +56,6 @@ const Page = ({ children }) => {
         dataStore.api.root &&
         !router.pathname.includes("[pid]")
       ) {
-        setCurrentId(dataStore.api.root.id);
         uiStore.filterStore.handleReset();
         dataStore.api.getIdFromLink(dataStore.api.root.id, true);
         if (!isMobile) {
@@ -94,7 +90,7 @@ const Page = ({ children }) => {
           <SearchBar />
         </HeaderWrapper>
         <PageWrapper>
-          {children}
+          <>{children}</>
           <Footer />
           <IntroAnimation key={"intro"} />
           {showLine ? <CursorLine /> : null}

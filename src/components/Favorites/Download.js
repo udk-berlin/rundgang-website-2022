@@ -52,6 +52,7 @@ const Download = () => {
         y: 10,
         width: 100,
         windowWidth: 500,
+        autoPaging: "text",
         fontFace: [new FontFace("Diatype", "/fonts/EduDiatype-Regular.woff2")],
       });
       if (
@@ -74,6 +75,7 @@ const Download = () => {
           y: 10,
           width: 100,
           windowWidth: 500,
+          autoPaging: "text",
           fontFace: [
             new FontFace("Diatype", "/fonts/EduDiatype-Regular.woff2"),
           ],
