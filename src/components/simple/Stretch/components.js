@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StretchWrapper = styled.div`
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   display: inline-block;
   flex-wrap: nowrap;

@@ -1,9 +1,7 @@
-import PropTypes from "prop-types";
 import styled from "styled-components";
 import React, { useMemo, useState } from "react";
 import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
-import { useIntl } from "react-intl";
 import AutoComplete from "./AutoComplete";
 import { SEARCHBAR_HEIGHT } from "@/utils/constants";
 
@@ -11,16 +9,14 @@ const Field = styled.input`
   cursor: pointer !important;
   color: ${({ theme }) => theme.colors.primary};
   background: inherit;
-  border: ${({ theme, isOpen }) =>
-    isOpen ? `4px solid ${theme.colors.highlight}` : "none"};
+  border: ${({ theme }) => `4px solid ${theme.colors.highlight}`};
   height: ${SEARCHBAR_HEIGHT}px;
   width: 100%;
-  margin: ${({ theme, isOpen }) => (isOpen ? theme.space(8) : "auto")};
+  margin: ${({ theme }) => theme.space(8)};
   align-items: center;
   padding: 0;
   padding-left: 8px;
-  font-size: ${({ theme, isOpen }) =>
-    isOpen ? theme.fontSizes.md : theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.md};
   :focus {
     outline: 1px solid #333;
   }
@@ -40,8 +36,7 @@ const Field = styled.input`
     color: ${({ theme }) => theme.colors.primary};
   }
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme, isOpen }) =>
-      isOpen ? theme.fontSizes.md : theme.fontSizes.lm};
+    font-size: ${({ theme }) => theme.fontSizes.md};
   }
 `;
 
@@ -62,8 +57,6 @@ const CloseButton = styled.div`
 `;
 
 const InputField = ({ handleSubmit }) => {
-  const { uiStore } = useStores();
-  const { messages } = useIntl();
   const [value, setValue] = useState("");
   const [autocompleteOpen, setAutocompleteOpen] = useState(false);
   const hasContent = useMemo(() => value.length > 0, [value]);
@@ -97,10 +90,7 @@ const InputField = ({ handleSubmit }) => {
         value={value}
         onChange={handleChange}
         onFocus={_handleFocus}
-        isOpen={uiStore.isOpen == "filter"}
-        placeholder={
-          uiStore.isOpen == "filter" ? messages.search : messages.filter
-        }
+        placeholder="FILTER"
       />
       {hasContent && <CloseButton onClick={handleReset}>&#57344;</CloseButton>}
       {hasContent && autocompleteOpen && (

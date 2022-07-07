@@ -73,7 +73,7 @@ const getDescription = (d, loc) => {
 };
 
 const ListView = ({ numCol }) => {
-  const { uiStore } = useStores();
+  const { uiStore, dataStore } = useStores();
   const { locale } = useRouter();
   const description = getDescription(
     uiStore.currentContext?.description,
@@ -88,7 +88,11 @@ const ListView = ({ numCol }) => {
     </ListViewWrapper>
   ) : (
     <NoItems>
-      <LocalizedText id="noitems" />
+      {dataStore.status == "pending" ? (
+        <LocalizedText id="loading" />
+      ) : (
+        <LocalizedText id="noitems" />
+      )}
     </NoItems>
   );
 };

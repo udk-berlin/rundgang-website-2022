@@ -49,9 +49,7 @@ const TagGroupTitle = styled.div`
 `;
 
 const TagGroupStretch = styled(motion.div)`
-  height: 100%;
-  max-height: 30vh;
-  overflow-y: auto;
+  height: fit-content;
   display: flex;
   width: 100%;
   flex-wrap: wrap;
@@ -76,7 +74,7 @@ const TagGroup = ({ group, name, handleSubmit }) => {
   const groups = useMemo(
     () =>
       entries(groupBy(group, "template")).sort((a, b) =>
-        a[0] == "subjects" ? 1 : -1,
+        a[0] == "subject" || a[0] == "faculty" ? -1 : 1,
       ),
     [uiStore.filterStore.selected],
   );
@@ -108,11 +106,7 @@ const TagGroup = ({ group, name, handleSubmit }) => {
               {v.map((child, i) => (
                 <Tag
                   onClick={() => {
-                    uiStore.filterStore.setSelected(
-                      name,
-                      child.id,
-                      child.ancestors,
-                    );
+                    uiStore.filterStore.setSelected(name, child.id);
                     handleSubmit();
                   }}
                   selected={uiStore.filterStore.selected[name] == child.id}

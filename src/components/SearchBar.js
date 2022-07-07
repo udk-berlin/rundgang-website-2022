@@ -39,10 +39,18 @@ const SearchBar = () => {
     uiStore.currentContext?.type !== "item" ? (
     <SearchBarWrapper>
       <FlexContainer id="flex-container-searchbar">
-        <ClickAwayListener onClickAway={() => handleClose("filter")}>
+        <ClickAwayListener
+          onClickAway={() => handleClose("filter")}
+          mouseEvent="mousedown"
+          touchEvent="touchstart"
+        >
           <Filter onOpen={() => handleOpen("filter")} />
         </ClickAwayListener>
-        <ClickAwayListener onClickAway={() => handleClose("favourites")}>
+        <ClickAwayListener
+          onClickAway={() => handleClose("favourites")}
+          mouseEvent="mousedown"
+          touchEvent="touchstart"
+        >
           <Favorites onOpen={() => handleOpen("favourites")} />
         </ClickAwayListener>
       </FlexContainer>

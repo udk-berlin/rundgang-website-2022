@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import React, { useCallback } from "react";
 import { observer } from "mobx-react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useStores } from "@/stores/index";
 import InputField from "./InputField";
 import { useRouter } from "next/router";
@@ -10,6 +9,7 @@ import { SEARCHBAR_HEIGHT, MIN_PADDING } from "@/utils/constants";
 import useMediaQuery from "@/utils/useMediaQuery";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 const TagMenu = dynamic(() => import("./TagMenu"), {
   suspense: true,
@@ -59,8 +59,18 @@ const FilterWrapper = styled(motion.div)`
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
+  cursor: pointer;
+`;
+const FilterText = styled(motion.div)`
+  align-items: center;
+  padding: 0;
+  padding-left: 8px;
+  line-height: 1.1;
+  margin: auto;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    max-height: 80vh;
+    font-size: ${({ theme }) => theme.fontSizes.lm};
+    line-height: 1.4;
   }
 `;
 
@@ -106,13 +116,30 @@ const Filter = React.forwardRef(({ onOpen }, ref) => {
       onClick={onOpen}
       transition={{ type: "linear", duration: 0.5 }}
     >
-      <InputField handleSubmit={handleSubmit} />
       <AnimatePresence>
-        <Suspense fallback={`Loading...`}>
-          {uiStore.isOpen && uiStore.isOpen == "filter" && (
-            <TagMenu handleSubmit={handleSubmit} />
-          )}
-        </Suspense>
+        {uiStore.isOpen !== "filter" && (
+          <FilterText
+            key="filtertext"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            FILTER
+          </FilterText>
+        )}
+        {uiStore.isOpen && uiStore.isOpen == "filter" && (
+          <motion.div
+            key="filtergroups"
+            initial={{ height: "0%" }}
+            animate={{ height: "100%" }}
+            exit={{ height: "0%" }}
+          >
+            <InputField handleSubmit={handleSubmit} />
+            <Suspense fallback={`Loading...`}>
+              <TagMenu handleSubmit={handleSubmit} />
+            </Suspense>
+          </motion.div>
+        )}
       </AnimatePresence>
     </FilterWrapper>
   );

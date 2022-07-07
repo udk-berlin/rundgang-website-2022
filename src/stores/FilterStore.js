@@ -50,7 +50,7 @@ class FilterStore {
     this.setOpenTagGroup(0);
   };
 
-  setSelected = (name, id, ancestors) => {
+  setSelected = (name, id) => {
     if (this.selected[name] == id) {
       this.selected = INITIAL_SELECTION;
       this.selectedId = null;

@@ -8,7 +8,7 @@ import { useStores } from "@/stores/index";
 
 const FilterMenuWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: fit-content;
 `;
 
 const ResetButton = styled.button`
@@ -44,10 +44,10 @@ const FilterMenu = styled.div`
   height: 100%;
   position: relative;
   max-height: calc(80vh - 66px);
-  padding-bottom: 16px;
-  overflow-y: hidden;
+  overflow-y: auto;
+  margin-bottom: 16px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
-    max-height: calc(80vh - 140px);
+    height: 55vh;
   }
 `;
 

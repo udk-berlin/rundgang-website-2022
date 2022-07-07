@@ -154,22 +154,29 @@ const Map = () => {
           };
 
           const redrawMarkers = filteredLocations => {
-            filteredLocations.map(el => {
-              const scale = map.current.getZoom() - el.maxZoom;
-              if (el.image !== "location-external") {
-                if (scale !== markers[el.id].scale && scale > 0) {
-                  markers[el.id].scale = scale;
-                  markers[el.id].mRoot.render(
-                    <GrundrissMarker el={el} size={60 * 2 ** scale} onlyPoints={false}  />,
-                  );
-                } else if (markers[el.id].scale > 0 && scale <= 0) {
-                  markers[el.id].scale = scale;
-                  markers[el.id].mRoot.render(
-                    <GrundrissMarker el={el} size={60} onlyPoints={false} />,
-                  );
+            let zoom = map.current.getZoom();
+            if (zoom > 13.6) {
+              filteredLocations.map(el => {
+                const scale = zoom - el.maxZoom;
+                if (el.image !== "location-external") {
+                  if (scale !== markers[el.id].scale && scale > 0) {
+                    markers[el.id].scale = scale;
+                    markers[el.id].mRoot.render(
+                      <GrundrissMarker
+                        el={el}
+                        size={60 * 2 ** scale}
+                        onlyPoints={false}
+                      />,
+                    );
+                  } else if (markers[el.id].scale > 0 && scale <= 0) {
+                    markers[el.id].scale = scale;
+                    markers[el.id].mRoot.render(
+                      <GrundrissMarker el={el} size={60} onlyPoints={false} />,
+                    );
+                  }
                 }
-              }
-            });
+              });
+            }
           };
 
           map.current.on("zoom", () => {

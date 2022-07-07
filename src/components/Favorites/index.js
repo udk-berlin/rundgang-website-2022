@@ -17,7 +17,7 @@ const variants = {
     overflowY: "auto",
   },
   filter: {
-    height: SEARCHBAR_HEIGHT + 2,
+    height: SEARCHBAR_HEIGHT + 3,
     width: "0%",
     margin: "0px",
     opacity: 0,
@@ -25,8 +25,8 @@ const variants = {
     overflowY: "auto",
   },
   closed: {
-    height: SEARCHBAR_HEIGHT + 2,
-    margin: "2px 0px 0px 16px",
+    height: SEARCHBAR_HEIGHT + 3,
+    margin: "0px 0px 0px 16px",
     overflow: "hidden",
     width: "80px",
     opacity: 1,
@@ -37,9 +37,9 @@ const FavouritesWrapper = styled(motion.div)`
   position: relative;
   width: 80px;
   background: white;
-  height: ${SEARCHBAR_HEIGHT + 2}px;
+  height: ${SEARCHBAR_HEIGHT + 3}px;
   border: ${({ theme }) => `2px solid ${theme.colors.primary}`};
-  margin: 2px 0px 0px 16px;
+  margin: 0px 0px 0px 16px;
   max-height: 70vh;
   overflow-y: hidden;
   overflow-x: hidden;

@@ -40,21 +40,25 @@ const AutoComplete = ({ searchValue, handleSelect, handleReset }) => {
     [searchValue],
   );
 
-  const onItemClicked = (e,item) => {
-    e.preventDefault()
-    e.stopPropagation()
-    uiStore.filterStore.setSelected(item.template, item.id, item.ancestors);
+  const onItemClicked = (e, item) => {
+    e.preventDefault();
+    e.stopPropagation();
+    uiStore.filterStore.setSelected(item.template, item.id);
     handleSelect();
     uiStore.setIsOpen(null);
   };
 
   return (
-    <ClickAwayListener onClickAway={e => handleReset(e)}>
+    <ClickAwayListener
+      onClickAway={e => handleReset(e)}
+      mouseEvent="mousedown"
+      touchEvent="touchstart"
+    >
       <AutoCompleteWrapper>
         {listWithIds && listWithIds.length > 0
           ? listWithIds.map(item => (
               <AutoCompleteItem
-                onClick={(e) => onItemClicked(e,item)}
+                onClick={e => onItemClicked(e, item)}
                 key={`autocomplete-item-${item.id}`}
               >
                 {item.name}

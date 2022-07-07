@@ -17,8 +17,10 @@ const TagWrapper = styled.span`
   border: 1px solid black;
   cursor: pointer;
   width: fit-content;
-  word-wrap: break-word;
-  word-break: normal;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   line-height: 1;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   margin: ${({ theme }) => theme.space(4)};

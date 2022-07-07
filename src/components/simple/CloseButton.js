@@ -15,7 +15,7 @@ const CloseButtonWrapper = styled.div`
 
 export const CloseIcon = styled.div`
   cursor: pointer;
-  pointer-events: all;
+  pointer-events: auto;
   text-align: center;
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.highlight};
@@ -30,7 +30,6 @@ export const CloseIcon = styled.div`
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 60px;
     height: 60px;
-    line-height: 1.4;
   }
   &:hover {
     opacity: 0.8;
