@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { observer } from "mobx-react";
 import { createRoot } from "react-dom/client";
 import { ReactSVG } from "react-svg";
 
@@ -39,4 +40,4 @@ const FloorPlanSvg = ({ url, handleSelectRoom }) => {
   );
 };
 
-export default FloorPlanSvg;
+export default observer(FloorPlanSvg);

@@ -87,11 +87,6 @@ const Filter = React.forwardRef(({ onOpen }, ref) => {
       : "closed";
 
   const handleSubmit = useCallback(() => {
-    console.log(
-      router.pathname,
-      router.query.pid,
-      uiStore.filterStore.selectedId,
-    );
     let link = router.pathname;
     if (uiStore.filterStore.selectedId) {
       let pid = makeUrlFromId(uiStore.filterStore.selectedId);

@@ -70,7 +70,6 @@ const ClosingButton = styled.div`
 `;
 
 const GrundrissPopup = ({ el, size }) => {
-  console.log(el);
   return (
     <PopupWrapper
       id={`popup-${el.id}`}

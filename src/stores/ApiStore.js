@@ -11,10 +11,8 @@ import wrangleData from "./wrangleData";
 
 const PATH_URL = "/pathlist";
 const TREE_URL = "/tree";
-const LIST_URL = "/list";
 const FILTER_URL = "/list/filter";
 const TYPE_ITEM = "/type/item";
-const TYPE_CONTEXT = "/type/context";
 const RENDER_JSON = "/render/json";
 
 const GET_OPTIONS = {
@@ -239,10 +237,9 @@ class ApiStore {
   };
 
   initializeRoot = async () => {
-    console.log("initialize root");
     this.setStatus("pending");
     try {
-      console.time("load api");
+      console.time("load data");
       const tree = await this.getTreeFromId(
         process.env.NEXT_PUBLIC_API_ROOT_URL,
       );
@@ -255,7 +252,6 @@ class ApiStore {
         tree,
         events,
       );
-      console.log("wrangleData worked");
       runInAction(() => {
         this.tags = tags;
         this.pathlist = pathlist;
@@ -265,6 +261,7 @@ class ApiStore {
         this.setStatus("success");
         this.isLoaded = true;
         console.timeEnd("load api");
+        console.log("all data was processed");
       });
     } catch (error) {
       runInAction(() => {

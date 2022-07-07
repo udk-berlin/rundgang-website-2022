@@ -10,7 +10,6 @@ import CursorLine from "@/components/CursorLine";
 import useMediaQuery from "@/utils/useMediaQuery";
 import IntroAnimation from "@/components/IntroAnimation";
 import HeadOG from "./HeadOG";
-import { makeIdFromUrl } from "@/utils/idUtils";
 
 const HeaderWrapper = styled.header`
   position: sticky;
@@ -37,6 +36,10 @@ const Page = ({ children }) => {
   const [showLine, setShowLine] = useState(false);
 
   useEffect(() => {
+    if (!dataStore.api?.isLoaded) dataStore.initialize();
+  }, []);
+
+  useEffect(() => {
     let pid = router.query.pid;
     setShowLine(false);
     if (dataStore.api?.root?.id) {
@@ -48,7 +51,6 @@ const Page = ({ children }) => {
         !router.pathname.includes("[pid]")
       ) {
         let id = router.pathname.replaceAll("/", "").replaceAll("[pid]", "");
-        let pid = makeIdFromUrl(id);
         uiStore.filterStore.handleReset();
         dataStore.api.getIdFromLink(id, true);
       } else if (

@@ -40,17 +40,6 @@ export const makeUrlFromId = idString => {
   return idString;
 };
 
-export const idsfromAliases = () => {
-  console.log(
-    JSON.stringify(
-      Object.entries(ALIASES[process.env.NODE_ENV]).reduce(
-        (obj, e) => ({ ...obj, [e[1]]: e[0] }),
-        {},
-      ),
-    ),
-  );
-};
-
 export const makeIdFromUrl = url => {
   //idsfromAliases();
   if (!url) return null;
