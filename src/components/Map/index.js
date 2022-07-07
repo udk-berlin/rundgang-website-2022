@@ -135,39 +135,6 @@ const Map = () => {
 
           markers[el.id] = { marker, mRoot, scale: 0 };
         });
-
-        const filterLocations = () => {
-          let bounds = map.current.getBounds();
-          let filteredLocations = addresses.filter(el =>
-            bounds.contains([el.lng, el.lat]),
-          );
-          return filteredLocations;
-        };
-
-        const redrawMarkers = filteredLocations => {
-          filteredLocations.map(el => {
-            const scale = map.current.getZoom() - el.maxZoom;
-            if (el.image !== "location-external") {
-              if (scale !== markers[el.id].scale && scale > 0) {
-                markers[el.id].scale = scale;
-                markers[el.id].mRoot.render(
-                  <GrundrissMarker el={el} size={60 * 2 ** scale} />,
-                );
-              } else if (markers[el.id].scale > 0 && scale <= 0) {
-                markers[el.id].scale = scale;
-                markers[el.id].mRoot.render(
-                  <GrundrissMarker el={el} size={60} />,
-                );
-              }
-            }
-          });
-        };
-
-        map.current.on("zoom", () => {
-          const filteredLocations = filterLocations();
-          redrawMarkers(filteredLocations);
-        });
-
         map.current.on("click", e => {
           addresses.map(otherEl => {
             const otherElement = document.getElementById(`popup-${otherEl.id}`);
