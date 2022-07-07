@@ -108,12 +108,21 @@ const ListItem = ({ element, numCol }) => {
       <RestyledLink to={linklocation}>
         <ImageWrapper>
           <Image>
-            <source srcSet={element.thumbnail} />
-            <source srcSet={element.thumbnail_full_size} />
+            <source
+              srcSet={element.thumbnail}
+              src={element.thumbnail_full_size}
+            />
             <img
               src="/assets/img/missing.png"
               alt="missing image"
               style={{ width: "100%", height: "auto" }}
+              onError={e => {
+                e.target.onerror = null;
+                e.currentTarget.parentNode.children[0].srcset =
+                  "/assets/img/missing.png";
+                e.currentTarget.parentNode.children[1].srcset =
+                  "/assets/img/missing.png";
+              }}
             />
           </Image>
           <SaveIcon
