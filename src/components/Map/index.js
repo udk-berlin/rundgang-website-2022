@@ -72,7 +72,11 @@ const Map = () => {
   const [addresses, setAddresses] = useState([]);
 
   useEffect(() => {
-    if (exactLocations && dataStore.api.locations && uiStore.filteredLocations) {
+    if (
+      exactLocations &&
+      dataStore.api.locations &&
+      uiStore.filteredLocations
+    ) {
       const adrr = exactLocations.map(a => ({
         ...a,
         ...dataStore.api.locations.find(
@@ -90,6 +94,8 @@ const Map = () => {
   useEffect(() => {
     if (addresses?.length) {
       const ZOOM = size && size.width > 999 ? 12 : 10.5;
+      const isMobile = size && size.width <= 768;
+
       //maplibregl.maxParallelImageRequests = 10;
       map.current = new maplibregl.Map({
         container: mapContainer.current,
@@ -124,9 +130,11 @@ const Map = () => {
           } else {
             mRoot = createRoot(markerElement);
           }
-
-          let markersize = el.image == "location-external" ? 20 : 60;
-          mRoot.render(<GrundrissMarker el={el} size={markersize} />);
+          let markersize =
+            el.image == "location-external" || isMobile ? 20 : 50;
+          mRoot.render(
+            <GrundrissMarker el={el} size={markersize} onlyPoints={isMobile} />,
+          );
 
           // add marker to map
           const marker = new maplibregl.Marker(markerElement)
@@ -135,6 +143,43 @@ const Map = () => {
 
           markers[el.id] = { marker, mRoot, scale: 0 };
         });
+
+        if (!isMobile) {
+          const filterLocations = () => {
+            let bounds = map.current.getBounds();
+            let filteredLocations = addresses.filter(el =>
+              bounds.contains([el.lng, el.lat]),
+            );
+            return filteredLocations;
+          };
+
+          const redrawMarkers = filteredLocations => {
+            filteredLocations.map(el => {
+              const scale = map.current.getZoom() - el.maxZoom;
+              if (el.image !== "location-external") {
+                if (scale !== markers[el.id].scale && scale > 0) {
+                  markers[el.id].scale = scale;
+                  markers[el.id].mRoot.render(
+                    <GrundrissMarker el={el} size={60 * 2 ** scale} onlyPoints={false}  />,
+                  );
+                } else if (markers[el.id].scale > 0 && scale <= 0) {
+                  markers[el.id].scale = scale;
+                  markers[el.id].mRoot.render(
+                    <GrundrissMarker el={el} size={60} onlyPoints={false} />,
+                  );
+                }
+              }
+            });
+          };
+
+          map.current.on("zoom", () => {
+            setTimeout(() => {
+              const filteredLocations = filterLocations();
+              redrawMarkers(filteredLocations);
+            }, 500);
+          });
+        }
+
         map.current.on("click", e => {
           addresses.map(otherEl => {
             const otherElement = document.getElementById(`popup-${otherEl.id}`);
