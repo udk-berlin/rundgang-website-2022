@@ -76,7 +76,7 @@ const Page = ({ children }) => {
     }
   }, [router.pathname]);
 
-  console.log(router, window.location.origin);
+  console.log(router.asPath);
 
   return (
     dataStore.api?.root?.id && (
@@ -90,7 +90,7 @@ const Page = ({ children }) => {
             uiStore?.currentContext?.description?.default ??
             "See projects and events..."
           }
-          ogurl={`${window.location.origin}${router.asPath}`}
+          ogurl={`https://rundgang.udk-berlin.de${router.asPath}`}
         />
         <HeaderWrapper>
           <PageTitle />
