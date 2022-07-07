@@ -86,18 +86,16 @@ const GrundrissPopup = ({ el, size }) => {
       </ClosingButton>
       <PopupTitle>{el.name}</PopupTitle>
       <Times>
-        {el?.allocation?.temporal?.map(time =>
-          time.udk == "rundgang" ? (
-            <TimeRange key={time.start}>
-              <FormattedDateTimeRange
-                from={time.start * 1000}
-                weekday="short"
-                hour="numeric"
-                to={time.end * 1000}
-              />
-            </TimeRange>
-          ) : null,
-        )}
+        {el.allocation?.temporal?.map(time => (
+          <TimeRange key={time.start}>
+            <FormattedDateTimeRange
+              from={time.start * 1000}
+              weekday="short"
+              hour="numeric"
+              to={time.end * 1000}
+            />
+          </TimeRange>
+        ))}
       </Times>
       <LocalizedLink to={`/orte/${el.id}`}>
         <RoomLink>
