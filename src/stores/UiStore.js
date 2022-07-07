@@ -10,7 +10,7 @@ class UiStore {
     this.title = null;
     this.floorLevel = null;
     this.selectedRoom = null;
-    this.zoomFiltered = null;
+    this.filteredByIds = null;
 
     makeAutoObservable(this, {
       setIsOpen: action,
@@ -77,8 +77,8 @@ class UiStore {
     this.selectedRoom = r;
   }
 
-  setZoomFiltered(arr) {
-    this.zoomFiltered = arr;
+  setFilteredByIds(arr) {
+    this.filteredByIds = arr;
   }
 
   get floorPlan() {
@@ -110,6 +110,16 @@ class UiStore {
     return this.dataStore.createEventStructure(events);
   }
 
+  get filteredLocations() {
+    let locations = this.dataStore.api?.locations?.filter(loc =>
+      this.items.find(item => item.tags?.find(t => t.id == loc.id)),
+    );
+    if (locations?.length) {
+      return locations;
+    }
+    return [];
+  }
+
   get savedEvents() {
     let events = this.dataStore.api.eventlist.filter(ev =>
       this.savedItemIds.find(id => id == ev.id),
@@ -139,12 +149,9 @@ class UiStore {
           el.tags.find(t => t.id == tag || t.name == tag),
         );
       }
-      if (
-        this.dataStore.api.currentRoot?.template == "location-university" &&
-        this.zoomFiltered?.length
-      ) {
+      if (this.filteredByIds?.length) {
         return this.dataStore.api.currentItems.filter(el =>
-          el.tags.find(t => this.zoomFiltered.includes(t.id)),
+          el.tags.find(t => this.filteredByIds.includes(t.id)),
         );
       }
       return this.dataStore.api.currentItems;

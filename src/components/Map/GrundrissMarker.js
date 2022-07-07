@@ -11,7 +11,7 @@ const Grundriss = styled.img`
   filter: drop-shadow(0px 0px 8px rgb(226, 255, 93));
 `;
 const GrundrissMarker = ({ el, size }) => {
-  return (
+  return el.isFound ? (
     <Grundriss
       id={`${el.id}-marker`}
       pitchAlignment="map"
@@ -19,7 +19,7 @@ const GrundrissMarker = ({ el, size }) => {
       size={size}
       src={`/assets/img/${el.image}.svg`}
     ></Grundriss>
-  );
+  ) : null;
 };
 
 export default GrundrissMarker;

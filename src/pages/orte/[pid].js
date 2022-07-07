@@ -6,6 +6,7 @@ import Layout from "@/components/simple/Layout";
 import ListView from "@/components/ListView";
 import ItemView from "@/components/ItemView";
 import Floorplan from "@/components/Floorplan";
+import Map from "@/components/Map";
 import {
   SEARCHBAR_HEIGHT,
   SEARCHBAR_PADDING,
@@ -50,11 +51,15 @@ const OrteView = () => {
         {uiStore.currentContext.type == "item" ? (
           <ItemView />
         ) : (
-          uiStore.currentContext.template == "location-building" && (
-            <FloorplanContainer>
+          <FloorplanContainer>
+            {["location-building", "location-level", "location-room"].includes(
+              uiStore.currentContext.template,
+            ) ? (
               <Floorplan />
-            </FloorplanContainer>
-          )
+            ) : (
+              <Map />
+            )}
+          </FloorplanContainer>
         )}
         {uiStore.currentContext.type !== "item" ? (
           <OrteKatalog>

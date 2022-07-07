@@ -132,7 +132,9 @@ const ItemView = () => {
   const item = uiStore.currentContext;
   const locDesc = locale == "en" && item.description.EN?.length ? "EN" : "DE";
   const loc =
-    locale == "en" && item.rendered.languages.EN?.formattedContent?.length ? "EN" : "DE";
+    locale == "en" && item.rendered.languages.EN?.formattedContent?.length
+      ? "EN"
+      : "DE";
 
   //console.log(toJS(item), {loc});
   return item && item?.id ? (
@@ -156,9 +158,7 @@ const ItemView = () => {
               showCross={false}
               template={t.template}
             >
-              <LocalizedLink to={`/katalog/${makeUrlFromId(t.id)}`}>
-                {t.name}
-              </LocalizedLink>
+              <LocalizedLink to={`/katalog/${t.id}`}>{t.name}</LocalizedLink>
             </Tag>
           ))}
       </Tags>
@@ -172,7 +172,7 @@ const ItemView = () => {
                 <LocationTag
                   key={t.name}
                   onClick={() =>
-                    router.replace(`/katalog/${makeUrlFromId(t.id)}`)
+                    router.replace(`/orte/${makeUrlFromId(t.id)}`)
                   }
                 >
                   {tagPrefix(t.template)}

@@ -241,6 +241,7 @@ class ApiStore {
   };
 
   initializeRoot = async () => {
+    console.log("initialize root");
     this.setStatus("pending");
     try {
       console.time("load api");
@@ -256,6 +257,7 @@ class ApiStore {
         tree,
         events,
       );
+      console.log("wrangleData worked");
       runInAction(() => {
         this.tags = tags;
         this.pathlist = pathlist;

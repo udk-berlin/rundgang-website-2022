@@ -58,9 +58,9 @@ const FIRSTLAT = 52.5215633;
 const FIRSTLNG = 13.3491838;
 
 const BOUNDS = [
-  [13.2397254,52.442394], // Southwest coordinates
-  [13.4871903, 52.586099] // Northeast coordinates
-  ];
+  [13.2397254, 52.442394], // Southwest coordinates
+  [13.4871903, 52.586099], // Northeast coordinates
+];
 
 const Map = () => {
   const { dataStore, uiStore } = useStores();
@@ -72,20 +72,20 @@ const Map = () => {
   const [addresses, setAddresses] = useState([]);
 
   useEffect(() => {
-    if (exactLocations && dataStore.api.locations) {
+    if (exactLocations && dataStore.api.locations && uiStore.filteredLocations) {
       const adrr = exactLocations.map(a => ({
         ...a,
         ...dataStore.api.locations.find(
           c => c.id == a.id[process.env.NODE_ENV],
         ),
-        isFound: dataStore.api.locations.find(
+        isFound: uiStore.filteredLocations.find(
           c => c.id == a.id[process.env.NODE_ENV],
-        )?.name,
+        )?.id,
         id: a.id[process.env.NODE_ENV],
       }));
       setAddresses(adrr);
     }
-  }, [dataStore.api.locations]);
+  }, [dataStore.api.locations, uiStore.filteredLocations]);
 
   useEffect(() => {
     if (addresses?.length) {
@@ -96,7 +96,7 @@ const Map = () => {
         style: MAP_STYLE,
         center: [FIRSTLNG, FIRSTLAT],
         zoom: ZOOM,
-        maxBounds:BOUNDS,
+        maxBounds: BOUNDS,
         maxZoom: 18,
         minZoom: 10,
         pitchWithRotate: false,
@@ -141,9 +141,6 @@ const Map = () => {
           let filteredLocations = addresses.filter(el =>
             bounds.contains([el.lng, el.lat]),
           );
-          if (filteredLocations?.length !== uiStore.zoomFiltered?.length) {
-            uiStore.setZoomFiltered(filteredLocations.map(loc => loc.id));
-          }
           return filteredLocations;
         };
 
@@ -178,22 +175,13 @@ const Map = () => {
           });
           if (e.originalEvent.target.id) {
             let popId = e.originalEvent.target.id.replace("-marker", "");
-            uiStore.setZoomFiltered([popId]);
             const popupElement = document.getElementById(`popup-${popId}`);
             popupElement.style.display = "block";
           }
         });
-
-        map.current.on("mousedown", () => {
-          filterLocations();
-        });
-
-        map.current.on("touchstart", () => {
-          filterLocations();
-        });
       });
     }
-  }, [size, dataStore.api.locations, addresses]);
+  }, [size, addresses]);
 
   return (
     <MapWrapper size={size}>
@@ -201,7 +189,7 @@ const Map = () => {
       <MapContainerDiv ref={mapContainer} />
       <Popups>
         {addresses.map((house, i) => (
-          <GrundrissPopup key={`popup-${house.id}`} el={house} size={260} />
+          <GrundrissPopup key={`popup-${house.id}`} el={house} size={290} />
         ))}
       </Popups>
     </MapWrapper>

@@ -90,6 +90,7 @@ const ImageWrapper = styled.div`
 const Floorplan = () => {
   const { uiStore, dataStore } = useStores();
   const [visibleRooms, setVisibleRooms] = useState([]);
+  const [buildingContext, setBuildingContext] = useState();
 
   useEffect(() => {
     if (dataStore.api.existingRooms && uiStore.floorPlan) {
@@ -109,7 +110,24 @@ const Floorplan = () => {
     ) {
       uiStore.setFloorLevel(0);
     }
-  }, [uiStore.currentContext?.context]);
+    if (
+      uiStore.currentContext.template !== "location-building" &&
+      dataStore.api.locations
+    ) {
+      let buildingId = uiStore.currentContext.tags.find(
+        t => t.template == "location-building",
+      )?.id;
+      let buildcon = dataStore.api.locations.find(
+        l => l.id == buildingId,
+      )?.extra;
+      if (buildcon) {
+        setBuildingContext(buildcon);
+        if (uiStore.currentContext.template == "location-level") {
+          uiStore.setFloorLevel(uiStore.currentContext.name);
+        }
+      }
+    }
+  }, [uiStore.currentContext?.context, dataStore.api.locations]);
 
   const handleSelectRoom = useCallback(
     e => {
@@ -150,6 +168,17 @@ const Floorplan = () => {
   const handleSelectAll = () => {
     uiStore.setSelectedRoom(null);
     uiStore.setFloorLevel(null);
+    if (
+      uiStore.currentContext.template !== "location-building" &&
+      dataStore.api.locations
+    ) {
+      let buildingId = uiStore.currentContext.tags.find(
+        t => t.template == "location-building",
+      )?.id;
+      if (buildingId) {
+        dataStore.api.getIdFromLink(buildingId, true)
+      }
+    }
   };
 
   return (
@@ -181,7 +210,7 @@ const Floorplan = () => {
       <ImageWrapper visibleRooms={visibleRooms}>
         <BackgroundImg
           grey={uiStore.floorLevel == null}
-          src={`/assets/img/${uiStore.currentContext?.description.default}_building.svg`}
+          src={`/assets/img/${buildingContext?.description.default}_building.svg`}
         />
         <FloorPlanSvg
           url={uiStore.floorPlan ? uiStore.floorPlan.thumbnail_full_size : null}

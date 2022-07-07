@@ -77,27 +77,26 @@ const Filter = React.forwardRef(({ onOpen }, ref) => {
       : "closed";
 
   const handleSubmit = useCallback(() => {
+    console.log(
+      router.pathname,
+      router.query.pid,
+      uiStore.filterStore.selectedId,
+    );
+    let link = router.pathname;
     if (uiStore.filterStore.selectedId) {
-      let link = router.pathname;
       let pid = makeUrlFromId(uiStore.filterStore.selectedId);
       if (router.pathname == "/") {
-        link = `katalog/${pid}`;
+        link = `/katalog/${pid}`;
       } else if (router.pathname.includes("[pid]")) {
-        link = link.replace("[pid]", pid);
+        link = pid;
       } else {
         link = `${router.pathname}/${pid}`;
       }
-      router.replace(link);
+      router.push(link);
     } else {
-      if (router.pathname == "/") {
-        router.replace("/");
-      } else if (router.pathname.includes("[pid]")) {
-        router.replace(router.pathname.replace("[pid]", ""));
-      } else {
-        router.replace(router.pathname.replace("[pid]", ""));
-      }
+      router.replace(link.replace("[pid]", ""));
     }
-  }, [uiStore.filterStore.selectedId]);
+  }, [uiStore.filterStore.selectedId, router.pathname]);
 
   return (
     <FilterWrapper

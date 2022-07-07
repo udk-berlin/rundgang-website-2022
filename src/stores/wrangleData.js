@@ -84,8 +84,10 @@ const wrangleData = (tree, events) => {
           ebene = "classes";
         } else if (
           context.template == "seminar" ||
-          context.template == "course"
+          context.template == "course" ||
+          context.template == "institution"
         ) {
+          console.log(context.name);
           ebene = "seminars";
         } else if (
           context.template == "location-room" ||
