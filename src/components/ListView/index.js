@@ -57,11 +57,16 @@ const DescriptionText = styled.div`
 `;
 
 const getDescription = (d, loc) => {
-  let desc = d?.default ?? null;
-  if (loc.toUpperCase() in d) {
-    desc = d[loc.toUpperCase()];
+  if (d) {
+    let desc = d?.default ?? null;
+    if (loc.toUpperCase() in d) {
+      desc = d[loc.toUpperCase()];
+    }
+    if (!desc.startsWith("400") && desc !== "udk-berlin") {
+      return desc;
+    }
   }
-  return desc;
+  return null;
 };
 
 const ListView = ({ numCol }) => {
@@ -73,11 +78,7 @@ const ListView = ({ numCol }) => {
   );
   return uiStore.items && uiStore.items.length > 0 ? (
     <ListViewWrapper numCol={numCol}>
-      { description ? (
-        <DescriptionText>
-          {description}
-        </DescriptionText>
-      ) : null}
+      {description ? <DescriptionText>{description}</DescriptionText> : null}
       {uiStore.items.map(item => (
         <ListItem numCol={numCol} key={item.id} element={item} />
       ))}
