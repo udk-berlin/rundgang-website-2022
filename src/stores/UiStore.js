@@ -131,7 +131,7 @@ class UiStore {
     return this.dataStore.api.locations.reduce(
       (obj, item) => ({
         ...obj,
-        [item.name]: item.extra,
+        [item.name]: item,
       }),
       {},
     );

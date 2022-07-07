@@ -70,6 +70,7 @@ const ClosingButton = styled.div`
 `;
 
 const GrundrissPopup = ({ el, size }) => {
+  console.log(el);
   return (
     <PopupWrapper
       id={`popup-${el.id}`}
@@ -86,7 +87,7 @@ const GrundrissPopup = ({ el, size }) => {
       </ClosingButton>
       <PopupTitle>{el.name}</PopupTitle>
       <Times>
-        {el?.extra?.allocation?.temporal?.map(time =>
+        {el?.allocation?.temporal?.map(time =>
           time.udk == "rundgang" ? (
             <TimeRange key={time.start}>
               <FormattedDateTimeRange

@@ -40,8 +40,8 @@ const MapContainerDiv = styled.div`
 
 const Popups = styled.div`
   position: absolute;
+  height: fit-content;
   width: inherit;
-  height: inherit;
   top: calc(50% - 100px);
   left: 0;
   bottom: 0;
@@ -200,7 +200,7 @@ const Map = () => {
         });
       });
     }
-  }, [size, addresses]);
+  }, [size?.width, addresses]);
 
   return (
     <MapWrapper size={size}>

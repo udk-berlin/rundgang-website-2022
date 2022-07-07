@@ -63,16 +63,14 @@ class ApiStore {
   };
 
   getLocations = async () => {
-    return this.get(
-      `${process.env.NEXT_PUBLIC_LOCATIONS_ROOT}/tree/filter/type/context`,
-    )
+    return this.get(process.env.NEXT_PUBLIC_LOCATIONS_ROOT)
       .then(res =>
         Promise.all(
-          Object.values(res.children).map(async building => {
+          Object.values(res.context).map(async building => {
             let data = await this.getId(building.id);
             return {
               ...building,
-              extra: data,
+              ...data,
             };
           }),
         ),

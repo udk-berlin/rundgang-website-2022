@@ -125,9 +125,7 @@ const Floorplan = () => {
       let buildingId = uiStore.currentContext.tags.find(
         t => t.template == "location-building",
       )?.id;
-      let buildcon = dataStore.api.locations.find(
-        l => l.id == buildingId,
-      )?.extra;
+      let buildcon = dataStore.api.locations.find(l => l.id == buildingId);
       if (buildcon) {
         setBuildingContext(buildcon);
         if (uiStore.currentContext.template == "location-level") {
