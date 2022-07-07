@@ -5,7 +5,10 @@
     "lng": "13.327300406397331",
     "maxZoom": 13.7,
     "image": "4005",
-    "id": "!amwvMUTwucDiRylpJQ:content.udk-berlin.de"
+    "id": {
+      "development": "!SLHPcitdKliABtGyyt:content.udk-berlin.de",
+      "production": "!amwvMUTwucDiRylpJQ:content.udk-berlin.de"
+    }
   },
   {
     "name": "Str. des 17. Juni 118",
