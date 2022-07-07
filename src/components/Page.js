@@ -9,6 +9,7 @@ import PageTitle from "@/components/PageTitle";
 import CursorLine from "@/components/CursorLine";
 import useMediaQuery from "@/utils/useMediaQuery";
 import IntroAnimation from "@/components/IntroAnimation";
+import HeadOG from "./HeadOG";
 
 const HeaderWrapper = styled.header`
   position: sticky;
@@ -71,6 +72,17 @@ const Page = ({ children }) => {
   return (
     dataStore.api?.root?.id && (
       <>
+        <HeadOG
+          imgurl={
+            uiStore?.currentContext?.thumbnail ?? "/assets/img/ogimage.png"
+          }
+          title={uiStore.title}
+          description={
+            uiStore?.currentContext?.description?.default ??
+            "See projects and events..."
+          }
+          ogurl={router.asPath}
+        />
         <HeaderWrapper>
           <PageTitle />
           <SearchBar />
