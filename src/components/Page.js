@@ -10,6 +10,8 @@ import CursorLine from "@/components/CursorLine";
 import useMediaQuery from "@/utils/useMediaQuery";
 import IntroAnimation from "@/components/IntroAnimation";
 import HeadOG from "./HeadOG";
+import { makeIdFromUrl } from "@/utils/idUtils";
+import Loader from "./Loader";
 
 const HeaderWrapper = styled.header`
   position: sticky;
@@ -34,12 +36,14 @@ const Page = ({ children }) => {
     "only screen and (max-width:768px) and (orientation:portrait)",
   );
   const [showLine, setShowLine] = useState(false);
+  const [currentId, setCurrentId] = useState();
 
   useEffect(() => {
     let pid = router.query.pid;
     setShowLine(false);
     if (dataStore.api?.root?.id) {
       if (pid) {
+        setCurrentId(pid);
         dataStore.api.getIdFromLink(pid, true);
       } else if (
         dataStore.isLoaded &&
@@ -47,6 +51,8 @@ const Page = ({ children }) => {
         !router.pathname.includes("[pid]")
       ) {
         let id = router.pathname.replaceAll("/", "").replaceAll("[pid]", "");
+        let pid = makeIdFromUrl(id);
+        setCurrentId(pid);
         uiStore.filterStore.handleReset();
         dataStore.api.getIdFromLink(id, true);
       } else if (
@@ -54,6 +60,7 @@ const Page = ({ children }) => {
         dataStore.api.root &&
         !router.pathname.includes("[pid]")
       ) {
+        setCurrentId(dataStore.api.root.id);
         uiStore.filterStore.handleReset();
         dataStore.api.getIdFromLink(dataStore.api.root.id, true);
         if (!isMobile) {
@@ -69,6 +76,8 @@ const Page = ({ children }) => {
     }
   }, [router.pathname]);
 
+  console.log(router, window.location.origin);
+
   return (
     dataStore.api?.root?.id && (
       <>
@@ -81,14 +90,14 @@ const Page = ({ children }) => {
             uiStore?.currentContext?.description?.default ??
             "See projects and events..."
           }
-          ogurl={router.asPath}
+          ogurl={`${window.location.origin}${router.asPath}`}
         />
         <HeaderWrapper>
           <PageTitle />
           <SearchBar />
         </HeaderWrapper>
         <PageWrapper>
-          {children}
+          {currentId == uiStore?.currentContext?.id ? children : <Loader />}
           <Footer />
           <IntroAnimation key={"intro"} />
           {showLine ? <CursorLine /> : null}

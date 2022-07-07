@@ -143,10 +143,8 @@ const ItemView = () => {
   );
 
   const item = uiStore.currentContext;
-  console.log(item.rendered.languages);
   const [locDesc, locText] = useMemo(() => getLoc(item, locale), [locale]);
 
-  console.log(toJS(item.rendered.languages[locText]));
   return item && item?.id ? (
     <ItemViewWrapper>
       <Tags>
