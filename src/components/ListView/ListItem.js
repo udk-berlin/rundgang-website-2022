@@ -107,6 +107,7 @@ const ListItem = ({ element, numCol }) => {
         <ImageWrapper>
           <Image>
             <source srcSet={element.thumbnail} />
+            <source srcSet={element.thumbnail_full_size} />
             <img
               src="/assets/img/missing.png"
               alt="missing image"

@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import ListItem from "./ListItem";
 import LocalizedText from "modules/i18n/components/LocalizedText";
+import { useRouter } from "next/router";
 
 const ListViewWrapper = styled.div`
   width: 100%;
@@ -49,10 +50,34 @@ const NoItems = styled.div`
   }
 `;
 
+const DescriptionText = styled.div`
+  grid-column: span 2;
+  padding-top: 16px;
+  font-size: 24px;
+`;
+
+const getDescription = (d, loc) => {
+  let desc = d?.default ?? null;
+  if (loc.toUpperCase() in d) {
+    desc = d[loc.toUpperCase()];
+  }
+  return desc;
+};
+
 const ListView = ({ numCol }) => {
   const { uiStore } = useStores();
+  const { locale } = useRouter();
+  const description = getDescription(
+    uiStore.currentContext?.description,
+    locale,
+  );
   return uiStore.items && uiStore.items.length > 0 ? (
     <ListViewWrapper numCol={numCol}>
+      { description ? (
+        <DescriptionText>
+          {description}
+        </DescriptionText>
+      ) : null}
       {uiStore.items.map(item => (
         <ListItem numCol={numCol} key={item.id} element={item} />
       ))}

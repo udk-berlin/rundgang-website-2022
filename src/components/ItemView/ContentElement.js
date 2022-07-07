@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import AudioPlayer from "./AudioPlayer";
-import LocalizedText from "modules/i18n/components/LocalizedText";
 import ImageDetailView from "./ImageDetailView";
+import ReactMarkdown from "react-markdown";
+import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const Heading = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lm};
@@ -64,9 +65,10 @@ const ContentElement = ({ item }) => {
   if (item.type == "heading") {
     return <Heading>{item.content}</Heading>;
   } else if (item.type == "text") {
+    let cont = String(item.content)
     return (
       <Paragraph>
-        <LocalizedText id="none" defaultMessage={item.formatted_content} />
+        <ReactMarkdown>{cont}</ReactMarkdown> 
       </Paragraph>
     );
   } else if (item.type == "image") {
