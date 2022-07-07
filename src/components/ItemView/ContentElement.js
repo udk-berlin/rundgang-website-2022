@@ -17,6 +17,10 @@ const Paragraph = styled.div`
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.md};
   }
+  a {
+    color: ${({ theme }) => theme.colors.maingrey};
+    text-decoration: underline;
+  }
 `;
 
 const Code = styled.pre`

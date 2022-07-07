@@ -80,20 +80,22 @@ const FavouriteItem = ({ element }) => {
             </Time>
           ))}
         {element.tags
-          .filter(t =>
-            ["location-room", "location-building"].includes(t.template),
-          )
-          .map(t => (
-            <Tag
-              selected={false}
-              key={`${t.id}-${t.template}`}
-              levelSelected={false}
-              showCross={false}
-              template={t.template}
-            >
-              {t.name}
-            </Tag>
-          ))}
+          ? element.tags
+              .filter(t =>
+                ["location-room", "location-building"].includes(t.template),
+              )
+              .map(t => (
+                <Tag
+                  selected={false}
+                  key={`${t.id}-${t.template}`}
+                  levelSelected={false}
+                  showCross={false}
+                  template={t.template}
+                >
+                  {t.name}
+                </Tag>
+              ))
+          : null}
       </Tags>
       <Info onClick={() => handleClick(element.id)}>
         <Title>
@@ -107,7 +109,7 @@ const FavouriteItem = ({ element }) => {
         <Authors>
           {[
             ...new Set(
-              element.origin?.authors.map(a => (a.name ? a.name.trim() : a.id)),
+              element.origin?.authors.map(a => (a.name ? a.name.trim() : null)),
             ),
           ]
             .filter(a => a)
@@ -127,7 +129,7 @@ const FavouritePrintout = ({ savedItems, filteredEvents }) => {
           savedItems
             .filter(item => item.template == "event")
             .map(ev => {
-              if (ev.tags.find(t => t.template == "location-building")) {
+              if (ev.tags?.find(t => t.template == "location-building")) {
                 let building = ev.tags?.find(
                   t => t.template == "location-building",
                 ).name;
@@ -152,15 +154,13 @@ const FavouritePrintout = ({ savedItems, filteredEvents }) => {
   return (
     <div
       id="favouriteprintoutlist"
-      style={{ width: "1000px", height: "fit-content", letterSpacing: "1.5px" }}
+      style={{ width: "1000px", height: "fit-content", letterSpacing: "2px" }}
     >
       <div
         style={{
           width: "100px",
           fontSize: "80px",
           height: "fit-content",
-          textAlign: "center",
-          letterSpacing: "4px",
         }}
       >
         <LocalizedText id="saved" />

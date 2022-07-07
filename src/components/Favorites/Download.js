@@ -5,9 +5,11 @@ import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import { jsPDF } from "jspdf";
 import dynamic from "next/dynamic";
-import FavouritePrintoutTime from "./FavouritePrintoutTime";
 const FavouritePrintout = dynamic(() => import("./FavouritePrintout"), {
-  loading: () => <header />,
+  loading: () => <div></div>,
+});
+const FavouritePrintoutTime = dynamic(() => import("./FavouritePrintoutTime"), {
+  loading: () => <div></div>,
 });
 
 const DownloadPdf = styled.div`
@@ -40,27 +42,10 @@ const Download = () => {
   const downloadImage = () => {
     var doc = new jsPDF();
     var source = window.document.getElementById("favouriteprintoutlist");
-
-    doc.html(source, {
-      callback: function (doc) {
-        doc.save("rundgangudk2022.pdf");
-        setProcessDownload(false);
-      },
-      x: 10,
-      y: 10,
-      width: 100,
-      windowWidth: 500,
-      fontFace: [new FontFace("Diatype", "/fonts/EduDiatype-Regular.woff2")],
-    });
-    if (
-      uiStore.savedItems.filter(item => item.template == "event").length > 3
-    ) {
-      var table = new jsPDF();
-      var source = window.document.getElementById("favouriteprintouttimetable");
-
-      table.html(source, {
+    if (source) {
+      doc.html(source, {
         callback: function (doc) {
-          doc.save("rundgangudk2022_timetable.pdf");
+          doc.save("rundgangudk2022.pdf");
           setProcessDownload(false);
         },
         x: 10,
@@ -69,6 +54,33 @@ const Download = () => {
         windowWidth: 500,
         fontFace: [new FontFace("Diatype", "/fonts/EduDiatype-Regular.woff2")],
       });
+      if (
+        uiStore.savedItems.filter(item => item.template == "event").length >
+          1 &&
+        window.document.getElementById("favouriteprintouttimetable") !==
+          undefined
+      ) {
+        var table = new jsPDF();
+        var source = window.document.getElementById(
+          "favouriteprintouttimetable",
+        );
+
+        table.html(source, {
+          callback: function (doc) {
+            doc.save("rundgangudk2022_timetable.pdf");
+            setProcessDownload(false);
+          },
+          x: 10,
+          y: 10,
+          width: 100,
+          windowWidth: 500,
+          fontFace: [
+            new FontFace("Diatype", "/fonts/EduDiatype-Regular.woff2"),
+          ],
+        });
+      }
+    } else {
+      setProcessDownload(false)
     }
   };
 

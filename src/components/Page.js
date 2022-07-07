@@ -11,7 +11,6 @@ import useMediaQuery from "@/utils/useMediaQuery";
 import IntroAnimation from "@/components/IntroAnimation";
 import HeadOG from "./HeadOG";
 import { makeIdFromUrl } from "@/utils/idUtils";
-import Loader from "./Loader";
 
 const HeaderWrapper = styled.header`
   position: sticky;
@@ -76,8 +75,6 @@ const Page = ({ children }) => {
     }
   }, [router.pathname]);
 
-  console.log(router.asPath);
-
   return (
     dataStore.api?.root?.id && (
       <>
@@ -97,7 +94,7 @@ const Page = ({ children }) => {
           <SearchBar />
         </HeaderWrapper>
         <PageWrapper>
-          {currentId == uiStore?.currentContext?.id ? children : <Loader />}
+          {children}
           <Footer />
           <IntroAnimation key={"intro"} />
           {showLine ? <CursorLine /> : null}

@@ -44,19 +44,6 @@ const Levels = styled.div`
   }
 `;
 
-const SelectedRoomTitle = styled.div`
-  position: absolute;
-  width: 100%;
-  top: 48px;
-  text-align: center;
-  font-size: ${({ theme }) => theme.fontSizes.md};
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
-    bottom: 16px;
-    top: auto;
-  }
-`;
-
 const LevelNumber = styled.div`
   border: none;
   font-size: ${({ theme }) => theme.fontSizes.md};
@@ -66,6 +53,7 @@ const LevelNumber = styled.div`
   cursor: pointer;
   z-index: 100;
   padding: 8px;
+  margin: 0px 2px;
   background: ${({ selected, theme }) =>
     selected ? theme.colors.lightgrey : theme.colors.white};
   &:hover {
@@ -75,6 +63,13 @@ const LevelNumber = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
+const SelectedRoomTitle = styled(LevelNumber)`
+  background: ${({ theme }) => theme.colors.highlight};
+  &:hover {
+    background: ${({ theme }) => theme.colors.highlight};
+  }
+`;
+
 const ImageWrapper = styled.div`
   width: 90%;
   height: auto;
@@ -216,6 +211,7 @@ const Floorplan = () => {
                 key={level.id}
                 selected={level.name == uiStore.floorLevel}
                 onClick={() => {
+                  uiStore.setSelectedRoom(null);
                   uiStore.setFloorLevel(level.name);
                 }}
               >
@@ -223,6 +219,11 @@ const Floorplan = () => {
               </LevelNumber>
             ),
         )}
+        {uiStore.selectedRoom ? (
+          <SelectedRoomTitle key="roomtitle" isAll selected={false}>
+            {uiStore.selectedRoom?.showname}
+          </SelectedRoomTitle>
+        ) : null}
       </Levels>
       <ImageWrapper visibleRooms={visibleRooms}>
         <BackgroundImg
@@ -234,7 +235,6 @@ const Floorplan = () => {
           handleSelectRoom={handleSelectRoom}
         />
       </ImageWrapper>
-      <SelectedRoomTitle>{uiStore.selectedRoom?.showname}</SelectedRoomTitle>
     </FloorplanWrapper>
   );
 };

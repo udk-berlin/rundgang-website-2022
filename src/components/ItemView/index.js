@@ -202,7 +202,7 @@ const ItemView = () => {
               ?.filter(a => a.name || a.id)
               .map(a => (
                 <AuthorTag key={`author-${a.name}-${a.id}`}>
-                  {a.name ? a.name : a.id}
+                  {a.name ? a.name : null}
                 </AuthorTag>
               ))}
           </LargeTags>

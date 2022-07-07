@@ -51,9 +51,12 @@ const NoItems = styled.div`
 `;
 
 const DescriptionText = styled.div`
-  grid-column: span 2;
+  grid-column: span 5;
   padding-top: 16px;
   font-size: 24px;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    grid-column: span 2;
+  }
 `;
 
 const getDescription = (d, loc) => {

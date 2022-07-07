@@ -61,6 +61,8 @@ const Title = styled.div`
 const Authors = styled.div`
   flex-grow: 0;
   font-size: ${({ theme }) => theme.fontSizes.xs};
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 `;
 
 const Time = styled.div`
@@ -141,7 +143,7 @@ const ListItem = ({ element, numCol }) => {
         <Authors>
           {[
             ...new Set(
-              element.origin?.authors.map(a => (a.name ? a.name.trim() : a.id)),
+              element.origin?.authors.map(a => (a.name ? a.name.trim() : null)),
             ),
           ]
             .filter(a => a)

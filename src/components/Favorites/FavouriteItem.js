@@ -32,6 +32,8 @@ const Title = styled.div`
   }
 `;
 const Authors = styled.div`
+  word-wrap: break-word;
+  word-break: break-all;
   font-size: ${({ theme }) => theme.fontSizes.md};
   flex-grow: 0;
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -42,6 +44,8 @@ const Tags = styled.div`
   display: flex;
   width: 100%;
   flex-grow: 1 1 50%;
+  word-wrap: break-word;
+  word-break: break-all;
   padding-top: ${({ theme }) => theme.space(8)};
   flex-wrap: wrap;
 `;
@@ -93,7 +97,7 @@ const FavouriteItem = ({ element, handleClick, handleUnsave }) => {
         <Authors>
           {[
             ...new Set(
-              element.origin?.authors.map(a => (a.name ? a.name.trim() : a.id)),
+              element.origin?.authors.map(a => (a.name ? a.name.trim() : null)),
             ),
           ]
             .filter(a => a)
