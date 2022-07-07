@@ -70,7 +70,9 @@ class DataStore {
   };
 
   initialize = async () => {
-    this.allStores.forEach(store => store?.initialize?.(this));
+    this.allStores.forEach(store =>
+      !store.isInitialized ? store?.initialize?.(this) : null,
+    );
   };
 
   // funciton that creates the snapshot of thr store

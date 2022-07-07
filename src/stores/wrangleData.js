@@ -14,16 +14,18 @@ const wrangleData = (tree, events) => {
   let rooms = {};
 
   let queue = [{ node: tree, id: tree.id, path: [tree] }];
-  let explored = [];
 
   while (queue.length > 0) {
     let curr = queue.shift();
     if (curr.node.type == "item") {
       let currpaths = curr.path.filter(
         x =>
-          !["structure-root", "Universität", "location-university"].includes(
-            x.template,
-          ) && x.id !== curr.id,
+          ![
+            "structure-root",
+            "Universität",
+            "location-university",
+            "rundgang22-root",
+          ].includes(x.template) && x.id !== curr.id,
       );
       if (curr.id in pathlist) {
         pathlist[curr.id].concat(currpaths);
@@ -62,7 +64,7 @@ const wrangleData = (tree, events) => {
           eventlist[curr.id] = eventobject;
         }
       }
-      curr.path.map((context, i) => {
+      currpaths.map((context, i) => {
         let ebene = null;
         if (
           context.template == "faculty" ||
@@ -87,7 +89,6 @@ const wrangleData = (tree, events) => {
           context.template == "course" ||
           context.template == "institution"
         ) {
-          console.log(context.name);
           ebene = "seminars";
         } else if (
           context.template == "location-room" ||
@@ -100,14 +101,14 @@ const wrangleData = (tree, events) => {
         }
         if (ebene) {
           if (i > 1) {
-            let ancestors = curr.path.slice(0, i - 1).map(p => p.id);
+            let ancestors = curr.path.map(p => p.id);
             tags[ebene][context.id] = {
               ...context,
               ancestors:
-                context.id in tags.ebene0
+                context.id in tags[ebene]
                   ? [
                       ...new Set(
-                        tags.ebene0[context.id].ancestors.concat(ancestors),
+                        tags[ebene][context.id].ancestors.concat(ancestors),
                       ),
                     ]
                   : ancestors,
@@ -120,14 +121,12 @@ const wrangleData = (tree, events) => {
     }
 
     Object.entries(curr.node.children).map(([k, v]) => {
-      if (explored.indexOf(k) == -1) {
-        let currPath = [...curr.path, v];
-        queue.push({
-          node: v,
-          id: k,
-          path: currPath,
-        });
-      }
+      let currPath = [...curr.path, v];
+      queue.push({
+        node: v,
+        id: k,
+        path: currPath,
+      });
     });
   }
   let result = Object.entries(tags).reduce((obj, [k, v]) => {

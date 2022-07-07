@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import FloorPlanSvg from "./FloorPlanSvg";
 import LocalizedText from "modules/i18n/components/LocalizedText";
+import raumnamen from "./raumnamen.json";
 
 const FloorplanWrapper = styled.div`
   width: 100%;
@@ -46,10 +47,13 @@ const Levels = styled.div`
 const SelectedRoomTitle = styled.div`
   position: absolute;
   width: 100%;
+  top: 48px;
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
+    bottom: 16px;
+    top: auto;
   }
 `;
 
@@ -87,6 +91,14 @@ const ImageWrapper = styled.div`
     )}
 `;
 
+const roomname = (data, newname) => {
+  if (newname && data.name !== "/") {
+    return `${newname} ${data.name}`;
+  } else if (newname == "/") {
+    return data.name;
+  } else return `${data.topic} ${data.name}`; // change here if shouldnt be shown at all
+};
+
 const Floorplan = () => {
   const { uiStore, dataStore } = useStores();
   const [visibleRooms, setVisibleRooms] = useState([]);
@@ -103,6 +115,7 @@ const Floorplan = () => {
   }, [uiStore.floorPlan, dataStore.api.existingRooms]);
 
   useEffect(() => {
+    setBuildingContext(uiStore.currentContext);
     if (
       uiStore.currentContext?.context?.find(
         level => level.name == "0" && level.context?.length,
@@ -152,9 +165,13 @@ const Floorplan = () => {
               `[data-id="${data.id}"]`,
             )[0];
             if (roomRect) {
-              roomRect.style.fill = "#E2FF5D";
-              uiStore.setSelectedRoom(data);
-              uiStore.setFloorLevel(uiStore.floorLevel);
+              let newname = raumnamen.find(n => n.id == data.id)?.newname;
+              let showname = roomname(data, newname);
+              if (showname) {
+                roomRect.style.fill = "#E2FF5D";
+                uiStore.setSelectedRoom({ ...data, showname });
+                uiStore.setFloorLevel(uiStore.floorLevel);
+              }
             }
           } else {
             uiStore.setSelectedRoom(null);
@@ -176,7 +193,7 @@ const Floorplan = () => {
         t => t.template == "location-building",
       )?.id;
       if (buildingId) {
-        dataStore.api.getIdFromLink(buildingId, true)
+        dataStore.api.getIdFromLink(buildingId, true);
       }
     }
   };
@@ -217,11 +234,7 @@ const Floorplan = () => {
           handleSelectRoom={handleSelectRoom}
         />
       </ImageWrapper>
-      <SelectedRoomTitle>
-        {uiStore.selectedRoom
-          ? `${uiStore.selectedRoom?.topic} ${uiStore.selectedRoom?.name}`
-          : null}
-      </SelectedRoomTitle>
+      <SelectedRoomTitle>{uiStore.selectedRoom?.showname}</SelectedRoomTitle>
     </FloorplanWrapper>
   );
 };

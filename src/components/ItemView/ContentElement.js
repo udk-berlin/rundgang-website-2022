@@ -49,6 +49,17 @@ const OLWrapper = styled(ListWrapper)`
   margin-left: ${({ theme }) => theme.space(48)};
 `;
 
+const Video = styled.div`
+  iframe {
+    height: 315px;
+    width: 560px;
+    @media ${({ theme }) => theme.breakpoints.tablet} {
+      height: 200px;
+      width: 358px;
+    }
+  }
+`;
+
 const ContentElement = ({ item }) => {
   if (item.type == "heading") {
     return <Heading>{item.content}</Heading>;
@@ -78,6 +89,12 @@ const ContentElement = ({ item }) => {
     return <Quote>{item.content}</Quote>;
   } else if (item.type == "code") {
     return <Code>{item.content}</Code>;
+  } else if (item.type == "video") {
+    return (
+      <Video
+        dangerouslySetInnerHTML={{ __html: item.formatted_content }}
+      ></Video>
+    );
   }
 };
 

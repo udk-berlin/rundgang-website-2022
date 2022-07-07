@@ -56,25 +56,6 @@ class FilterStore {
       this.selectedId = null;
     } else {
       this.selectedId = id;
-      const selectAncestors = ancestors => {
-        return keys(INITIAL_SELECTION).reduce((obj, cat) => {
-          let selId = null;
-          if (
-            cat in this.initialTags &&
-            this.initialTags[cat].find(x => x.id == id)
-          ) {
-            selId = id;
-          } else if (
-            cat in this.initialTags &&
-            this.initialTags[cat].find(x => ancestors.includes(x.id))
-          ) {
-            selId = this.initialTags[cat].find(x =>
-              ancestors.includes(x.id),
-            )?.id;
-          }
-          return { ...obj, [cat]: selId };
-        }, {});
-      };
       if (
         ["ebene0", "faculty", "consulting service", "centre"].includes(name)
       ) {
@@ -87,23 +68,24 @@ class FilterStore {
           ...INITIAL_SELECTION,
           initiatives: id,
         };
-      } else if (["ebene1", "institute", "subject"].includes(name)) {
+      } else if (
+        ["ebene1", "institute", "subject", "institutes", "subjects"].includes(
+          name,
+        )
+      ) {
         this.selected = {
           ...INITIAL_SELECTION,
           ebene1: id,
-          ...selectAncestors(ancestors),
         };
       } else if (["classes", "class", "Fachgebiet"].includes(name)) {
         this.selected = {
           ...INITIAL_SELECTION,
           classes: id,
-          ...selectAncestors(ancestors),
         };
       } else if (["seminars", "seminar", "course"].includes(name)) {
         this.selected = {
           ...INITIAL_SELECTION,
           seminars: id,
-          ...selectAncestors(ancestors),
         };
       } else {
         this.selected = INITIAL_SELECTION;
@@ -133,8 +115,8 @@ class FilterStore {
       let allTags = this.initialTags;
       const flEl = (group, sel) => {
         if (group && sel) {
-          let res = group.filter(k => k.ancestors.includes(sel));
-          res = [...new Map(res.map(item => [item.name, item])).values()];
+          let res = values(group).filter(k => k.ancestors.includes(sel));
+          res = [...new Map(res.map(item => [item.id, item])).values()];
           return res;
         }
         return group;
@@ -142,13 +124,13 @@ class FilterStore {
       if (this.selected?.seminars !== null) {
         return allTags;
       }
-      if (this.selected?.classes && this.selected.classes !== "none") {
+      if (this.selected?.classes !== null) {
         allTags = {
           ...allTags,
           seminars: flEl(allTags.seminars, this.selected.classes),
         };
       }
-      if (this.selected?.ebene1 && this.selected.ebene1 !== "none") {
+      if (this.selected?.ebene1 !== null) {
         allTags = {
           ...allTags,
           initiatives: flEl(allTags.initiatives, this.selected.ebene1),
@@ -156,14 +138,14 @@ class FilterStore {
           seminars: flEl(allTags.seminars, this.selected.ebene1),
         };
       }
-      if (this.selected?.initiatives && this.selected.initiatives !== "none") {
+      if (this.selected?.initiatives !== null) {
         allTags = {
           ...allTags,
           classes: flEl(allTags.classes, this.selected.initiatives),
           seminars: flEl(allTags.seminars, this.selected.initiatives),
         };
       }
-      if (this.selected.ebene0 && this.selected.ebene0 !== "none") {
+      if (this.selected.ebene0 !== null) {
         allTags = {
           ...allTags,
           ebene1: flEl(allTags.ebene1, this.selected.ebene0),

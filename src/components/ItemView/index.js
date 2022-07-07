@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { entries } from "lodash";
 import styled from "styled-components";
 import { observer } from "mobx-react";
@@ -119,6 +119,19 @@ const Tags = styled.div`
   padding-bottom: ${({ theme }) => theme.space(10)};
 `;
 
+const getLoc = (item, locale) => {
+  let locBig = locale.toUpperCase();
+  let locDesc = locBig;
+  let locText = locBig;
+  if (!item.description[locDesc]?.length) {
+    locDesc = locDesc == "EN" ? "DE" : "EN";
+  }
+  if (!item.rendered.languages[locText]?.formattedContent?.length) {
+    locText = locText == "EN" ? "DE" : "EN";
+  }
+  return [locDesc, locText];
+};
+
 const ItemView = () => {
   const router = useRouter();
   const { locale } = router;
@@ -130,13 +143,10 @@ const ItemView = () => {
   );
 
   const item = uiStore.currentContext;
-  const locDesc = locale == "en" && item.description.EN?.length ? "EN" : "DE";
-  const loc =
-    locale == "en" && item.rendered.languages.EN?.formattedContent?.length
-      ? "EN"
-      : "DE";
+  console.log(item.rendered.languages);
+  const [locDesc, locText] = useMemo(() => getLoc(item, locale), [locale]);
 
-  //console.log(toJS(item), {loc});
+  console.log(toJS(item.rendered.languages[locText]));
   return item && item?.id ? (
     <ItemViewWrapper>
       <Tags>
@@ -171,9 +181,7 @@ const ItemView = () => {
               .map(t => (
                 <LocationTag
                   key={t.name}
-                  onClick={() =>
-                    router.replace(`/orte/${makeUrlFromId(t.id)}`)
-                  }
+                  onClick={() => router.replace(`/orte/${makeUrlFromId(t.id)}`)}
                 >
                   {tagPrefix(t.template)}
                   {t.name}
@@ -205,8 +213,8 @@ const ItemView = () => {
       </ItemHeaderWrapper>
       <ContentWrapper>
         <div>
-          {item.rendered.languages[loc] &&
-            entries(item.rendered.languages[loc].content).map(([k, c]) => (
+          {item.rendered.languages[locText] &&
+            entries(item.rendered.languages[locText].content).map(([k, c]) => (
               <ContentElement key={k} item={c} />
             ))}
         </div>

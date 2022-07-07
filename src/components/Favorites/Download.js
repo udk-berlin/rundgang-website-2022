@@ -5,6 +5,7 @@ import { useStores } from "@/stores/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import { jsPDF } from "jspdf";
 import dynamic from "next/dynamic";
+import FavouritePrintoutTime from "./FavouritePrintoutTime";
 const FavouritePrintout = dynamic(() => import("./FavouritePrintout"), {
   loading: () => <header />,
 });
@@ -38,7 +39,8 @@ const Download = () => {
 
   const downloadImage = () => {
     var doc = new jsPDF();
-    var source = window.document.getElementById("favouriteprintout");
+    var source = window.document.getElementById("favouriteprintoutlist");
+
     doc.html(source, {
       callback: function (doc) {
         doc.save("rundgangudk2022.pdf");
@@ -48,7 +50,26 @@ const Download = () => {
       y: 10,
       width: 100,
       windowWidth: 500,
+      fontFace: [new FontFace("Diatype", "/fonts/EduDiatype-Regular.woff2")],
     });
+    if (
+      uiStore.savedItems.filter(item => item.template == "event").length > 3
+    ) {
+      var table = new jsPDF();
+      var source = window.document.getElementById("favouriteprintouttimetable");
+
+      table.html(source, {
+        callback: function (doc) {
+          doc.save("rundgangudk2022_timetable.pdf");
+          setProcessDownload(false);
+        },
+        x: 10,
+        y: 10,
+        width: 100,
+        windowWidth: 500,
+        fontFace: [new FontFace("Diatype", "/fonts/EduDiatype-Regular.woff2")],
+      });
+    }
   };
 
   const handleDownload = () => {
@@ -64,11 +85,14 @@ const Download = () => {
       <>
         {processDownload ? (
           <DownloadPdf>
-            <FavouritePrintout
-              savedItems={uiStore.savedItems}
-              filteredEvents={uiStore.savedEvents}
-              houseInfo={uiStore.houseInfo}
-            />
+            <div id="favouriteprintout">
+              <FavouritePrintout
+                savedItems={uiStore.savedItems}
+                filteredEvents={uiStore.savedEvents}
+                houseInfo={uiStore.houseInfo}
+              />
+              <FavouritePrintoutTime filteredEvents={uiStore.savedEvents} />
+            </div>
           </DownloadPdf>
         ) : null}
         <DownloadButton onClick={() => handleDownload()}>
