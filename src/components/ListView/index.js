@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 const ListViewWrapper = styled.div`
   width: 100%;
   height: 100%;
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 230px);
   position: relative;
   display: grid;
   justify-content: space-evenly;
@@ -41,7 +41,7 @@ const ListViewWrapper = styled.div`
 const NoItems = styled.div`
   margin: auto;
   width: inherit;
-  height: calc(100vh - 130px);
+  height: calc(100vh - 230px);
   line-height: 100px;
   text-align: center;
   font-size: ${({ theme }) => theme.fontSizes.md};
@@ -88,7 +88,9 @@ const ListView = ({ numCol }) => {
     </ListViewWrapper>
   ) : (
     <NoItems>
-      {dataStore.status == "pending" ? (
+      {dataStore.api.status == "pending" ||
+      !dataStore.api.isLoaded ||
+      !uiStore.isLoaded ? (
         <LocalizedText id="loading" />
       ) : (
         <LocalizedText id="noitems" />

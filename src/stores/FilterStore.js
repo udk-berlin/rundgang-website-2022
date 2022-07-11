@@ -1,5 +1,5 @@
-import { keys, values } from "lodash";
-import { action, makeAutoObservable, observable, toJS } from "mobx";
+import { values } from "lodash";
+import { action, makeAutoObservable, observable } from "mobx";
 const INITIAL_SELECTION = {
   ebene0: null,
   initiatives: null,

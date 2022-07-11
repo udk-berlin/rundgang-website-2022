@@ -10,8 +10,6 @@ const Heading = styled.div`
 `;
 
 const Paragraph = styled.div`
-  word-wrap: break-word;
-  word-break: break-all;
   font-size: ${({ theme }) => theme.fontSizes.mm};
   padding-top: ${({ theme }) => theme.space(8)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -69,10 +67,9 @@ const ContentElement = ({ item }) => {
   if (item.type == "heading") {
     return <Heading>{item.content}</Heading>;
   } else if (item.type == "text") {
-    let cont = String(item.content)
     return (
       <Paragraph>
-        <ReactMarkdown>{cont}</ReactMarkdown> 
+        <ReactMarkdown children={item.content} /> 
       </Paragraph>
     );
   } else if (item.type == "image") {

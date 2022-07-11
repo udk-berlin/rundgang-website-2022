@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { useStores } from "@/stores/index";
 import AutoComplete from "./AutoComplete";
 import { SEARCHBAR_HEIGHT } from "@/utils/constants";
+import { useIntl } from "react-intl";
 
 const Field = styled.input`
   cursor: pointer !important;
@@ -60,6 +61,7 @@ const InputField = ({ handleSubmit }) => {
   const [value, setValue] = useState("");
   const [autocompleteOpen, setAutocompleteOpen] = useState(false);
   const hasContent = useMemo(() => value.length > 0, [value]);
+  const intl = useIntl()
 
   const handleChange = e => {
     setValue(e.target.value);
@@ -90,7 +92,7 @@ const InputField = ({ handleSubmit }) => {
         value={value}
         onChange={handleChange}
         onFocus={_handleFocus}
-        placeholder="FILTER"
+        placeholder={intl.formatMessage({ id: "search" })}
       />
       {hasContent && <CloseButton onClick={handleReset}>&#57344;</CloseButton>}
       {hasContent && autocompleteOpen && (

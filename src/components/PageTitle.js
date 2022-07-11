@@ -12,6 +12,7 @@ const PageTitleWrapper = styled.div`
   width: 100%;
   height: ${TITLE_HEIGHT}px;
   font-family: "Diatype";
+  font-size: 30px;
   background-color: ${({ theme }) => theme.colors.white};
   overflow: hidden;
   margin-top: 4px;
@@ -36,10 +37,13 @@ const splitLongTitles = (s, titleId) => {
 
   var s1 = s.substr(0, middle);
   var s2 = s.substr(middle + 1);
+  if (s1.length == 0 && s2.split(" ").length == 2) {
+    [s1, s2] = s2.split(" ");
+  }
   return [s1, s2];
 };
 
-const PageTitle = () => {
+const PageTitle = ({ loaded }) => {
   const { uiStore, dataStore } = useStores();
   const intl = useIntl();
   const router = useRouter();
@@ -57,57 +61,54 @@ const PageTitle = () => {
           )
         : intl.formatMessage({ id: uiStore.title });
     }
-    return ["LOADING"];
+    return [];
   }, [isMobile, uiStore.title, router.locale]);
 
   const handleBack = () => {
-    let link = router.pathname;
+    if (router.query.pid == uiStore.filterStore.selectedId) {
+      uiStore.filterStore.handleReset();
+    }
     if (
       router.pathname.includes("[pid]") &&
       router.query.pid !== "beratungsangebote"
     ) {
       uiStore.setSelectedRoom(null);
       uiStore.setFloorLevel(null);
-      link = link.replace("[pid]", "");
-      router.replace(link);
+      router.back();
     } else {
       router.replace("/");
       uiStore.setTitle(dataStore.api.root.name, dataStore.api.root.id);
     }
   };
 
-  return (
-    uiStore.title && (
-      <PageTitleWrapper>
-        {isMobile && titleStrings?.length > 1 ? (
-          titleStrings.map((line, i) => (
-            <Stretch
-              handleClick={handleBack}
-              titleId={`${uiStore.title}-${i}-${router.locale}`}
-              key={`${uiStore.title}-line-${i}`}
-              preferredSize={"37px"}
-              arrowDir={uiStore.title !== "rundgang" && i == 0 ? "left" : null}
-            >
-              {line}
-            </Stretch>
-          ))
-        ) : (
+  return uiStore.title && loaded ? (
+    <PageTitleWrapper>
+      {isMobile && titleStrings?.length > 1 ? (
+        titleStrings.map((line, i) => (
           <Stretch
             handleClick={handleBack}
-            titleId={`${uiStore.title}-${router.locale}`}
-            key={`${uiStore.title}_title`}
-            preferredSize={"80px"}
-            arrowDir={
-              uiStore.title !== "rundgang" && titleStrings[0] !== "LOADING"
-                ? "left"
-                : null
-            }
+            titleId={`${uiStore.title}-${i}-${router.locale}`}
+            key={`${uiStore.title}-line-${i}`}
+            preferredSize={"37px"}
+            arrowDir={uiStore.title !== "rundgang" && i == 0 ? "left" : null}
           >
-            {titleStrings}
+            {line}
           </Stretch>
-        )}
-      </PageTitleWrapper>
-    )
+        ))
+      ) : (
+        <Stretch
+          handleClick={handleBack}
+          titleId={`${uiStore.title}-${router.locale}`}
+          key={`${uiStore.title}_title`}
+          preferredSize={"80px"}
+          arrowDir={uiStore.title !== "rundgang" ? "left" : null}
+        >
+          {titleStrings}
+        </Stretch>
+      )}
+    </PageTitleWrapper>
+  ) : (
+    <PageTitleWrapper>{intl.formatMessage({ id: "loading" })}</PageTitleWrapper>
   );
 };
 

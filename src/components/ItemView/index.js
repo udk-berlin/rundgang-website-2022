@@ -11,6 +11,7 @@ import ContentElement from "./ContentElement";
 import Tag from "@/components/simple/Tag";
 import ImageDetailView from "./ImageDetailView";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
+import ReactMarkdown from "react-markdown";
 
 const ItemViewWrapper = styled.div`
   height: 100%;
@@ -186,11 +187,11 @@ const ItemView = () => {
                 </LocationTag>
               ))}
             {item.template == "event" && item.allocation?.temporal?.length
-              ? item.allocation?.temporal?.slice(0, 3).map((t, i) => (
+              ? item.allocation?.temporal?.map((t, i) => (
                   <Time key={`time-item-${t.start}-${i}-${t.end}`}>
                     <FormattedDateTimeRange
-                      from={(t.start - 7200) * 1000}
-                      to={(t.end - 7200) * 1000}
+                      from={(parseInt(t.start) - 7200) * 1000}
+                      to={(parseInt(t.end) - 7200) * 1000}
                       weekday="short"
                       hour="numeric"
                       minute="numeric"
@@ -206,7 +207,9 @@ const ItemView = () => {
                 </AuthorTag>
               ))}
           </LargeTags>
-          <TitleText>{item.description[locDesc]}</TitleText>
+          <TitleText>
+            <ReactMarkdown children={item.description[locDesc]} />
+          </TitleText>
         </DescriptionWrapper>
       </ItemHeaderWrapper>
       <ContentWrapper>

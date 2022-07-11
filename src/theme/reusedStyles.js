@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-const StyledLink = ({ as, children, className, href, prefetch = false }) => (
-  <Link href={href} as={as} passHref prefetch={prefetch}>
+const StyledLink = ({ as, children, className, href }) => (
+  <Link href={href} as={as} passHref>
     <a className={className}>{children}</a>
   </Link>
 );

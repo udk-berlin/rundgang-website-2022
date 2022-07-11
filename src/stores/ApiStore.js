@@ -33,7 +33,7 @@ class ApiStore {
     this.isLoaded = false;
     this.status = "initial";
     makeAutoObservable(this, {
-      isLoaded: false,
+      isLoaded: observable,
       root: observable,
       currentRoot: observable,
       setCachedId: action,
@@ -160,10 +160,10 @@ class ApiStore {
         if (!searchId.includes(process.env.NEXT_PUBLIC_ID_ENDING)) {
           searchId = makeIdFromUrl(searchId);
         }
-        let tags = data?.tags ? data.tags : [];
+        let tags = data?.tags ? data.tags : null;
         if (!data) {
           data = await this.getId(searchId);
-          if (tags.length < 1) {
+          if (!tags) {
             tags = await this.getParentsFromId(data);
             data = { ...data, tags: tags };
           }
@@ -183,7 +183,11 @@ class ApiStore {
               } else {
                 let res = await this.getId(item.id);
                 if (res) {
-                  let itemTags = await this.getParentsFromId(res);
+                  let itemTags =
+                    item.id in this.pathlist ? this.pathlist[item.id] : null;
+                  if (!itemTags) {
+                    itemTags = await this.getParentsFromId(res);
+                  }
                   this.setCachedId(res, itemTags);
                   return { ...res, tags: itemTags };
                 } else return null;
@@ -239,7 +243,6 @@ class ApiStore {
   initializeRoot = async () => {
     this.setStatus("pending");
     try {
-      console.time("load data");
       const tree = await this.getTreeFromId(
         process.env.NEXT_PUBLIC_API_ROOT_URL,
       );
@@ -258,10 +261,8 @@ class ApiStore {
         this.existingRooms = rooms;
         this.locations = locations;
         this.eventlist = eventlist;
-        this.setStatus("success");
+        this.root = tree;
         this.isLoaded = true;
-        console.timeEnd("load api");
-        console.log("all data was processed");
       });
     } catch (error) {
       runInAction(() => {
@@ -275,10 +276,6 @@ class ApiStore {
   };
 
   initialize = async () => {
-    const root = await this.getId(process.env.NEXT_PUBLIC_API_ROOT_URL);
-    runInAction(() => {
-      this.root = root;
-    });
     this.initializeRoot();
   };
 

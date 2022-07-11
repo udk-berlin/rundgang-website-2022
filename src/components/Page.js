@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { observer } from "mobx-react";
 import styled from "styled-components";
@@ -6,8 +6,6 @@ import { useStores } from "../stores/index";
 import Footer from "@/components/Footer";
 import SearchBar from "@/components/SearchBar";
 import PageTitle from "@/components/PageTitle";
-import CursorLine from "@/components/CursorLine";
-import useMediaQuery from "@/utils/useMediaQuery";
 import IntroAnimation from "@/components/IntroAnimation";
 import HeadOG from "./HeadOG";
 
@@ -30,75 +28,51 @@ const PageWrapper = styled.div`
 const Page = ({ children }) => {
   const { dataStore, uiStore } = useStores();
   const router = useRouter();
-  const isMobile = useMediaQuery(
-    "only screen and (max-width:768px) and (orientation:portrait)",
-  );
-  const [showLine, setShowLine] = useState(false);
-
-  useEffect(() => {
-    if (!dataStore.api?.isLoaded) dataStore.initialize();
-  }, []);
 
   useEffect(() => {
     let pid = router.query.pid;
-    setShowLine(false);
-    if (dataStore.api?.root?.id) {
+    if (dataStore.api?.isLoaded) {
       if (pid) {
         dataStore.api.getIdFromLink(pid, true);
       } else if (
-        dataStore.isLoaded &&
         router.pathname !== "/" &&
         !router.pathname.includes("[pid]")
       ) {
         let id = router.pathname.replaceAll("/", "").replaceAll("[pid]", "");
-        uiStore.filterStore.handleReset();
         dataStore.api.getIdFromLink(id, true);
-      } else if (
-        dataStore.isLoaded &&
-        dataStore.api.root &&
-        !router.pathname.includes("[pid]")
-      ) {
+      } else if (dataStore.api.root && !router.pathname.includes("[pid]")) {
         uiStore.filterStore.handleReset();
         dataStore.api.getIdFromLink(dataStore.api.root.id, true);
-        if (!isMobile) {
-          setShowLine(true);
-        }
       }
     }
-  }, [router.query.pid, router.pathname, dataStore.api?.root?.id]);
-
-  useEffect(() => {
-    if (router.pathname == "/" && !isMobile) {
-      setShowLine(true);
-    }
-  }, [router.pathname]);
+  }, [
+    router.query.pid,
+    router.pathname,
+    dataStore.api?.root?.id,
+    dataStore.api?.isLoaded,
+  ]);
 
   return (
-    dataStore.api?.root?.id && (
-      <>
-        <HeadOG
-          imgurl={
-            uiStore?.currentContext?.thumbnail ?? "/assets/img/ogimage.png"
-          }
-          title={uiStore.title}
-          description={
-            uiStore?.currentContext?.description?.default ??
-            "See projects and events..."
-          }
-          ogurl={`https://rundgang.udk-berlin.de${router.asPath}`}
-        />
-        <HeaderWrapper>
-          <PageTitle />
-          <SearchBar />
-        </HeaderWrapper>
-        <PageWrapper>
-          <>{children}</>
-          <Footer />
-          <IntroAnimation key={"intro"} />
-          {showLine ? <CursorLine /> : null}
-        </PageWrapper>
-      </>
-    )
+    <>
+      <HeadOG
+        imgurl={uiStore?.currentContext?.thumbnail ?? "/assets/img/ogimage.png"}
+        title={uiStore.title}
+        description={
+          uiStore?.currentContext?.description?.default ??
+          "See projects and events..."
+        }
+        ogurl={`https://rundgang.udk-berlin.de${router.asPath}`}
+      />
+      <HeaderWrapper>
+        <PageTitle loaded={dataStore.api.isLoaded && uiStore.isLoaded} />
+        <SearchBar />
+      </HeaderWrapper>
+      <PageWrapper>
+        {children}
+        <Footer />
+        <IntroAnimation key={"intro"} />
+      </PageWrapper>
+    </>
   );
 };
 export default observer(Page);

@@ -15,6 +15,8 @@ const wrangleData = (tree, events) => {
 
   let queue = [{ node: tree, id: tree.id, path: [tree] }];
 
+  let lastRoomid = 1;
+
   while (queue.length > 0) {
     let curr = queue.shift();
     if (curr.node.type == "item") {
@@ -28,13 +30,13 @@ const wrangleData = (tree, events) => {
           ].includes(x.template) && x.id !== curr.id,
       );
       if (curr.id in pathlist) {
-        pathlist[curr.id].concat(currpaths);
+        pathlist[curr.id] = [...new Set(pathlist[curr.id].concat(currpaths))];
       } else {
         pathlist[curr.id] = currpaths;
       }
       if (
         curr.node.template == "event" &&
-        (!(curr.id in eventlist) || eventlist[curr.id]?.room.id == "digital")
+        (!(curr.id in eventlist) || eventlist[curr.id]?.room.id == "unbekannt")
       ) {
         let eventData = events.find(e => e.id == curr.id);
         if (
@@ -52,8 +54,9 @@ const wrangleData = (tree, events) => {
             room = building;
           }
           if (!building) {
-            building = { id: "digital", name: "digital" };
-            room = building;
+            building = { id: "unbekannt", name: "unbekannt" };
+            room = { id: "unbekannt", name: lastRoomid };
+            lastRoomid += 1;
           }
           let eventobject = {
             ...curr.node,

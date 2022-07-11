@@ -10,18 +10,18 @@ import { theme } from "theme/index";
 import GlobalStyle from "theme/globalStyle";
 import GlobalFonts from "public/fonts/globalFonts";
 import { useStoreInstances } from "../stores/index";
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
-
-const Page = dynamic(() => import("../components/Page"), {
-  suspense: true,
-});
+import Page from "../components/Page";
 
 export default function App({ Component, pageProps }) {
   const { data } = pageProps;
   const snapshot = data?.dataStore;
   const { dataStore, uiStore } = useStoreInstances(snapshot);
   const router = useRouter();
+
+  React.useEffect(() => {
+    dataStore.connect({ uiStore });
+    dataStore.initialize();
+  }, []);
 
   const messages = useMemo(() => {
     switch (router.locale) {

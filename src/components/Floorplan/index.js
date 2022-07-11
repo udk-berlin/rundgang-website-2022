@@ -35,6 +35,7 @@ const Levels = styled.div`
   flex-wrap: wrap;
   justify-content: space-evenly;
   border: 1px solid black;
+  background: white;
   border-radius: ${({ theme }) => theme.space(32)};
   font-size: ${({ theme }) => theme.fontSizes.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -64,6 +65,7 @@ const LevelNumber = styled.div`
   }
 `;
 const SelectedRoomTitle = styled(LevelNumber)`
+  cursor: auto;
   background: ${({ theme }) => theme.colors.highlight};
   &:hover {
     background: ${({ theme }) => theme.colors.highlight};

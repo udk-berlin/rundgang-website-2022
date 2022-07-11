@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 import Stretch from "@/components/simple/Stretch/index";
 import LocalizedText from "modules/i18n/components/LocalizedText";
 import LocalizedLink from "modules/i18n/components/LocalizedLink";
+import CursorLine from "./CursorLine";
 
 const LinkWrapper = styled(LocalizedLink)`
   width: 100%;
@@ -62,6 +63,7 @@ const LandingPage = () => {
           <LocalizedText id="beratungsangebote_index" />
         </Stretch>
       </LinkWrapper>
+      {!isMobile && <CursorLine />}
     </IndexWrapper>
   );
 };

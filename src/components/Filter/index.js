@@ -130,7 +130,7 @@ const Filter = React.forwardRef(({ onOpen }, ref) => {
             exit={{ height: "0%" }}
           >
             <InputField handleSubmit={handleSubmit} />
-            <Suspense fallback={`Loading...`}>
+            <Suspense fallback="...">
               <TagMenu handleSubmit={handleSubmit} />
             </Suspense>
           </motion.div>
