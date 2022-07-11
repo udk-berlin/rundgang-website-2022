@@ -250,11 +250,14 @@ class ApiStore {
         tree,
         events,
       );
+      
+      // const detailedList = add call here, return array
       runInAction(() => {
         this.tags = tags;
         this.pathlist = pathlist;
         this.existingRooms = rooms;
         this.locations = locations;
+        //this.cachedIds = _.keyBy(detailedList, "id")
         this.eventlist = eventlist;
         this.root = tree;
         this.isLoaded = true;
