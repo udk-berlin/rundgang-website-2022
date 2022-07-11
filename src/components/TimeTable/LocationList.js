@@ -100,31 +100,29 @@ const LocationList = ({
                       <RoomTitle></RoomTitle>
                     </RoomTitleWrapper>
                     <EventsWrapper>
-                      {houseInfo[house]
-                        ? houseInfo[house]?.allocation?.temporal?.map(time =>
-                            time.udk == "rundgang" ? (
-                              <EventBar
-                                key={`opening-${houseInfo[house]?.id}-${time.start}`}
-                                start={scaleX(time.start) - locWidth}
-                                end={scaleX(time.end) - locWidth}
-                                link={`/orte/${makeUrlFromId(
-                                  houseInfo[house]?.id,
-                                )}`}
-                                color="lightgrey"
-                              >
-                                <LocalizedText id="openingtimes" />
-                                <FormattedDateTimeRange
-                                  from={time.start * 1000}
-                                  to={time.end * 1000}
-                                  weekday="long"
-                                  month="numeric"
-                                  day="numeric"
-                                  hour="numeric"
-                                  minute="numeric"
-                                />
-                              </EventBar>
-                            ) : null,
-                          )
+                      {houseInfo && house in houseInfo
+                        ? houseInfo[house]?.allocation?.temporal?.map(time => (
+                            <EventBar
+                              key={`opening-${houseInfo[house]?.id}-${time.start}`}
+                              start={scaleX(time.start) - locWidth}
+                              end={scaleX(time.end) - locWidth}
+                              link={`/orte/${makeUrlFromId(
+                                houseInfo[house]?.id,
+                              )}`}
+                              color="lightgrey"
+                            >
+                              <LocalizedText id="openingtimes" />
+                              <FormattedDateTimeRange
+                                from={time.start * 1000}
+                                to={time.end * 1000}
+                                weekday="long"
+                                month="numeric"
+                                day="numeric"
+                                hour="numeric"
+                                minute="numeric"
+                              />
+                            </EventBar>
+                          ))
                         : null}
                     </EventsWrapper>
                   </Room>

@@ -57,7 +57,7 @@ const PageTitle = () => {
           )
         : intl.formatMessage({ id: uiStore.title });
     }
-    return [];
+    return ["LOADING"];
   }, [isMobile, uiStore.title, router.locale]);
 
   const handleBack = () => {
@@ -97,7 +97,11 @@ const PageTitle = () => {
             titleId={`${uiStore.title}-${router.locale}`}
             key={`${uiStore.title}_title`}
             preferredSize={"80px"}
-            arrowDir={uiStore.title !== "rundgang" ? "left" : null}
+            arrowDir={
+              uiStore.title !== "rundgang" && titleStrings[0] !== "LOADING"
+                ? "left"
+                : null
+            }
           >
             {titleStrings}
           </Stretch>

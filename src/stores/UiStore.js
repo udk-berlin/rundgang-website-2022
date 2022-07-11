@@ -11,23 +11,30 @@ class UiStore {
     this.floorLevel = null;
     this.selectedRoom = null;
     this.filteredByIds = null;
+    this.isLoaded = false;
 
     makeAutoObservable(this, {
       setIsOpen: action,
       setTitle: action,
+      setIsLoaded: action,
       title: observable,
       isOpen: observable,
+      isLoaded: observable,
     });
   }
+
+  setIsLoaded = isl => {
+    this.isLoaded = isl;
+  };
 
   connect = ({ dataStore }) => {
     this.dataStore = dataStore;
     this.allStores.forEach(store => store?.connect?.(this, dataStore));
   };
 
-  setIsOpen(open) {
+  setIsOpen = open => {
     this.isOpen = open;
-  }
+  };
 
   get numberSavedItems() {
     return this.savedItemIds.length;
@@ -67,6 +74,7 @@ class UiStore {
     } else {
       this.title = title;
     }
+    this.setIsLoaded(true);
   }
 
   setFloorLevel(level) {
@@ -104,10 +112,13 @@ class UiStore {
   }
 
   get filteredEvents() {
-    let events = this.dataStore.api.eventlist.filter(ev =>
-      this.items.find(item => item.id == ev.id),
-    );
-    return this.dataStore.createEventStructure(events);
+    if (this.dataStore.api?.eventlist?.length) {
+      let events = this.dataStore.api.eventlist.filter(ev =>
+        this.items.find(item => item.id == ev.id),
+      );
+      return this.dataStore.createEventStructure(events);
+    }
+    return null;
   }
 
   get filteredLocations() {
@@ -128,13 +139,16 @@ class UiStore {
   }
 
   get houseInfo() {
-    return this.dataStore.api.locations.reduce(
-      (obj, item) => ({
-        ...obj,
-        [item.name]: item,
-      }),
-      {},
-    );
+    if (this.dataStore.api?.locations?.length) {
+      return this.dataStore.api.locations.reduce(
+        (obj, item) => ({
+          ...obj,
+          [item.name]: item,
+        }),
+        {},
+      );
+    }
+    return null;
   }
 
   get items() {
