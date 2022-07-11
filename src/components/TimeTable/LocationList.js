@@ -142,8 +142,8 @@ const LocationList = ({
                             ev={ev}
                             top={i}
                             forSaved={forSaved}
-                            start={scaleX(ev.time.start) - locWidth}
-                            end={scaleX(ev.time.end) - locWidth}
+                            start={scaleX(ev.time.start - 7200) - locWidth}
+                            end={scaleX(ev.time.end - 7200) - locWidth}
                             link={`${pathname}/${makeUrlFromId(ev.id)}`}
                           />
                         )),
