@@ -91,6 +91,9 @@ class ApiStore {
   };
 
   getParentsFromId = async item => {
+    if (item.id in this.pathlist) {
+      return this.pathlist[item.id];
+    }
     return Promise.all(
       item.parents.map(parent => this.getPathToId(parent)),
     ).then(res => {
@@ -136,6 +139,9 @@ class ApiStore {
     if (data.id && !(data.id in this.cachedIds)) {
       this.cachedIds[data.id] = { ...data, tags: tags };
     }
+    if (!(data.id in this.pathlist)) {
+      this.pathlist[data.id] = tags;
+    }
   };
 
   setStatus = s => {
@@ -145,94 +151,85 @@ class ApiStore {
   getIdFromLink = async (searchId, asroot = false) => {
     try {
       let data = searchId in this.cachedIds ? this.cachedIds[searchId] : null;
-      if (data && (data.currentItems || data.renderedItem)) {
-        runInAction(() => {
-          if (asroot) {
-            this.currentItems = data.allItemsBelow.map(
-              item => this.cachedIds[item.id],
-            );
-            this.currentRoot = data;
-          }
-        });
-      } else {
-        this.setStatus("pending");
-        let title = searchId;
-        if (!searchId.includes(process.env.NEXT_PUBLIC_ID_ENDING)) {
-          searchId = makeIdFromUrl(searchId);
-        }
-        let tags = data?.tags ? data.tags : null;
-        if (!data) {
-          data = await this.getId(searchId);
-          if (!tags) {
-            tags = await this.getParentsFromId(data);
-            data = { ...data, tags: tags };
-          }
-          this.setCachedId(data, tags);
-        }
-        let currentItems = data?.allItemsBelow?.length
-          ? data.allItemsBelow.map(item => this.cachedIds[item.id])
-          : null;
-        if (data?.type == "context") {
-          let items = await this.getFilteredListFromId(searchId, TYPE_ITEM);
-
-          data = { ...data, allItemsBelow: items.map(i => i.id) };
-          currentItems = await Promise.all(
-            items.map(async item => {
-              if (item.id in this.cachedIds && item.id in this.pathlist) {
-                return this.cachedIds[item.id];
-              } else {
-                let res = await this.getId(item.id);
-                if (res) {
-                  let itemTags =
-                    item.id in this.pathlist ? this.pathlist[item.id] : null;
-                  if (!itemTags) {
-                    itemTags = await this.getParentsFromId(res);
-                  }
-                  this.setCachedId(res, itemTags);
-                  return { ...res, tags: itemTags };
-                } else return null;
-              }
-            }),
-          );
-          currentItems = shuffle(currentItems.filter(a => a));
-        } else if (data?.type == "item" && asroot) {
-          let renderedItem = await this.getRenderedItem(searchId);
-          data = { ...data, rendered: renderedItem };
-        }
+      this.setStatus("pending");
+      let title = searchId;
+      if (!searchId.includes(process.env.NEXT_PUBLIC_ID_ENDING)) {
+        searchId = makeIdFromUrl(searchId);
+      }
+      if (!data) {
+        data = await this.getId(searchId);
+      }
+      let tags = data?.tags ? data.tags : null;
+      if (!tags) {
+        tags = await this.getParentsFromId(data);
+        data = { ...data, tags: tags };
+      }
+      let currentItems = null;
+      if (data?.type == "context") {
+        currentItems = await this.getFilteredListFromId(searchId, TYPE_ITEM);
+        currentItems = await Promise.all(
+          currentItems.map(async item => {
+            if (item.id in this.cachedIds && item.id in this.pathlist) {
+              return {
+                ...item,
+                ...this.cachedIds[item.id],
+              };
+            } else {
+              let res = await this.getId(item.id);
+              if (res) {
+                let itemTags = await this.getParentsFromId(res);
+                this.setCachedId(res, itemTags);
+                return { ...res, tags: itemTags };
+              } else return null;
+            }
+          }),
+        );
+        data = { ...data, allItemsBelow: currentItems.map(i => i.id) };
+        currentItems = shuffle(currentItems.filter(a => a));
 
         if (title == "beratungsangebote") {
           currentItems = currentItems.filter(l =>
             l.tags.find(tag => tag.template == "consulting service"),
           );
         }
-        if (data.template == "location-building") {
+        if (data.template == "location-building" && !data.levels) {
           data.context = data.context.sort(
             (a, b) => parseInt(a.name) - parseInt(b.name),
           );
           let levels = await Promise.all(
             data.context.map(async level => {
-              if (level.id in this.cachedIds) {
-                return this.cachedIds[level.id];
+              if (
+                level.id in this.cachedIds &&
+                this.cachedIds[level.id].thumbnail_full_size
+              ) {
+                return {
+                  ...this.cachedIds[level.id],
+                  tags: this.pathlist[level.id],
+                };
               } else {
                 let res = await this.getId(level.id);
-                this.setCachedId(res, tags);
+                let levelTags = await this.getParentsFromId(res);
+                this.setCachedId(res, levelTags);
                 return res;
               }
             }),
           );
           data.levels = levels;
         }
-        data.name =
-          title in ALIAS_IDS[process.env.NODE_ENV] ? title : data.name;
-
-        runInAction(() => {
-          if (asroot) {
-            this.currentItems = currentItems;
-            this.currentRoot = data;
-          }
-          this.setStatus("success");
-        });
+      } else if (data?.type == "item" && asroot) {
+        let renderedItem = await this.getRenderedItem(searchId);
+        data = { ...data, rendered: renderedItem };
       }
+      data.name = title in ALIAS_IDS[process.env.NODE_ENV] ? title : data.name;
+
+      this.setCachedId(data, tags);
+      runInAction(() => {
+        if (asroot) {
+          this.currentItems = currentItems;
+          this.currentRoot = data;
+        }
+        this.setStatus("success");
+      });
     } catch (error) {
       runInAction(() => {
         this.setStatus("error");

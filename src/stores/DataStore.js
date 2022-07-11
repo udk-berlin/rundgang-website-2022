@@ -10,6 +10,8 @@ class DataStore {
     makeAutoObservable(this, {
       api: false,
     });
+
+    this.initialize();
   }
 
   createEventStructure(eventlist) {
@@ -42,7 +44,7 @@ class DataStore {
 
   get eventLocations() {
     if (this.api.eventlist) {
-      return this.createEventStructure(this.api.eventlist);
+      return this.createEventStructure(Object.values(this.api.eventlist));
     }
     return null;
   }
@@ -58,10 +60,10 @@ class DataStore {
     this.uiStore = stores.uiStore;
     this.sideEffects = [
       reaction(
-        () => this.api.currentRoot,
-        rootNode => {
-          if (rootNode?.name && rootNode?.id) {
-            this.uiStore.setTitle(rootNode.name, rootNode.id);
+        () => this.api.currentRoot?.name,
+        curname => {
+          if (curname && this.api.currentRoot.id) {
+            this.uiStore.setTitle(curname, this.api.currentRoot.id);
           }
         },
       ),

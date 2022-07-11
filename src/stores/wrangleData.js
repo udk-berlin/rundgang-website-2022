@@ -51,7 +51,11 @@ const wrangleData = (tree, events) => {
           );
           let room = curr.path.find(loc => loc.template == "location-room");
           if (building?.template == "location-external") {
-            room = building;
+            let [roomname] = building.name?.split(" ") ?? [building.name];
+            room = {
+              id: `room-${building.id}`,
+              name: roomname,
+            };
           }
           if (!building) {
             building = { id: "unbekannt", name: "unbekannt" };
@@ -104,7 +108,14 @@ const wrangleData = (tree, events) => {
         }
         if (ebene) {
           if (i > 1) {
-            let ancestors = curr.path.map(p => p.id);
+            if (context.id in pathlist) {
+              pathlist[context.id] = [
+                ...new Set(pathlist[context.id].concat(currpaths)),
+              ];
+            } else {
+              pathlist[context.id] = currpaths;
+            }
+            let ancestors = currpaths.map(p => p.id);
             tags[ebene][context.id] = {
               ...context,
               ancestors:
@@ -138,7 +149,8 @@ const wrangleData = (tree, events) => {
     }
     return obj;
   }, {});
-  return { tags: result, rooms, eventlist: Object.values(eventlist), pathlist };
+
+  return { tags: result, rooms, eventlist, pathlist };
 };
 
 export default wrangleData;

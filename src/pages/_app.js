@@ -18,11 +18,6 @@ export default function App({ Component, pageProps }) {
   const { dataStore, uiStore } = useStoreInstances(snapshot);
   const router = useRouter();
 
-  React.useEffect(() => {
-    dataStore.connect({ uiStore });
-    dataStore.initialize();
-  }, []);
-
   const messages = useMemo(() => {
     switch (router.locale) {
       case "de":

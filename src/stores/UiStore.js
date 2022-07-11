@@ -112,8 +112,8 @@ class UiStore {
   }
 
   get filteredEvents() {
-    if (this.dataStore.api?.eventlist?.length) {
-      let events = this.dataStore.api.eventlist.filter(ev =>
+    if (this.dataStore.api?.eventlist) {
+      let events = Object.values(this.dataStore.api.eventlist).filter(ev =>
         this.items.find(item => item.id == ev.id),
       );
       return this.dataStore.createEventStructure(events);
@@ -132,10 +132,13 @@ class UiStore {
   }
 
   get savedEvents() {
-    let events = this.dataStore.api.eventlist.filter(ev =>
-      this.savedItemIds.find(id => id == ev.id),
-    );
-    return this.dataStore.createEventStructure(events);
+    if (this.dataStore.api?.eventlist) {
+      let events = Object.values(this.dataStore.api.eventlist).filter(ev =>
+        this.savedItemIds.find(id => id == ev.id),
+      );
+      return this.dataStore.createEventStructure(events);
+    }
+    return null;
   }
 
   get houseInfo() {
