@@ -138,7 +138,7 @@ const ListItem = ({ element, numCol }) => {
               ? element.allocation?.temporal?.slice(0, 3).map((t, i) => (
                   <Time key={`time-range-${t.start}-${i}-${t.end}`}>
                     <FormattedTime
-                      value={t.start * 1000}
+                      value={(t.start - 7200) * 1000}
                       weekday="short"
                       hour="numeric"
                       minute="numeric"

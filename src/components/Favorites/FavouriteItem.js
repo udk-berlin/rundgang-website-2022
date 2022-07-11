@@ -115,11 +115,11 @@ const FavouriteItem = ({ element, handleClick, handleUnsave }) => {
             element?.allocation?.temporal?.map((t, i) => (
               <Time key={`time-range-${t.start}-${i}-${t.end}`}>
                 <FormattedDateTimeRange
-                  from={t.start * 1000}
+                  from={(t.start - 7200) * 1000}
                   weekday="short"
                   hour="numeric"
                   minute="numeric"
-                  to={t.end * 1000}
+                  to={(t.end - 7200) * 1000}
                 />
               </Time>
             ))}
