@@ -77,9 +77,6 @@ class ApiStore {
   };
 
   getId = async id => {
-    if (id in this.cachedIds) {
-      return this.cachedIds[id];
-    }
     return this.get(id);
   };
 
@@ -137,9 +134,9 @@ class ApiStore {
 
   setCachedId = (data, tags) => {
     if (data.id && !(data.id in this.cachedIds)) {
-      this.cachedIds[data.id] = { ...data, tags: tags };
+      this.cachedIds[data.id] = data;
     }
-    if (!(data.id in this.pathlist)) {
+    if (data.id && !(data.id in this.pathlist)) {
       this.pathlist[data.id] = tags;
     }
   };
@@ -150,20 +147,20 @@ class ApiStore {
 
   getIdFromLink = async (searchId, asroot = false) => {
     try {
-      let data = searchId in this.cachedIds ? this.cachedIds[searchId] : null;
       this.setStatus("pending");
       let title = searchId;
       if (!searchId.includes(process.env.NEXT_PUBLIC_ID_ENDING)) {
         searchId = makeIdFromUrl(searchId);
       }
+      let data = searchId in this.cachedIds ? this.cachedIds[searchId] : null;
+      let tags = searchId in this.pathlist ? this.pathlist[searchId] : null;
       if (!data) {
         data = await this.getId(searchId);
       }
-      let tags = data?.tags ? data.tags : null;
       if (!tags) {
         tags = await this.getParentsFromId(data);
-        data = { ...data, tags: tags };
       }
+      data = { ...data, tags };
       let currentItems = null;
       if (data?.type == "context") {
         currentItems = await this.getFilteredListFromId(searchId, TYPE_ITEM);
@@ -173,6 +170,7 @@ class ApiStore {
               return {
                 ...item,
                 ...this.cachedIds[item.id],
+                tags: this.pathlist[item.id],
               };
             } else {
               let res = await this.getId(item.id);

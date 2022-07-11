@@ -30,7 +30,10 @@ const wrangleData = (tree, events) => {
           ].includes(x.template) && x.id !== curr.id,
       );
       if (curr.id in pathlist) {
-        pathlist[curr.id] = [...new Set(pathlist[curr.id].concat(currpaths))];
+        let newpaths = pathlist[curr.id].concat(currpaths);
+        pathlist[curr.id] = [
+          ...new Map(newpaths.map(item => [item.id, item])).values(),
+        ];
       } else {
         pathlist[curr.id] = currpaths;
       }
@@ -109,8 +112,9 @@ const wrangleData = (tree, events) => {
         if (ebene) {
           if (i > 1) {
             if (context.id in pathlist) {
+              let newpaths = pathlist[context.id].concat(currpaths);
               pathlist[context.id] = [
-                ...new Set(pathlist[context.id].concat(currpaths)),
+                ...new Map(newpaths.map(item => [item.id, item])).values(),
               ];
             } else {
               pathlist[context.id] = currpaths;
@@ -149,6 +153,8 @@ const wrangleData = (tree, events) => {
     }
     return obj;
   }, {});
+
+  console.log("done with data");
 
   return { tags: result, rooms, eventlist, pathlist };
 };
