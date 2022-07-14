@@ -12,10 +12,16 @@ const PageTitleWrapper = styled.div`
   width: 100%;
   height: ${TITLE_HEIGHT}px;
   font-family: "Diatype";
-  font-size: 30px;
   background-color: ${({ theme }) => theme.colors.white};
   overflow: hidden;
   margin-top: 4px;
+`;
+
+const LoadWrapper = styled.div`
+  font-size: 74px;
+  transform: scaleX(1.5);
+  transform-origin: top left;
+  overflow: hidden;
 `;
 
 const splitLongTitles = (s, titleId) => {
@@ -78,7 +84,6 @@ const PageTitle = ({ loaded }) => {
     } else {
       uiStore.setTitle("rundgang", dataStore.api.root.id);
       router.replace("/");
-      uiStore.setTitle("rundgang", dataStore.api.root.id);
     }
   };
 
@@ -109,7 +114,9 @@ const PageTitle = ({ loaded }) => {
       )}
     </PageTitleWrapper>
   ) : (
-    <PageTitleWrapper>{intl.formatMessage({ id: "loading" })}</PageTitleWrapper>
+    <PageTitleWrapper>
+      <LoadWrapper>{intl.formatMessage({ id: "loading" })}</LoadWrapper>
+    </PageTitleWrapper>
   );
 };
 

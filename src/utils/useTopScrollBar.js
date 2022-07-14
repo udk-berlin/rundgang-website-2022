@@ -46,14 +46,14 @@ const useTopScrollBar = (switchPos, sundayPos) => {
 
     bottomScroll.current.addEventListener(
       "scroll",
-      throttle(setFromBottom, 100),
+      throttle(setFromBottom, 200),
     );
     topScroll.current.addEventListener("scroll", throttle(setFromTop, 100));
 
     return () => {
       bottomScroll?.current?.removeEventListener(
         "scroll",
-        throttle(setFromBottom, 100),
+        throttle(setFromBottom, 200),
       );
       topScroll?.current?.removeEventListener(
         "scroll",

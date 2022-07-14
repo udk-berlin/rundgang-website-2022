@@ -63,5 +63,6 @@
   "level9": "9.OG",
   "level10": "10.OG",
   "levelnull": "Alle Etagen",
-  "loading": "lädt..."
+  "loading": "lädt...",
+  "downloadtimetable": "Zeitplan"
 }

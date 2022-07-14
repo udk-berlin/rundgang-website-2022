@@ -1,0 +1,395 @@
+[
+  {
+    "name": "UNI.T - Theater der UdK Berlin",
+    "lat": "52.5098",
+    "lng": "13.3290",
+    "maxZoom": 15.4,
+    "image": "unit",
+    "id": {
+      "development": "!pvskkxkddkLUqsuUzK:dev.medienhaus.udk-berlin.de",
+      "production": "!uAswzmPHWtAVmjhIYx:content.udk-berlin.de"
+    },
+    "allocation": {}
+  },
+  {
+    "name": "Konzertsaal der UdK Berlin",
+    "lat": "52.50895",
+    "lng": "13.3281",
+    "maxZoom": 15.2,
+    "image": "konzertsaal",
+    "id": {
+      "development": "!QxQzOsKXzcYiHEMMpg:dev.medienhaus.udk-berlin.de",
+      "production": "!jocCvZKGntdCmvmmUG:content.udk-berlin.de"
+    },
+    "allocation": {}
+  },
+  {
+    "name": "Jazz-Institut Berlin, Einsteinufer 43-53, 10587 Berlin",
+    "lat": "52.5169",
+    "lng": "13.32299",
+    "maxZoom": 15.8,
+    "image": "jib",
+    "id": {
+      "development": "!NDEmKoPNTYAwCsgmgG:dev.medienhaus.udk-berlin.de",
+      "production": "!hjTkjNaIDkzxNWQZTR:content.udk-berlin.de"
+    },
+    "allocation": {}
+  },
+  {
+    "name": "Bundesallee 1-12",
+    "lat": "52.498635",
+    "lng": "13.3299",
+    "maxZoom": 14.1,
+    "image": "4001",
+    "id": {
+      "development": "!dtjgwrdMPItWQIaoSt:dev.medienhaus.udk-berlin.de",
+      "production": "!XaBVrlwEHUifKOmMPa:content.udk-berlin.de"
+    },
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658480400,
+          "end": 1658534400,
+          "udk": "preview"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658566800,
+          "end": 1658610000,
+          "udk": "rundgang"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658649600,
+          "end": 1658689200,
+          "udk": "rundgang"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Einsteinufer 43",
+    "lat": "52.51705",
+    "lng": "13.32215",
+    "maxZoom": 14.7,
+    "image": "4002",
+    "id": {
+      "development": "!RoplWetVwBJXxKZPGr:dev.medienhaus.udk-berlin.de",
+      "production": "!aLyedVYnhynRwlhXUm:content.udk-berlin.de"
+    },
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658480400,
+          "end": 1658523600,
+          "udk": "preview"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658566800,
+          "end": 1658610000,
+          "udk": "rundgang"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658649600,
+          "end": 1658689200,
+          "udk": "rundgang"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Hardenbergstraße 33",
+    "lat": "52.50967152502669",
+    "lng": "13.327300406397331",
+    "maxZoom": 13.7,
+    "image": "4005",
+    "id": {
+      "development": "!SLHPcitdKliABtGyyt:dev.medienhaus.udk-berlin.de",
+      "production": "!amwvMUTwucDiRylpJQ:content.udk-berlin.de"
+    },
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658480400,
+          "end": 1658534400,
+          "udk": "preview"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658566800,
+          "end": 1658610000,
+          "udk": "rundgang"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658649600,
+          "end": 1658689200,
+          "udk": "rundgang"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Grunewaldstrasse 2-5",
+    "lat": "52.4908045",
+    "lng": "13.3588243",
+    "maxZoom": 14.66,
+    "image": "4004",
+    "id": {
+      "development": "!XgKNyhtSSvvLtRepkF:dev.medienhaus.udk-berlin.de",
+      "production": "!LiVonEpyzckeIAyOIb:content.udk-berlin.de"
+    },
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658480400,
+          "end": 1658523600,
+          "udk": "preview"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658566800,
+          "end": 1658610000,
+          "udk": "rundgang"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658649600,
+          "end": 1658689200,
+          "udk": "rundgang"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Fasanenstraße 1B",
+    "lat": "52.50939",
+    "lng": "13.32859",
+    "maxZoom": 15.2,
+    "image": "4003",
+    "id": {
+      "development": "!iaYmdanFCGqDxCGLyW:dev.medienhaus.udk-berlin.de",
+      "production": "!cUpdRzxCGmLkwfrUeq:content.udk-berlin.de"
+    },
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658480400,
+          "end": 1658523600,
+          "udk": "preview"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658566800,
+          "end": 1658610000,
+          "udk": "rundgang"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658649600,
+          "end": 1658689200,
+          "udk": "rundgang"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Straße des 17. Juni 118",
+    "lat": "52.513815995810795",
+    "lng": "13.329011660461106",
+    "maxZoom": 15.45,
+    "image": "4007",
+    "id": {
+      "development": "!dLrgJvQtzVDImFhOUu:dev.medienhaus.udk-berlin.de",
+      "production": "!FYglBKPJHZGUNIYcBt:content.udk-berlin.de"
+    },
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658480400,
+          "end": 1658523600,
+          "udk": "preview"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658566800,
+          "end": 1658610000,
+          "udk": "rundgang"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658649600,
+          "end": 1658689200,
+          "udk": "rundgang"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Hardenbergstraße 41",
+    "lat": "52.511295526569526",
+    "lng": "13.323453006016974",
+    "maxZoom": 16.8,
+    "image": "4006",
+    "id": {
+      "development": "!tbzskmejuZweqmVLuh:dev.medienhaus.udk-berlin.de",
+      "production": "!fwsuOeorRCZtTqwukc:content.udk-berlin.de"
+    },
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658480400,
+          "end": 1658523600,
+          "udk": "preview"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658566800,
+          "end": 1658610000,
+          "udk": "rundgang"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658649600,
+          "end": 1658689200,
+          "udk": "rundgang"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Lietzenburger Str. 45",
+    "lat": "52.49982823444154",
+    "lng": "13.332849698118526",
+    "maxZoom": 15.6,
+    "image": "4008",
+    "id": {
+      "development": "!FQcGktOAOcPMpBqJxd:dev.medienhaus.udk-berlin.de",
+      "production": "!ozXLGbrpCVNrRScjQJ:content.udk-berlin.de"
+    },
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658480400,
+          "end": 1658523600,
+          "udk": "preview"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658566800,
+          "end": 1658610000,
+          "udk": "rundgang"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658649600,
+          "end": 1658689200,
+          "udk": "rundgang"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Mierendorffstrasse 28-30",
+    "lat": "52.52441",
+    "lng": "13.30389",
+    "maxZoom": 15.89,
+    "image": "4009",
+    "id": {
+      "development": "!bxVKmYoHQbrOuwQYAL:dev.medienhaus.udk-berlin.de",
+      "production": "!nOMmizEAkvzoapuqCK:content.udk-berlin.de"
+    },
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658480400,
+          "end": 1658523600,
+          "udk": "preview"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658566800,
+          "end": 1658610000,
+          "udk": "rundgang"
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658649600,
+          "end": 1658689200,
+          "udk": "rundgang"
+        }
+      ]
+    }
+  },
+  {
+    "name": "BHROX bauhaus reuse",
+    "lat": "52.5129644934866",
+    "lng": "13.322278932541101",
+    "maxZoom": 18,
+    "image": "location-external",
+    "id": {
+      "development": "!PadwaEcxOidsaIKXIQ:dev.medienhaus.udk-berlin.de",
+      "production": "!PkpdUouHNyPWmVReTC:content.udk-berlin.de"
+    },
+    "allocation": {}
+  },
+  {
+    "name": "Kühlhaus Berlin",
+    "lat": "52.49975612059813",
+    "lng": "13.376558909891168",
+    "maxZoom": 14.4,
+    "image": "location-external",
+    "id": {
+      "development": "!dmoHMYUxUsSLerJZcF:dev.medienhaus.udk-berlin.de",
+      "production": "!dYAxemkkcQCGTMQgTS:content.udk-berlin.de"
+    },
+    "allocation": {}
+  },
+  {
+    "name": "Hochschulübergreifendes Zentrum Tanz Berlin (HZT)",
+    "lat": "52.5517",
+    "lng": "13.3748",
+    "maxZoom": 16,
+    "image": "hzt",
+    "id": {
+      "development": "!bwyfqxrdHCbwOYLLgp:dev.medienhaus.udk-berlin.de",
+      "production": "!FqPOhaHHAjYeliMfOU:content.udk-berlin.de"
+    },
+    "allocation": {}
+  },
+  {
+    "name": "Außenvitrine Einsteinufer",
+    "lat": "52.51741297926878",
+    "lng": "13.322555087168652",
+    "maxZoom": 14.4,
+    "image": "location-external",
+    "id": {
+      "development": "!quUjIOqsGbxZlsMGZk:dev.medienhaus.udk-berlin.de",
+      "production": "!bwyfqxrdHCbwOYLLgp:content.udk-berlin.de"
+    },
+    "allocation": {}
+  },
+  {
+    "name": "Bundesallee Parkdeck",
+    "lat": "52.49797669481042",
+    "lng": "13.329729205033358",
+    "maxZoom": 14.4,
+    "image": "location-external",
+    "id": {
+      "development": "!hQzMPzEcOUiJxoYoue:dev.medienhaus.udk-berlin.de",
+      "production": "!bwyfqxrdHCbwOYLLgp:content.udk-berlin.de"
+    },
+    "allocation": {}
+  }
+]

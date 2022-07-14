@@ -66,5 +66,6 @@
   "level9": "9 F",
   "level10": "10 F",
   "levelnull": "all floors",
-  "loading": "loading..."
+  "loading": "loading...",
+  "downloadtimetable": "timetable"
 }

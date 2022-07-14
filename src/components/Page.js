@@ -64,7 +64,7 @@ const Page = ({ children }) => {
         ogurl={`https://rundgang.udk-berlin.de${router.asPath}`}
       />
       <HeaderWrapper>
-        <PageTitle loaded={dataStore.api.isLoaded && uiStore.isLoaded} />
+        <PageTitle loaded={dataStore.api.isLoaded} />
         <SearchBar />
       </HeaderWrapper>
       <PageWrapper>

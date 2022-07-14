@@ -5,7 +5,6 @@ import { createRoot } from "react-dom/client";
 import maplibregl from "maplibre-gl";
 import { useStores } from "@/stores/index";
 import useWindowSize from "@/utils/useWindowSize";
-import exactLocations from "./locationData.json";
 import GrundrissMarker from "./GrundrissMarker";
 import GrundrissPopup from "./GrundrissPopup";
 
@@ -72,20 +71,12 @@ const Map = () => {
   const [addresses, setAddresses] = useState([]);
 
   useEffect(() => {
-    if (
-      exactLocations &&
-      dataStore.api.locations &&
-      uiStore.filteredLocations
-    ) {
-      const adrr = exactLocations.map(a => ({
+    if (dataStore.api.locations && uiStore.filteredLocations) {
+      const adrr = dataStore.api.locations.map(a => ({
         ...a,
-        ...dataStore.api.locations.find(
-          c => c.id == a.id[process.env.NODE_ENV],
-        ),
         isFound: uiStore.filteredLocations.find(
-          c => c.id == a.id[process.env.NODE_ENV],
+          c => c.id == a.id,
         )?.id,
-        id: a.id[process.env.NODE_ENV],
       }));
       setAddresses(adrr);
     }

@@ -28,10 +28,13 @@ const DownloadButton = styled.button`
   margin-right: 8px;
   border-radius: ${({ theme }) => theme.space(32)};
   background: ${({ theme }) => theme.colors.highlight};
-  font-size: ${({ theme }) => theme.fontSizes.lm};
-  padding: ${({ theme }) => `${theme.space(4)} ${theme.space(16)}`};
+  font-size: ${({ theme }) => theme.fontSizes.mm};
+  padding: ${({ theme }) => `${theme.space(2)} ${theme.space(8)}`};
   &:hover {
     background: ${({ theme }) => theme.colors.lightgrey};
+  }
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
   }
 `;
 
@@ -39,13 +42,13 @@ const Download = () => {
   const { uiStore } = useStores();
   const [processDownload, setProcessDownload] = useState(false);
 
-  const downloadImage = () => {
+  const downloadImage = (id, name) => {
     var doc = new jsPDF();
-    var source = window.document.getElementById("favouriteprintoutlist");
+    var source = window.document.getElementById(id);
     if (source) {
       doc.html(source, {
         callback: function (doc) {
-          doc.save("rundgangudk2022.pdf");
+          doc.save(name);
           setProcessDownload(false);
         },
         x: 10,
@@ -55,67 +58,60 @@ const Download = () => {
         autoPaging: "text",
         fontFace: [new FontFace("Diatype", "/fonts/EduDiatype-Regular.woff2")],
       });
-      if (
-        uiStore.savedItems.filter(item => item.template == "event").length >
-          1 &&
-        window.document.getElementById("favouriteprintouttimetable") !==
-          undefined
-      ) {
-        var table = new jsPDF();
-        var source = window.document.getElementById(
-          "favouriteprintouttimetable",
-        );
-
-        table.html(source, {
-          callback: function (doc) {
-            doc.save("rundgangudk2022_timetable.pdf");
-            setProcessDownload(false);
-          },
-          x: 10,
-          y: 10,
-          width: 100,
-          windowWidth: 500,
-          autoPaging: "text",
-          fontFace: [
-            new FontFace("Diatype", "/fonts/EduDiatype-Regular.woff2"),
-          ],
-        });
-      }
     } else {
-      setProcessDownload(false)
+      setProcessDownload(false);
     }
   };
 
-  const handleDownload = () => {
-    setProcessDownload(true);
+  const handleDownload = (id, name) => {
+    setProcessDownload(id);
     const timer = setTimeout(() => {
-      downloadImage();
+      downloadImage(id, name);
     }, 1000);
     return timer;
   };
+  const events = uiStore.savedItems.filter(item => item.template == "event");
 
   return (
     uiStore.numberSavedItems > 0 && (
       <>
         {processDownload ? (
           <DownloadPdf>
-            <div id="favouriteprintout">
-              <FavouritePrintout
-                savedItems={uiStore.savedItems}
-                filteredEvents={uiStore.savedEvents}
-                houseInfo={uiStore.houseInfo}
-              />
-              <FavouritePrintoutTime filteredEvents={uiStore.savedEvents} />
-            </div>
+            <FavouritePrintout
+              savedItems={uiStore.savedItems}
+              filteredEvents={uiStore.savedEvents}
+              houseInfo={uiStore.houseInfo}
+            />
+            <FavouritePrintoutTime filteredEvents={uiStore.savedEvents} />
           </DownloadPdf>
         ) : null}
-        <DownloadButton onClick={() => handleDownload()}>
-          {processDownload ? (
+        <DownloadButton
+          onClick={() =>
+            handleDownload("favouriteprintoutlist", "rundgangudk2022.pdf")
+          }
+        >
+          {processDownload == "favouriteprintoutlist" ? (
             <LocalizedText id="downloading" />
           ) : (
             <LocalizedText id="download" />
           )}
         </DownloadButton>
+        {events.length > 0 ? (
+          <DownloadButton
+            onClick={() =>
+              handleDownload(
+                "favouriteprintouttimetable",
+                "rundgangudk2022_timetable.pdf",
+              )
+            }
+          >
+            {processDownload == "favouriteprintouttimetable" ? (
+              <LocalizedText id="downloading" />
+            ) : (
+              <LocalizedText id="downloadtimetable" />
+            )}
+          </DownloadButton>
+        ) : null}
       </>
     )
   );

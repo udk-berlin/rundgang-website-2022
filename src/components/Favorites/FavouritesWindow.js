@@ -21,7 +21,7 @@ const FavouritesWindowWrapper = styled.div`
 const FavouritesHeader = styled.div`
   display: flex;
   width: 100%;
-  height: ${SEARCHBAR_HEIGHT * 2}px;
+  height: ${SEARCHBAR_HEIGHT +4}px;
   justify-content: space-between;
   cursor: pointer;
 `;

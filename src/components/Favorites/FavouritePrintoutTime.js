@@ -79,7 +79,7 @@ const FavouritePrintoutTime = ({ filteredEvents }) => {
   return (
     <div
       id="favouriteprintouttimetable"
-      style={{ position: "relative", marginTop: "200px" }}
+      style={{ position: "relative", marginTop: "100px" }}
     >
       <div
         style={{

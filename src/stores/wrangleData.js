@@ -1,4 +1,4 @@
-const wrangleData = (tree, events) => {
+const wrangleData = (tree, detailedList) => {
   let tags = {
     ebene0: {},
     initiatives: {},
@@ -39,9 +39,9 @@ const wrangleData = (tree, events) => {
       }
       if (
         curr.node.template == "event" &&
-        (!(curr.id in eventlist) || eventlist[curr.id]?.room.id == "unbekannt")
+        (!(curr.id in eventlist) || eventlist[curr.id]?.room.id == "diverse")
       ) {
-        let eventData = events.find(e => e.id == curr.id);
+        let eventData = detailedList.find(e => e.id == curr.id);
         if (
           eventData &&
           eventData?.allocation?.temporal?.filter(t => t.start < 1658563200)
@@ -61,8 +61,8 @@ const wrangleData = (tree, events) => {
             };
           }
           if (!building) {
-            building = { id: "unbekannt", name: "unbekannt" };
-            room = { id: "unbekannt", name: lastRoomid };
+            building = { id: "diverse", name: "diverse" };
+            room = { id: "diverse", name: lastRoomid };
             lastRoomid += 1;
           }
           let eventobject = {
@@ -110,30 +110,26 @@ const wrangleData = (tree, events) => {
           rooms[context.id] = [curr.node.id];
         }
         if (ebene) {
-          if (i > 1) {
-            if (context.id in pathlist) {
-              let newpaths = pathlist[context.id].concat(currpaths);
-              pathlist[context.id] = [
-                ...new Map(newpaths.map(item => [item.id, item])).values(),
-              ];
-            } else {
-              pathlist[context.id] = currpaths;
-            }
-            let ancestors = currpaths.map(p => p.id);
-            tags[ebene][context.id] = {
-              ...context,
-              ancestors:
-                context.id in tags[ebene]
-                  ? [
-                      ...new Set(
-                        tags[ebene][context.id].ancestors.concat(ancestors),
-                      ),
-                    ]
-                  : ancestors,
-            };
+          if (context.id in pathlist) {
+            let newpaths = pathlist[context.id].concat(currpaths);
+            pathlist[context.id] = [
+              ...new Map(newpaths.map(item => [item.id, item])).values(),
+            ];
           } else {
-            tags[ebene][context.id] = { ...context, ancestors: [] };
+            pathlist[context.id] = currpaths;
           }
+          let ancestors = currpaths.map(p => p.id);
+          tags[ebene][context.id] = {
+            ...context,
+            ancestors:
+              context.id in tags[ebene]
+                ? [
+                    ...new Set(
+                      tags[ebene][context.id].ancestors.concat(ancestors),
+                    ),
+                  ]
+                : ancestors,
+          };
         }
       });
     }
@@ -154,9 +150,12 @@ const wrangleData = (tree, events) => {
     return obj;
   }, {});
 
-  console.log("done with data");
+  let allItems = detailedList.map(item => ({
+    ...item,
+    tags: item.id in pathlist ? pathlist[item.id] : null,
+  }));
 
-  return { tags: result, rooms, eventlist, pathlist };
+  return { tags: result, rooms, eventlist, pathlist, allItems };
 };
 
 export default wrangleData;

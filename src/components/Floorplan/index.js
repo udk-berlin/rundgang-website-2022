@@ -24,7 +24,7 @@ const BackgroundImg = styled.img`
 `;
 
 const Levels = styled.div`
-  position: relative;
+  position: absolute;
   top: 16px;
   left: 0;
   width: fit-content;
@@ -35,13 +35,18 @@ const Levels = styled.div`
   flex-wrap: wrap;
   justify-content: space-evenly;
   border: 1px solid black;
-  background: white;
+  background-color: white;
+  z-index: 100;
   border-radius: ${({ theme }) => theme.space(32)};
   font-size: ${({ theme }) => theme.fontSizes.md};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.sm};
     justify-content: space-evenly;
+    position: relative;
     top: 16px;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 
@@ -228,7 +233,7 @@ const Floorplan = () => {
       <ImageWrapper visibleRooms={visibleRooms}>
         <BackgroundImg
           grey={uiStore.floorLevel == null}
-          src={`/assets/img/${buildingContext?.description.default}_building.svg`}
+          src={`/assets/img/${buildingContext?.image}_building.svg`}
         />
         <FloorPlanSvg
           url={uiStore.floorPlan ? uiStore.floorPlan.thumbnail_full_size : null}

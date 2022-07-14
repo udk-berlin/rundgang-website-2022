@@ -124,7 +124,7 @@ const FavouriteItem = ({ element, handleClick, handleUnsave }) => {
               </Time>
             ))}
           {element.tags
-            .filter(t =>
+            ?.filter(t =>
               ["location-room", "location-building"].includes(t.template),
             )
             .map(t => (

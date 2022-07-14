@@ -8,6 +8,7 @@ import {
 import { shuffle } from "lodash";
 import { makeIdFromUrl, ALIAS_IDS } from "@/utils/idUtils";
 import wrangleData from "./wrangleData";
+import locationData from "./locationData.json";
 
 const PATH_URL = "/pathlist";
 const TREE_URL = "/tree";
@@ -58,22 +59,6 @@ class ApiStore {
     return this.get(process.env.NEXT_PUBLIC_API_ROOT_URL).catch(() =>
       console.log("no ROOT id"),
     );
-  };
-
-  getLocations = async () => {
-    return this.get(process.env.NEXT_PUBLIC_LOCATIONS_ROOT)
-      .then(res =>
-        Promise.all(
-          Object.values(res.context).map(async building => {
-            let data = await this.getId(building.id);
-            return {
-              ...building,
-              ...data,
-            };
-          }),
-        ),
-      )
-      .catch(() => console.log("no list of locations ids"));
   };
 
   getId = async id => {
@@ -134,7 +119,7 @@ class ApiStore {
 
   setCachedId = (data, tags) => {
     if (data.id && !(data.id in this.cachedIds)) {
-      this.cachedIds[data.id] = data;
+      this.cachedIds[data.id] = { ...data, tags: tags };
     }
     if (data.id && !(data.id in this.pathlist)) {
       this.pathlist[data.id] = tags;
@@ -154,7 +139,7 @@ class ApiStore {
       }
       let data = searchId in this.cachedIds ? this.cachedIds[searchId] : null;
       let tags = searchId in this.pathlist ? this.pathlist[searchId] : null;
-      if (!data) {
+      if (!data || data?.type == "item") {
         data = await this.getId(searchId);
       }
       if (!tags) {
@@ -167,6 +152,12 @@ class ApiStore {
         currentItems = await Promise.all(
           currentItems.map(async item => {
             if (item.id in this.cachedIds && item.id in this.pathlist) {
+              if (!this.cachedIds[item.id]?.tags) {
+                this.setCachedId(
+                  this.cachedIds[item.id],
+                  this.pathlist[item.id],
+                );
+              }
               return {
                 ...item,
                 ...this.cachedIds[item.id],
@@ -194,6 +185,7 @@ class ApiStore {
           data.context = data.context.sort(
             (a, b) => parseInt(a.name) - parseInt(b.name),
           );
+          data.image = this.locations.find(l => l.id == data.id)?.image;
           let levels = await Promise.all(
             data.context.map(async level => {
               if (
@@ -241,23 +233,25 @@ class ApiStore {
       const tree = await this.getTreeFromId(
         process.env.NEXT_PUBLIC_API_ROOT_URL,
       );
-      const locations = await this.getLocations();
-      const events = await this.getFilteredListFromId(
-        process.env.NEXT_PUBLIC_API_ROOT_URL,
-        "/allocation/temporal",
+      const locations = await locationData.map(loc => ({
+        ...loc,
+        id: loc.id[process.env.NODE_ENV],
+      }));
+      const detailedList = await this.get(
+        `${process.env.NEXT_PUBLIC_STRUCTURE_ROOT}/detailedList/filter/type/item`,
       );
-      const { tags, rooms, eventlist, pathlist } = await wrangleData(
+
+      const { tags, rooms, eventlist, pathlist, allItems } = wrangleData(
         tree,
-        events,
+        detailedList,
       );
-      
-      // const detailedList = add call here, return array
+
       runInAction(() => {
         this.tags = tags;
         this.pathlist = pathlist;
         this.existingRooms = rooms;
         this.locations = locations;
-        //this.cachedIds = _.keyBy(detailedList, "id")
+        this.cachedIds = _.keyBy(allItems, "id");
         this.eventlist = eventlist;
         this.root = tree;
         this.isLoaded = true;
