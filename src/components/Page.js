@@ -8,6 +8,7 @@ import SearchBar from "@/components/SearchBar";
 import PageTitle from "@/components/PageTitle";
 import IntroAnimation from "@/components/IntroAnimation";
 import HeadOG from "./HeadOG";
+import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const HeaderWrapper = styled.header`
   position: sticky;
@@ -23,6 +24,13 @@ const HeaderWrapper = styled.header`
 const PageWrapper = styled.div`
   height: 100%;
   width: 100%;
+`;
+
+const LoadWrapper = styled.div`
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  background-color: #e2ff5d;
 `;
 
 const Page = ({ children }) => {
@@ -63,15 +71,23 @@ const Page = ({ children }) => {
         }
         ogurl={`https://rundgang.udk-berlin.de${router.asPath}`}
       />
-      <HeaderWrapper>
-        <PageTitle loaded={dataStore.api.isLoaded} />
-        <SearchBar />
-      </HeaderWrapper>
-      <PageWrapper>
-        {children}
-        <Footer />
-        <IntroAnimation key={"intro"} />
-      </PageWrapper>
+      {dataStore.api.isLoaded ? (
+        <>
+          <HeaderWrapper>
+            <PageTitle loaded={dataStore.api.isLoaded} />
+            <SearchBar />
+          </HeaderWrapper>
+          <PageWrapper>
+            {children}
+            <Footer />
+            <IntroAnimation key={"intro"} />
+          </PageWrapper>
+        </>
+      ) : (
+        <LoadWrapper>
+          <LocalizedText id="loading" />
+        </LoadWrapper>
+      )}
     </>
   );
 };

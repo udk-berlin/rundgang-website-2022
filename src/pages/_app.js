@@ -5,7 +5,6 @@ import deFile from "modules/i18n/localizations/de.json";
 import enFile from "modules/i18n/localizations/en.json";
 import { Provider } from "mobx-react";
 import { ThemeProvider } from "styled-components";
-import { MotionConfig } from "framer-motion";
 import { theme } from "theme/index";
 import GlobalStyle from "theme/globalStyle";
 import GlobalFonts from "public/fonts/globalFonts";
@@ -40,11 +39,9 @@ export default function App({ Component, pageProps }) {
             messages={messages}
             onError={() => null}
           >
-            <MotionConfig reducedMotion="user">
-              <Page>
-                <Component key={router.pathname} {...pageProps} />
-              </Page>
-            </MotionConfig>
+            <Page>
+              <Component key={router.pathname} {...pageProps} />
+            </Page>
           </IntlProvider>
         </Provider>
       </ThemeProvider>

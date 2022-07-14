@@ -107,7 +107,6 @@ const variants = {
 };
 
 const spinTransition = {
-  repeat: Infinity,
   ease: "linear",
   duration: 4,
 };
