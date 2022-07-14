@@ -71,23 +71,21 @@ const Page = ({ children }) => {
         }
         ogurl={`https://rundgang.udk-berlin.de${router.asPath}`}
       />
-      {dataStore.api.isLoaded ? (
-        <>
-          <HeaderWrapper>
-            <PageTitle loaded={dataStore.api.isLoaded} />
-            <SearchBar />
-          </HeaderWrapper>
-          <PageWrapper>
-            {children}
-            <Footer />
-            <IntroAnimation key={"intro"} />
-          </PageWrapper>
-        </>
-      ) : (
-        <LoadWrapper>
-          <LocalizedText id="loading" />
-        </LoadWrapper>
-      )}
+      <HeaderWrapper>
+        <PageTitle loaded={dataStore.api.isLoaded} />
+        <SearchBar />
+      </HeaderWrapper>
+      <PageWrapper>
+        {dataStore.api.isLoaded ? (
+          children
+        ) : (
+          <LoadWrapper>
+            <LocalizedText id="loading" />
+          </LoadWrapper>
+        )}
+        <Footer />
+        <IntroAnimation key={"intro"} />
+      </PageWrapper>
     </>
   );
 };
