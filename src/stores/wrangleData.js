@@ -1,3 +1,4 @@
+import { entries, values } from "lodash";
 const wrangleData = (tree, detailedList) => {
   let tags = {
     ebene0: {},
@@ -27,14 +28,14 @@ const wrangleData = (tree, detailedList) => {
             "Universität",
             "location-university",
             "rundgang22-root",
-          ].includes(x.template) && x.id !== curr.id,
+          ].includes(x.template) &&
+          x.id !== curr.id &&
+          (!(curr.id in pathlist) || pathlist[curr.id].indexOf(x) === -1),
       );
       if (curr.id in pathlist) {
         let newpaths = pathlist[curr.id].concat(currpaths);
-        pathlist[curr.id] = [
-          ...new Map(newpaths.map(item => [item.id, item])).values(),
-        ];
-      } else {
+        pathlist[curr.id] = [...new Set(newpaths)];
+      } else if (currpaths.length) {
         pathlist[curr.id] = currpaths;
       }
       if (
@@ -104,17 +105,14 @@ const wrangleData = (tree, detailedList) => {
           context.template == "location-room" ||
           context.template == "location-level"
         ) {
-          if (context.id in rooms) {
-            rooms[context.id].push(curr.node.id);
+          if (!(context.id in rooms)) {
+            rooms[context.id] = [curr.node.id];
           }
-          rooms[context.id] = [curr.node.id];
         }
         if (ebene) {
           if (context.id in pathlist) {
             let newpaths = pathlist[context.id].concat(currpaths);
-            pathlist[context.id] = [
-              ...new Map(newpaths.map(item => [item.id, item])).values(),
-            ];
+            pathlist[context.id] = [...new Set(newpaths)];
           } else {
             pathlist[context.id] = currpaths;
           }
@@ -132,20 +130,20 @@ const wrangleData = (tree, detailedList) => {
           };
         }
       });
-    }
-
-    Object.entries(curr.node.children).map(([k, v]) => {
-      let currPath = [...curr.path, v];
-      queue.push({
-        node: v,
-        id: k,
-        path: currPath,
+    } else {
+      entries(curr.node.children).map(([k, v]) => {
+        let currPath = [...curr.path, v];
+        queue.push({
+          node: v,
+          id: k,
+          path: currPath,
+        });
       });
-    });
+    }
   }
-  let result = Object.entries(tags).reduce((obj, [k, v]) => {
-    if (Object.values(v).length) {
-      return { ...obj, [k]: Object.values(v) };
+  let result = entries(tags).reduce((obj, [k, v]) => {
+    if (values(v).length) {
+      return { ...obj, [k]: values(v) };
     }
     return obj;
   }, {});
@@ -155,7 +153,9 @@ const wrangleData = (tree, detailedList) => {
     tags: item.id in pathlist ? pathlist[item.id] : null,
   }));
 
-  return { tags: result, rooms, eventlist, pathlist, allItems };
+  delete tree["children"];
+
+  return { tags: result, rootItem: tree, rooms, eventlist, pathlist, allItems };
 };
 
 export default wrangleData;

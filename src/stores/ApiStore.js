@@ -1,11 +1,5 @@
-import {
-  makeAutoObservable,
-  runInAction,
-  observable,
-  action,
-  toJS,
-} from "mobx";
-import { shuffle } from "lodash";
+import { makeAutoObservable, runInAction, observable, action } from "mobx";
+import { shuffle, keyBy, values } from "lodash";
 import { makeIdFromUrl, ALIAS_IDS } from "@/utils/idUtils";
 import wrangleData from "./wrangleData";
 import locationData from "./locationData.json";
@@ -38,7 +32,10 @@ class ApiStore {
       root: observable,
       currentRoot: observable,
       setCachedId: action,
+      initialize: action,
     });
+
+    this.initialize();
   }
 
   get = async (urlParams = "") => {
@@ -148,7 +145,11 @@ class ApiStore {
       data = { ...data, tags };
       let currentItems = null;
       if (data?.type == "context") {
-        currentItems = await this.getFilteredListFromId(searchId, TYPE_ITEM);
+        if (searchId !== this.root.id) {
+          currentItems = await this.getFilteredListFromId(searchId, TYPE_ITEM);
+        } else {
+          currentItems = values(this.cachedIds);
+        }
         currentItems = await Promise.all(
           currentItems.map(async item => {
             if (item.id in this.cachedIds && item.id in this.pathlist) {
@@ -227,34 +228,33 @@ class ApiStore {
     }
   };
 
-  initializeRoot = async () => {
+  initialize = async () => {
     this.setStatus("pending");
     try {
-      const tree = await this.getTreeFromId(
-        process.env.NEXT_PUBLIC_API_ROOT_URL,
+      const treeload = this.getTreeFromId(process.env.NEXT_PUBLIC_API_ROOT_URL);
+      const listload = this.get(
+        `${process.env.NEXT_PUBLIC_API_ROOT_URL}/detailedList/filter/type/item`,
       );
-      const locations = await locationData.map(loc => ({
+      const [tree, detailedList] = await Promise.all([treeload, listload]);
+
+      const wrangled = wrangleData(tree, detailedList);
+      const locations = locationData.map(loc => ({
         ...loc,
         id: loc.id[process.env.NODE_ENV],
       }));
-      const detailedList = await this.get(
-        `${process.env.NEXT_PUBLIC_STRUCTURE_ROOT}/detailedList/filter/type/item`,
-      );
-
-      const { tags, rooms, eventlist, pathlist, allItems } = wrangleData(
-        tree,
-        detailedList,
-      );
 
       runInAction(() => {
+        const { tags, rooms, eventlist, pathlist, allItems } = wrangled;
         this.tags = tags;
         this.pathlist = pathlist;
         this.existingRooms = rooms;
-        this.locations = locations;
-        this.cachedIds = _.keyBy(allItems, "id");
+        this.cachedIds = keyBy(allItems, "id");
         this.eventlist = eventlist;
-        this.root = tree;
         this.isLoaded = true;
+        delete tree["children"];
+        this.locations = locations;
+        this.root = tree;
+        this.setStatus("success");
       });
     } catch (error) {
       runInAction(() => {
@@ -265,10 +265,6 @@ class ApiStore {
 
   hydrate = snapshot => {
     console.log(snapshot);
-  };
-
-  initialize = async () => {
-    this.initializeRoot();
   };
 
   connect(parentStore) {

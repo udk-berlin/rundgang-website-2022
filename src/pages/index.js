@@ -1,6 +1,9 @@
 import React from "react";
 import Layout from "@/components/simple/Layout";
-import LandingPage from "@/components/LandingPage";
+import dynamic from "next/dynamic";
+const LandingPage = dynamic(() => import("../components/LandingPage"), {
+  loading: () => <div></div>,
+});
 
 const IndexPage = () => {
   return (

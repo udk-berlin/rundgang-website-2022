@@ -10,8 +10,6 @@ class DataStore {
     makeAutoObservable(this, {
       api: false,
     });
-
-    this.initialize();
   }
 
   createEventStructure(eventlist) {
