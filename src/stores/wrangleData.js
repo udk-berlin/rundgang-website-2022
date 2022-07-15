@@ -28,9 +28,7 @@ const wrangleData = (tree, detailedList) => {
             "Universität",
             "location-university",
             "rundgang22-root",
-          ].includes(x.template) &&
-          x.id !== curr.id &&
-          (!(curr.id in pathlist) || pathlist[curr.id].indexOf(x) === -1),
+          ].includes(x.template) && x.id !== curr.id,
       );
       if (curr.id in pathlist) {
         pathlist[curr.id] = unionBy(currpaths, pathlist[curr.id], "id");
