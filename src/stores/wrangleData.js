@@ -34,7 +34,6 @@ const wrangleData = (tree, detailedList) => {
       );
       if (curr.id in pathlist) {
         pathlist[curr.id] = unionBy(currpaths, pathlist[curr.id], "id");
-        console.log(unionBy(currpaths, pathlist[curr.id], "id"));
       } else if (currpaths.length) {
         pathlist[curr.id] = currpaths;
       }
@@ -111,13 +110,9 @@ const wrangleData = (tree, detailedList) => {
         }
         if (ebene) {
           if (context.id in pathlist) {
-            pathlist[context.id] = unionBy(
-              currpaths, pathlist[context.id],
-              "id",
-            );
-          } else {
-            pathlist[context.id] = currpaths;
+            currpaths = unionBy(currpaths, pathlist[context.id], "id");
           }
+          pathlist[context.id] = currpaths;
           let ancestors = currpaths.map(p => p.id);
           tags[ebene][context.id] = {
             ...context,

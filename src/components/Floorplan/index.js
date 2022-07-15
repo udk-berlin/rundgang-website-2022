@@ -94,7 +94,7 @@ const ImageWrapper = styled.div`
 `;
 
 const roomname = (data, newname) => {
-  if (newname && data.name !== "/") {
+  if (newname && data.name && newname !== "/") {
     return `${newname} ${data.name}`;
   } else if (newname == "/") {
     return data.name;
