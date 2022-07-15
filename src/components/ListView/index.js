@@ -59,8 +59,8 @@ const DescriptionText = styled.div`
   }
 `;
 
-const getDescription = (d, loc) => {
-  if (d) {
+const getDescription = (d, loc, template) => {
+  if (d && template !== "location-room") {
     let desc = d?.default ?? null;
     if (loc.toUpperCase() in d) {
       desc = d[loc.toUpperCase()];
@@ -78,6 +78,7 @@ const ListView = ({ numCol }) => {
   const description = getDescription(
     uiStore.currentContext?.description,
     locale,
+    uiStore.currentContext?.template,
   );
   return uiStore.items && uiStore.items.length > 0 ? (
     <ListViewWrapper numCol={numCol}>

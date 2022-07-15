@@ -48,7 +48,7 @@ const OrtePage = () => {
         <MapContainer>
           <Map />
         </MapContainer>
-        <OrteKatalog className="sticky-element">
+        <OrteKatalog>
           <ListView numCol={2} />
         </OrteKatalog>
       </OrteWrapper>
