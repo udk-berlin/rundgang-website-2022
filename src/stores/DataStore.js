@@ -56,16 +56,6 @@ class DataStore {
   connect = stores => {
     this.allStores.forEach(store => store?.connect?.(this));
     this.uiStore = stores.uiStore;
-    this.sideEffects = [
-      reaction(
-        () => this.api.currentRoot?.name,
-        curname => {
-          if (curname && this.api.currentRoot.id) {
-            this.uiStore.setTitle(curname, this.api.currentRoot.id);
-          }
-        },
-      ),
-    ];
   };
 
   initialize = async () => {

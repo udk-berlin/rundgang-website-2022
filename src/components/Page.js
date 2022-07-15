@@ -60,6 +60,15 @@ const Page = ({ children }) => {
     dataStore.api?.isLoaded,
   ]);
 
+  useEffect(() => {
+    if (dataStore.api.currentRoot) {
+      uiStore.setTitle(
+        dataStore.api.currentRoot.name,
+        dataStore.api.currentRoot.id,
+      );
+    }
+  }, [dataStore?.api?.currentRoot?.name]);
+
   return (
     <>
       <HeadOG

@@ -132,7 +132,13 @@ const wrangleData = (tree, detailedList) => {
       });
     } else {
       entries(curr.node.children).map(([k, v]) => {
-        let currPath = [...curr.path, v];
+        let pathobj = {
+          name: v.name,
+          id: v.id,
+          template: v.template,
+          type: v.type,
+        };
+        let currPath = [...curr.path, pathobj];
         queue.push({
           node: v,
           id: k,
