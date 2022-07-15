@@ -1,4 +1,4 @@
-import { entries, values, unionBy } from "lodash";
+import { entries, values, unionBy, union } from "lodash";
 const wrangleData = (tree, detailedList) => {
   let tags = {
     ebene0: {},
@@ -116,7 +116,7 @@ const wrangleData = (tree, detailedList) => {
             ...context,
             ancestors:
               context.id in tags[ebene]
-                ? unionBy(tags[ebene][context.id].ancestors, ancestors, "id")
+                ? union(tags[ebene][context.id].ancestors, ancestors)
                 : ancestors,
           };
         }
