@@ -1,4 +1,4 @@
-import { entries, values } from "lodash";
+import { entries, values, unionBy } from "lodash";
 const wrangleData = (tree, detailedList) => {
   let tags = {
     ebene0: {},
@@ -33,8 +33,8 @@ const wrangleData = (tree, detailedList) => {
           (!(curr.id in pathlist) || pathlist[curr.id].indexOf(x) === -1),
       );
       if (curr.id in pathlist) {
-        let newpaths = pathlist[curr.id].concat(currpaths);
-        pathlist[curr.id] = [...new Set(newpaths)];
+        pathlist[curr.id] = unionBy(currpaths, pathlist[curr.id], "id");
+        console.log(unionBy(currpaths, pathlist[curr.id], "id"));
       } else if (currpaths.length) {
         pathlist[curr.id] = currpaths;
       }
@@ -111,8 +111,10 @@ const wrangleData = (tree, detailedList) => {
         }
         if (ebene) {
           if (context.id in pathlist) {
-            let newpaths = pathlist[context.id].concat(currpaths);
-            pathlist[context.id] = [...new Set(newpaths)];
+            pathlist[context.id] = unionBy(
+              currpaths, pathlist[context.id],
+              "id",
+            );
           } else {
             pathlist[context.id] = currpaths;
           }
@@ -121,11 +123,7 @@ const wrangleData = (tree, detailedList) => {
             ...context,
             ancestors:
               context.id in tags[ebene]
-                ? [
-                    ...new Set(
-                      tags[ebene][context.id].ancestors.concat(ancestors),
-                    ),
-                  ]
+                ? unionBy(tags[ebene][context.id].ancestors, ancestors, "id")
                 : ancestors,
           };
         }
