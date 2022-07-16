@@ -92,14 +92,7 @@ const ContentElement = ({ item }) => {
   } else if (item.type == "quote") {
     return <Quote>{item.content}</Quote>;
   } else if (item.type == "code") {
-    return <Code>{item.content} hallo
-    hallo hallo hallo
-    hallo hallo hallohallo hallo hallo
-    hallo hallo{"\n"}
-    newline{"\n"}
-    newline{"\n"}
-    newline{"\n"}
-    {"  "}newline</Code>;
+    return <Code>{item.content}</Code>;
   } else if (item.type == "video") {
     return (
       <Video
