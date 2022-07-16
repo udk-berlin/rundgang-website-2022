@@ -112,7 +112,7 @@ class UiStore {
   }
 
   get filteredEvents() {
-    if (this.dataStore.api?.eventlist) {
+    if (this.dataStore.api?.eventlist && this.items) {
       let events = Object.values(this.dataStore.api.eventlist).filter(ev =>
         this.items.find(item => item.id == ev.id),
       );
@@ -122,11 +122,13 @@ class UiStore {
   }
 
   get filteredLocations() {
-    let locations = this.dataStore.api?.locations?.filter(loc =>
-      this.items.find(item => item.tags?.find(t => t.id == loc.id)),
-    );
-    if (locations?.length) {
-      return locations;
+    if (this.items) {
+      let locations = this.dataStore.api?.locations?.filter(loc =>
+        this.items.find(item => item.tags?.find(t => t.id == loc.id)),
+      );
+      if (locations?.length) {
+        return locations;
+      }
     }
     return [];
   }
@@ -173,7 +175,7 @@ class UiStore {
       }
       return this.dataStore.api.currentItems;
     }
-    return [];
+    return null;
   }
 }
 

@@ -62,7 +62,7 @@ const useTopScrollBar = (switchPos, sundayPos) => {
     };
   }, []);
 
-  return { switchDay, selectedDay, bottomScroll, topScroll };
+  return { switchDay, selectedDay, bottomScroll, topScroll, scrollPos };
 };
 
 export default useTopScrollBar;

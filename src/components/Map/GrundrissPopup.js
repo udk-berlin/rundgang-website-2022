@@ -46,9 +46,6 @@ const RoomLink = styled.div`
     border: 1px solid black;
   }
 `;
-const Arrow = styled.span`
-  font-family: "Inter";
-`;
 
 const ClosingButton = styled.div`
   background: ${({ theme }) => theme.colors.black};
@@ -60,8 +57,7 @@ const ClosingButton = styled.div`
   width: 36px;
   height: 36px;
   font-size: 24px;
-  font-family: "Inter";
-  line-height: 1.6;
+  line-height: 1.55;
   text-align: center;
   cursor: pointer;
   &:hover {
@@ -99,7 +95,7 @@ const GrundrissPopup = ({ el, size }) => {
       </Times>
       <LocalizedLink to={`/orte/${el.id}`}>
         <RoomLink>
-          <LocalizedText id="program" /> <Arrow>&#8594;</Arrow>
+          <LocalizedText id="program" /> <span>&#8594;</span>
         </RoomLink>
       </LocalizedLink>
     </PopupWrapper>

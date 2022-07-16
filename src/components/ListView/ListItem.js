@@ -152,7 +152,7 @@ const ListItem = ({ element, numCol }) => {
         <Authors>
           {[
             ...new Set(
-              element.origin?.authors.map(a => (a.name ? a.name.trim() : null)),
+              element.origin?.authors.map(a => (a.name ? a.name.split("@")[0].trim() : null)),
             ),
           ]
             .filter(a => a)

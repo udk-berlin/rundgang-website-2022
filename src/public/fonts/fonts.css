@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "Diatype";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/fonts/EduDiatype-Regular.woff2") format("woff2"),
+    url("/fonts/EduDiatype-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "DiatypeBold";
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url("/fonts/EduDiatype-Bold.woff2") format("woff2");
+}

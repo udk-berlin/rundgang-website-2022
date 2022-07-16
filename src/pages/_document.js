@@ -38,16 +38,7 @@ export default class MyDocument extends Document {
             type="font/woff2"
             crossOrigin=""
           />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin=""
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Inter&text=↑→↓←"
-            rel="stylesheet"
-          />
+          <link href="/fonts/fonts.css" rel="stylesheet" />
         </Head>
         <body>
           <Main />

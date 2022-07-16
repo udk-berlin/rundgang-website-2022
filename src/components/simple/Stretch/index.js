@@ -18,20 +18,19 @@ const Stretch = ({
   const [lineHeight, setLineHeight] = useState(0.9);
 
   useEffect(() => {
-    if (isNaN(preferredSize) && preferredSize.includes("px") && size.height) {
-      let pval = parseFloat(preferredSize.replace("px", ""));
-      setFontSize((pval / size.height) * 100);
-      setLineHeight(1);
-    } else if (
-      isNaN(preferredSize) &&
-      preferredSize.includes("%") &&
-      size.height
-    ) {
-      let pval = parseFloat(preferredSize.replace("%", ""));
-      let val = (pval * (size.height - 180)) / size.height;
-      setFontSize(val);
-    } else {
-      setFontSize(preferredSize);
+    let pval = preferredSize;
+    if (isNaN(pval) && size.height) {
+      if (pval.includes("px")) {
+        pval = (parseFloat(pval.replace("px", "")) / size.height) * 100;
+        setLineHeight(1);
+      } else if (pval.includes("%")) {
+        pval =
+          (parseFloat(pval.replace("%", "")) * (size.height - 180)) /
+          size.height;
+      }
+    }
+    if (pval !== fontSize) {
+      setFontSize(pval);
     }
   }, [preferredSize, size.height]);
 

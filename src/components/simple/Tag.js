@@ -71,7 +71,7 @@ const Tag = ({
       {tagPrefix}
       {children}
       {selected && showCross ? (
-        <TagIcon size="12">&#57344;</TagIcon>
+        <TagIcon size="16">&#x2715;</TagIcon>
       ) : (
         showCross && <TagIcon size="22">+</TagIcon>
       )}

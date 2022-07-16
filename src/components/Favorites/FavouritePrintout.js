@@ -109,7 +109,9 @@ const FavouriteItem = ({ element }) => {
         <Authors>
           {[
             ...new Set(
-              element.origin?.authors.map(a => (a.name ? a.name.trim() : null)),
+              element.origin?.authors.map(a =>
+                a.name ? a.name.split("@")[0].trim() : null,
+              ),
             ),
           ]
             .filter(a => a)
@@ -138,9 +140,12 @@ const FavouritePrintout = ({ savedItems, filteredEvents }) => {
                 ).name;
                 return {
                   ...ev,
-                  sortIndex: filteredEvents[building][room]
-                    .filter(d => d.id == ev.id)
-                    .map(d => d.sortIndex + 1),
+                  sortIndex:
+                    building && room && filteredEvents[building][room]
+                      ? filteredEvents[building][room]
+                          .filter(d => d.id == ev.id)
+                          .map(d => d.sortIndex + 1)
+                      : 0,
                 };
               }
             })
@@ -179,7 +184,7 @@ const FavouritePrintout = ({ savedItems, filteredEvents }) => {
       ).map(([loc, items]) => (
         <div key={loc}>
           <FavouritesTitle>{loc}</FavouritesTitle>
-          {items.map(element => (
+          {items?.map(element => (
             <FavouriteItem
               key={`favouriteprintout-element-${element.id}`}
               element={element}

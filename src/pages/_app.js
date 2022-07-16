@@ -7,7 +7,6 @@ import { Provider } from "mobx-react";
 import { ThemeProvider } from "styled-components";
 import { theme } from "theme/index";
 import GlobalStyle from "theme/globalStyle";
-import GlobalFonts from "public/fonts/globalFonts";
 import { useStoreInstances } from "../stores/index";
 import Page from "../components/Page";
 
@@ -30,7 +29,6 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <GlobalFonts />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <Provider dataStore={dataStore} uiStore={uiStore}>

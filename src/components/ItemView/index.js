@@ -199,12 +199,16 @@ const ItemView = () => {
                   </Time>
                 ))
               : null}
-            {item?.origin?.authors
-              ?.filter(a => a.name || a.id)
-              .map(a => (
-                <AuthorTag key={`author-${a.name}-${a.id}`}>
-                  {a.name ? a.name : null}
-                </AuthorTag>
+            {[
+              ...new Set(
+                item?.origin?.authors.map(a =>
+                  a.name ? a.name.split("@")[0].trim() : null,
+                ),
+              ),
+            ]
+              .filter(a => a)
+              .map((aname, i) => (
+                <AuthorTag key={`author-${aname}-${i}`}>{aname}</AuthorTag>
               ))}
           </LargeTags>
           <TitleText>

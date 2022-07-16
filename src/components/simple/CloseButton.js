@@ -2,7 +2,6 @@ import styled from "styled-components";
 import React from "react";
 
 const CloseButtonWrapper = styled.div`
-  pointer-events: none;
   position: relative;
   margin-left: auto;
   right: 0px;
@@ -24,12 +23,12 @@ export const CloseIcon = styled.div`
   width: 60px;
   height: 60px;
   font-size: 44px;
-  font-family: "Inter";
-  line-height: 1.35;
+  line-height: 1.45;
   margin: auto;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     width: 60px;
     height: 60px;
+    line-height: 1.4;
   }
   &:hover {
     opacity: 0.8;

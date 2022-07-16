@@ -147,6 +147,7 @@ class ApiStore {
       if (data?.type == "context") {
         if (searchId !== this.root.id) {
           currentItems = await this.getFilteredListFromId(searchId, TYPE_ITEM);
+          currentItems = shuffle(currentItems);
         } else {
           currentItems = values(this.cachedIds);
         }
@@ -174,8 +175,6 @@ class ApiStore {
             }
           }),
         );
-        data = { ...data, allItemsBelow: currentItems.map(i => i.id) };
-        currentItems = shuffle(currentItems.filter(a => a));
 
         if (title == "beratungsangebote") {
           currentItems = currentItems.filter(l =>

@@ -11,7 +11,6 @@ import { TITLE_HEIGHT } from "@/utils/constants";
 const PageTitleWrapper = styled.div`
   width: 100%;
   height: ${TITLE_HEIGHT}px;
-  font-family: "Diatype";
   background-color: ${({ theme }) => theme.colors.white};
   overflow: hidden;
   margin-top: 4px;

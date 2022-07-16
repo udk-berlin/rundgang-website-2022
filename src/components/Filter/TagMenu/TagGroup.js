@@ -32,7 +32,6 @@ const NumberItems = styled.span`
   }
 `;
 const ToggleIcon = styled.span`
-  font-family: "Inter";
   font-size: ${({ theme }) => theme.fontSizes.mm};
   margin: ${({ theme }) => `${theme.space(4)} ${theme.space(4)}`};
   @media ${({ theme }) => theme.breakpoints.tablet} {

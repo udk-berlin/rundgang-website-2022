@@ -48,7 +48,6 @@ const InputFieldWrapper = styled.div`
 `;
 
 const CloseButton = styled.div`
-  font-family: "Diatype";
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -94,7 +93,7 @@ const InputField = ({ handleSubmit }) => {
         onFocus={_handleFocus}
         placeholder={intl.formatMessage({ id: "search" })}
       />
-      {hasContent && <CloseButton onClick={handleReset}>&#57344;</CloseButton>}
+      {hasContent && <CloseButton onClick={handleReset}>&#x2715;</CloseButton>}
       {hasContent && autocompleteOpen && (
         <AutoComplete
           searchValue={value}

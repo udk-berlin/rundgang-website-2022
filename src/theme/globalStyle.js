@@ -20,11 +20,14 @@ html {
     background-color: black;
     outline: 1px solid black;
   }
+  * {
+  -webkit-tap-highlight-color: #00000000;
+  }
 }
 body {
   margin: 0;
   padding: 0;
-  font-family: "Diatype", sans-serif;
+  font-family: "Diatype",Arial, Helvetica, system-ui, sans-serif;
   width: 100%;
   box-sizing: border-box;
   overflow-x: hidden;

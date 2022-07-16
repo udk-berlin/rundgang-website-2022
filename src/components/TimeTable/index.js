@@ -98,9 +98,7 @@ const DayName = styled.div`
   }
 `;
 
-const Arrow = styled.span`
-  font-family: "Inter";
-`;
+const Arrow = styled.span``;
 
 const TimeHeader = styled.div`
   position: fixed;
@@ -131,6 +129,22 @@ const TimeNumbers = styled.div`
   width: ${({ wwidth }) => wwidth}px;
 `;
 
+const ScrollInfoArrow = styled.div`
+  position: fixed;
+  top: 50%;
+  right: 16px;
+  display: ${({ isScrolled }) => (isScrolled ? "none" : "block")};
+  width: fit-content;
+  margin: auto;
+  z-index: 200;
+  pointer-events: fill;
+  font-size: 50px;
+  background-color: white;
+  opacity: 0.4;
+  line-height: 1.2;
+  padding: 0px 4px;
+`;
+
 const TimeTable = () => {
   const { uiStore } = useStores();
   const [padding, setPadding] = useState(0);
@@ -148,10 +162,8 @@ const TimeTable = () => {
     .domain([1658564000, 1658696400])
     .range([padding, width]);
 
-  const { switchDay, selectedDay, bottomScroll, topScroll } = useTopScrollBar(
-    scaleX(1658613600),
-    scaleX(1658649600),
-  );
+  const { switchDay, selectedDay, bottomScroll, topScroll, scrollPos } =
+    useTopScrollBar(scaleX(1658613600), scaleX(1658649600));
 
   return (
     <TimeTableWrapper>
@@ -162,12 +174,12 @@ const TimeTable = () => {
             left
             onClick={() => switchDay(0)}
           >
-            {selectedDay == 1 && <Arrow>&#8592;</Arrow>}
+            {selectedDay == 1 && <Arrow> &#8592; </Arrow>}
             <LocalizedText id="saturday" />
           </DayName>
           <DayName selected={selectedDay == 1} onClick={() => switchDay(1)}>
             <LocalizedText id="sunday" />
-            {selectedDay == 0 && <Arrow>&#8594;</Arrow>}
+            {selectedDay == 0 && <Arrow> &#8594; </Arrow>}
           </DayName>
         </DayMenu>
         <TimeNumbers wwidth={width}>
@@ -177,6 +189,12 @@ const TimeTable = () => {
             </TimeHour>
           ))}
         </TimeNumbers>
+        <ScrollInfoArrow
+          isScrolled={scrollPos > 30}
+          onClick={() => switchDay(1)}
+        >
+          &#8594;
+        </ScrollInfoArrow>
       </TimeHeader>
       <TimeTableContainer id={"time-table-container"} ref={bottomScroll}>
         <TimeScale scaleX={scaleX} times={times} />

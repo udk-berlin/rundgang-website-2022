@@ -6,11 +6,10 @@ import useIsScrolled from "@/utils/useIsScrolled";
 const JumpToTopWrapper = styled.div`
   position: fixed;
   bottom: 30px;
-  right: 0;
+  right: 16px;
   margin: auto;
   z-index: 5000;
   font-size: ${({ theme }) => theme.space(64)};
-  font-family: "Inter";
   font-weight: bold;
   cursor: pointer;
   -webkit-text-stroke: 1px white;

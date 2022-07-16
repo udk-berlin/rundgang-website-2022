@@ -73,7 +73,7 @@ const getDescription = (d, loc, template) => {
 };
 
 const ListView = ({ numCol }) => {
-  const { uiStore, dataStore } = useStores();
+  const { uiStore } = useStores();
   const { locale } = useRouter();
   const description = getDescription(
     uiStore.currentContext?.description,
@@ -89,12 +89,10 @@ const ListView = ({ numCol }) => {
     </ListViewWrapper>
   ) : (
     <NoItems>
-      {dataStore.api.status == "pending" ||
-      !dataStore.api.isLoaded ||
-      !uiStore.isLoaded ? (
-        <LocalizedText id="loading" />
-      ) : (
+      {uiStore.items && uiStore.items.length == 0 ? (
         <LocalizedText id="noitems" />
+      ) : (
+        <LocalizedText id="loading" />
       )}
     </NoItems>
   );
