@@ -12,6 +12,8 @@ const Heading = styled.div`
 const Paragraph = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.mm};
   padding-top: ${({ theme }) => theme.space(8)};
+  text-align: justify;
+  text-justify: inter-word;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.md};
   }
@@ -28,7 +30,6 @@ const Code = styled.pre`
   white-space: pre-wrap;
   background: black;
   color: ${({ theme }) => theme.colors.highlight};
-  width: fit-content;
   margin: ${({ theme }) => theme.space(8)};
   padding: ${({ theme }) => theme.space(8)};
 `;
@@ -69,7 +70,7 @@ const ContentElement = ({ item }) => {
   } else if (item.type == "text") {
     return (
       <Paragraph>
-        <ReactMarkdown children={item.content} /> 
+        <ReactMarkdown children={item.content} />
       </Paragraph>
     );
   } else if (item.type == "image") {
@@ -91,7 +92,14 @@ const ContentElement = ({ item }) => {
   } else if (item.type == "quote") {
     return <Quote>{item.content}</Quote>;
   } else if (item.type == "code") {
-    return <Code>{item.content}</Code>;
+    return <Code>{item.content} hallo
+    hallo hallo hallo
+    hallo hallo hallohallo hallo hallo
+    hallo hallo{"\n"}
+    newline{"\n"}
+    newline{"\n"}
+    newline{"\n"}
+    {"  "}newline</Code>;
   } else if (item.type == "video") {
     return (
       <Video

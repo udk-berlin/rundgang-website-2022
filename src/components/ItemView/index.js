@@ -93,6 +93,8 @@ const LargeTags = styled.div`
 `;
 
 const TitleText = styled.div`
+  text-align: justify;
+  text-justify: inter-word;
   padding-top: ${({ theme }) => theme.space(16)};
   font-size: ${({ theme }) => theme.fontSizes.mm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
