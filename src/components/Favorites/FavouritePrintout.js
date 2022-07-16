@@ -138,14 +138,22 @@ const FavouritePrintout = ({ savedItems, filteredEvents }) => {
                 let room = ev.tags?.find(
                   t => t.template == "location-room",
                 ).name;
+                if (
+                  building in filteredEvents &&
+                  room in filteredEvents[building] &&
+                  ev?.allocation?.temporal?.filter(t => t.start < 1658563200)
+                    ?.length < 1
+                ) {
+                  return {
+                    ...ev,
+                    sortIndex: filteredEvents[building][room]
+                      .filter(d => d.id == ev.id)
+                      .map(d => d.sortIndex + 1),
+                  };
+                }
                 return {
                   ...ev,
-                  sortIndex:
-                    building && room && filteredEvents[building][room]
-                      ? filteredEvents[building][room]
-                          .filter(d => d.id == ev.id)
-                          .map(d => d.sortIndex + 1)
-                      : 0,
+                  sortIndex: []
                 };
               }
             })

@@ -96,7 +96,7 @@ const Download = () => {
             <LocalizedText id="download" />
           )}
         </DownloadButton>
-        {events.length > 0 ? (
+        {Boolean(Object.keys(uiStore.savedEvents).length ) ? (
           <DownloadButton
             onClick={() =>
               handleDownload(
