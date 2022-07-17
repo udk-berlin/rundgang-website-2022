@@ -81,7 +81,6 @@ const PageTitle = ({ loaded }) => {
       uiStore.setFloorLevel(null);
       router.back();
     } else {
-      uiStore.setTitle("rundgang", dataStore.api.root.id);
       router.replace("/");
     }
   };

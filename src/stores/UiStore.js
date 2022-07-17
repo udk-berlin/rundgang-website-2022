@@ -126,7 +126,10 @@ class UiStore {
       let locations = this.dataStore.api?.locations?.filter(loc =>
         this.items.find(item => item.tags?.find(t => t.id == loc.id)),
       );
-      if (locations?.length) {
+      if (this.currentContext?.template == "location-external") {
+        locations = locations.filter(loc => loc.id == this.currentContext.id);
+      }
+      if (locations?.length > 0) {
         return locations;
       }
     }

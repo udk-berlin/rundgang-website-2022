@@ -19,6 +19,7 @@ const ItemViewWrapper = styled.div`
   width: 100%;
   overflow-x: hidden;
   font-size: ${({ theme }) => theme.fontSizes.sm};
+  hyphens: auto;
 `;
 
 const ItemHeaderWrapper = styled.div`

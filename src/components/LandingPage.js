@@ -24,7 +24,7 @@ const IndexWrapper = styled.div`
 
 const LandingPage = () => {
   const intl = useIntl();
-  const isMobile = useMediaQuery("(max-height: 800px)");
+  const isMobile = useMediaQuery("(max-height: 800px)  and (orientation: portrait)");
   return (
     <IndexWrapper>
       <LinkWrapper to="/katalog">

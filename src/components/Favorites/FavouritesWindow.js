@@ -21,7 +21,7 @@ const FavouritesWindowWrapper = styled.div`
 const FavouritesHeader = styled.div`
   display: flex;
   width: 100%;
-  height: ${SEARCHBAR_HEIGHT +4}px;
+  height: ${SEARCHBAR_HEIGHT + 4}px;
   justify-content: space-between;
   cursor: pointer;
 `;
@@ -31,7 +31,7 @@ const FavouritesSavedItems = styled.div`
   flex-grow: 1;
   margin: auto;
   padding: ${({ theme }) => `0 ${theme.space(8)}`};
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: ${({ theme }) => theme.fontSizes.ll};
 
   @media ${({ theme }) => theme.breakpoints.mobileM} {
     font-size: ${({ theme }) => theme.fontSizes.lm};

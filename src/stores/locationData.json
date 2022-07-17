@@ -12,18 +12,6 @@
     "allocation": {}
   },
   {
-    "name": "Konzertsaal der UdK Berlin",
-    "lat": "52.50895",
-    "lng": "13.3281",
-    "maxZoom": 15.2,
-    "image": "konzertsaal",
-    "id": {
-      "development": "!QxQzOsKXzcYiHEMMpg:dev.medienhaus.udk-berlin.de",
-      "production": "!jocCvZKGntdCmvmmUG:content.udk-berlin.de"
-    },
-    "allocation": {}
-  },
-  {
     "name": "Jazz-Institut Berlin, Einsteinufer 43-53, 10587 Berlin",
     "lat": "52.5169",
     "lng": "13.32299",
@@ -389,6 +377,18 @@
     "id": {
       "development": "!hQzMPzEcOUiJxoYoue:dev.medienhaus.udk-berlin.de",
       "production": "!bwyfqxrdHCbwOYLLgp:content.udk-berlin.de"
+    },
+    "allocation": {}
+  },
+  {
+    "name": "Konzertsaal der UdK Berlin",
+    "lat": "52.50895",
+    "lng": "13.3281",
+    "maxZoom": 15.2,
+    "image": "konzertsaal",
+    "id": {
+      "development": "!QxQzOsKXzcYiHEMMpg:dev.medienhaus.udk-berlin.de",
+      "production": "!jocCvZKGntdCmvmmUG:content.udk-berlin.de"
     },
     "allocation": {}
   }
