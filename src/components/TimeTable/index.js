@@ -116,6 +116,7 @@ const TimeHour = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.mm};
   height: 0;
   width: 0;
+  white-space: nowrap;
   background: ${({ theme }) => theme.background.primary};
   position: absolute;
   left: ${({ x }) => x - 8}px;
@@ -133,14 +134,13 @@ const ScrollInfoArrow = styled.div`
   position: fixed;
   top: 50%;
   right: 16px;
-  display: ${({ isScrolled }) => (isScrolled ? "none" : "block")};
   width: fit-content;
   margin: auto;
-  z-index: 200;
+  z-index: 700;
   pointer-events: fill;
-  font-size: 50px;
+  font-size: 70px;
   background-color: white;
-  opacity: 0.4;
+  cursor: pointer;
   line-height: 1.2;
   padding: 0px 4px;
 `;
@@ -185,13 +185,16 @@ const TimeTable = () => {
         <TimeNumbers wwidth={width}>
           {times.map(t => (
             <TimeHour x={scaleX(t)} key={`timehour-${t}`} id={`timehour-${t}`}>
-              {new Date(t * 1000).getHours()}
+              {new Date(t * 1000).getHours()} Uhr
             </TimeHour>
           ))}
         </TimeNumbers>
         <ScrollInfoArrow
-          isScrolled={scrollPos > 30}
-          onClick={() => switchDay(1)}
+          onClick={() => {
+            if (topScroll.current) {
+              topScroll.current.scrollLeft += 50;
+            }
+          }}
         >
           &#8594;
         </ScrollInfoArrow>
