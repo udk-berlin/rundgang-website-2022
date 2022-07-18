@@ -241,6 +241,7 @@ class ApiStore {
         ...loc,
         id: loc.id[process.env.NODE_ENV],
       }));
+      
 
       runInAction(() => {
         const { tags, rooms, eventlist, pathlist, allItems } = wrangled;
