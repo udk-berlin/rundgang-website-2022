@@ -11,6 +11,7 @@ const Heading = styled.div`
 
 const Paragraph = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.mm};
+  word-break: break-all;
   text-align: justify;
   text-justify: inter-word;
   @media ${({ theme }) => theme.breakpoints.tablet} {

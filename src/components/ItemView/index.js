@@ -226,7 +226,7 @@ const ItemView = () => {
               <ContentElement key={k} item={c} />
             ))}
         </div>
-        <div></div>
+        <div> </div>
       </ContentWrapper>
     </ItemViewWrapper>
   ) : null;
