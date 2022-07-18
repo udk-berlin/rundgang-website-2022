@@ -88,8 +88,10 @@ const GrundrissPopup = ({ el, size }) => {
               from={time.start * 1000}
               weekday="short"
               hour="numeric"
+              minute="numeric"
               to={time.end * 1000}
             />
+            {time.info ?? null}
           </TimeRange>
         ))}
       </Times>

@@ -9,7 +9,15 @@
       "development": "!pvskkxkddkLUqsuUzK:dev.medienhaus.udk-berlin.de",
       "production": "!uAswzmPHWtAVmjhIYx:content.udk-berlin.de"
     },
-    "allocation": {}
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658570400,
+          "end": 1658595600
+        }
+      ]
+    }
   },
   {
     "name": "Jazz-Institut Berlin, Einsteinufer 43-53, 10587 Berlin",
@@ -21,7 +29,15 @@
       "development": "!NDEmKoPNTYAwCsgmgG:dev.medienhaus.udk-berlin.de",
       "production": "!hjTkjNaIDkzxNWQZTR:content.udk-berlin.de"
     },
-    "allocation": {}
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658676600,
+          "end": 1658689200
+        }
+      ]
+    }
   },
   {
     "name": "Bundesallee 1-12",
@@ -163,7 +179,13 @@
         {
           "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000
+          "end": 1658592000
+        },
+        {
+          "app": "rundgang22-cms",
+          "start": 1658599200,
+          "end": 1658610000,
+          "info": ", (SCHAU22 mit Ticket)"
         },
         {
           "app": "rundgang22-cms",
@@ -282,7 +304,15 @@
       "development": "!bwyfqxrdHCbwOYLLgp:dev.medienhaus.udk-berlin.de",
       "production": "!FqPOhaHHAjYeliMfOU:content.udk-berlin.de"
     },
-    "allocation": {}
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658577600,
+          "end": 1658597400
+        }
+      ]
+    }
   },
   {
     "name": "Außenvitrine Einsteinufer",
@@ -318,6 +348,14 @@
       "development": "!QxQzOsKXzcYiHEMMpg:dev.medienhaus.udk-berlin.de",
       "production": "!jocCvZKGntdCmvmmUG:content.udk-berlin.de"
     },
-    "allocation": {}
+    "allocation": {
+      "temporal": [
+        {
+          "app": "rundgang22-cms",
+          "start": 1658593800,
+          "end": 1658606400
+        }
+      ]
+    }
   }
 ]
