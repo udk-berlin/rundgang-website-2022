@@ -14,7 +14,6 @@ const CloseButtonWrapper = styled.div`
 
 export const CloseIcon = styled.div`
   cursor: pointer;
-  pointer-events: auto;
   text-align: center;
   background: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.highlight};
@@ -35,10 +34,10 @@ export const CloseIcon = styled.div`
   }
 `;
 
-const CloseButton = ({ stretching }) => {
+const CloseButton = ({ stretching, onClick }) => {
   return (
     <CloseButtonWrapper stretching={stretching}>
-      <CloseIcon>&#x2715;</CloseIcon>
+      <CloseIcon onClick={onClick}>&#x2715;</CloseIcon>
     </CloseButtonWrapper>
   );
 };

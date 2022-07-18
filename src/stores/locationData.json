@@ -37,21 +37,13 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658480400,
-          "end": 1658534400,
-          "udk": "preview"
-        },
-        {
-          "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000,
-          "udk": "rundgang"
+          "end": 1658610000
         },
         {
           "app": "rundgang22-cms",
           "start": 1658649600,
-          "end": 1658689200,
-          "udk": "rundgang"
+          "end": 1658689200
         }
       ]
     }
@@ -70,21 +62,13 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658480400,
-          "end": 1658523600,
-          "udk": "preview"
-        },
-        {
-          "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000,
-          "udk": "rundgang"
+          "end": 1658610000
         },
         {
           "app": "rundgang22-cms",
           "start": 1658649600,
-          "end": 1658689200,
-          "udk": "rundgang"
+          "end": 1658689200
         }
       ]
     }
@@ -103,21 +87,13 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658480400,
-          "end": 1658534400,
-          "udk": "preview"
-        },
-        {
-          "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000,
-          "udk": "rundgang"
+          "end": 1658610000
         },
         {
           "app": "rundgang22-cms",
           "start": 1658649600,
-          "end": 1658689200,
-          "udk": "rundgang"
+          "end": 1658689200
         }
       ]
     }
@@ -136,21 +112,13 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658480400,
-          "end": 1658523600,
-          "udk": "preview"
-        },
-        {
-          "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000,
-          "udk": "rundgang"
+          "end": 1658610000
         },
         {
           "app": "rundgang22-cms",
           "start": 1658649600,
-          "end": 1658689200,
-          "udk": "rundgang"
+          "end": 1658689200
         }
       ]
     }
@@ -169,21 +137,13 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658480400,
-          "end": 1658523600,
-          "udk": "preview"
-        },
-        {
-          "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000,
-          "udk": "rundgang"
+          "end": 1658610000
         },
         {
           "app": "rundgang22-cms",
           "start": 1658649600,
-          "end": 1658689200,
-          "udk": "rundgang"
+          "end": 1658689200
         }
       ]
     }
@@ -202,21 +162,13 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658480400,
-          "end": 1658523600,
-          "udk": "preview"
-        },
-        {
-          "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000,
-          "udk": "rundgang"
+          "end": 1658610000
         },
         {
           "app": "rundgang22-cms",
           "start": 1658649600,
-          "end": 1658689200,
-          "udk": "rundgang"
+          "end": 1658689200
         }
       ]
     }
@@ -235,21 +187,13 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658480400,
-          "end": 1658523600,
-          "udk": "preview"
-        },
-        {
-          "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000,
-          "udk": "rundgang"
+          "end": 1658610000
         },
         {
           "app": "rundgang22-cms",
           "start": 1658649600,
-          "end": 1658689200,
-          "udk": "rundgang"
+          "end": 1658689200
         }
       ]
     }
@@ -268,21 +212,13 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658480400,
-          "end": 1658523600,
-          "udk": "preview"
-        },
-        {
-          "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000,
-          "udk": "rundgang"
+          "end": 1658610000
         },
         {
           "app": "rundgang22-cms",
           "start": 1658649600,
-          "end": 1658689200,
-          "udk": "rundgang"
+          "end": 1658689200
         }
       ]
     }
@@ -301,21 +237,13 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658480400,
-          "end": 1658523600,
-          "udk": "preview"
-        },
-        {
-          "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000,
-          "udk": "rundgang"
+          "end": 1658610000
         },
         {
           "app": "rundgang22-cms",
           "start": 1658649600,
-          "end": 1658689200,
-          "udk": "rundgang"
+          "end": 1658689200
         }
       ]
     }

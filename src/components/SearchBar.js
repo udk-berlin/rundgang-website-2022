@@ -41,21 +41,21 @@ const SearchBar = () => {
       <FlexContainer id="flex-container-searchbar">
         <ClickAwayListener
           onClickAway={() => handleClose("filter")}
-          mouseEvent="mousedown"
+          mouseEvent="mouseup"
           touchEvent="touchstart"
         >
           <Filter onOpen={() => handleOpen("filter")} />
         </ClickAwayListener>
         <ClickAwayListener
           onClickAway={() => handleClose("favourites")}
-          mouseEvent="mousedown"
+          mouseEvent="mouseup"
           touchEvent="touchstart"
         >
           <Favorites onOpen={() => handleOpen("favourites")} />
         </ClickAwayListener>
       </FlexContainer>
       {uiStore.isOpen && (
-        <CloseButton stretching={uiStore.isOpen == "favourites" ? 50 : 100} />
+        <CloseButton stretching={uiStore.isOpen == "favourites" ? 50 : 100} onClick={() => handleClose(uiStore.isOpen)} />
       )}
     </SearchBarWrapper>
   ) : null;
