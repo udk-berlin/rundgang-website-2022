@@ -20,7 +20,7 @@
     }
   },
   {
-    "name": "Jazz-Institut Berlin, Einsteinufer 43-53, 10587 Berlin",
+    "name": "Jazz-Institut Berlin",
     "lat": "52.5169",
     "lng": "13.32299",
     "maxZoom": 15.8,
@@ -79,12 +79,12 @@
         {
           "app": "rundgang22-cms",
           "start": 1658566800,
-          "end": 1658610000
+          "end": 1658602800
         },
         {
           "app": "rundgang22-cms",
-          "start": 1658649600,
-          "end": 1658689200
+          "start": 1658653200,
+          "end": 1658682000
         }
       ]
     }
@@ -153,13 +153,13 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658566800,
-          "end": 1658610000
+          "start": 1658570400,
+          "end": 1658593800
         },
         {
           "app": "rundgang22-cms",
-          "start": 1658649600,
-          "end": 1658689200
+          "start": 1658656800,
+          "end": 1658667600
         }
       ]
     }
@@ -259,13 +259,8 @@
       "temporal": [
         {
           "app": "rundgang22-cms",
-          "start": 1658566800,
-          "end": 1658610000
-        },
-        {
-          "app": "rundgang22-cms",
-          "start": 1658649600,
-          "end": 1658689200
+          "start": 1658557800,
+          "end": 1658602800
         }
       ]
     }
