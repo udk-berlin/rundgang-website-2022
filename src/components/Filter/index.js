@@ -49,7 +49,7 @@ const variants = {
 const FilterWrapper = styled(motion.div)`
   width: 100%;
   height: fit-content;
-  max-height: calc(100vh - ${2 * MIN_PADDING}px);
+  max-height: calc(100vh - ${MIN_PADDING}px);
   position: relative;
   background: white;
   border: ${({ theme }) => `4px solid ${theme.colors.highlight}`};
