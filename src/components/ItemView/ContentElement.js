@@ -7,6 +7,9 @@ import LocalizedText from "modules/i18n/components/LocalizedText";
 
 const Heading = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.lm};
+  word-break: break-word;
+  text-align: justify;
+  text-justify: inter-word;
 `;
 
 const Paragraph = styled.div`
@@ -35,6 +38,9 @@ const Code = styled.pre`
 `;
 
 const Quote = styled.blockquote`
+  word-break: break-word;
+  text-align: justify;
+  text-justify: inter-word;
   font-size: ${({ theme }) => theme.fontSizes.mm};
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.md};
@@ -42,6 +48,9 @@ const Quote = styled.blockquote`
 `;
 
 const ListWrapper = styled.div`
+  word-break: break-word;
+  text-align: justify;
+  text-justify: inter-word;
   font-size: ${({ theme }) => theme.fontSizes.mm};
   margin-left: ${({ theme }) => theme.space(32)};
   @media ${({ theme }) => theme.breakpoints.tablet} {
@@ -50,10 +59,16 @@ const ListWrapper = styled.div`
 `;
 
 const OLWrapper = styled(ListWrapper)`
+  word-break: break-word;
+  text-align: justify;
+  text-justify: inter-word;
   margin-left: ${({ theme }) => theme.space(48)};
 `;
 
 const Video = styled.div`
+  word-break: break-word;
+  text-align: justify;
+  text-justify: inter-word;
   iframe {
     height: 315px;
     width: 560px;

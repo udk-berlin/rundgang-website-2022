@@ -9,23 +9,21 @@ const ImageWrapper = styled.div`
 
 const Image = styled.picture`
   cursor: pointer;
+  max-height: 100%;
+  max-width: 100%;
   width: 100%;
-  height: auto;
 `;
 
 const DetailView = styled.img`
-  height: 90%;
-  width: auto;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
   position: absolute;
   top: 0;
   bottom: 0;
   margin: auto;
   left: 0;
   right: 0;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    height: auto;
-    width: 90%;
-  }
 `;
 
 const DetailWrapper = styled.div`
@@ -44,21 +42,27 @@ const CloseButton = styled(CloseIcon)`
   top: 16px;
 `;
 
+const ImageTag = styled.img`
+  object-fit: contain;
+  max-width: 100%;
+  max-height: auto;
+  width: inherit;
+`;
+
 const ImageDetailView = ({ src }) => {
   const [imageDetailOpen, setImageDetailOpen] = useState(false);
   return (
     <ImageWrapper>
       <Image onClick={() => setImageDetailOpen(true)}>
         <source srcSet={src} />
-        <img
-          src="/assets/img/missing.png"
-          alt="missing image"
-          style={{ width: "100%" }}
-        />
+        <ImageTag src="/assets/img/missing.png" alt="missing image" />
       </Image>
       {imageDetailOpen ? (
         <DetailWrapper>
-          <ClickAwayListener onClickAway={() => setImageDetailOpen(false)}>
+          <ClickAwayListener
+            touchEvent="mouseUp"
+            onClickAway={() => setImageDetailOpen(false)}
+          >
             <DetailView src={src} />
           </ClickAwayListener>
           <CloseButton
