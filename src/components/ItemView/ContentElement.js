@@ -17,6 +17,7 @@ const Paragraph = styled.div`
   word-break: break-word;
   text-align: justify;
   text-justify: inter-word;
+  max-width: 100%;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSizes.md};
   }
