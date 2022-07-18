@@ -191,7 +191,7 @@ const TimeTable = () => {
         </TimeNumbers>
         <ScrollInfoArrow
           onClick={() => {
-            if (topScroll.current) {
+            if (topScroll?.current) {
               topScroll.current.scrollLeft += 50;
             }
           }}
