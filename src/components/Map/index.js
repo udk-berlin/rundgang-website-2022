@@ -52,7 +52,7 @@ const Popups = styled.div`
   }
 `;
 const MAP_STYLE =
-  "https://api.maptiler.com/maps/0c31e459-4801-44f9-a78e-7404c9e2ece1/style.json?key=xOE99p3irw1zge6R9iKY";
+  "https://osm.udk-berlin.de/styles/udk-rundgang-2022/style.json";
 const FIRSTLAT = 52.5215633;
 const FIRSTLNG = 13.3491838;
 
