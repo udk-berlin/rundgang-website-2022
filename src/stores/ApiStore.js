@@ -45,6 +45,13 @@ class ApiStore {
     );
     const response = await fetch(request).then(res => {
       if (!res.ok) {
+        // HACKY HACK ALERT
+        // If we're trying to load a specific student project by its ID (`/c/<matrix-room-id>`) and the API does not
+        // know about it (404) then we forward the visitor to the old Rundgang website, assuming and hoping that the
+        // requested student project was from last year's rundgang.
+        if (res.status == 404 && window.location.href.includes('/c/!')) {
+          window.location.href = `https://2021.rundgang.udk-berlin.de/c/${window.location.href.substring(window.location.href.indexOf('/c/!') + 3)}`
+        }
         return null;
       }
       return res.json();
